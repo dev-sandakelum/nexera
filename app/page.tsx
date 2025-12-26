@@ -3,6 +3,10 @@ import HeadingNavBar from "@/components/nav/heading-navbar";
 import "./styles/app/main.css";
 import "./styles/app/nav.css";
 import "./styles/app/heading-navbar.css";
+import "./styles/app/scroll-bar.css";
+
+import "./styles/notes/main.css";
+import "./styles/notes/card1.css";
 
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
@@ -34,7 +38,9 @@ export default function Home() {
     >
       <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
       <HeadingNavBar data={routeList} />
-      {activeIcon === "Notes" && <Notes />}
+      <div className="ContentArea">
+        <div className="UsableArea">{activeIcon === "Notes" && <Notes />}</div>
+      </div>
     </div>
   );
 }

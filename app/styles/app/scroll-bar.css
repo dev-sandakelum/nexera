@@ -1,0 +1,30 @@
+
+.ContentArea .UsableArea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ContentArea .UsableArea::-webkit-scrollbar-track {
+  background: #f1f1f5;
+  border-radius: 10px;
+}
+
+.ContentArea .UsableArea::-webkit-scrollbar-thumb {
+  background: #c4c4d8;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.ContentArea .UsableArea::-webkit-scrollbar-thumb:hover {
+  background: #a8a8c0;
+}
+
+.ContentArea .UsableArea::-webkit-scrollbar-thumb:active {
+  background: #8e8ea8;
+}
+
+/* For Firefox */
+.ContentArea .UsableArea {
+  scrollbar-width: thin;
+  scrollbar-color: #c4c4d8 #f1f1f5;
+}
