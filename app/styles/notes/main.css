@@ -1,33 +1,60 @@
-.NotesPage {
-  width: 100%;
-  height: 100%;
-  padding-top: 96px;
-  padding-left: 64px;
-  padding-right: 64px;
+.container{
+    width: 100%;
+    margin-top: 128px;
+    padding: 0 64px;
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--theme-colorB);
 }
-.NotesPage .catogory {
-  width: 208px;
-  height: 24px;
+.container .favorites , .container .suggestions{
+    width: 100%;
+    /* border: 1px solid red; */
+    border-radius: 16px;
+    padding: 16px 32px;
+  background-color: var(--components-background);
 
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  color: #000000;
-  margin-top: 24px;
-  margin-bottom: 16px;
 }
-.NotesPage .topic {
-  width: 100%;
-  height: auto;
-  /* border: 1px solid blue; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+
+.container .objects{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.container .objects .object{
+    width: 200px;
+    height: auto;
+    /* border: 1px solid red; */
+}
+.container .objects .object .img{
+    width: 200px;
+    height: 200px;
+    /* border: 1px solid red; */
+    border-radius: 16px;
+}
+.container .objects .object .info{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+}
+.container .objects .object .title{
+    font-weight: 600;
+    padding: 2px;
+    padding-left: 4px;
+}
+.container .objects .object .option-btn{
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--theme-colorB);
+    font-size: 24px;
+    cursor: pointer;
 }

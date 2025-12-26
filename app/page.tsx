@@ -6,16 +6,23 @@ import "./styles/app/heading-navbar.css";
 import "./styles/app/scroll-bar.css";
 
 import "./styles/notes/main.css";
-import "./styles/notes/card1.css";
+
+import "./styles/notes-sub/main.css";
+import "./styles/notes-sub/card1.css";
 
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Notes from "@/components/page/notes";
+import Notes from "@/components/page/notes/notes";
+import { Testdataset } from "@/public/json/dataset";
+import Notes_Sub from "@/components/page/notes/notes-sub";
+import { Fav_dataset } from "@/public/json/fav";
+import { Suggestion_dataset } from "@/public/json/suggest";
 
 export default function Home() {
   const params = useSearchParams();
   const route = params.get("r");
+  const sub = params.get("u");
   const routeList = route ? route.split("/r/") : [];
 
   const [activeIcon, setActiveIcon] = useState<string>(
@@ -39,7 +46,10 @@ export default function Home() {
       <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
       <HeadingNavBar data={routeList} />
       <div className="ContentArea">
-        <div className="UsableArea">{activeIcon === "Notes" && <Notes />}</div>
+        <div className="UsableArea">
+          {activeIcon === "Notes" && !sub && <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />}
+          {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
+        </div>
       </div>
     </div>
   );
