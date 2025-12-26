@@ -32,7 +32,7 @@ export default function NavBar({
   }, []);
 
   function handleRoute(term: string) {
-    const param = new URLSearchParams(params);
+    const param = new URLSearchParams();
     const activeTab = term ? term.split("/r/") : [];
     if (term) {
       param.set("r", term);

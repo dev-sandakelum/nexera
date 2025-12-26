@@ -1,60 +1,46 @@
-.container{
-    width: 100%;
-    margin-top: 128px;
-    padding: 0 64px;
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    color: var(--theme-colorB);
+.container {
+  width: 100%;
+  margin-top: 100px;
+  padding: 0 64px;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--theme-colorB);
 }
-.container .favorites , .container .suggestions{
-    width: 100%;
-    /* border: 1px solid red; */
-    border-radius: 16px;
-    padding: 16px 32px;
+.container .favorites,
+.container .suggestions {
+  width: 100%;
+  border-radius: 16px;
+  border: 1px solid var(--navbar-border);
+  overflow: hidden;
   background-color: var(--components-background);
-
 }
 
-.container .objects{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
+.container .header {
+  font-weight: 600;
+  font-size: 24px;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--components-background);
+  /* border: 1px solid red; */
+  width: fit-content;
+  padding: 8px 16px;
+  padding-bottom: 16px;
+  padding-right: 128px;
+  border-radius: 100% 0% 100% 0% / 0% 0% 100% 100%;
+  background: linear-gradient(
+    130.14deg,
+    rgb(116, 116, 116) 92.69%,
+    #515151 44.05%
+  );
 }
-.container .objects .object{
-    width: 200px;
-    height: auto;
-    /* border: 1px solid red; */
-}
-.container .objects .object .img{
-    width: 200px;
-    height: 200px;
-    /* border: 1px solid red; */
-    border-radius: 16px;
-}
-.container .objects .object .info{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2px;
-}
-.container .objects .object .title{
-    font-weight: 600;
-    padding: 2px;
-    padding-left: 4px;
-}
-.container .objects .object .option-btn{
-    background: none;
-    border: none;
-    width: 32px;
-    height: 32px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--theme-colorB);
-    font-size: 24px;
-    cursor: pointer;
+.container .objects {
+  padding: 16px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
 }
