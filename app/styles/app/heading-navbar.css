@@ -1,0 +1,153 @@
+.heading-navbar{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    padding-left: 192px;
+    padding-right: 8px;
+    height: 64px;
+    z-index: 15;
+}
+
+.heading-navbar .route{
+    position: relative;
+    width: fit-content;
+    margin-left: 16px;
+    font-weight: 500;
+    padding: 8px 10px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: var(--theme-colorB);
+    background: var(--navbar-background);
+    border: 1px solid var(--navbar-border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.heading-navbar .route p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.heading-navbar .route .route-item {
+    display: inline-flex;
+    align-items: center;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Exit animation */
+.heading-navbar .route.exiting p {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+/* Enter animations - staggered */
+.heading-navbar .route.entering .route-item {
+    animation: fadeSlideIn 0.4s ease forwards;
+    animation-delay: var(--delay, 0s);
+    opacity: 0;
+}
+
+.heading-navbar .route.entering .active {
+    animation: fadeSlideInActive 0.5s ease forwards;
+    animation-delay: var(--delay, 0s);
+    opacity: 0;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeSlideInActive {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.heading-navbar .route .separator {
+    margin: 0 0.5rem;
+    opacity: 0.6;
+}
+
+.heading-navbar .route .active{
+    color: var(--theme-colorA);
+    font-weight: 600;
+}
+
+.heading-navbar .user-info{
+    width: 240px;
+    height: 100%;
+    color: var(--navbar-foreground);
+    padding: 0 6px;
+    background: var(--navbar-background);
+    border: 1px solid var(--navbar-border);
+    border-radius: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:8px;
+}
+
+.heading-navbar .user-info .user-details{
+    font-size: 12px;
+    padding-left: 12px;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    gap:2px;
+}
+
+.heading-navbar .user-info .user-details .user-name{
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    text-align: end; 
+}
+
+.heading-navbar .user-info .user-details .user-role{
+    display: flex;
+    justify-content: end;
+    margin-top: 4px;
+    gap: 4px;
+}
+
+.heading-navbar .user-info .user-details .user-role .badge{
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.heading-navbar .user-info .user-avatar{
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--navbar-border);
+    overflow: hidden;
+}
