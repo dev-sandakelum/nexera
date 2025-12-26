@@ -24,6 +24,13 @@ export default function NavBar({
     }
   }, []);
 
+  useEffect(() => {
+    if (params.size == 0) {
+      setActiveIcon("Home");
+      handleRoute("Home");
+    }
+  }, []);
+
   function handleRoute(term: string) {
     const param = new URLSearchParams(params);
     const activeTab = term ? term.split("/r/") : [];
@@ -33,7 +40,7 @@ export default function NavBar({
       param.delete("r");
     }
     replace(`${pathname}?${param.toString()}`, { scroll: false });
-    
+
     setActiveIcon(activeTab[0] || "Home");
   }
   const currentRoute = params.get("r");

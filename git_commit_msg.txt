@@ -1,2 +1,6 @@
+feat: Implement notes feature with enhanced styling and functionality
 
-- test git push and commit helpers
+- Added new styles for notes and card components.
+- Introduced a scroll bar customization for better user experience.
+- Integrated a dataset for displaying notes with categories and details.
+- Updated navigation to set default active icon based on search parameters.

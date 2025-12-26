@@ -1,0 +1,83 @@
+
+.NotesPage .topic .objects {
+  width: 400px;
+  height: 100px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0 8px;
+  color: var(--theme-colorB);
+  background-color: var(--components-background);
+  border-bottom: 3px solid var(--card1-file-type-bg);
+  z-index: 2;
+}
+
+.NotesPage .topic .objects .type {
+  min-width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--card1-file-type-fg);
+}
+.NotesPage .topic .objects .type .icon {
+  width: 24px;
+  height: 24px;
+}
+.NotesPage .topic .objects .info {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.NotesPage .topic .objects .info .name {
+  font-size: 14px;
+  font-weight: 600;
+  width: 100%;
+}
+.NotesPage .topic .objects .info .description {
+  font-size: 12px;
+  font-weight: 400;
+  width: 90%;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-height: 1.4;
+  max-height: calc(1.4em * 3);
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.NotesPage .topic .objects .user {
+  width: 0;
+  color: var(--theme-colorE75);
+  transform:translateX(380px);
+  border: 1px solid var(--card1-file-type-bg);
+}
+.NotesPage .topic .objects .user .date {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-left: 32px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+  transform: translateX(-200px) translateY(40px);
+  /* border: 1px solid red; */
+}
+
+.NotesPage .topic .objects .user .username {
+  width: 200px;
+  text-align: end;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+  transform: translateX(-200px) translateY(-40px);
+}
