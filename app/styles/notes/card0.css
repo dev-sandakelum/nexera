@@ -1,0 +1,73 @@
+
+.container .objects .object {
+  width: 320px;
+  height: 160px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .objects .object .fg {
+  width: 320px;
+  min-width: 320px;
+  height: 160px;
+  border-radius: 16px;
+  border: 1px solid var(--navbar-border);
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  z-index: 8;
+  background: linear-gradient(
+    130.14deg,
+    #fbfbfb 44.05%,
+    rgba(255, 238, 238, 0.615) 68.99%,
+    rgba(149, 149, 149, 0) 92.69%
+  );
+}
+
+.container .objects .object .info {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  padding-left: 16px;
+  color: var(--theme-colorB);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: start;
+}
+.container .objects .object .info .title {
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.container .objects .object .info .description {
+  font-weight: 400;
+  font-size: 12px;
+}
+.container .objects .object .info button {
+  box-sizing: border-box;
+  width: 100px;
+  height: 32px;
+  background: none;
+  cursor: pointer;
+
+  border: 1px solid var(--theme-colorA);
+  color: var(--theme-colorA);
+  font-weight: 600;
+  border-radius: 32px;
+}
+.container .objects .object .btn {
+  min-width: 30px;
+  margin-top: 16px;
+  margin-right: 16px;
+  border-radius: 8px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff80;
+  border: 1px solid var(--navbar-border);
+}

@@ -1,4 +1,1 @@
-Add favorite and suggestion datasets for note items
-
-- Created `fav.ts` with a dataset of 10 favorite items including titles and image URLs.
-- Created `suggest.ts` with a dataset of 30 suggestion items, expanding on the favorites with additional titles and image URLs.
+feat: Revamp notes feature with new card layout and improved data structure

@@ -6,6 +6,7 @@ import "./styles/app/heading-navbar.css";
 import "./styles/app/scroll-bar.css";
 
 import "./styles/notes/main.css";
+import "./styles/notes/card0.css";
 
 import "./styles/notes-sub/main.css";
 import "./styles/notes-sub/card1.css";
@@ -23,7 +24,7 @@ export default function Home() {
   const params = useSearchParams();
   const route = params.get("r");
   const sub = params.get("u");
-  const routeList = route ? route.split("/r/") : [];
+  const routeList = Array.from(params.values());
 
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]

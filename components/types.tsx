@@ -11,5 +11,5 @@ export type Note_dataSet = {
 export type Note_Item = {
   id: string; 
   title: string;
-  imgUrl: string;
+  description: string;
 }[];
