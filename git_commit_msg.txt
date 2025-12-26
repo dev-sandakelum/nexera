@@ -1,1 +1,1 @@
-feat: Revamp notes feature with new card layout and improved data structure
+feat: Refactor Home component and implement HomeContent for improved structure and functionality
