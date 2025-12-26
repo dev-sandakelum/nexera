@@ -1,4 +1,6 @@
-export const Testdataset = [
+import { Note_dataSet } from "@/components/types";
+
+export const Testdataset:Note_dataSet[] = [
   {
     catogory: "Data Science Fundamentals",
     data: [
