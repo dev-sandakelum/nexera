@@ -13,6 +13,8 @@ import "./styles/notes-sub/card1.css";
 
 import "./styles/projects/main.css";
 
+import "./styles/admin/main.css";
+
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -60,7 +62,7 @@ export default function HomeContent() {
           {activeIcon === "Notes" && !sub && <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />}
           {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
           {activeIcon === "Projects" && <Projects />}
-          {activeIcon === "Admin" && <Admin/>}
+          {activeIcon === "Admin" && <Admin subRoute={sub ? sub : "null"}/>}
         </div>
       </div>
     </div>
