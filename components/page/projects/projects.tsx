@@ -1,0 +1,135 @@
+"use client"; // Required for Framer Motion
+
+import { Projects_data } from "@/public/json/project";
+import { motion } from "framer-motion"; // Import motion
+import Image from "next/image";
+import { BsGithub, BsLinkedin } from "react-icons/bs";
+import { MdVerified } from "react-icons/md";
+
+// 1. Define Animation Variants
+// This controls the container (the list)
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Time between each card appearing
+    },
+  },
+};
+
+// This controls individual cards
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 50, // Start 50px below final position
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 12,
+    },
+  },
+};
+
+export default function Projects() {
+  return (
+    <div className="projectsPage">
+      <div className="projects-header">
+        <h1 className="projects-header-title">Projects</h1>
+      </div>
+
+      {/* 2. Turn the wrapper into a motion.div */}
+      <motion.div
+        className="project-cards"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }} // Animates only once when 10% visible
+      >
+        {Projects_data.map((project) => (
+          /* 3. Turn the card item into a motion.div */
+          <motion.div
+            className="project"
+            key={project.id}
+            variants={cardVariants}
+            whileHover={{
+              y: -5,
+              transition: { type: "spring", stiffness: 300, damping: 20 },
+            }} 
+          >
+            <div className="project-card overlay0"></div>
+            <div className="project-card overlay1"></div>
+            <div className="project-card overlay2">
+              <div className="content">
+                <div className="info">
+                  <h2 className="title">{project.title}</h2>
+                  <p className="access">{project.access}</p>
+                  <p className="description">{project.description}</p>
+                  <button className="btn">
+                    <span>
+                      <project.action.icon />
+                    </span>
+                    <p>{project.action.label}</p>
+                  </button>
+                </div>
+                <div className="line">
+                  <p>Contributions</p>
+                </div>
+                <div className="footer">
+                  <div className="social-media">
+                    {project.socials.map((social) => (
+                      <div key={social.id + "key"}>
+                        {social.type == "verified" && (
+                          <div className="icon" key={social.id}>
+                            <MdVerified />
+                          </div>
+                        )}
+                        {social.type == "github" && (
+                          <a
+                            className="icon"
+                            href={social.url ? social.url : "#"}
+                            key={social.id}
+                            target="_blank"
+                          >
+                            <BsGithub />
+                          </a>
+                        )}
+                        {social.type == "linkedin" && (
+                          <a
+                            className="icon"
+                            href={social.url ? social.url : "#"}
+                            key={social.id}
+                            target="_blank"
+                          >
+                            <BsLinkedin />
+                          </a>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="Contributions">
+                    {project.contributionsLabel.map((contribution, idx) => (
+                      <Image
+                        key={contribution.id}
+                        src={contribution.image}
+                        alt={contribution.id}
+                        className="img"
+                        style={{ "--idx": idx } as React.CSSProperties}
+                        width={32}
+                        height={32}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}

@@ -60,6 +60,8 @@
   --file-03-bg: #f59e0b;
   --file-03-fg: #fffbeb;
 
+  --poor-richard-font: 'Poor Richard', sans-serif;
+
   font-family: var(--font-poppins), sans-serif;
   background-color: var(--background);
 }

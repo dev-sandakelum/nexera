@@ -7,9 +7,29 @@ export type Note_dataSet = {
     name: string;
     description: string;
   }[];
-}
+};
 export type Note_Item = {
-  id: string; 
+  id: string;
   title: string;
   description: string;
 }[];
+
+export type ProjectData = {
+  id: string;
+  title: string;
+  access: "admin only" | "public" | "private";
+  description: string;
+  action: {
+    label: string;
+    icon: React.ComponentType;
+  };
+  contributionsLabel: {
+    id: string;
+    image: string;
+  }[];
+  socials: {
+    id: number;
+    type: "verified" | "github" | "linkedin";
+    url?: string;
+  }[];
+};

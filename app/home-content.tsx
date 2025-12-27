@@ -11,6 +11,8 @@ import "./styles/notes/card0.css";
 import "./styles/notes-sub/main.css";
 import "./styles/notes-sub/card1.css";
 
+import "./styles/projects/main.css";
+
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,6 +21,7 @@ import { Testdataset } from "@/public/json/dataset";
 import Notes_Sub from "@/components/page/notes/notes-sub";
 import { Fav_dataset } from "@/public/json/fav";
 import { Suggestion_dataset } from "@/public/json/suggest";
+import Projects from "@/components/page/projects/projects";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -50,6 +53,7 @@ export default function HomeContent() {
         <div className="UsableArea">
           {activeIcon === "Notes" && !sub && <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />}
           {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
+          {activeIcon === "Projects" && <Projects />}
         </div>
       </div>
     </div>

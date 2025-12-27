@@ -1,0 +1,200 @@
+.projectsPage {
+  width: 100%;
+  height: 100%;
+  /* border: 2px solid red;  */
+  padding-top: 96px; /* 96 × 1.5 = 144 */
+  padding-left: 96px; /* 64 × 1.5 = 96 */
+  padding-right: 96px;
+  color: var(--theme-colorB);
+}
+
+.projectsPage .projects-header {
+  width: 100%;
+  margin-bottom: 20px;
+  /* border: 2px solid blue;  */
+}
+
+.projectsPage .projects-header-title {
+  font-size: 40px; /* 24 × 1.5 = 36 → 40 */
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.projectsPage .project-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:32px;
+    row-gap: 64px;
+}
+
+.projectsPage .project {
+  width: 496px;
+  height: 288px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.projectsPage .project .project-card {
+  width: 496px; /* 328 × 1.5 = 492 → 496 */
+  height: 288px; /* 192 × 1.5 = 288 */
+  min-height: 288px;
+  border-radius: 24px; /* 16 × 1.5 = 24 */
+  background-color: var(--components-background);
+  /* border: 1px solid red; */
+  box-shadow: 0px 2px 10px 10px rgba(214, 218, 255, 0.138);
+}
+
+.projectsPage .project .project-card.overlay0 {
+  width: 464px;
+  transform: translateY(20px);
+  background-color: #ffffff20;
+}
+
+.projectsPage .project .project-card.overlay1 {
+  width: 480px;
+  transform: translateY(calc(-288px + 10px));
+  background-color: #ffffff50;
+}
+
+.projectsPage .project .project-card.overlay2 {
+  width: 496px;
+  transform: translateY(calc(-288px * 2));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projectsPage .project .project-card .info {
+  width: 496px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 0;
+  /* border: 1px solid red; */
+}
+.projectsPage .project .project-card .info .title {
+  width: 100%;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 400;
+  font-family: var(--poor-richard-font);
+}
+.projectsPage .project .project-card .info .access {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+}
+.projectsPage .project .project-card .info .description {
+  width: 80%;
+  height: 38px;
+  overflow: hidden;
+  min-width: 80%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--theme-colorE75);
+
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+}
+.projectsPage .project .project-card .btn {
+  width: 40%;
+  height: 40px;
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  background: linear-gradient(90deg, #6776fc 0%, #0316c4 100%);
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.projectsPage .project .project-card .btn span {
+  /* font-size: 20px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.projectsPage .project .project-card .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.projectsPage .project .project-card .line {
+  width: 90%;
+  border-top: 1px solid var(--navbar-border);
+  margin: 0px 0 4px 0;
+  height: 1px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.projectsPage .project .project-card .line p{
+  width: fit-content;
+  height: fit-content;
+  padding:  4px;
+  margin-right: 10px;
+  background: var(--components-background);
+  font-size: 12px;
+  color: var(--theme-colorE75);
+}
+.projectsPage .project .project-card .footer {
+  width: 90%;
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projectsPage .project .project-card .footer .social-media{
+    width: auto;
+    height: 48px;
+  
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.projectsPage .project .project-card .footer .social-media .icon {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.projectsPage .project .project-card .footer .Contributions {
+    width: auto;
+    height: 48px;
+  
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+  }
+  .projectsPage .project .project-card .footer .Contributions .img {
+    border-radius: 50%;
+    border: 3px solid var(--components-background);
+    width: 37px;
+    height: 37px;
+      transform: translateX(calc(var(--idx)*20px));
+    }

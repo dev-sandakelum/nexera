@@ -1,1 +1,7 @@
-feat: Refactor Home component and implement HomeContent for improved structure and functionality
+feat: Update configuration and enhance HomeContent with new Projects component
+
+- Enabled component caching in next.config.ts for improved performance.
+- Added Projects component to HomeContent for better project management visibility.
+- Updated layout metadata to reflect new application branding.
+- Introduced new CSS styles for improved aesthetics and typography.
+- Expanded types to include ProjectData for better data handling.
