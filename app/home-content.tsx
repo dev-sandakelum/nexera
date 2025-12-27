@@ -22,6 +22,7 @@ import Notes_Sub from "@/components/page/notes/notes-sub";
 import { Fav_dataset } from "@/public/json/fav";
 import { Suggestion_dataset } from "@/public/json/suggest";
 import Projects from "@/components/page/projects/projects";
+import Admin from "@/components/page/admin/admin";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -41,6 +42,11 @@ export default function HomeContent() {
     }
   }, [route]);
 
+  useEffect(() => {
+    const area = document.querySelector(".UsableArea");
+    area?.scrollTo(0, 0);
+  }, [activeIcon, sub]);
+
   return (
     <div
       className="page root"
@@ -50,10 +56,11 @@ export default function HomeContent() {
       <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
       <HeadingNavBar data={routeList} />
       <div className="ContentArea">
-        <div className="UsableArea">
+        <div className="UsableArea" key={activeIcon + sub}>
           {activeIcon === "Notes" && !sub && <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />}
           {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
           {activeIcon === "Projects" && <Projects />}
+          {activeIcon === "Admin" && <Admin/>}
         </div>
       </div>
     </div>
