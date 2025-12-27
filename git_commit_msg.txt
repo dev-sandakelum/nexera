@@ -1,5 +1,4 @@
-feat: Enhance notes and projects components with animations and styling improvements
+feat: Add Admin component to HomeContent and implement scroll reset on icon change
 
-- Added motion effects to the headers in the Notes and Projects components for a smoother user experience.
-- Updated the Projects component header to use a motion.h1 for improved visual appeal.
-- Refactored cardVariants in Projects for better type handling.
+- Integrated Admin component into HomeContent for enhanced functionality.
+- Added useEffect to reset scroll position to the top of the UsableArea when activeIcon or sub changes.
