@@ -1,4 +1,1 @@
-feat: Add Admin component to HomeContent and implement scroll reset on icon change
-
-- Integrated Admin component into HomeContent for enhanced functionality.
-- Added useEffect to reset scroll position to the top of the UsableArea when activeIcon or sub changes.
+feat: Implement Admin component with dynamic subRoute handling and add styling for MainAdminPage
