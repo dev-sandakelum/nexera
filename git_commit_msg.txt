@@ -1,7 +1,5 @@
-feat: Update configuration and enhance HomeContent with new Projects component
+feat: Enhance notes and projects components with animations and styling improvements
 
-- Enabled component caching in next.config.ts for improved performance.
-- Added Projects component to HomeContent for better project management visibility.
-- Updated layout metadata to reflect new application branding.
-- Introduced new CSS styles for improved aesthetics and typography.
-- Expanded types to include ProjectData for better data handling.
+- Added motion effects to the headers in the Notes and Projects components for a smoother user experience.
+- Updated the Projects component header to use a motion.h1 for improved visual appeal.
+- Refactored cardVariants in Projects for better type handling.

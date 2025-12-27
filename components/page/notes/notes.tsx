@@ -32,17 +32,30 @@ export default function Notes({
   }
   const currentRoute = params.get("u");
 
-  
-
   return (
     <div className="container">
       <div className="favorites">
-        <div className="header"><GrFavorite /><span> Favorites</span></div>
+        <motion.div
+          className="header"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        >
+          <GrFavorite />
+          <span> Favorites</span>
+        </motion.div>
         <Card0 dataset={datasetA} type="favorites" />
-        
       </div>{" "}
       <div className="suggestions">
-        <div className="header"><GiWorld /><span> Suggestions</span></div>
+        <motion.div
+          className="header"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        >
+          <GiWorld />
+          <span> Suggestions</span>
+        </motion.div>
         <Card0 dataset={datasetB} type="Suggestions" />
       </div>
     </div>

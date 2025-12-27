@@ -31,7 +31,7 @@ const cardVariants = {
       type: "spring" as const,
       stiffness: 100,
       damping: 12,
-    },
+    } as const,
   },
 };
 
@@ -39,7 +39,14 @@ export default function Projects() {
   return (
     <div className="projectsPage">
       <div className="projects-header">
-        <h1 className="projects-header-title">Projects</h1>
+        <motion.h1
+          className="projects-header-title"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.1, duration: 0.4 }}
+        >
+          Projects
+        </motion.h1>
       </div>
 
       {/* 2. Turn the wrapper into a motion.div */}
@@ -58,8 +65,8 @@ export default function Projects() {
             variants={cardVariants}
             whileHover={{
               y: -5,
-              transition: { type: "spring", stiffness: 300, damping: 20 },
-            }} 
+              transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+            }}
           >
             <div className="project-card overlay0"></div>
             <div className="project-card overlay1"></div>
