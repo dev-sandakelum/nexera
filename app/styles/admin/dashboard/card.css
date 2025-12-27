@@ -1,0 +1,114 @@
+.item .CountStatus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color);
+  padding: 16px;
+}
+.item .CountStatus .top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 16px;
+  justify-content: space-between;
+}
+.item .CountStatus .top .icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+.item .CountStatus .top .badge {
+  width: auto;
+  height: 24px;
+  border-radius: 12px;
+  font-size: 12px;
+  padding: 2px 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+}
+
+.item .CountStatus .middle {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 16px;
+}
+.item .CountStatus .middle .number {
+  font-family: adminFontX1;
+  font-weight: 400;
+  font-size: 48px;
+  align-items: center;
+  margin-bottom: -4px;
+}
+
+.item .CountStatus .middle .description {
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.item .CountStatus .middle .description::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--bg);
+  filter: drop-shadow(0 0 5px var(--bg));
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.item .CountStatus .bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 16px;
+  margin-left: 8px;
+}
+.item .CountStatus .bottom .btn {
+  width: 240px;
+  height: 36px;
+  background: var(--bg);
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  box-shadow: none;
+  color: inherit;
+  padding: 8px;
+  margin: 0;
+  cursor: pointer;
+}
+.item .CountStatus .bottom .icon {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid var(--bg); */
+}
+
+.item .CountStatus .bg {
+  width: 100%;
+  height: 1px;
+  font-size: 90px;
+  color: var(--bg);
+  opacity: 60%;
+  transform: translate(100px, -80px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

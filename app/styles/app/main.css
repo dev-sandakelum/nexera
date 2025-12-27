@@ -60,6 +60,25 @@
   --file-03-bg: #f59e0b;
   --file-03-fg: #fffbeb;
 
+
+  --accent-soft: #2563EB;
+  --accent-soft-bg: #D0E4FF;
+  --accent-soft-border: #D0E4FF;
+
+  --success-soft: #16A34A;
+  --success-soft-bg: #D1FFE1;
+  --success-soft-border: #B8FFEF;
+
+  --warning-soft: #EA580C;
+  --warning-soft-bg: #FFF7ED;
+  --warning-soft-border: #FFE3C0;
+
+  --danger-soft: #ef4444;
+  --danger-soft-bg: #ef44441a;
+  --danger-soft-border: #D0E4FF;
+
+  /* Shadow (very important for this UI style) */
+  --shadow-soft: 0 10px 30px rgba(79, 124, 255, 0.08);
   --poor-richard-font: 'Poor Richard', sans-serif;
 
   font-family: var(--font-poppins), sans-serif;

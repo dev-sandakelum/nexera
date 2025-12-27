@@ -14,7 +14,10 @@ import "./styles/notes-sub/card1.css";
 import "./styles/projects/main.css";
 
 import "./styles/admin/main.css";
+import "./styles/admin/dashboard/card.css";
+import "./styles/admin/dashboard/ctrl-btn.css";
 
+import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";

@@ -1,1 +1,6 @@
-feat: Implement Admin component with dynamic subRoute handling and add styling for MainAdminPage
+feat: Update Admin component and styles for improved layout and functionality
+
+- Refactored Admin component to use a new path for MainAdminPage.
+- Removed obsolete MainAdminPage file and integrated its functionality into the updated structure.
+- Enhanced CSS styles for the admin layout, including adjustments to grid properties and new color variables for better theming.
+- Added new CSS files for dashboard styling to support the Admin component.
