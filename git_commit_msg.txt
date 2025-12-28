@@ -1,5 +1,6 @@
-feat: Implement login redirection and conditional rendering in HomeContent
+feat: Enhance authentication flow and UI in HomeContent
 
-- Added login component and state management to handle user authentication.
-- Implemented redirection to the login page if the user is not logged in and attempts to access other routes.
-- Updated rendering logic to display the login component or the main navigation based on the user's authentication status.
+- Integrated registration component and improved login handling in HomeContent.
+- Updated conditional rendering to support both login and registration views.
+- Enhanced styles for the login interface, including new email toggle functionality and improved spacing.
+- Added custom scrollbar styles for better user experience in the login context.

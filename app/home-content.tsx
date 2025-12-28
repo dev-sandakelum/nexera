@@ -32,6 +32,8 @@ import "./styles/MOBILE/notes-sub/card1.css";
 
 import "./styles/MOBILE/projects/main.css";
 
+import "./styles/MOBILE/auth/main.css";
+
 import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
 import {
@@ -49,8 +51,8 @@ import { Suggestion_dataset } from "@/public/json/suggest";
 import Projects from "@/components/page/projects/projects";
 import Admin from "@/components/page/admin/admin";
 import MobileNavBar from "@/components/MOBILE/nav/nav";
-import Link from "next/link";
 import Login from "@/components/auth/login";
+import Register from "@/components/auth/register";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -58,11 +60,14 @@ export default function HomeContent() {
   const sub = params.get("u");
   const routeList = Array.from(params.values());
 
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const [isLogged, setIsLogged] = useState<boolean>();
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const { replace } = useRouter();
+  console.log(isLogged);
+  
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -87,12 +92,19 @@ export default function HomeContent() {
   }, [activeIcon, sub]);
 
   useEffect(() => {
-    if (!isLogged && activeIcon != "login") {
+    if(!isLogged){
+      setIsLogged(false);
+    }
+    if (!isLogged && !(activeIcon == "login" || activeIcon == "register")) {
       const param = new URLSearchParams();
       param.set("r", "login");
 
-      redirect("/?" + param);
+      replace("/?" + param);
     }
+    if (isLogged && (activeIcon == "login" || activeIcon == "register")) {
+      replace("/?r=Home");
+    }
+
   }, [isLogged]);
   return (
     <div
@@ -101,7 +113,10 @@ export default function HomeContent() {
       onLoad={() => setActiveIcon(routeList[0])}
     >
       {isLogged == false ? (
-        <Login />
+        <>
+          {activeIcon === "login" && <Login setIsLogged={setIsLogged} />}
+          {activeIcon === "register" && <Register />}
+        </>
       ) : (
         <>
           {isMobile ? (
