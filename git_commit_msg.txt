@@ -1,4 +1,5 @@
-style: Add new font and update font-family in project styles
+style: Update project styles for improved layout and spacing
 
-- Introduced a new font, my_PoorRichard, for enhanced typography in the project styles.
-- Updated the font-family property in main.css to use the new font for improved visual consistency.
+- Adjusted gap in mobile project styles for better visual balance.
+- Modified project card dimensions to enhance layout consistency.
+- Reduced height of the main project page for a more compact design.
