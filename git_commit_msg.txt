@@ -1,6 +1,6 @@
-feat: Update Admin component and styles for improved layout and functionality
+feat: Add mobile navigation support and enhance HomeContent responsiveness
 
-- Refactored Admin component to use a new path for MainAdminPage.
-- Removed obsolete MainAdminPage file and integrated its functionality into the updated structure.
-- Enhanced CSS styles for the admin layout, including adjustments to grid properties and new color variables for better theming.
-- Added new CSS files for dashboard styling to support the Admin component.
+- Introduced a MobileNavBar component for improved navigation on mobile devices.
+- Implemented screen size detection to toggle between desktop and mobile navigation.
+- Updated HomeContent to conditionally render the appropriate navigation based on screen size.
+- Cleaned up imports and adjusted layout for better mobile compatibility.

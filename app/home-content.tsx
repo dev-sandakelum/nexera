@@ -17,6 +17,10 @@ import "./styles/admin/main.css";
 import "./styles/admin/dashboard/card.css";
 import "./styles/admin/dashboard/ctrl-btn.css";
 
+// Mobile
+
+import "./styles/MOBILE/nav.css";
+
 import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";
@@ -28,6 +32,7 @@ import { Fav_dataset } from "@/public/json/fav";
 import { Suggestion_dataset } from "@/public/json/suggest";
 import Projects from "@/components/page/projects/projects";
 import Admin from "@/components/page/admin/admin";
+import MobileNavBar from "@/components/MOBILE/nav/nav";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -38,6 +43,17 @@ export default function HomeContent() {
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
+
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   useEffect(() => {
     if (routeList.length === 0) {
@@ -58,14 +74,23 @@ export default function HomeContent() {
       suppressHydrationWarning
       onLoad={() => setActiveIcon(routeList[0])}
     >
-      <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-      <HeadingNavBar data={routeList} />
+      {isMobile ? (
+        <MobileNavBar data={routeList} activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+      ) : (
+        <>
+          <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+          <HeadingNavBar data={routeList} />
+        </>
+      )}
+
       <div className="ContentArea">
         <div className="UsableArea" key={activeIcon + sub}>
-          {activeIcon === "Notes" && !sub && <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />}
+          {activeIcon === "Notes" && !sub && (
+            <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
+          )}
           {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
           {activeIcon === "Projects" && <Projects />}
-          {activeIcon === "Admin" && <Admin subRoute={sub ? sub : "null"}/>}
+          {activeIcon === "Admin" && <Admin subRoute={sub ? sub : "null"} />}
         </div>
       </div>
     </div>

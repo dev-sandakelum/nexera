@@ -1,5 +1,4 @@
-import { BiPowerOff, BiShieldQuarter } from "react-icons/bi";
-import { FaPowerOff } from "react-icons/fa6";
+import { BiShieldQuarter } from "react-icons/bi";
 import { FiAirplay } from "react-icons/fi";
 import { LuPowerOff } from "react-icons/lu";
 

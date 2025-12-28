@@ -14,6 +14,7 @@ export default function NavBar({
   const pathname = usePathname();
   const params = useSearchParams();
   const [centerHeight, setCenterHeight] = useState<number>(0);
+  
   const centerRef = useRef<HTMLDivElement>(null);
   const { replace } = useRouter();
 
@@ -31,6 +32,7 @@ export default function NavBar({
     }
   }, []);
 
+  
   function handleRoute(term: string) {
     const param = new URLSearchParams();
     const activeTab = term ? term.split("/r/") : [];
