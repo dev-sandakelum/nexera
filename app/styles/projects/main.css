@@ -83,7 +83,7 @@
   text-align: center;
   font-size: 36px;
   font-weight: 400;
-  font-family: var(--poor-richard-font);
+  font-family: my_PoorRichard;
 }
 .projectsPage .project .project-card .info .access {
   width: 100%;

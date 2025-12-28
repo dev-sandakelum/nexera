@@ -1,5 +1,4 @@
-style: Add project styles and clean up CSS formatting
+style: Add new font and update font-family in project styles
 
-- Introduced a new CSS file for project styles to enhance layout and design consistency.
-- Cleaned up formatting in existing CSS files for better readability and maintainability.
-- Updated imports in home-content.tsx to include the new project styles.
+- Introduced a new font, my_PoorRichard, for enhanced typography in the project styles.
+- Updated the font-family property in main.css to use the new font for improved visual consistency.
