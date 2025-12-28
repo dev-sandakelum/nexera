@@ -50,7 +50,6 @@
   border: var(--accent-soft-border);
   border-radius: 64px;
   margin-top: 10px;
-  /* border: 1px solid red; */
 }
 
 .mobile-nav .nav-sideIcon {
@@ -67,7 +66,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   background: radial-gradient(
     circle at top left,
     var(--components-background) 0%,
