@@ -15,7 +15,7 @@ const smoothTransition = {
 
 const sidebarItemVariants: Variants = {
   open: (i: number) => ({
-    y: i * 68,
+    y: (i+1) * 68,
     transition: {
       ...smoothTransition,
       delay: i * 0.1, // Slower stagger (100ms between items)

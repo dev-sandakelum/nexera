@@ -1,3 +1,3 @@
-style: Add z-index to mobile navigation for improved layering
+fix: Adjust sidebar item positioning for smoother animations
 
-- Added z-index property to .mobile-nav for better stacking context and visibility in the layout.
+- Updated the vertical positioning of sidebar items to ensure proper spacing during animations, enhancing the overall user experience.
