@@ -55,7 +55,7 @@ export default function Projects() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }} // Animates only once when 10% visible
+        viewport={{ once: true, amount: 0.01 }} // Animates only once when 10% visible
       >
         {Projects_data.map((project) => (
           /* 3. Turn the card item into a motion.div */

@@ -1,5 +1,5 @@
-style: Update project styles for improved layout and spacing
+style: Refine project card styles and adjust animation viewport
 
-- Adjusted gap in mobile project styles for better visual balance.
-- Modified project card dimensions to enhance layout consistency.
-- Reduced height of the main project page for a more compact design.
+- Added border to project cards for better visual definition.
+- Implemented translation effects for project cards with different overlays.
+- Adjusted viewport settings for animations to trigger at 1% visibility for improved user experience.
