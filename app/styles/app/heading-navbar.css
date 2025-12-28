@@ -118,7 +118,8 @@
   align-items: center;
   justify-content: end;
   gap: 8px;
-  transition: transform .3s, width 0.3s, height 1s;
+  transition: transform .3s, width 0.5s, height 1s , top 0.5s ,right 0.5s;
+  transition-delay: right 0.5s;
 }
 
 .navbar-user-info.open {
@@ -130,12 +131,15 @@
   height: 64px;
   right: 16px;
   top: 8px;
+  border: none;
 }
 
 .navbar-user-info.openMobile {
   border-radius: 16px;
   height: 230px;
   right: 32px;
+  top: 64px;
+  border: none;
 }
 /* ───── User Details ───── */
 .navbar-user-info .user-details {
@@ -146,7 +150,7 @@
   align-items: center;
   flex-direction: column;
   gap: 2px;
-  transform: translateX(-64px);
+  transform: translateX(-56px);
   /* border: 1px solid red; */
   transition: all 0.5s;
 }

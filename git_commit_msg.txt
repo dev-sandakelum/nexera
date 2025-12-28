@@ -1,5 +1,5 @@
-style: Enhance mobile navigation and heading navbar for improved layout and user experience
+style: Update heading navbar transitions and positioning for improved user experience
 
-- Added a flexbox layout for the logo container in mobile navigation for better alignment.
-- Updated user info component styles in the heading navbar, including new positioning and transition effects.
-- Refined CSS organization for improved readability and maintainability.
+- Enhanced transition effects in the heading navbar for smoother animations.
+- Adjusted positioning of user info components for better alignment and visibility.
+- Refined CSS properties to improve overall layout and maintainability.
