@@ -2,7 +2,64 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+
+// --- 1. Smooth & Calm Configuration ---
+
+const smoothTransition = {
+  type: "spring" as const,
+  stiffness: 120, // Lower = Slower/Softer tension
+  damping: 20, // Controls the "bounciness" (20 is smooth, not too bouncy)
+  mass: 1, // Weight of the object
+};
+
+const sidebarItemVariants: Variants = {
+  open: (i: number) => ({
+    y: i * 68,
+    transition: {
+      ...smoothTransition,
+      delay: i * 0.1, // Slower stagger (100ms between items)
+    },
+  }),
+  closed: (i: number) => ({
+    y: 0,
+    transition: {
+      ...smoothTransition,
+      // When closing, we speed it up slightly so it doesn't feel sluggish
+      delay: (6 - i) * 0.05,
+    },
+  }),
+};
+
+const iconVariants: Variants = {
+  initial: { opacity: 0, scale: 0.6, rotate: -90 },
+  animate: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { duration: 0.5, ease: "easeInOut" }, // Slow, smooth rotation
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.6,
+    rotate: 90,
+    transition: { duration: 0.4, ease: "easeInOut" },
+  },
+};
+
+const breadcrumbVariants: Variants = {
+  initial: { opacity: 0, x: -15 },
+  animate: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: "easeOut" }, // Slow drift in
+  },
+  exit: {
+    opacity: 0,
+    x: 15,
+    transition: { duration: 0.4, ease: "easeIn" },
+  },
+};
 
 export default function MobileNavBar({
   data,
@@ -20,7 +77,7 @@ export default function MobileNavBar({
   const [displayData, setDisplayData] = useState(data);
 
   useEffect(() => {
-    if (params.size == 0) {
+    if (params.size === 0) {
       setActiveIcon("Home");
       handleRoute("Home");
     }
@@ -69,56 +126,78 @@ export default function MobileNavBar({
     <>
       <div className="mobile-nav">
         <ul className={`nav-sideIcons ${openPanel && "open"}`}>
-          <AnimatePresence>
-            {navigationItems.map(({ value, icon, alt }, idx) => (
+          {navigationItems.map(({ value, icon, alt }, idx) => {
+            const isActive = activeIcon === value;
+            const isCurrentView = displayData[0] === value;
+
+            return (
               <motion.li
                 key={value}
-                className={`nav-sideIcon ${activeIcon === value && "active"}`}
+                className={`nav-sideIcon ${isActive && "active"}`}
+                custom={idx}
+                variants={sidebarItemVariants}
+                initial="closed"
+                animate={openPanel ? "open" : "closed"}
                 style={{
-                  zIndex: displayData[0] === value ? 32 : 30,
-                }}
-                initial={false}
-                animate={{
-                  y: openPanel ? idx * 68 : 0,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                  delay: openPanel ? idx * 0.1 : (navigationItems.length - idx) * 0.05,
+                  zIndex: isCurrentView ? 32 : 30 - idx,
+                  position: "absolute",
+                  top: 0,
                 }}
               >
                 <motion.button
                   type="button"
                   className="navigation-btn"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => {
-                    if (displayData[0] === value) {
-                      setOpenPanel(true);
+                    if (isCurrentView) {
+                      setOpenPanel(!openPanel);
                       if (openPanel) {
                         setActiveIcon(value);
                         handleRoute(value);
-                        setOpenPanel(false);
                       }
                     } else {
-                      if (openPanel) {
-                        setOpenPanel(false);
-                      }
+                      setOpenPanel(false);
                       setActiveIcon(value);
                       handleRoute(value);
                     }
                   }}
                 >
-                  <AnimatePresence mode="wait">
-                    {activeIcon !== value && (
+                  <AnimatePresence mode="wait" initial={false}>
+                    {isActive ? (
+                      <motion.div
+                        key="active"
+                        variants={iconVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        style={{
+                          position: "absolute",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Image
+                          src={`/icons/nav/active/${icon}.png`}
+                          alt={alt}
+                          width={24}
+                          height={24}
+                        />
+                      </motion.div>
+                    ) : (
                       <motion.div
                         key="inactive"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.2 }}
-                        style={{ position: "absolute" }}
+                        variants={iconVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        style={{
+                          position: "absolute",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
                       >
                         <Image
                           src={`/icons/nav/${icon}.png`}
@@ -128,28 +207,11 @@ export default function MobileNavBar({
                         />
                       </motion.div>
                     )}
-                    {activeIcon === value && (
-                      <motion.div
-                        key="active"
-                        initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
-                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                        exit={{ opacity: 0, scale: 0.8, rotate: 180 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ position: "absolute" }}
-                      >
-                        <Image
-                          src={`/icons/nav/active/${icon}.png`}
-                          alt={alt}
-                          width={24}
-                          height={24}
-                        />
-                      </motion.div>
-                    )}
                   </AnimatePresence>
                 </motion.button>
               </motion.li>
-            ))}
-          </AnimatePresence>
+            );
+          })}
         </ul>
 
         <div className="logo">
@@ -161,6 +223,7 @@ export default function MobileNavBar({
             className="logoImage"
           />
         </div>
+
         <div className="nav-sideIcons">
           <div className="nav-sideIcon">
             <div className="user">
@@ -173,38 +236,38 @@ export default function MobileNavBar({
       <div className="mobile-route">
         <motion.div
           className="path"
-          initial={{ y: 20, opacity: 0 }}
+          layout
+          initial={{ y: 15, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.8, ease: "easeOut" }} // Very slow entry for path container
         >
-          <p>
+          <p
+            style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
+          >
             <AnimatePresence mode="popLayout">
               {previousRoutes.map((item, index) => (
                 <motion.span
                   key={`${item}-${index}`}
                   className="route-item"
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: index * 0.08,
-                  }}
+                  variants={breadcrumbVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  layout
                 >
                   {item}
                   <span className="separator"> &gt; </span>
                 </motion.span>
               ))}
+
               <motion.span
                 key={`active-${activeRoute}`}
                 className="active route-item"
-                initial={{ opacity: 0, x: -10, scale: 0.9 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 10, scale: 0.9 }}
-                transition={{
-                  duration: 0.3,
-                  delay: previousRoutes.length * 0.08,
-                }}
+                variants={breadcrumbVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                layout
               >
                 {activeRoute}
               </motion.span>

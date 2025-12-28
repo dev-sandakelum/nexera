@@ -1,6 +1,6 @@
-refactor: Simplify MobileNavBar component and enhance animations
+feat: Enhance MobileNavBar with improved animations and CSS adjustments
 
-- Removed unused state variables and exit/enter animations for cleaner logic.
-- Consolidated navigation items into a single array for better maintainability.
-- Integrated Framer Motion for improved animations on navigation items and route transitions.
-- Updated CSS styles to remove redundant properties and enhance visual consistency.
+- Added smooth transition effects for sidebar items and icons using Framer Motion.
+- Updated navigation item rendering logic for better performance and clarity.
+- Adjusted CSS styles for visual consistency and removed redundant properties.
+- Ensured proper handling of active and inactive states for navigation icons.
