@@ -2,3 +2,7 @@
     font-family: adminFontX1;
     src: url(/fonts/protest-riot/protest-riot-latin-400-normal.ttf);
 }
+@font-face {
+    font-family: my_PoorRichard;
+    src: url(../../public/fonts/PoorRichardOpti.otf);
+}
