@@ -1,5 +1,1 @@
-style: Refine project card styles and adjust animation viewport
-
-- Added border to project cards for better visual definition.
-- Implemented translation effects for project cards with different overlays.
-- Adjusted viewport settings for animations to trigger at 1% visibility for improved user experience.
+style: Comment out border in project card styles for visual refinement
