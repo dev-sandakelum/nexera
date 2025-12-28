@@ -1,6 +1,1 @@
-feat: Enhance MobileNavBar with improved animations and CSS adjustments
-
-- Added smooth transition effects for sidebar items and icons using Framer Motion.
-- Updated navigation item rendering logic for better performance and clarity.
-- Adjusted CSS styles for visual consistency and removed redundant properties.
-- Ensured proper handling of active and inactive states for navigation icons.
+style: Add overflow hidden to main CSS for improved layout management
