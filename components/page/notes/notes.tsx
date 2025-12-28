@@ -33,7 +33,7 @@ export default function Notes({
   const currentRoute = params.get("u");
 
   return (
-    <div className="container">
+    <div className="noteContainer">
       <div className="favorites">
         <motion.div
           className="header"

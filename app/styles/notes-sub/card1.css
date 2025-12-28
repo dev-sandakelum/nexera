@@ -41,7 +41,7 @@
 .NotesPage .topic .objects .info .description {
   font-size: 12px;
   font-weight: 400;
-  width: 90%;
+  width: auto;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -69,7 +69,6 @@
   white-space: nowrap;
   overflow: visible;
   transform: translateX(-200px) translateY(40px);
-  /* border: 1px solid red; */
 }
 
 .NotesPage .topic .objects .user .username {

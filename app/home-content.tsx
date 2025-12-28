@@ -19,7 +19,14 @@ import "./styles/admin/dashboard/ctrl-btn.css";
 
 // Mobile
 
+import "./styles/MOBILE/main.css";
 import "./styles/MOBILE/nav.css";
+
+import "./styles/MOBILE/notes/main.css";
+import "./styles/MOBILE/notes/card0.css";
+
+import "./styles/MOBILE/notes-sub/main.css";
+import "./styles/MOBILE/notes-sub/card1.css";
 
 import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
