@@ -1,1 +1,5 @@
-style: Comment out border in project card styles for visual refinement
+feat: Implement login redirection and conditional rendering in HomeContent
+
+- Added login component and state management to handle user authentication.
+- Implemented redirection to the login page if the user is not logged in and attempts to access other routes.
+- Updated rendering logic to display the login component or the main navigation based on the user's authentication status.

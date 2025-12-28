@@ -17,6 +17,8 @@ import "./styles/admin/main.css";
 import "./styles/admin/dashboard/card.css";
 import "./styles/admin/dashboard/ctrl-btn.css";
 
+import "./styles/auth/main.css";
+
 // Mobile
 
 import "./styles/MOBILE/main.css";
@@ -32,7 +34,12 @@ import "./styles/MOBILE/projects/main.css";
 
 import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
-import { useSearchParams } from "next/navigation";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect, useState } from "react";
 import Notes from "@/components/page/notes/notes";
 import { Testdataset } from "@/public/json/dataset";
@@ -42,6 +49,8 @@ import { Suggestion_dataset } from "@/public/json/suggest";
 import Projects from "@/components/page/projects/projects";
 import Admin from "@/components/page/admin/admin";
 import MobileNavBar from "@/components/MOBILE/nav/nav";
+import Link from "next/link";
+import Login from "@/components/auth/login";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -49,10 +58,10 @@ export default function HomeContent() {
   const sub = params.get("u");
   const routeList = Array.from(params.values());
 
+  const [isLogged, setIsLogged] = useState<boolean>(false);
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
-
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
@@ -77,31 +86,53 @@ export default function HomeContent() {
     area?.scrollTo(0, 0);
   }, [activeIcon, sub]);
 
+  useEffect(() => {
+    if (!isLogged && activeIcon != "login") {
+      const param = new URLSearchParams();
+      param.set("r", "login");
+
+      redirect("/?" + param);
+    }
+  }, [isLogged]);
   return (
     <div
       className="page root"
       suppressHydrationWarning
       onLoad={() => setActiveIcon(routeList[0])}
     >
-      {isMobile ? (
-        <MobileNavBar data={routeList} activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+      {isLogged == false ? (
+        <Login />
       ) : (
         <>
-          <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-          <HeadingNavBar data={routeList} />
+          {isMobile ? (
+            <MobileNavBar
+              data={routeList}
+              activeIcon={activeIcon}
+              setActiveIcon={setActiveIcon}
+            />
+          ) : (
+            <>
+              <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+              <HeadingNavBar data={routeList} />
+            </>
+          )}
+
+          <div className="ContentArea">
+            <div className="UsableArea" key={activeIcon + sub}>
+              {activeIcon === "Notes" && !sub && (
+                <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
+              )}
+              {activeIcon === "Notes" && sub && (
+                <Notes_Sub dataset={Testdataset} />
+              )}
+              {activeIcon === "Projects" && <Projects />}
+              {activeIcon === "Admin" && (
+                <Admin subRoute={sub ? sub : "null"} />
+              )}
+            </div>
+          </div>
         </>
       )}
-
-      <div className="ContentArea">
-        <div className="UsableArea" key={activeIcon + sub}>
-          {activeIcon === "Notes" && !sub && (
-            <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
-          )}
-          {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
-          {activeIcon === "Projects" && <Projects />}
-          {activeIcon === "Admin" && <Admin subRoute={sub ? sub : "null"} />}
-        </div>
-      </div>
     </div>
   );
 }
