@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { UserInfo } from "@/components/nav/heading-navbar";
 
 // --- 1. Smooth & Calm Configuration ---
 
@@ -225,11 +226,7 @@ export default function MobileNavBar({
         </div>
 
         <div className="nav-sideIcons">
-          <div className="nav-sideIcon">
-            <div className="user">
-              <Image src="/avatar/user.png" alt="user" width={48} height={48} />
-            </div>
-          </div>
+          <UserInfo/>
         </div>
       </div>
 

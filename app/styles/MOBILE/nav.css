@@ -28,16 +28,14 @@
 }
 
 .mobile-nav .nav-sideIcons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  height: 64px;
+  max-height: 64px;
+  margin-top: 20px;
   max-width: 64px;
-  width: 64px;
   /* border: 1px solid red; */
 }
-
+.mobile-nav .nav-sideIcons .navbar-user-info.open {
+  transform: translateX(-80%) translateY(40px);
+}
 .mobile-nav .nav-sideIcon {
   position: absolute;
   width: 64px;
@@ -90,13 +88,6 @@
 
   border: 1px solid var(--accent-soft);
   box-shadow: inset 2px 2px 11px 5px var(--accent-soft-border);
-}
-
-.mobile-nav .nav-sideIcons .user {
-  width: 48px;
-  height: 48px;
-  border-radius: 25px;
-  overflow: hidden;
 }
 
 .mobile-route {
