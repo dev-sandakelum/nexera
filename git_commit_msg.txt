@@ -1,5 +1,5 @@
-style: Refactor mobile navigation and heading navbar styles for improved layout and user experience
+style: Enhance mobile navigation and heading navbar for improved layout and user experience
 
-- Updated mobile navigation styles to enhance icon positioning and responsiveness.
-- Refined heading navbar styles, including new user info component with animations and transitions.
-- Improved overall CSS organization with comments for better readability and maintainability.
+- Added a flexbox layout for the logo container in mobile navigation for better alignment.
+- Updated user info component styles in the heading navbar, including new positioning and transition effects.
+- Refined CSS organization for improved readability and maintainability.

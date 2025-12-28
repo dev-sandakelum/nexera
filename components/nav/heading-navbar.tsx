@@ -85,6 +85,8 @@ export function UserInfo() {
     <div
       className={`navbar-user-info ${is_UserInfo_open && "open"} ${
         is_UserInfo_mobile && !is_UserInfo_open && "mobile"
+      } ${
+        is_UserInfo_mobile && is_UserInfo_open && "openMobile"
       }`}
     >
       <div className="user-details">

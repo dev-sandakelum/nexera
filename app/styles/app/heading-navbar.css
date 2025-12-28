@@ -107,6 +107,8 @@
 .navbar-user-info {
   width: 240px;
   height: 100%;
+  position: absolute;
+  right: 6px;
   color: var(--navbar-foreground);
   padding: 0 6px;
   background: var(--navbar-background);
@@ -116,7 +118,7 @@
   align-items: center;
   justify-content: end;
   gap: 8px;
-  transition: all 0.45s;
+  transition: transform .3s, width 0.3s, height 1s;
 }
 
 .navbar-user-info.open {
@@ -126,8 +128,15 @@
 .navbar-user-info.mobile {
   width: 64px;
   height: 64px;
+  right: 16px;
+  top: 8px;
 }
 
+.navbar-user-info.openMobile {
+  border-radius: 16px;
+  height: 230px;
+  right: 32px;
+}
 /* ───── User Details ───── */
 .navbar-user-info .user-details {
   font-size: 12px;
@@ -209,13 +218,15 @@
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
-  transition: 1s ease;
+  transition: margin 0.8s ease-out, transform 0.8s ;
+  transition-delay:margin , transform .5s;
 }
 
 .navbar-user-info.open .user-avatar {
   width: 80px;
   height: 80px;
-  transform: translateX(-75px) translateY(-55px);
+  margin-right: 75px;
+  transform: translateY(-55px);
 }
 
 /* ───── Sign Out Button ───── */

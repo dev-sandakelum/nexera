@@ -10,7 +10,14 @@
   padding: 0 20px;
   z-index: 40;
 }
-
+.mobile-nav .logoContainer{
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  left: 0;
+  width: 100%;
+  /* border: 1px solid red; */
+}
 .mobile-nav .logo {
   width: 160px;
   height: 64px;
@@ -29,13 +36,10 @@
 
 .mobile-nav .nav-sideIcons {
   max-height: 64px;
-  margin-top: 20px;
   max-width: 64px;
   /* border: 1px solid red; */
 }
-.mobile-nav .nav-sideIcons .navbar-user-info.open {
-  transform: translateX(-80%) translateY(40px);
-}
+
 .mobile-nav .nav-sideIcon {
   position: absolute;
   width: 64px;
