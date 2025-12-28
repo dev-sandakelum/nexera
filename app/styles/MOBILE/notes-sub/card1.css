@@ -1,0 +1,10 @@
+@media (max-width: 768px) {
+  .NotesPage .topic .objects {
+    max-width: 96vw;
+  }
+  @media (max-width: 400px) {
+    .NotesPage .topic .objects .user {
+      transform: translateX(90vw);
+    }
+  }
+}

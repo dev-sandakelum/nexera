@@ -1,5 +1,5 @@
 
-.container .objects .object {
+.noteContainer .objects .object {
   width: 320px;
   height: 160px;
 
@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.container .objects .object .fg {
+.noteContainer .objects .object .fg {
   width: 320px;
   min-width: 320px;
   height: 160px;
@@ -27,7 +27,7 @@
   );
 }
 
-.container .objects .object .info {
+.noteContainer .objects .object .info {
   width: 100%;
   height: 100%;
   padding: 10px;
@@ -38,16 +38,16 @@
   flex-direction: column;
   align-items: start;
 }
-.container .objects .object .info .title {
+.noteContainer .objects .object .info .title {
   font-weight: 600;
   font-size: 18px;
   text-transform: capitalize;
 }
-.container .objects .object .info .description {
+.noteContainer .objects .object .info .description {
   font-weight: 400;
   font-size: 12px;
 }
-.container .objects .object .info button {
+.noteContainer .objects .object .info button {
   box-sizing: border-box;
   width: 100px;
   height: 32px;
@@ -59,7 +59,7 @@
   font-weight: 600;
   border-radius: 32px;
 }
-.container .objects .object .btn {
+.noteContainer .objects .object .btn {
   min-width: 30px;
   margin-top: 16px;
   margin-right: 16px;

@@ -1,3 +1,5 @@
-@media screen {
-  
+@media (max-width: 768px) {
+  .noteContainer {
+    padding: 0;
+  }
 }

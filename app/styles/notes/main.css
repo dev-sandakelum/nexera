@@ -1,4 +1,4 @@
-.container {
+.noteContainer {
   width: 100%;
   margin-top: 100px;
   padding: 0 64px;
@@ -8,8 +8,8 @@
   gap: 16px;
   color: var(--theme-colorB);
 }
-.container .favorites,
-.container .suggestions {
+.noteContainer .favorites,
+.noteContainer .suggestions {
   width: 100%;
   border-radius: 16px;
   border: 1px solid var(--navbar-border);
@@ -17,7 +17,7 @@
   background-color: var(--components-background);
 }
 
-.container .header {
+.noteContainer .header {
   font-weight: 600;
   font-size: 24px;
   text-transform: capitalize;
@@ -38,7 +38,7 @@
     #515151 44.05%
   );
 }
-.container .objects {
+.noteContainer .objects {
   padding: 16px 32px;
   display: flex;
   flex-wrap: wrap;

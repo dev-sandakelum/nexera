@@ -1,3 +1,5 @@
-fix: Adjust sidebar item positioning for smoother animations
+style: Update mobile notes styles for improved layout and responsiveness
 
-- Updated the vertical positioning of sidebar items to ensure proper spacing during animations, enhancing the overall user experience.
+- Added new CSS files for mobile notes and adjusted existing styles to enhance layout on smaller screens.
+- Refactored class names from .container to .noteContainer for better specificity and consistency across styles.
+- Implemented media queries to ensure proper padding and layout adjustments for mobile devices.
