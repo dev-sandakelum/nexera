@@ -1,0 +1,91 @@
+/* ===============================
+   Projects Page – Mobile (≤768px)
+   =============================== */
+
+@media (max-width: 768px) {
+  .projectsPage {
+    padding: 64px 8px;
+  }
+  .projectsPage .projects-header-title {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  /* Cards layout */
+  .projectsPage .project-cards {
+    max-width: 96vw;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    /* border: 1px solid red; */
+  }
+  .projectsPage .project {
+    max-width: 94vw;
+    /* border: 1px solid blue; */
+    overflow: hidden;
+  }
+  
+
+  /* Info */
+  .projectsPage .project .project-card .info {
+    width: 100%;
+    padding: 12px 8px;
+    gap: 6px;
+  }
+
+  .projectsPage .project .project-card .info .title {
+    font-size: 24px;
+  }
+
+  .projectsPage .project .project-card .info .access {
+    font-size: 14px;
+  }
+
+  .projectsPage .project .project-card .info .description {
+    width: 90%;
+    font-size: 13px;
+    max-width: 96vw;
+  }
+
+  /* Button */
+  .projectsPage .project .project-card .btn {
+    width: 60vw;
+    max-width: 40%;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  /* Divider */
+  .projectsPage .project .project-card .line {
+    max-width: 92vw;
+    width: 95%;
+  }
+
+  /* Footer */
+  .projectsPage .project .project-card .footer {
+    width: 95%;
+    max-width: 92vw;
+    padding: 0 6px;
+  }
+
+  .projectsPage .project .project-card .footer .social-media {
+    height: 40px;
+    gap: 6px;
+  }
+
+  .projectsPage .project .project-card .footer .social-media .icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .projectsPage .project .project-card .footer .Contributions {
+    height: 40px;
+  }
+
+  .projectsPage .project .project-card .footer .Contributions .img {
+    width: 32px;
+    height: 32px;
+    transform: translateX(calc(var(--idx) * 16px));
+  }
+ 
+}

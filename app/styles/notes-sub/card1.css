@@ -78,5 +78,6 @@
   font-weight: 600;
   white-space: nowrap;
   overflow: visible;
+
   transform: translateX(-200px) translateY(-40px);
 }

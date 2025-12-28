@@ -28,6 +28,8 @@ import "./styles/MOBILE/notes/card0.css";
 import "./styles/MOBILE/notes-sub/main.css";
 import "./styles/MOBILE/notes-sub/card1.css";
 
+import "./styles/MOBILE/projects/main.css";
+
 import "./styles/fonts.css";
 import NavBar from "@/components/nav/main";
 import { useSearchParams } from "next/navigation";

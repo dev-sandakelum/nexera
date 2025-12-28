@@ -21,11 +21,11 @@
 }
 
 .projectsPage .project-cards {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap:32px;
-    row-gap: 64px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 32px;
+  row-gap: 64px;
 }
 
 .projectsPage .project {
@@ -102,7 +102,6 @@
   font-weight: 400;
   color: var(--theme-colorE75);
 
-  
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-height: 1.4;
@@ -143,15 +142,15 @@
   border-top: 1px solid var(--navbar-border);
   margin: 0px 0 4px 0;
   height: 1px;
-  
+
   display: flex;
   align-items: center;
   justify-content: end;
 }
-.projectsPage .project .project-card .line p{
+.projectsPage .project .project-card .line p {
   width: fit-content;
   height: fit-content;
-  padding:  4px;
+  padding: 4px;
   margin-right: 10px;
   background: var(--components-background);
   font-size: 12px;
@@ -166,13 +165,13 @@
   justify-content: space-between;
 }
 
-.projectsPage .project .project-card .footer .social-media{
-    width: auto;
-    height: 48px;
-  
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.projectsPage .project .project-card .footer .social-media {
+  width: auto;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .projectsPage .project .project-card .footer .social-media .icon {
@@ -184,17 +183,17 @@
   justify-content: center;
 }
 .projectsPage .project .project-card .footer .Contributions {
-    width: auto;
-    height: 48px;
-  
-    display: flex;
-    align-items: center;
-    flex-direction: row-reverse;
-  }
-  .projectsPage .project .project-card .footer .Contributions .img {
-    border-radius: 50%;
-    border: 3px solid var(--components-background);
-    width: 37px;
-    height: 37px;
-      transform: translateX(calc(var(--idx)*20px));
-    }
+  width: auto;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.projectsPage .project .project-card .footer .Contributions .img {
+  border-radius: 50%;
+  border: 3px solid var(--components-background);
+  width: 37px;
+  height: 37px;
+  transform: translateX(calc(var(--idx) * 20px));
+}

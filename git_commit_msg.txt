@@ -1,5 +1,5 @@
-style: Update mobile notes styles for improved layout and responsiveness
+style: Add project styles and clean up CSS formatting
 
-- Added new CSS files for mobile notes and adjusted existing styles to enhance layout on smaller screens.
-- Refactored class names from .container to .noteContainer for better specificity and consistency across styles.
-- Implemented media queries to ensure proper padding and layout adjustments for mobile devices.
+- Introduced a new CSS file for project styles to enhance layout and design consistency.
+- Cleaned up formatting in existing CSS files for better readability and maintainability.
+- Updated imports in home-content.tsx to include the new project styles.
