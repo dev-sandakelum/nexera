@@ -1,1 +1,3 @@
-style: Add overflow hidden to main CSS for improved layout management
+style: Update mobile navigation positioning for improved layout
+
+- Changed position of .mobile-nav and .mobile-route from absolute to fixed for better alignment and responsiveness on mobile devices.

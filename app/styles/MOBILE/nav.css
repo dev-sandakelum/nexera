@@ -1,5 +1,6 @@
 .mobile-nav {
   /* border: 1px solid red; */
+  position: fixed;
   width: 100vw;
   height: 64px;
 
@@ -98,7 +99,7 @@
 }
 
 .mobile-route {
-  position: absolute;
+  position: fixed;
   width: 100%;
   /* border: 1px solid red; */
   bottom: 0;
