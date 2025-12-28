@@ -1,6 +1,6 @@
-feat: Add mobile navigation support and enhance HomeContent responsiveness
+refactor: Simplify MobileNavBar component and enhance animations
 
-- Introduced a MobileNavBar component for improved navigation on mobile devices.
-- Implemented screen size detection to toggle between desktop and mobile navigation.
-- Updated HomeContent to conditionally render the appropriate navigation based on screen size.
-- Cleaned up imports and adjusted layout for better mobile compatibility.
+- Removed unused state variables and exit/enter animations for cleaner logic.
+- Consolidated navigation items into a single array for better maintainability.
+- Integrated Framer Motion for improved animations on navigation items and route transitions.
+- Updated CSS styles to remove redundant properties and enhance visual consistency.

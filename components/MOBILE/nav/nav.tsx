@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function MobileNavBar({
   data,
@@ -17,8 +18,6 @@ export default function MobileNavBar({
   const { replace } = useRouter();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
   const [displayData, setDisplayData] = useState(data);
-  const [isExiting, setIsExiting] = useState(false);
-  const [isEntering, setIsEntering] = useState(false);
 
   useEffect(() => {
     if (params.size == 0) {
@@ -38,23 +37,8 @@ export default function MobileNavBar({
   }, [params]);
 
   useEffect(() => {
-    if (JSON.stringify(data) !== JSON.stringify(displayData)) {
-      // Start exit animation
-      setIsExiting(true);
-
-      // After exit completes, swap content and start enter animation
-      setTimeout(() => {
-        setDisplayData(data);
-        setIsExiting(false);
-        setIsEntering(true);
-      }, 300); // Exit duration
-
-      // End enter animation
-      setTimeout(() => {
-        setIsEntering(false);
-      }, 300 + data.length * 80 + 500); // Exit + stagger delays + active delay
-    }
-  }, [data, displayData]);
+    setDisplayData(data);
+  }, [data]);
 
   function handleRoute(term: string) {
     const param = new URLSearchParams();
@@ -67,7 +51,17 @@ export default function MobileNavBar({
     replace(`${pathname}?${param.toString()}`, { scroll: false });
     setActiveIcon(activeTab[0] || "Home");
   }
-  function IFopenPanel() {}
+
+  const navigationItems = [
+    { value: "Home", icon: "Home", alt: "Home Icon" },
+    { value: "Notes", icon: "Notes", alt: "Notes Icon" },
+    { value: "Projects", icon: "Projects", alt: "Projects Icon" },
+    { value: "Applications", icon: "Applications", alt: "Applications Icon" },
+    { value: "Admin", icon: "Admin", alt: "Admin Icon" },
+    { value: "Info", icon: "Info", alt: "Info Icon" },
+    { value: "Settings", icon: "Settings", alt: "Settings Icon" },
+  ];
+
   const previousRoutes = displayData.slice(0, -1);
   const activeRoute = displayData[displayData.length - 1];
 
@@ -75,94 +69,87 @@ export default function MobileNavBar({
     <>
       <div className="mobile-nav">
         <ul className={`nav-sideIcons ${openPanel && "open"}`}>
-          {[
-            {
-              value: "Home",
-              icon: "Home",
-              alt: "Home Icon",
-            },
-            {
-              value: "Notes",
-              icon: "Notes",
-              alt: "Notes Icon",
-            },
-            {
-              value: "Projects",
-              icon: "Projects",
-              alt: "Projects Icon",
-            },
-            {
-              value: "Applications",
-              icon: "Applications",
-              alt: "Applications Icon",
-            },
-            {
-              value: "Admin",
-              icon: "Admin",
-              alt: "Admin Icon",
-            },
-            {
-              value: "Info",
-              icon: "Info",
-              alt: "Info Icon",
-            },
-            {
-              value: "Settings",
-              icon: "Settings",
-              alt: "Settings Icon",
-            },
-          ].map(({ value, icon, alt }, idx) => (
-            <li
-              key={value}
-              className={`nav-sideIcon ${activeIcon === value && "active"}`}
-              style={
-                {
+          <AnimatePresence>
+            {navigationItems.map(({ value, icon, alt }, idx) => (
+              <motion.li
+                key={value}
+                className={`nav-sideIcon ${activeIcon === value && "active"}`}
+                style={{
                   zIndex: displayData[0] === value ? 32 : 30,
-                  "--idx": idx,
-                } as React.CSSProperties
-              }
-            >
-              <button
-                type="button"
-                className="navigation-btn"
-                onClick={() => {
-                  if (displayData[0] === value) {
-                    setOpenPanel(true);
-                    if (openPanel) {
-                      setActiveIcon(value);
-                      handleRoute(value);
-                      setOpenPanel(false);
-                    }
-                  } else {
-                    if (openPanel) {
-                      setOpenPanel(false);
-                    }
-                    setActiveIcon(value);
-                    handleRoute(value);
-                  }
+                }}
+                initial={false}
+                animate={{
+                  y: openPanel ? idx * 68 : 0,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                  delay: openPanel ? idx * 0.1 : (navigationItems.length - idx) * 0.05,
                 }}
               >
-                <Image
-                  src={`/icons/nav/${icon}.png`}
-                  alt={alt}
-                  width={24}
-                  height={24}
-                  className={`icon ${
-                    activeIcon === value ? "deactivated" : "active"
-                  }`}
-                />
-                <Image
-                  src={`/icons/nav/active/${icon}.png`}
-                  alt={alt}
-                  width={24}
-                  height={24}
-                  className={`icon ${
-                    activeIcon === value ? "active" : "deactivated"
-                  }`}
-                />
-              </button>
-            </li>
-          ))}
+                <motion.button
+                  type="button"
+                  className="navigation-btn"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    if (displayData[0] === value) {
+                      setOpenPanel(true);
+                      if (openPanel) {
+                        setActiveIcon(value);
+                        handleRoute(value);
+                        setOpenPanel(false);
+                      }
+                    } else {
+                      if (openPanel) {
+                        setOpenPanel(false);
+                      }
+                      setActiveIcon(value);
+                      handleRoute(value);
+                    }
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    {activeIcon !== value && (
+                      <motion.div
+                        key="inactive"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ position: "absolute" }}
+                      >
+                        <Image
+                          src={`/icons/nav/${icon}.png`}
+                          alt={alt}
+                          width={24}
+                          height={24}
+                        />
+                      </motion.div>
+                    )}
+                    {activeIcon === value && (
+                      <motion.div
+                        key="active"
+                        initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        exit={{ opacity: 0, scale: 0.8, rotate: 180 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ position: "absolute" }}
+                      >
+                        <Image
+                          src={`/icons/nav/active/${icon}.png`}
+                          alt={alt}
+                          width={24}
+                          height={24}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
+              </motion.li>
+            ))}
+          </AnimatePresence>
         </ul>
 
         <div className="logo">
@@ -182,31 +169,48 @@ export default function MobileNavBar({
           </div>
         </div>
       </div>
+
       <div className="mobile-route">
-        <div className="path">
+        <motion.div
+          className="path"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
           <p>
-            {previousRoutes.map((item, index) => (
-              <span
-                key={`${item}-${index}`}
-                className="route-item"
-                style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}
+            <AnimatePresence mode="popLayout">
+              {previousRoutes.map((item, index) => (
+                <motion.span
+                  key={`${item}-${index}`}
+                  className="route-item"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.08,
+                  }}
+                >
+                  {item}
+                  <span className="separator"> &gt; </span>
+                </motion.span>
+              ))}
+              <motion.span
+                key={`active-${activeRoute}`}
+                className="active route-item"
+                initial={{ opacity: 0, x: -10, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 10, scale: 0.9 }}
+                transition={{
+                  duration: 0.3,
+                  delay: previousRoutes.length * 0.08,
+                }}
               >
-                {item}
-                <span className="separator"> &gt; </span>
-              </span>
-            ))}
-            <span
-              className="active route-item"
-              style={
-                {
-                  "--delay": `${previousRoutes.length * 0.08}s`,
-                } as React.CSSProperties
-              }
-            >
-              {activeRoute}
-            </span>
+                {activeRoute}
+              </motion.span>
+            </AnimatePresence>
           </p>
-        </div>
+        </motion.div>
       </div>
     </>
   );
