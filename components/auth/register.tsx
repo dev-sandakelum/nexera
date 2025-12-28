@@ -6,12 +6,8 @@ import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Login({
-  setIsLogged,
-}: {
-  setIsLogged: (icon: boolean) => void;
-}) {
-  const [showEmailLogin, setShowEmailLogin] = useState(false);
+export default function Register() {
+  const [showEmailRegister, setShowEmailRegister] = useState(false);
 
   return (
     <div className="loginContainer">
@@ -26,27 +22,27 @@ export default function Login({
           />
         </div>
         <div className="top">
-          <h1>Welcome back</h1>
-          <p>Enter your details to access your workspace.</p>
+          <h1>Create an account</h1>
+          <p>Get started with your free account today.</p>
         </div>
         <div className="google">
           <GoogleBtn />
         </div>
         <div className="divider">
-          <p>Or sign in with email</p>
+          <p>Or sign up with email</p>
         </div>
         <button
           className="email-toggle"
-          onClick={() => setShowEmailLogin(!showEmailLogin)}
+          onClick={() => setShowEmailRegister(!showEmailRegister)}
         >
           <span>Continue with Email</span>
           <HiChevronDown
-            className={`toggle-icon ${showEmailLogin ? "open" : ""}`}
+            className={`toggle-icon ${showEmailRegister ? "open" : ""}`}
             size={20}
           />
         </button>
         <AnimatePresence>
-          {showEmailLogin && (
+          {showEmailRegister && (
             <motion.div
               className="inputs"
               initial={{ opacity: 0, height: 0 }}
@@ -55,24 +51,29 @@ export default function Login({
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
               <div className="input">
+                <p>Full Name</p>
+                <input type="text" />
+              </div>
+              <div className="input">
                 <p>Email</p>
                 <input type="email" />
               </div>
               <div className="input">
-                <p>
-                  <span>Password</span>
-                  <a href="#">Forgot Password?</a>
-                </p>
+                <p>Password</p>
                 <input type="password" />
               </div>
-              <button className="SignIn" onClick={()=>{setIsLogged(true)}}>Sign In</button>
+              <div className="input">
+                <p>Confirm Password</p>
+                <input type="password" />
+              </div>
+              <button className="SignIn">Create Account</button>
             </motion.div>
           )}
         </AnimatePresence>
         <div className="footer">
           <p className="text">
-            Don't have an account?
-            <a href="/?r=register">Sign up</a>
+            Already have an account?
+            <a href="/?r=login">Sign in</a>
           </p>
           <p>© 2026 Nexera (.EXE)</p>
         </div>

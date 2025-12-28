@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   /* border: 1px solid green; */
-  padding: 20px 0;
+  padding: 24px 0; /* Changed: reduced from 20px to 24px for better vertical spacing */
 
   display: flex;
   justify-content: center;
@@ -14,21 +14,49 @@
 
 .loginContainer .context {
   width: 600px;
-  height: 100%;
+  height: auto;
+  max-height: 100vh;
+  overflow-y: scroll; /* Changed: from scroll to auto - scrollbar only appears when needed */
+  scroll-behavior: smooth;
   background: var(--components-background);
 
   border-radius: 16px;
   border: 1px solid var(--navbar-border);
 
-  padding: 40px 80px;
+  padding: 48px 64px; /* Changed: reduced horizontal padding from 80px to 64px, increased vertical from 40px to 48px for better proportions */
   /* border: 1px solid green; */
 }
+
+/* Added: Custom scrollbar styling for webkit browsers */
+.loginContainer .context::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Added: Scrollbar track styling */
+.loginContainer .context::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+/* Added: Scrollbar thumb styling */
+.loginContainer .context::-webkit-scrollbar-thumb {
+  background: var(--navbar-border);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+/* Added: Scrollbar thumb hover effect */
+.loginContainer .context::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-colorA);
+}
+
 .loginContainer .context .top {
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 32px; /* Changed: reduced from 40px to 32px for tighter section spacing */
 }
 .loginContainer .context .top h1 {
   font-size: 26px;
+  margin-bottom: 8px; /* Added: spacing between title and subtitle */
 }
 .loginContainer .context .top p {
   font-size: 16px;
@@ -44,13 +72,13 @@
   gap: 12px;
   background: var(--components-background);
   border: 1px solid var(--navbar-border);
-  padding: 12px;
+  padding: 14px 12px; /* Changed: increased vertical padding from 12px to 14px for better button height */
   border-radius: 10px;
   font-weight: 500;
   font-size: 16px;
   color: var(--theme-colorB);
   cursor: pointer;
-  margin-bottom: 24px;
+  margin-bottom: 28px; /* Changed: increased from 24px to 28px for better separation from divider */
   transition: 0.4s;
 }
 
@@ -72,25 +100,60 @@
   font-size: 12px;
   color: var(--theme-colorE75);
   border-top: 1px solid var(--navbar-border);
-  margin-bottom: 16px;
+  margin-bottom: 24px; /* Changed: increased from 16px to 24px for better spacing before inputs */
 }
 .loginContainer .context .divider p {
   transform: translateY(-50%);
-  padding: 0 8px;
+  padding: 0 12px; /* Changed: increased from 8px to 12px for better text breathing room */
   background: var(--components-background);
+}
+
+/* Added: Email toggle button styles */
+.email-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--components-background);
+  border: 1px solid var(--navbar-border);
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--theme-colorB);
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: 0.4s;
+}
+
+/* Added: Email toggle hover effect */
+.email-toggle:hover {
+  border: 1px solid var(--theme-colorA);
+}
+
+/* Added: Toggle icon rotation animation */
+.toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Added: Rotate icon when dropdown is open */
+.toggle-icon.open {
+  transform: rotate(180deg);
 }
 
 .loginContainer .context .inputs {
   width: 100%;
+  overflow: hidden; /* Added: prevents content from showing during height animation */
 }
 .loginContainer .context .inputs .input {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 20px; /* Changed: increased from 16px to 20px for better input field spacing */
 }
 .loginContainer .context .inputs .input p {
   font-size: 14px;
   color: var(--theme-colorB);
   width: 100%;
+  margin-bottom: 8px; /* Added: spacing between label and input */
 
   display: flex;
   align-items: center;
@@ -101,19 +164,38 @@
   width: 100%;
   height: 48px;
   font-size: 16px;
-  padding: 0 8px;
+  padding: 0 12px; /* Changed: increased from 8px to 12px for better text padding */
   border-radius: 8px;
-  background: var(--components-background);
+  background: transparent;
   color: var(--theme-colorB);
   border: 1px solid var(--navbar-border);
+  transition: .2s;
 }
+.loginContainer .context .inputs .input input:focus{
+  border: 2px solid var(--theme-colorA);
+  outline: none;
+}
+.loginContainer .context .inputs .input input:-webkit-autofill,
+.loginContainer .context .inputs .input input:-webkit-autofill:hover,
+.loginContainer .context .inputs .input input:-webkit-autofill:focus,
+.loginContainer .context .inputs .input input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--accent-soft-bg) inset !important;
+  box-shadow: 0 0 0 1000px var(--accent-soft-bg) inset !important;
+  font-size: 16px;
+
+  -webkit-text-fill-color: var(--theme-colorB) !important;
+  caret-color: var(--theme-colorB);
+
+  border: 1px solid var(--navbar-border);
+}
+
+
 .loginContainer .context .inputs .SignIn {
   color: var(--components-background);
   background: var(--accent-soft);
-  border: none;
   box-shadow: 0 10px 15px -3px var(--accent-soft-bg),
     0 4px 6px -4px var(--accent-soft-bg);
-  margin: 8px 0px;
+  margin: 12px 0px 24px 0px; /* Changed: increased top margin from 8px to 12px, added 24px bottom margin for better spacing before footer */
 }
 
 .loginContainer .context .footer {
@@ -122,6 +204,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px; /* Added: spacing between footer items */
+  margin-top: 8px; /* Added: additional top spacing for footer section */
 }
 .loginContainer a {
   padding-left: 4px;

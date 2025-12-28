@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+  .loginContainer {
+  background: var(--components-background);
+  padding: 0;
+  }
+
+  .loginContainer .context {
+    width: 100vw;
+    border: 0px;
+    box-shadow: none;
+    outline: none;
+
+    border-radius: 0;
+
+    padding: 48px 24px;
+  }
+}
