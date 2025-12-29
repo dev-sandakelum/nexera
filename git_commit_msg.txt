@@ -1,4 +1,3 @@
-style: Update homeContainer dimensions for full viewport coverage
+style: Adjust homeContainer positioning for full viewport coverage
 
-- Changed width and height properties to 100vw and 100vh respectively for better responsiveness.
-- Added position: absolute to ensure proper layout within the viewport.
+- Added right and bottom properties to homeContainer to ensure it occupies the entire viewport without overflow.
