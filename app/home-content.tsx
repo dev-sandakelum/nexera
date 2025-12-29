@@ -5,6 +5,8 @@ import "./styles/app/nav.css";
 import "./styles/app/heading-navbar.css";
 import "./styles/app/scroll-bar.css";
 
+import "./styles/home/main.css";
+
 import "./styles/notes/main.css";
 import "./styles/notes/card0.css";
 
@@ -53,6 +55,7 @@ import Admin from "@/components/page/admin/admin";
 import MobileNavBar from "@/components/MOBILE/nav/nav";
 import Login from "@/components/auth/login";
 import Register from "@/components/auth/register";
+import HomePage from "@/components/page/home/home";
 
 export default function HomeContent() {
   const params = useSearchParams();
@@ -67,7 +70,6 @@ export default function HomeContent() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { replace } = useRouter();
   console.log(isLogged);
-  
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -92,7 +94,7 @@ export default function HomeContent() {
   }, [activeIcon, sub]);
 
   useEffect(() => {
-    if(!isLogged){
+    if (!isLogged) {
       setIsLogged(false);
     }
     if (!isLogged && !(activeIcon == "login" || activeIcon == "register")) {
@@ -104,7 +106,6 @@ export default function HomeContent() {
     if (isLogged && (activeIcon == "login" || activeIcon == "register")) {
       replace("/?r=Home");
     }
-
   }, [isLogged]);
   return (
     <div
@@ -134,6 +135,7 @@ export default function HomeContent() {
 
           <div className="ContentArea">
             <div className="UsableArea" key={activeIcon + sub}>
+              {activeIcon === "Home" && <HomePage />}
               {activeIcon === "Notes" && !sub && (
                 <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
               )}

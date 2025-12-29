@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
 interface HeadingNavBarProps {
@@ -113,7 +114,7 @@ export function UserInfo() {
           </div>
         </div>
         <div className="signOut">
-          <button>Sign Out</button>
+          <button onClick={()=>redirect("/?r=login")}>Sign Out</button>
         </div>
       </div>
       <div

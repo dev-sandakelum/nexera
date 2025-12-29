@@ -1,5 +1,5 @@
-style: Update heading navbar transitions and positioning for improved user experience
+feat: Integrate HomePage component and enhance heading navbar styles
 
-- Enhanced transition effects in the heading navbar for smoother animations.
-- Adjusted positioning of user info components for better alignment and visibility.
-- Refined CSS properties to improve overall layout and maintainability.
+- Added HomePage component rendering in HomeContent based on active icon.
+- Updated heading navbar styles with new border and background properties for improved aesthetics.
+- Adjusted button styles for better user interaction and visual consistency.
