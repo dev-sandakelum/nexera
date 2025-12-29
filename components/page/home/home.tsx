@@ -46,7 +46,7 @@ export default function HomePage() {
           "#e3f2fd",
         ].map((bg, idx) => (
           <motion.div
-            key={idx}
+            key={idx + "bg"}
             className="bgC"
             custom={idx}
             variants={itemVariants(idx)}

@@ -1,6 +1,8 @@
-refactor: Clean up HomeContent component and enhance login functionality
+feat: update user and badge data structures, add new users and badges
 
-- Removed unused state management for user login status in HomeContent.
-- Simplified screen size check logic and active icon setting.
-- Updated Login component to handle email and password input with form submission.
-- Improved user experience by redirecting after successful login and handling invalid credentials.
+- Modified `NexeraUser` type to include password and updated email format.
+- Added new `nexBadge` type for badge management.
+- Updated user data in `users.ts` with new users and their respective details.
+- Introduced new badges in `badges.ts` with descriptions and color schemes.
+- Adjusted profile picture paths and added a new image.
+- Enhanced user data structure to include academic details and badge associations.

@@ -37,13 +37,14 @@ export type ProjectData = {
 export type NexeraUser = {
   id: string;
   name: string;
-  email: string;
-  profilePicture: string; //sequence URL public/img/profile_pic/0.jpg to 96.jpg
+  email: string; //*@nex.com (a@nex.com) (only for testing purposes , just use single letters before @nex.com)
+  password: string; //nex1234
+  profilePicture: string; //sequence URL /img/profile_pic/0.jpg to 96.jpg ,randomly assigned
   headline: string;
   bio: string;
   location: string;
   joinedAt: string;
-  academic : {
+  academic: {
     institution: string;
     degree: string;
     fieldOfStudy: string;
@@ -51,9 +52,8 @@ export type NexeraUser = {
     graduationYear: number;
   };
   badges: {
-    id: number;
-    name: string;
-  }[]; // must have id from B1 to B10 , 2 badges min , max and must be unique 
+    id: string; // must correspond to nexBadges id in badges.ts (B1 to B10)
+  }[]; // must have id from B1 to B10 , 2 badges max and must be unique (only 2 badges per user)
   data: {
     notes: {
       favorites: {
@@ -81,3 +81,15 @@ export type NexeraUser = {
     };
   };
 };
+
+export type nexBadge = {
+  id:string;
+  name:string;
+  description:string;
+  icon:string;
+  color:{
+    bgColor:string;
+    textColor:string;
+    borderColor:string;
+  };
+}

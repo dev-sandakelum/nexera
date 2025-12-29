@@ -56,8 +56,9 @@ import MobileNavBar from "@/components/MOBILE/nav/nav";
 import Login from "@/components/auth/login";
 import Register from "@/components/auth/register";
 import HomePage from "@/components/page/home/home";
+import { NexeraUser } from "@/components/types";
 
-export default function HomeContent() {
+export default function HomeContent({user}:{user:NexeraUser}) {
   const params = useSearchParams();
   const route = params.get("r");
   const sub = params.get("u");
@@ -98,11 +99,12 @@ export default function HomeContent() {
               data={routeList}
               activeIcon={activeIcon}
               setActiveIcon={setActiveIcon}
+              user={user}
             />
           ) : (
             <>
               <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-              <HeadingNavBar data={routeList} />
+              <HeadingNavBar data={routeList} user={user} />
             </>
           )}
 

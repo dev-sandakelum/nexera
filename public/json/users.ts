@@ -2,323 +2,693 @@ import { NexeraUser } from "@/components/types";
 
 export const nexeraUsers: NexeraUser[] = [
   {
-    id: "U1",
-    name: "Hasitha Sandakelum",
-    email: "hasitha@nexera.dev",
-    profilePicture: "/img/profile_pic/0.jpg",
-    headline: "Full-Stack Developer",
-    bio: "Building scalable web apps with modern stacks.",
-    location: "Matara, Sri Lanka",
-    joinedAt: "2024-01-10",
+    id: "u_001",
+    name: "Alex Rivera",
+    email: "a@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/12.jpg",
+    headline: "System Architect | Full Stack Engineer",
+    bio: "Building the digital infrastructure of tomorrow. Lover of clean code and strong coffee.",
+    location: "San Francisco, CA",
+    joinedAt: "2023-01-15T08:00:00Z",
     academic: {
-      institution: "University of Ruhuna",
-      degree: "BSc",
+      institution: "Stanford University",
+      degree: "M.Sc.",
       fieldOfStudy: "Computer Science",
-      studyingYear: 3,
-      graduationYear: 2026,
-    },
-    badges: [
-      { id: 1, name: "B1" },
-      { id: 3, name: "B3" },
-    ],
-    data: {
-      notes: {
-        favorites: [{ id: "N1" }],
-        uploads: [{ id: "N5" }],
-      },
-      projects: {
-        favorites: [{ id: "P1" }],
-        contributions: [{ id: "P3" }],
-      },
-      applications: {
-        favorites: [{ id: "A1" }],
-        uploads: [{ id: "A3" }],
-      },
-    },
-  },
-  {
-    id: "U2",
-    name: "Nimal Perera",
-    email: "nimal@nexera.dev",
-    profilePicture: "/img/profile_pic/1.jpg",
-    headline: "Backend Engineer",
-    bio: "APIs, databases, and performance tuning.",
-    location: "Colombo, Sri Lanka",
-    joinedAt: "2024-01-22",
-    academic: {
-      institution: "University of Colombo",
-      degree: "BSc",
-      fieldOfStudy: "Information Systems",
-      studyingYear: 4,
-      graduationYear: 2025,
-    },
-    badges: [
-      { id: 2, name: "B2" },
-      { id: 6, name: "B6" },
-    ],
-    data: {
-      notes: {
-        favorites: [{ id: "N2" }],
-        uploads: [],
-      },
-      projects: {
-        favorites: [{ id: "P2" }],
-        contributions: [{ id: "P4" }],
-      },
-      applications: {
-        favorites: [],
-        uploads: [{ id: "A2" }],
-      },
-    },
-  },
-  {
-    id: "U3",
-    name: "Sithmi Jayasinghe",
-    email: "sithmi@nexera.dev",
-    profilePicture: "/img/profile_pic/2.jpg",
-    headline: "UI / UX Designer",
-    bio: "Designing clean and accessible interfaces.",
-    location: "Galle, Sri Lanka",
-    joinedAt: "2024-02-05",
-    academic: {
-      institution: "SLIIT",
-      degree: "BSc",
-      fieldOfStudy: "Interactive Media",
       studyingYear: 2,
-      graduationYear: 2027,
+      graduationYear: 2024,
     },
     badges: [
-      { id: 4, name: "B4" },
-      { id: 7, name: "B7" },
+      { id: "nex_001" }, // nexRoot
+      { id: "nex_006" }, // nexDev
     ],
     data: {
-      notes: {
-        favorites: [{ id: "N3" }],
-        uploads: [{ id: "N6" }],
-      },
-      projects: {
-        favorites: [{ id: "P5" }],
-        contributions: [{ id: "P6" }],
-      },
-      applications: {
-        favorites: [{ id: "A4" }],
-        uploads: [],
-      },
-    },
-  },
-  {
-    id: "U4",
-    name: "Kavindu Fernando",
-    email: "kavindu@nexera.dev",
-    profilePicture: "/img/profile_pic/3.jpg",
-    headline: "Mobile App Developer",
-    bio: "Android & cross-platform mobile apps.",
-    location: "Kandy, Sri Lanka",
-    joinedAt: "2024-02-18",
-    academic: {
-      institution: "University of Peradeniya",
-      degree: "BSc",
-      fieldOfStudy: "Software Engineering",
-      studyingYear: 3,
-      graduationYear: 2026,
-    },
-    badges: [
-      { id: 5, name: "B5" },
-      { id: 8, name: "B8" },
-    ],
-    data: {
-      notes: {
-        favorites: [],
-        uploads: [{ id: "N7" }],
-      },
-      projects: {
-        favorites: [{ id: "P7" }],
-        contributions: [{ id: "P8" }],
-      },
-      applications: {
-        favorites: [],
-        uploads: [{ id: "A5" }],
-      },
-    },
-  },
-  {
-    id: "U5",
-    name: "Tharindu Silva",
-    email: "tharindu@nexera.dev",
-    profilePicture: "/img/profile_pic/4.jpg",
-    headline: "DevOps Engineer",
-    bio: "CI/CD, cloud automation, infrastructure.",
-    location: "Negombo, Sri Lanka",
-    joinedAt: "2024-03-01",
-    academic: {
-      institution: "NSBM",
-      degree: "BSc",
-      fieldOfStudy: "Computer Engineering",
-      studyingYear: 4,
-      graduationYear: 2025,
-    },
-    badges: [
-      { id: 6, name: "B6" },
-      { id: 9, name: "B9" },
-    ],
-    data: {
-      notes: {
-        favorites: [{ id: "N8" }],
-        uploads: [],
-      },
-      projects: {
-        favorites: [],
-        contributions: [{ id: "P9" }],
-      },
-      applications: {
-        favorites: [{ id: "A6" }],
-        uploads: [],
-      },
-    },
-  },
-  {
-    id: "U6",
-    name: "Dilani Wijesekara",
-    email: "dilani@nexera.dev",
-    profilePicture: "/img/profile_pic/5.jpg",
-    headline: "Data Science Student",
-    bio: "Learning ML and analytics.",
-    location: "Kurunegala, Sri Lanka",
-    joinedAt: "2024-03-15",
-    academic: {
-      institution: "University of Kelaniya",
-      degree: "BSc",
-      fieldOfStudy: "Data Science",
-      studyingYear: 2,
-      graduationYear: 2027,
-    },
-    badges: [
-      { id: 7, name: "B7" },
-      { id: 10, name: "B10" },
-    ],
-    data: {
-      notes: {
-        favorites: [{ id: "N9" }],
-        uploads: [{ id: "N10" }],
-      },
-      projects: {
-        favorites: [{ id: "P10" }],
-        contributions: [],
-      },
-      applications: {
-        favorites: [],
-        uploads: [{ id: "A7" }],
-      },
-    },
-  },
-  {
-    id: "U7",
-    name: "Chamod Akalanka",
-    email: "chamod@nexera.dev",
-    profilePicture: "/img/profile_pic/6.jpg",
-    headline: "Game Developer",
-    bio: "2D & 3D interactive games.",
-    location: "Anuradhapura, Sri Lanka",
-    joinedAt: "2024-04-01",
-    academic: {
-      institution: "SLTC",
-      degree: "BSc",
-      fieldOfStudy: "Game Development",
-      studyingYear: 3,
-      graduationYear: 2026,
-    },
-    badges: [
-      { id: 1, name: "B1" },
-      { id: 8, name: "B8" },
-    ],
-    data: {
-      notes: { favorites: [], uploads: [] },
-      projects: {
-        favorites: [{ id: "P11" }],
-        contributions: [{ id: "P12" }],
-      },
-      applications: {
-        favorites: [],
-        uploads: [{ id: "A8" }],
-      },
-    },
-  },
-  {
-    id: "U8",
-    name: "Ishara Madushan",
-    email: "ishara@nexera.dev",
-    profilePicture: "/img/profile_pic/7.jpg",
-    headline: "Cyber Security Learner",
-    bio: "Ethical hacking & security basics.",
-    location: "Badulla, Sri Lanka",
-    joinedAt: "2024-04-20",
-    academic: {
-      institution: "ESOFT",
-      degree: "BSc",
-      fieldOfStudy: "Cyber Security",
-      studyingYear: 1,
-      graduationYear: 2028,
-    },
-    badges: [
-      { id: 2, name: "B2" },
-      { id: 9, name: "B9" },
-    ],
-    data: {
-      notes: { favorites: [{ id: "N11" }], uploads: [] },
-      projects: { favorites: [], contributions: [] },
-      applications: { favorites: [{ id: "A9" }], uploads: [] },
-    },
-  },
-  {
-    id: "U9",
-    name: "Rashmi Senanayake",
-    email: "rashmi@nexera.dev",
-    profilePicture: "/img/profile_pic/8.jpg",
-    headline: "Frontend Engineer",
-    bio: "React, animations, modern UI.",
-    location: "Panadura, Sri Lanka",
-    joinedAt: "2024-05-05",
-    academic: {
-      institution: "IIT",
-      degree: "BEng",
-      fieldOfStudy: "Software Engineering",
-      studyingYear: 2,
-      graduationYear: 2027,
-    },
-    badges: [
-      { id: 3, name: "B3" },
-      { id: 10, name: "B10" },
-    ],
-    data: {
-      notes: { favorites: [{ id: "N12" }], uploads: [] },
-      projects: { favorites: [{ id: "P13" }], contributions: [] },
+      notes: { favorites: [], uploads: [{ id: "n_101" }] },
+      projects: { favorites: [{ id: "p_500" }], contributions: [{ id: "p_500" }] },
       applications: { favorites: [], uploads: [] },
     },
   },
   {
-    id: "U10",
-    name: "Sanjeewa Karunaratne",
-    email: "sanjeewa@nexera.dev",
-    profilePicture: "/img/profile_pic/9.jpg",
-    headline: "Open Source Contributor",
-    bio: "Community-driven development.",
-    location: "Ratnapura, Sri Lanka",
-    joinedAt: "2024-05-20",
+    id: "u_002",
+    name: "Beatriz Silva",
+    email: "b@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/45.jpg",
+    headline: "Network Security Specialist",
+    bio: "Keeping the Nexus safe from threats. Cybersecurity enthusiast.",
+    location: "Lisbon, Portugal",
+    joinedAt: "2023-02-10T14:30:00Z",
     academic: {
-      institution: "OUSL",
-      degree: "BSc",
-      fieldOfStudy: "Information Technology",
+      institution: "University of Lisbon",
+      degree: "B.Sc.",
+      fieldOfStudy: "Information Systems",
       studyingYear: 4,
+      graduationYear: 2023,
+    },
+    badges: [
+      { id: "nex_002" }, // nexAdmin
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_200" }], uploads: [] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [], uploads: [{ id: "a_99" }] },
+    },
+  },
+  {
+    id: "u_003",
+    name: "Charlie Chen",
+    email: "c@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/88.jpg",
+    headline: "AI Researcher | Data Scientist",
+    bio: "Exploring the boundaries of machine learning and neural networks.",
+    location: "Toronto, Canada",
+    joinedAt: "2023-03-05T09:15:00Z",
+    academic: {
+      institution: "University of Toronto",
+      degree: "PhD",
+      fieldOfStudy: "Artificial Intelligence",
+      studyingYear: 1,
+      graduationYear: 2026,
+    },
+    badges: [
+      { id: "nex_003" }, // nexPrime
+      { id: "nex_010" }, // nexLink
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_301" }, { id: "n_302" }] },
+      projects: { favorites: [{ id: "p_501" }], contributions: [{ id: "p_501" }] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_004",
+    name: "Diana Prince",
+    email: "d@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/3.jpg",
+    headline: "UI/UX Designer",
+    bio: "Crafting beautiful and intuitive user experiences. Pixel perfectionist.",
+    location: "London, UK",
+    joinedAt: "2023-03-22T11:00:00Z",
+    academic: {
+      institution: "Royal College of Art",
+      degree: "M.A.",
+      fieldOfStudy: "Design Products",
+      studyingYear: 2,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_004" }, // nexNova
+      { id: "nex_008" }, // nexVision
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_400" }], uploads: [] },
+      projects: { favorites: [{ id: "p_502" }], contributions: [] },
+      applications: { favorites: [{ id: "a_100" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_005",
+    name: "Ethan Hunt",
+    email: "e@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/22.jpg",
+    headline: "DevOps Engineer",
+    bio: "Automating everything. Infrastructure as Code advocate.",
+    location: "Berlin, Germany",
+    joinedAt: "2023-04-18T16:45:00Z",
+    academic: {
+      institution: "Technical University of Munich",
+      degree: "B.Sc.",
+      fieldOfStudy: "Informatics",
+      studyingYear: 3,
       graduationYear: 2025,
     },
     badges: [
-      { id: 4, name: "B4" },
-      { id: 6, name: "B6" },
+      { id: "nex_005" }, // nexCore
     ],
     data: {
       notes: { favorites: [], uploads: [] },
-      projects: { favorites: [{ id: "P14" }], contributions: [{ id: "P15" }] },
-      applications: { favorites: [], uploads: [{ id: "A10" }] },
+      projects: { favorites: [], contributions: [{ id: "p_503" }] },
+      applications: { favorites: [], uploads: [{ id: "a_101" }] },
+    },
+  },
+  {
+    id: "u_006",
+    name: "Fiona Gallagher",
+    email: "f@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/67.jpg",
+    headline: "Frontend Developer | React Specialist",
+    bio: "Turning coffee into components. Passionate about accessibility.",
+    location: "Chicago, IL",
+    joinedAt: "2023-05-01T10:20:00Z",
+    academic: {
+      institution: "University of Illinois",
+      degree: "B.Sc.",
+      fieldOfStudy: "Computer Science",
+      studyingYear: 4,
+      graduationYear: 2023,
+    },
+    badges: [
+      { id: "nex_006" }, // nexDev
+      { id: "nex_007" }, // nexPulse
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_601" }], uploads: [{ id: "n_602" }] },
+      projects: { favorites: [{ id: "p_504" }], contributions: [{ id: "p_504" }] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_007",
+    name: "George Martin",
+    email: "g@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/9.jpg",
+    headline: "Technical Writer & Blogger",
+    bio: "Documenting the journey. Simplifier of complex concepts.",
+    location: "Santa Fe, NM",
+    joinedAt: "2023-05-15T13:00:00Z",
+    academic: {
+      institution: "St. John's College",
+      degree: "B.A.",
+      fieldOfStudy: "Liberal Arts",
+      studyingYear: 2,
+      graduationYear: 2026,
+    },
+    badges: [
+      { id: "nex_008" }, // nexVision
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_701" }, { id: "n_702" }, { id: "n_703" }] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_008",
+    name: "Hannah Lee",
+    email: "h@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/33.jpg",
+    headline: "Mobile Developer (iOS/Android)",
+    bio: "Building apps that people love to use. Swift & Kotlin expert.",
+    location: "Seoul, South Korea",
+    joinedAt: "2023-06-02T08:30:00Z",
+    academic: {
+      institution: "KAIST",
+      degree: "M.Sc.",
+      fieldOfStudy: "Mobile Computing",
+      studyingYear: 1,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_004" }, // nexNova
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_800" }], uploads: [] },
+      projects: { favorites: [{ id: "p_505" }], contributions: [{ id: "p_505" }] },
+      applications: { favorites: [{ id: "a_102" }], uploads: [{ id: "a_103" }] },
+    },
+  },
+  {
+    id: "u_009",
+    name: "Ian Wright",
+    email: "i@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/51.jpg",
+    headline: "Cybersecurity Analyst",
+    bio: "White hat hacker. Protecting data privacy one exploit at a time.",
+    location: "Sydney, Australia",
+    joinedAt: "2023-06-20T15:10:00Z",
+    academic: {
+      institution: "UNSW Sydney",
+      degree: "B.Sc.",
+      fieldOfStudy: "Cyber Security",
+      studyingYear: 3,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_009" }, // nexGuard
+      { id: "nex_005" }, // nexCore
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_901" }] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_010",
+    name: "Jessica Jones",
+    email: "j@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/16.jpg",
+    headline: "Project Manager",
+    bio: "Agile enthusiast. Keeping teams aligned and projects on track.",
+    location: "New York, NY",
+    joinedAt: "2023-07-04T12:00:00Z",
+    academic: {
+      institution: "NYU",
+      degree: "MBA",
+      fieldOfStudy: "Business Administration",
+      studyingYear: 2,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_005" }, // nexCore
+      { id: "nex_010" }, // nexLink
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_1001" }], uploads: [] },
+      projects: { favorites: [{ id: "p_506" }], contributions: [] },
+      applications: { favorites: [], uploads: [{ id: "a_104" }] },
+    },
+  },
+  {
+    id: "u_011",
+    name: "Kevin Durant",
+    email: "k@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/90.jpg",
+    headline: "Cloud Architect",
+    bio: "Designing scalable cloud solutions. AWS & Azure certified.",
+    location: "Seattle, WA",
+    joinedAt: "2023-07-15T09:45:00Z",
+    academic: {
+      institution: "University of Washington",
+      degree: "B.Sc.",
+      fieldOfStudy: "Cloud Computing",
+      studyingYear: 4,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_006" }, // nexDev
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_1101" }] },
+      projects: { favorites: [], contributions: [{ id: "p_507" }] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_012",
+    name: "Laura Croft",
+    email: "l@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/27.jpg",
+    headline: "Game Developer",
+    bio: "Creating immersive worlds. Unity & Unreal Engine pro.",
+    location: "Derby, UK",
+    joinedAt: "2023-08-01T14:20:00Z",
+    academic: {
+      institution: "University of Derby",
+      degree: "B.A.",
+      fieldOfStudy: "Game Design",
+      studyingYear: 3,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_008" }, // nexVision
+      { id: "nex_007" }, // nexPulse
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_1201" }], uploads: [] },
+      projects: { favorites: [{ id: "p_508" }], contributions: [{ id: "p_508" }] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_013",
+    name: "Michael Chang",
+    email: "m@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/55.jpg",
+    headline: "Data Analyst",
+    bio: "Turning data into actionable insights. SQL & Python wizard.",
+    location: "Singapore",
+    joinedAt: "2023-08-10T10:00:00Z",
+    academic: {
+      institution: "NUS",
+      degree: "B.Sc.",
+      fieldOfStudy: "Data Analytics",
+      studyingYear: 2,
+      graduationYear: 2026,
+    },
+    badges: [
+      { id: "nex_005" }, // nexCore
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_1301" }] },
+      projects: { favorites: [{ id: "p_509" }], contributions: [] },
+      applications: { favorites: [], uploads: [{ id: "a_105" }] },
+    },
+  },
+  {
+    id: "u_014",
+    name: "Nina Simone",
+    email: "n@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/8.jpg",
+    headline: "Music Tech Engineer",
+    bio: "Blending audio and code. Developing next-gen VSTs.",
+    location: "Paris, France",
+    joinedAt: "2023-08-25T16:30:00Z",
+    academic: {
+      institution: "IRCAM",
+      degree: "M.Sc.",
+      fieldOfStudy: "Sound Engineering",
+      studyingYear: 1,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_004" }, // nexNova
+      { id: "nex_008" }, // nexVision
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_1401" }], uploads: [] },
+      projects: { favorites: [], contributions: [{ id: "p_510" }] },
+      applications: { favorites: [{ id: "a_106" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_015",
+    name: "Oscar Wilde",
+    email: "o@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/72.jpg",
+    headline: "Backend Developer",
+    bio: "Structuring data and logic. Node.js & Go enthusiast.",
+    location: "Dublin, Ireland",
+    joinedAt: "2023-09-05T09:00:00Z",
+    academic: {
+      institution: "Trinity College Dublin",
+      degree: "B.Sc.",
+      fieldOfStudy: "Computer Science",
+      studyingYear: 4,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_006" }, // nexDev
+      { id: "nex_009" }, // nexGuard
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_1501" }] },
+      projects: { favorites: [{ id: "p_511" }], contributions: [{ id: "p_511" }] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_016",
+    name: "Priya Patel",
+    email: "p@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/39.jpg",
+    headline: "Blockchain Developer",
+    bio: "Decentralizing the web. Smart contract auditor.",
+    location: "Mumbai, India",
+    joinedAt: "2023-09-20T13:45:00Z",
+    academic: {
+      institution: "IIT Bombay",
+      degree: "B.Tech",
+      fieldOfStudy: "Computer Science",
+      studyingYear: 3,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_003" }, // nexPrime
+      { id: "nex_005" }, // nexCore
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_1601" }], uploads: [] },
+      projects: { favorites: [{ id: "p_512" }], contributions: [{ id: "p_512" }] },
+      applications: { favorites: [], uploads: [{ id: "a_107" }] },
+    },
+  },
+  {
+    id: "u_017",
+    name: "Quinn Fabray",
+    email: "q@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/1.jpg",
+    headline: "Quality Assurance Engineer",
+    bio: "Breaking things so you don't have to. Automated testing expert.",
+    location: "Austin, TX",
+    joinedAt: "2023-10-01T11:15:00Z",
+    academic: {
+      institution: "University of Texas",
+      degree: "B.Sc.",
+      fieldOfStudy: "Software Engineering",
+      studyingYear: 2,
+      graduationYear: 2026,
+    },
+    badges: [
+      { id: "nex_009" }, // nexGuard
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_1701" }] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [{ id: "a_108" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_018",
+    name: "Rafael Nadal",
+    email: "r@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/95.jpg",
+    headline: "Sports Analytics Researcher",
+    bio: "Applying ML to athletic performance. Data-driven coaching.",
+    location: "Madrid, Spain",
+    joinedAt: "2023-10-15T15:30:00Z",
+    academic: {
+      institution: "Technical University of Madrid",
+      degree: "M.Sc.",
+      fieldOfStudy: "Sports Science",
+      studyingYear: 1,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_010" }, // nexLink
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_1801" }], uploads: [{ id: "n_1802" }] },
+      projects: { favorites: [{ id: "p_513" }], contributions: [] },
+      applications: { favorites: [], uploads: [] },
+    },
+  },
+  {
+    id: "u_019",
+    name: "Sarah Connor",
+    email: "s@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/61.jpg",
+    headline: "Embedded Systems Engineer",
+    bio: "Programming the physical world. IoT and robotics.",
+    location: "Los Angeles, CA",
+    joinedAt: "2023-11-02T08:50:00Z",
+    academic: {
+      institution: "Caltech",
+      degree: "PhD",
+      fieldOfStudy: "Robotics",
+      studyingYear: 2,
+      graduationYear: 2027,
+    },
+    badges: [
+      { id: "nex_006" }, // nexDev
+      { id: "nex_005" }, // nexCore
+    ],
+    data: {
+      notes: { favorites: [], uploads: [] },
+      projects: { favorites: [{ id: "p_514" }], contributions: [{ id: "p_514" }] },
+      applications: { favorites: [], uploads: [{ id: "a_109" }] },
+    },
+  },
+  {
+    id: "u_020",
+    name: "Tyler Durden",
+    email: "t@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/82.jpg",
+    headline: "Ethical Hacker",
+    bio: "Security consultant. Finding holes in the system before the bad guys do.",
+    location: "Wilmington, DE",
+    joinedAt: "2023-11-20T22:00:00Z",
+    academic: {
+      institution: "University of Delaware",
+      degree: "B.Sc.",
+      fieldOfStudy: "Computer Security",
+      studyingYear: 3,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_002" }, // nexAdmin (Hidden role)
+      { id: "nex_009" }, // nexGuard
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_2001" }], uploads: [{ id: "n_2002" }] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [{ id: "a_110" }], uploads: [] },
+    },
+  },{
+    id: "u_021",
+    name: "Ursula Vance",
+    email: "u@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/14.jpg",
+    headline: "UX Researcher",
+    bio: "Understanding user behavior to drive design decisions. Empathy is key.",
+    location: "Vancouver, Canada",
+    joinedAt: "2023-12-01T09:10:00Z",
+    academic: {
+      institution: "UBC",
+      degree: "M.Sc.",
+      fieldOfStudy: "Human-Computer Interaction",
+      studyingYear: 2,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_008" }, // nexVision
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_2101" }], uploads: [] },
+      projects: { favorites: [{ id: "p_515" }], contributions: [] },
+      applications: { favorites: [], uploads: [{ id: "a_111" }] },
+    },
+  },
+  {
+    id: "u_022",
+    name: "Victor Stone",
+    email: "v@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/77.jpg",
+    headline: "System Administrator",
+    bio: "Keeping the servers humming. Linux enthusiast and shell scripter.",
+    location: "Detroit, MI",
+    joinedAt: "2023-12-05T14:45:00Z",
+    academic: {
+      institution: "Wayne State University",
+      degree: "B.Sc.",
+      fieldOfStudy: "Information Technology",
+      studyingYear: 4,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_005" }, // nexCore
+      { id: "nex_009" }, // nexGuard
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_2201" }] },
+      projects: { favorites: [], contributions: [{ id: "p_516" }] },
+      applications: { favorites: [{ id: "a_112" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_023",
+    name: "Wanda Maximoff",
+    email: "w@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/29.jpg",
+    headline: "Full Stack Developer",
+    bio: "Weaving magic with code. Specializing in MERN stack.",
+    location: "Westview, NJ",
+    joinedAt: "2023-12-10T11:00:00Z",
+    academic: {
+      institution: "Rutgers University",
+      degree: "B.Sc.",
+      fieldOfStudy: "Computer Science",
+      studyingYear: 3,
+      graduationYear: 2025,
+    },
+    badges: [
+      { id: "nex_004" }, // nexNova
+      { id: "nex_006" }, // nexDev
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_2301" }, { id: "n_2302" }], uploads: [] },
+      projects: { favorites: [{ id: "p_517" }], contributions: [{ id: "p_517" }] },
+      applications: { favorites: [], uploads: [{ id: "a_113" }] },
+    },
+  },
+  {
+    id: "u_024",
+    name: "Xavier Foster",
+    email: "x@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/60.jpg",
+    headline: "Machine Learning Engineer",
+    bio: "Training models to solve complex problems. Python & TensorFlow.",
+    location: "Zurich, Switzerland",
+    joinedAt: "2023-12-15T16:20:00Z",
+    academic: {
+      institution: "ETH Zurich",
+      degree: "PhD",
+      fieldOfStudy: "Machine Learning",
+      studyingYear: 1,
+      graduationYear: 2027,
+    },
+    badges: [
+      { id: "nex_003" }, // nexPrime
+    ],
+    data: {
+      notes: { favorites: [], uploads: [{ id: "n_2401" }] },
+      projects: { favorites: [{ id: "p_518" }], contributions: [] },
+      applications: { favorites: [{ id: "a_114" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_025",
+    name: "Yara Shahidi",
+    email: "y@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/5.jpg",
+    headline: "Community Manager",
+    bio: "Building bridges between developers. fostering inclusive tech spaces.",
+    location: "Boston, MA",
+    joinedAt: "2023-12-20T10:30:00Z",
+    academic: {
+      institution: "Harvard University",
+      degree: "B.A.",
+      fieldOfStudy: "Sociology & Tech",
+      studyingYear: 2,
+      graduationYear: 2026,
+    },
+    badges: [
+      { id: "nex_010" }, // nexLink
+      { id: "nex_007" }, // nexPulse
+    ],
+    data: {
+      notes: { favorites: [{ id: "n_2501" }], uploads: [{ id: "n_2502" }] },
+      projects: { favorites: [], contributions: [] },
+      applications: { favorites: [{ id: "a_115" }], uploads: [] },
+    },
+  },
+  {
+    id: "u_026",
+    name: "Zack Morris",
+    email: "z@nex.com",
+    password: "nex1234",
+    profilePicture: "/img/profile_pic/91.jpg",
+    headline: "Product Owner",
+    bio: "Defining the roadmap. Balancing user needs with business goals.",
+    location: "San Diego, CA",
+    joinedAt: "2023-12-28T13:00:00Z",
+    academic: {
+      institution: "UCSD",
+      degree: "MBA",
+      fieldOfStudy: "Business Administration",
+      studyingYear: 2,
+      graduationYear: 2024,
+    },
+    badges: [
+      { id: "nex_005" }, // nexCore
+    ],
+    data: {
+      notes: { favorites: [], uploads: [] },
+      projects: { favorites: [{ id: "p_519" }], contributions: [] },
+      applications: { favorites: [], uploads: [{ id: "a_116" }] },
     },
   },
 ];

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { UserInfo } from "@/components/nav/heading-navbar";
+import { NexeraUser } from "@/components/types";
 
 // --- 1. Smooth & Calm Configuration ---
 
@@ -66,10 +67,12 @@ export default function MobileNavBar({
   data,
   activeIcon,
   setActiveIcon,
+  user
 }: {
   data: string[];
   activeIcon: string;
   setActiveIcon: (icon: string) => void;
+  user:NexeraUser
 }) {
   const params = useSearchParams();
   const pathname = usePathname();
@@ -106,7 +109,7 @@ export default function MobileNavBar({
     } else {
       param.delete("r");
     }
-    replace(`${pathname}?${param.toString()}`, { scroll: false });
+    replace(`${pathname}?${param.toString()}` as any, { scroll: false });
     setActiveIcon(activeTab[0] || "Home");
   }
 
@@ -227,7 +230,7 @@ export default function MobileNavBar({
         </div>
 
         <div className="nav-sideIcons">
-          <UserInfo />
+          <UserInfo user={user} />
         </div>
       </div>
 

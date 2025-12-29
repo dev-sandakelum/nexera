@@ -21,7 +21,6 @@ export default function Login() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
-    console.log((e.target as any).nexEmail?.value);
     const data = await res.json();
 
     if (data.success) {

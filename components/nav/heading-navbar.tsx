@@ -1,13 +1,17 @@
 "use client";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import { nexBadge, NexeraUser } from "../types";
+import { nexBadges } from "@/public/json/badges";
 
-interface HeadingNavBarProps {
-  data: string[];
-}
-
-export default function HeadingNavBar({ data }: HeadingNavBarProps) {
+export default function HeadingNavBar({
+  data,
+  user,
+}: {
+  data: any;
+  user: NexeraUser;
+}) {
   const [displayData, setDisplayData] = useState(data);
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
@@ -42,7 +46,7 @@ export default function HeadingNavBar({ data }: HeadingNavBarProps) {
         }`}
       >
         <p>
-          {previousRoutes.map((item, index) => (
+          {previousRoutes.map((item: string, index: number) => (
             <span
               key={`${item}-${index}`}
               className="route-item"
@@ -64,14 +68,23 @@ export default function HeadingNavBar({ data }: HeadingNavBarProps) {
           </span>
         </p>
       </div>
-      <UserInfo />
+      <UserInfo user={user} />
     </div>
   );
 }
 
-export function UserInfo() {
+export function UserInfo({ user }: { user: NexeraUser }) {
   const [is_UserInfo_open, set_is_UserInfo_open] = useState(false);
   const [is_UserInfo_mobile, set_is_UserInfo_mobile] = useState(false);
+  const { replace } = useRouter();
+
+  const pickedBadges: nexBadge[] = [];
+  user.badges.forEach((nexBadge) => {
+    const foundBadge = nexBadges.find((badge) => badge.id === nexBadge.id);
+    if (foundBadge) {
+      pickedBadges.push(foundBadge);
+    }
+  });
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -82,44 +95,47 @@ export function UserInfo() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  const handleLogOut = async () => {
+    await fetch("/api/logout", { method: "POST" });
+    replace("/?r=login");
+  };
+
   return (
     <div
       className={`navbar-user-info ${is_UserInfo_open && "open"} ${
         is_UserInfo_mobile && !is_UserInfo_open && "mobile"
-      } ${
-        is_UserInfo_mobile && is_UserInfo_open && "openMobile"
-      }`}
+      } ${is_UserInfo_mobile && is_UserInfo_open && "openMobile"}`}
     >
       <div className="user-details">
-        <div className="user-name">Hasitha Sandakelum</div>
-        <div className="user-Email">dev.sandakelum@gmail.com</div>
+        <div className="user-name">{user.name}</div>
+        <div className="user-Email">{user.email}</div>
         <div className="user-role">
-          <div
-            className="badge"
-            style={{
-              background: "var(--badge-03-bg)",
-              color: "var(--badge-03-fg)",
-            }}
-          >
-            NexRoot
-          </div>
-          <div
-            className="badge"
-            style={{
-              background: "var(--badge-07-bg)",
-              color: "var(--badge-07-fg)",
-            }}
-          >
-            NexAdmin
-          </div>
+          {user.badges.length > 0 &&
+            pickedBadges.map((badge) => (
+              <>
+                <div
+                  key={badge.id}
+                  className="badge"
+                  style={{
+                    background: badge.color.bgColor,
+                    color: badge.color.textColor,
+                  }}
+                >
+                  {badge.name}
+                </div>
+              </>
+            ))}
+          
         </div>
         <div className="signOut">
-          <button onClick={()=>redirect("/?r=login")}>Sign Out</button>
+          <button onClick={handleLogOut}>
+            {user.id == "guest_000" ? "Sign In" : "Sign Out"}
+          </button>
         </div>
       </div>
       <div
         className="user-avatar"
-        style={{ "--bg": "url(/avatar/user.png)" } as React.CSSProperties}
+        style={{ "--bg": `url(${user.profilePicture})` } as React.CSSProperties}
         onClick={() => {
           set_is_UserInfo_open(!is_UserInfo_open);
         }}

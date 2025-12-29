@@ -1,27 +1,31 @@
 // app/api/login/route.ts
+import { nexeraUsers } from "@/public/json/users";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
-console.log(email + "     " + password);
+  console.log(email + "     " + password);
 
-  // Replace with your real validation
-  if (email === "admin@example.com" && password === "123456") {
-    const response = NextResponse.json({ success: true });
+  const user = nexeraUsers.find((u) => u.email === email);
 
-    // Set cookie for 1 day
-    response.cookies.set({
-      name: "auth-token",
-      value: "user-unique-token", // could be JWT or any string
-      httpOnly: true, // cannot be read by JS (recommended)
-      maxAge: 60 * 60 * 24, // 1 day
-      path: "/", // accessible for all routes
-      secure: process.env.NODE_ENV === "production", // HTTPS only in prod
-      sameSite: "lax", // prevents CSRF in most cases
-    });
+  if (email != null && password != null && user) {
+    if (user.email == email) {
+      if (user.password == password) {
+        const response = NextResponse.json({ success: true });
 
-    return response;
+        response.cookies.set({
+          name: "auth-token",
+          value: email, // could be JWT or any string
+          httpOnly: true, // cannot be read by JS (recommended)
+          maxAge: 60 * 60 * 24, // 1 day
+          path: "/", // accessible for all routes
+          secure: process.env.NODE_ENV === "production", // HTTPS only in prod
+          sameSite: "lax", // prevents CSRF in most cases
+        });
+
+        return response;
+      }
+    }
   }
-
   return NextResponse.json({ success: false }, { status: 401 });
 }
