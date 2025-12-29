@@ -23,8 +23,6 @@ export const guestUser: NexeraUser = {
   },
   // Satisfying the "min 2 badges" requirement
   badges: [
-    { id: 1, name: "Visitor" },
-    { id: 2, name: "Explorer" },
   ],
   data: {
     notes: { favorites: [], uploads: [] },

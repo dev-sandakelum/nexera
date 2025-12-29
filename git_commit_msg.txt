@@ -1,4 +1,3 @@
-style: Update heading navbar CSS for layout adjustments
+chore: Remove default badges from guest user data structure
 
-- Commented out the border property for cleaner aesthetics.
-- Set width to 100% for improved responsiveness and layout consistency.
+- Commented out the "Visitor" and "Explorer" badges from the guest user object in `page.tsx` to streamline user data.
