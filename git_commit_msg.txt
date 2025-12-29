@@ -1,8 +1,4 @@
-feat: update user and badge data structures, add new users and badges
+style: Update heading navbar CSS for layout adjustments
 
-- Modified `NexeraUser` type to include password and updated email format.
-- Added new `nexBadge` type for badge management.
-- Updated user data in `users.ts` with new users and their respective details.
-- Introduced new badges in `badges.ts` with descriptions and color schemes.
-- Adjusted profile picture paths and added a new image.
-- Enhanced user data structure to include academic details and badge associations.
+- Commented out the border property for cleaner aesthetics.
+- Set width to 100% for improved responsiveness and layout consistency.
