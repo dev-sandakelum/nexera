@@ -14,22 +14,33 @@ export type Note_Item = {
   description: string;
 }[];
 
-export type ProjectData = {
+export type nexProjectData = {
   id: string;
   title: string;
   access: "admin only" | "public" | "private";
   description: string;
   action: {
     label: string;
-    icon: React.ComponentType;
+    icon:
+      | "Github"
+      | "Globe"
+      | "Lock"
+      | "Shield"
+      | "Terminal"
+      | "Edit3"
+      | "Share2"
+      | "ExternalLink"
+      | "Code"
+      | "Database"
+      | "LayoutTemplate";
   };
-  contributionsLabel: {
-    id: string;
-    image: string;
-  }[];
+  contributions: {
+    userID: string; // u_001 to u_026
+  }[]; // 3 to 6 contributions
+  verified: boolean;
   socials: {
     id: number;
-    type: "verified" | "github" | "linkedin";
+    type: "github" | "linkedin";
     url?: string;
   }[];
 };
@@ -83,13 +94,13 @@ export type NexeraUser = {
 };
 
 export type nexBadge = {
-  id:string;
-  name:string;
-  description:string;
-  icon:string;
-  color:{
-    bgColor:string;
-    textColor:string;
-    borderColor:string;
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: {
+    bgColor: string;
+    textColor: string;
+    borderColor: string;
   };
-}
+};

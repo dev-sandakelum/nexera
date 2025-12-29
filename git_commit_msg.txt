@@ -1,5 +1,7 @@
-style: Refactor CSS and enhance mobile navigation components
+feat: Enhance project and note layouts, update CSS styles
 
-- Added a new background element for the mobile navigation and user info components to improve visual layering.
-- Updated CSS variables for consistent styling across components.
-- Cleaned up and organized CSS properties for better readability and maintainability.
+- Added blur effect to the returning background in main.css for improved visual depth.
+- Centered content in notes and projects sections for better alignment and aesthetics.
+- Updated project data structure to include new fields for contributions and verified status.
+- Refactored project icons to use a mapping for better maintainability and flexibility.
+- Adjusted contributions display logic to utilize user profile pictures dynamically.

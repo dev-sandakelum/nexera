@@ -124,6 +124,7 @@
 }
 .returningBG.open {
   display: block;
+  filter: blur(20px);
 }
 .footer-space {
   height: 100px;

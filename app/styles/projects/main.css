@@ -26,6 +26,7 @@
   flex-wrap: wrap;
   gap: 32px;
   row-gap: 64px;
+  justify-content: center;
 }
 
 .projectsPage .project {

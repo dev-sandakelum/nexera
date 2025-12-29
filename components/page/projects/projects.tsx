@@ -1,13 +1,30 @@
-"use client"; // Required for Framer Motion
+"use client";
 
 import { Projects_data } from "@/public/json/project";
-import { motion } from "framer-motion"; // Import motion
+import { nexeraUsers } from "@/public/json/users";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { BsGithub, BsLinkedin } from "react-icons/bs";
-import { MdVerified } from "react-icons/md";
+import { BsGithub, BsLinkedin, BsCodeSlash } from "react-icons/bs";
+import { MdVerified, MdLock, MdShare, MdEdit } from "react-icons/md";
+import { HiGlobe, HiTerminal, HiExternalLink } from "react-icons/hi";
+import { BiShieldQuarter } from "react-icons/bi";
+import { FiLayout, FiDatabase } from "react-icons/fi";
 
-// 1. Define Animation Variants
-// This controls the container (the list)
+// Icon mapping from string names to React components
+const iconMap: Record<string, React.ComponentType> = {
+  Code: BsCodeSlash,
+  Shield: BiShieldQuarter,
+  Lock: MdLock,
+  Terminal: HiTerminal,
+  Edit3: MdEdit,
+  Share2: MdShare,
+  ExternalLink: HiExternalLink,
+  Database: FiDatabase,
+  LayoutTemplate: FiLayout,
+  Globe: HiGlobe,
+  Github: BsGithub,
+};
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -35,6 +52,7 @@ const cardVariants = {
   },
 };
 
+const users = nexeraUsers;
 export default function Projects() {
   return (
     <div className="projectsPage">
@@ -57,85 +75,99 @@ export default function Projects() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.01 }} // Animates only once when 10% visible
       >
-        {Projects_data.map((project) => (
-          /* 3. Turn the card item into a motion.div */
-          <motion.div
-            className="project"
-            key={project.id}
-            variants={cardVariants}
-            whileHover={{
-              y: -5,
-              transition: { type: "spring" as const, stiffness: 300, damping: 20 },
-            }}
-          >
-            <div className="project-card overlay0"></div>
-            <div className="project-card overlay1"></div>
-            <div className="project-card overlay2">
-              <div className="content">
-                <div className="info">
-                  <h2 className="title">{project.title}</h2>
-                  <p className="access">{project.access}</p>
-                  <p className="description">{project.description}</p>
-                  <button className="btn">
-                    <span>
-                      <project.action.icon />
-                    </span>
-                    <p>{project.action.label}</p>
-                  </button>
-                </div>
-                <div className="line">
-                  <p>Contributions</p>
-                </div>
-                <div className="footer">
-                  <div className="social-media">
-                    {project.socials.map((social) => (
-                      <div key={social.id + "key"}>
-                        {social.type == "verified" && (
-                          <div className="icon" key={social.id}>
-                            <MdVerified />
-                          </div>
-                        )}
-                        {social.type == "github" && (
-                          <a
-                            className="icon"
-                            href={social.url ? social.url : "#"}
-                            key={social.id}
-                            target="_blank"
-                          >
-                            <BsGithub />
-                          </a>
-                        )}
-                        {social.type == "linkedin" && (
-                          <a
-                            className="icon"
-                            href={social.url ? social.url : "#"}
-                            key={social.id}
-                            target="_blank"
-                          >
-                            <BsLinkedin />
-                          </a>
-                        )}
-                      </div>
-                    ))}
+        {Projects_data.map((project) => {
+          const Icon = iconMap[project.action.icon] || BsCodeSlash;
+          return (
+            /* 3. Turn the card item into a motion.div */
+            <motion.div
+              className="project"
+              key={project.id}
+              variants={cardVariants}
+              whileHover={{
+                y: -5,
+                transition: {
+                  type: "spring" as const,
+                  stiffness: 300,
+                  damping: 20,
+                },
+              }}
+            >
+              <div className="project-card overlay0"></div>
+              <div className="project-card overlay1"></div>
+              <div className="project-card overlay2">
+                <div className="content">
+                  <div className="info">
+                    <h2 className="title">{project.title}</h2>
+                    <p className="access">{project.access}</p>
+                    <p className="description">{project.description}</p>
+                    <button className="btn">
+                      <span>
+                        <Icon />
+                      </span>
+                      <p>{project.action.label}</p>
+                    </button>
                   </div>
-                  <div className="Contributions">
-                    {project.contributionsLabel.map((contribution, idx) => (
-                      <Image
-                        key={contribution.id}
-                        src={contribution.image}
-                        alt={contribution.id}
-                        className="img"
-                        style={{ "--idx": idx } as React.CSSProperties}
-                        width={32}
-                        height={32}
-                      />
-                    ))}
+                  <div className="line">
+                    <p>Contributions</p>
+                  </div>
+                  <div className="footer">
+                    <div className="social-media">
+                      {project.verified == true && (
+                        <div className="icon" key={project.id + "verified"}>
+                          <MdVerified />
+                        </div>
+                      )}
+                      {project.socials.map((social) => (
+                        <div key={social.id + "key"}>
+                          {social.type == "github" && (
+                            <a
+                              className="icon"
+                              href={social.url ? social.url : "#"}
+                              key={social.id}
+                              target="_blank"
+                            >
+                              <BsGithub />
+                            </a>
+                          )}
+                          {social.type == "linkedin" && (
+                            <a
+                              className="icon"
+                              href={social.url ? social.url : "#"}
+                              key={social.id}
+                              target="_blank"
+                            >
+                              <BsLinkedin />
+                            </a>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="Contributions">
+                      {project.contributions.map((contribution, idx) => {
+                        const user = users?.find((u) => u.id === contribution.userID);
+                        const profilePicture = user?.profilePicture;
+                        
+                        if (!profilePicture) return null;
+                        
+                        return (
+                          <Image
+                            key={contribution.userID}
+                            src={profilePicture}
+                            alt={contribution.userID}
+                            className="img"
+                            style={{ "--idx": idx } as React.CSSProperties}
+                            width={32}
+                            height={32}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </motion.div>
     </div>
   );
