@@ -139,7 +139,18 @@
   height: 230px;
   right: 32px;
   top: 64px;
-  border: none;
+  border: 1px solid var(--theme-colorA);
+}
+.navbar-user-info.openMobile::before {
+  content: "";
+  background: var(--components-background);
+  z-index: -3;
+  border-radius: 16px;
+  position: absolute;
+  width: 108%;
+  height: 108%;
+  margin: auto;
+  transform: translateX(6%) translateY(0%);
 }
 /* ───── User Details ───── */
 .navbar-user-info .user-details {
@@ -256,7 +267,7 @@
 .navbar-user-info .signOut button {
   width: 40%;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 16px;
   border: none;
   outline: none;
   transition: background 0.3s ease, color 0.3s ease;
