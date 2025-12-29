@@ -1,5 +1,5 @@
-feat: Integrate HomePage component and enhance heading navbar styles
+style: Update CSS for improved layout and aesthetics
 
-- Added HomePage component rendering in HomeContent based on active icon.
-- Updated heading navbar styles with new border and background properties for improved aesthetics.
-- Adjusted button styles for better user interaction and visual consistency.
+- Changed border-radius in main.css for a more rounded appearance.
+- Adjusted navbar styles in nav.css, including fixed positioning and increased z-index for better visibility.
+- Added overflow hidden property in home.css to prevent content overflow in the home container.
