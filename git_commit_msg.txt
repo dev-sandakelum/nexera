@@ -1,3 +1,4 @@
-style: Update noteContainer styles for favorites and suggestions
+style: Update homeContainer dimensions for full viewport coverage
 
-- Added border-radius: 0 to favorites and suggestions within noteContainer for a cleaner design.
+- Changed width and height properties to 100vw and 100vh respectively for better responsiveness.
+- Added position: absolute to ensure proper layout within the viewport.
