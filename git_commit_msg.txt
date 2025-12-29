@@ -1,5 +1,6 @@
-style: Update CSS for improved layout and aesthetics
+refactor: Clean up HomeContent component and enhance login functionality
 
-- Changed border-radius in main.css for a more rounded appearance.
-- Adjusted navbar styles in nav.css, including fixed positioning and increased z-index for better visibility.
-- Added overflow hidden property in home.css to prevent content overflow in the home container.
+- Removed unused state management for user login status in HomeContent.
+- Simplified screen size check logic and active icon setting.
+- Updated Login component to handle email and password input with form submission.
+- Improved user experience by redirecting after successful login and handling invalid credentials.

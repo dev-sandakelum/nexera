@@ -33,3 +33,51 @@ export type ProjectData = {
     url?: string;
   }[];
 };
+
+export type NexeraUser = {
+  id: string;
+  name: string;
+  email: string;
+  profilePicture: string; //sequence URL public/img/profile_pic/0.jpg to 96.jpg
+  headline: string;
+  bio: string;
+  location: string;
+  joinedAt: string;
+  academic : {
+    institution: string;
+    degree: string;
+    fieldOfStudy: string;
+    studyingYear: number;
+    graduationYear: number;
+  };
+  badges: {
+    id: number;
+    name: string;
+  }[]; // must have id from B1 to B10 , 2 badges min , max and must be unique 
+  data: {
+    notes: {
+      favorites: {
+        id: string;
+      }[];
+      uploads: {
+        id: string;
+      }[];
+    };
+    projects: {
+      favorites: {
+        id: string;
+      }[];
+      contributions: {
+        id: string;
+      }[];
+    };
+    applications: {
+      favorites: {
+        id: string;
+      }[];
+      uploads: {
+        id: string;
+      }[];
+    };
+  };
+};

@@ -5,13 +5,32 @@ import GoogleBtn from "./google-btn";
 import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
-export default function Login({
-  setIsLogged,
-}: {
-  setIsLogged: (icon: boolean) => void;
-}) {
+export default function Login() {
   const [showEmailLogin, setShowEmailLogin] = useState(false);
+  const { replace } = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    console.log((e.target as any).nexEmail?.value);
+    const data = await res.json();
+
+    if (data.success) {
+      // cookie is set by server automatically
+      replace("/?r=Home"); // redirect after login
+    } else {
+      alert("Invalid credentials");
+    }
+  };
 
   return (
     <div className="loginContainer">
@@ -47,7 +66,8 @@ export default function Login({
         </button>
         <AnimatePresence>
           {showEmailLogin && (
-            <motion.div
+            <motion.form
+              onSubmit={handleLogin}
               className="inputs"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -56,17 +76,25 @@ export default function Login({
             >
               <div className="input">
                 <p>Email</p>
-                <input type="email" />
+                <input
+                  type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
               <div className="input">
                 <p>
                   <span>Password</span>
                   <a href="#">Forgot Password?</a>
                 </p>
-                <input type="password" />
+                <input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
-              <button className="SignIn" onClick={()=>{setIsLogged(true)}}>Sign In</button>
-            </motion.div>
+              <button className="SignIn" type="submit">
+                Sign In
+              </button>
+            </motion.form>
           )}
         </AnimatePresence>
         <div className="footer">

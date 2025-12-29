@@ -63,29 +63,22 @@ export default function HomeContent() {
   const sub = params.get("u");
   const routeList = Array.from(params.values());
 
-  const [isLogged, setIsLogged] = useState<boolean>();
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
   const [isMobile, setIsMobile] = useState<boolean>(false);
+
   const { replace } = useRouter();
-  console.log(isLogged);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
   useEffect(() => {
-    if (routeList.length === 0) {
-      setActiveIcon("Home");
-    } else {
-      setActiveIcon(routeList[0]);
-    }
+    setActiveIcon(routeList.length === 0 ? "Home" : routeList[0]);
   }, [route]);
 
   useEffect(() => {
@@ -93,32 +86,12 @@ export default function HomeContent() {
     area?.scrollTo(0, 0);
   }, [activeIcon, sub]);
 
-  useEffect(() => {
-    if (!isLogged) {
-      setIsLogged(false);
-    }
-    if (!isLogged && !(activeIcon == "login" || activeIcon == "register")) {
-      const param = new URLSearchParams();
-      param.set("r", "login");
-
-      replace("/?" + param);
-    }
-    if (isLogged && (activeIcon == "login" || activeIcon == "register")) {
-      replace("/?r=Home");
-    }
-  }, [isLogged]);
   return (
-    <div
-      className="page root"
-      suppressHydrationWarning
-      onLoad={() => setActiveIcon(routeList[0])}
-    >
-      {isLogged == false ? (
-        <>
-          {activeIcon === "login" && <Login setIsLogged={setIsLogged} />}
-          {activeIcon === "register" && <Register />}
-        </>
-      ) : (
+    <div className="page root" suppressHydrationWarning>
+      {activeIcon === "login" && <Login />}
+      {activeIcon === "register" && <Register />}
+
+      {!(activeIcon === "login" || activeIcon === "register") && (
         <>
           {isMobile ? (
             <MobileNavBar
@@ -139,13 +112,9 @@ export default function HomeContent() {
               {activeIcon === "Notes" && !sub && (
                 <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
               )}
-              {activeIcon === "Notes" && sub && (
-                <Notes_Sub dataset={Testdataset} />
-              )}
+              {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
               {activeIcon === "Projects" && <Projects />}
-              {activeIcon === "Admin" && (
-                <Admin subRoute={sub ? sub : "null"} />
-              )}
+              {activeIcon === "Admin" && <Admin subRoute={sub || "null"} />}
             </div>
           </div>
         </>
