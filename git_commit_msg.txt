@@ -1,7 +1,1 @@
-feat: Enhance project and note layouts, update CSS styles
-
-- Added blur effect to the returning background in main.css for improved visual depth.
-- Centered content in notes and projects sections for better alignment and aesthetics.
-- Updated project data structure to include new fields for contributions and verified status.
-- Refactored project icons to use a mapping for better maintainability and flexibility.
-- Adjusted contributions display logic to utilize user profile pictures dynamically.
+refactor: Remove ProjectCard component to streamline project display
