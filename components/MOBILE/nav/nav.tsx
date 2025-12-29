@@ -67,12 +67,12 @@ export default function MobileNavBar({
   data,
   activeIcon,
   setActiveIcon,
-  user
+  user,
 }: {
   data: string[];
   activeIcon: string;
   setActiveIcon: (icon: string) => void;
-  user:NexeraUser
+  user: NexeraUser;
 }) {
   const params = useSearchParams();
   const pathname = usePathname();
@@ -129,6 +129,13 @@ export default function MobileNavBar({
   return (
     <>
       <div className="mobile-nav">
+        {" "}
+        <div
+          className={`returningBG ${openPanel && "open"}`}
+          onClick={() => {
+            openPanel && setOpenPanel(false);
+          }}
+        ></div>
         <ul className={`nav-sideIcons ${openPanel && "open"}`}>
           {navigationItems.map(({ value, icon, alt }, idx) => {
             const isActive = activeIcon === value;
@@ -228,7 +235,6 @@ export default function MobileNavBar({
             />
           </div>
         </div>
-
         <div className="nav-sideIcons">
           <UserInfo user={user} />
         </div>
