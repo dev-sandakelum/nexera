@@ -1,3 +1,5 @@
-chore: Remove default badges from guest user data structure
+style: Refactor CSS and enhance mobile navigation components
 
-- Commented out the "Visitor" and "Explorer" badges from the guest user object in `page.tsx` to streamline user data.
+- Added a new background element for the mobile navigation and user info components to improve visual layering.
+- Updated CSS variables for consistent styling across components.
+- Cleaned up and organized CSS properties for better readability and maintainability.

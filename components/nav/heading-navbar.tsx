@@ -106,26 +106,29 @@ export function UserInfo({ user }: { user: NexeraUser }) {
         is_UserInfo_mobile && !is_UserInfo_open && "mobile"
       } ${is_UserInfo_mobile && is_UserInfo_open && "openMobile"}`}
     >
+      <div
+        className={`returningBG ${is_UserInfo_open && "open"}`}
+        onClick={() => {
+          is_UserInfo_open && set_is_UserInfo_open(false);
+        }}
+      ></div>
       <div className="user-details">
         <div className="user-name">{user.name}</div>
         <div className="user-Email">{user.email}</div>
         <div className="user-role">
           {user.badges.length > 0 &&
             pickedBadges.map((badge) => (
-              <>
-                <div
-                  key={badge.id}
-                  className="badge"
-                  style={{
-                    background: badge.color.bgColor,
-                    color: badge.color.textColor,
-                  }}
-                >
-                  {badge.name}
-                </div>
-              </>
+              <div
+                key={badge.id}
+                className="badge"
+                style={{
+                  background: badge.color.bgColor,
+                  color: badge.color.textColor,
+                }}
+              >
+                {badge.name}
+              </div>
             ))}
-          
         </div>
         <div className="signOut">
           <button onClick={handleLogOut}>
@@ -137,7 +140,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
         className="user-avatar"
         style={{ "--bg": `url(${user.profilePicture})` } as React.CSSProperties}
         onClick={() => {
-          set_is_UserInfo_open(!is_UserInfo_open);
+          !is_UserInfo_open && set_is_UserInfo_open(true);
         }}
       >
         {" "}

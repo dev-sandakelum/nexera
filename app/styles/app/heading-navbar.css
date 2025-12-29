@@ -152,6 +152,7 @@
   margin: auto;
   transform: translateX(6%) translateY(0%);
 }
+
 /* ───── User Details ───── */
 .navbar-user-info .user-details {
   font-size: 12px;
