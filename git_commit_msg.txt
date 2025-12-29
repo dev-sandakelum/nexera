@@ -1,1 +1,3 @@
-refactor: Remove ProjectCard component to streamline project display
+style: Update noteContainer styles for favorites and suggestions
+
+- Added border-radius: 0 to favorites and suggestions within noteContainer for a cleaner design.

@@ -2,4 +2,8 @@
   .noteContainer {
     padding: 0;
   }
+  .noteContainer .favorites,
+  .noteContainer .suggestions {
+    border-radius: 0;
+  }
 }
