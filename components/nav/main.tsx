@@ -1,4 +1,5 @@
 "use client";
+import { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -14,7 +15,7 @@ export default function NavBar({
   const pathname = usePathname();
   const params = useSearchParams();
   const [centerHeight, setCenterHeight] = useState<number>(0);
-  
+
   const centerRef = useRef<HTMLDivElement>(null);
   const { replace } = useRouter();
 
@@ -32,7 +33,6 @@ export default function NavBar({
     }
   }, []);
 
-  
   function handleRoute(term: string) {
     const param = new URLSearchParams();
     const activeTab = term ? term.split("/r/") : [];
@@ -41,7 +41,8 @@ export default function NavBar({
     } else {
       param.delete("r");
     }
-    replace(`${pathname}?${param.toString()}`, { scroll: false });
+    const url = `${pathname}?${param.toString()}`;
+    replace(url as Route, { scroll: false });
 
     setActiveIcon(activeTab[0] || "Home");
   }

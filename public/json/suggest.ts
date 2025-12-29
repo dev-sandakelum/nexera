@@ -1,6 +1,6 @@
-import { Note_Item } from "@/components/types";
+import { nexSubject, Subject } from "@/components/types";
 
-export const Suggestion_dataset: Note_Item = [
+export const Suggestion_dataset: Subject = [
   {
     id: "note-1",
     title: "Introduction to Databases",

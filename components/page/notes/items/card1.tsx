@@ -1,34 +1,32 @@
+import { NexeraUser, nexNoteAbout } from "@/components/types";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export type Card1Props = {
-  data: {
-    ID: string;
-    username: string;
-    fileType: string;
-    name: string;
-    description: string;
-  };
-};
-
-export default function Card1({ data }: Card1Props) {
+export default function Card1({
+  data,
+  users,
+}: {
+  data: nexNoteAbout;
+  users: NexeraUser[];
+}) {
   let fileTypeIcon = "";
   let fileTypeStyle: React.CSSProperties = {};
   if (!data) {
     return null;
   }
-  if (data.fileType == "pdf") {
+  if (data.type == "pdf") {
     fileTypeIcon = "/icons/file-types/pdf.png";
     fileTypeStyle = {
       "--card1-file-type-fg": "var(--file-01-fg)",
       "--card1-file-type-bg": "var(--file-01-bg)",
     } as React.CSSProperties;
-  } else if (data.fileType == "note") {
+  } else if (data.type == "note") {
     fileTypeIcon = "/icons/file-types/note.png";
     fileTypeStyle = {
       "--card1-file-type-fg": "var(--file-02-fg)",
       "--card1-file-type-bg": "var(--file-02-bg)",
     } as React.CSSProperties;
-  } else if (data.fileType == "quiz") {
+  } else if (data.type == "quiz") {
     fileTypeIcon = "/icons/file-types/quiz.png";
     fileTypeStyle = {
       "--card1-file-type-fg": "var(--file-03-fg)",
@@ -36,13 +34,34 @@ export default function Card1({ data }: Card1Props) {
     } as React.CSSProperties;
   }
 
+  const params = useSearchParams();
+  const pathname = "/";
+  const router = useRouter();
+  function handleRoute(term: string) {
+    const param = new URLSearchParams(params);
+    if (term) {
+      param.set("note", term);
+    } else {
+      param.delete("note");
+    }
+    router.replace(`${pathname}?${param.toString()}`, {
+      scroll: false,
+    });
+  }
   return (
-    <div className="objects" style={fileTypeStyle}>
+    <div
+      className="objects"
+      style={fileTypeStyle}
+      onClick={() => handleRoute(encodeURIComponent(data.id))}
+    >
       <div className="user">
         <p className="date">
-          <span>{data.ID}</span>
+          <span>{data.id}</span>
         </p>
-        <p className="username">{data.username}</p>
+        <p className="username">
+          {users.find((user) => user.id === data.publishedBy)?.name ||
+            data.publishedBy}
+        </p>
       </div>
       <div className="type">
         <Image
@@ -54,7 +73,7 @@ export default function Card1({ data }: Card1Props) {
         />
       </div>
       <div className="info">
-        <p className="name">{data.name}</p>
+        <p className="name">{data.title}</p>
         <p className="description">{data.description}</p>
       </div>
     </div>

@@ -1,3 +1,4 @@
-style: Adjust homeContainer positioning for full viewport coverage
+Add ICT subjects and topics data for curriculum enhancement
 
-- Added right and bottom properties to homeContainer to ensure it occupies the entire viewport without overflow.
+- Introduced a comprehensive list of ICT subjects in `subjects.ts`, covering key areas such as Programming, Networking, Database Management, Web Technologies, Cybersecurity, Operating Systems, Cloud Computing, Data Structures, AI, Software Engineering, and more.
+- Added detailed topics for each subject in `topics.ts`, including essential concepts, methodologies, and practical applications to support the learning objectives.

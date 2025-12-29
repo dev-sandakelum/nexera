@@ -46,10 +46,7 @@ import {
 } from "next/navigation";
 import { useEffect, useState } from "react";
 import Notes from "@/components/page/notes/notes";
-import { Testdataset } from "@/public/json/dataset";
 import Notes_Sub from "@/components/page/notes/notes-sub";
-import { Fav_dataset } from "@/public/json/fav";
-import { Suggestion_dataset } from "@/public/json/suggest";
 import Projects from "@/components/page/projects/projects";
 import Admin from "@/components/page/admin/admin";
 import MobileNavBar from "@/components/MOBILE/nav/nav";
@@ -57,6 +54,10 @@ import Login from "@/components/auth/login";
 import Register from "@/components/auth/register";
 import HomePage from "@/components/page/home/home";
 import { NexeraUser } from "@/components/types";
+import { nexIctSubjects } from "@/public/json/subjects";
+import { ictTopics } from "@/public/json/topics";
+import { noteContexts } from "@/public/json/notesData";
+import { ictNotes } from "@/public/json/notes";
 
 export default function HomeContent({user}:{user:NexeraUser}) {
   const params = useSearchParams();
@@ -112,9 +113,9 @@ export default function HomeContent({user}:{user:NexeraUser}) {
             <div className="UsableArea" key={activeIcon + sub}>
               {activeIcon === "Home" && <HomePage />}
               {activeIcon === "Notes" && !sub && (
-                <Notes datasetA={Fav_dataset} datasetB={Suggestion_dataset} />
+                <Notes dataset={nexIctSubjects} favarites={user.data.notes.favorites} />
               )}
-              {activeIcon === "Notes" && sub && <Notes_Sub dataset={Testdataset} />}
+              {activeIcon === "Notes" && sub && <Notes_Sub topics={ictTopics} noteAbouts={ictNotes} />}
               {activeIcon === "Projects" && <Projects />}
               {activeIcon === "Admin" && <Admin subRoute={sub || "null"} />}
             </div>

@@ -1,37 +1,27 @@
-import { Note_dataSet, Note_Item } from "@/components/types";
+import { nexSubject, Subject } from "@/components/types";
 import { motion } from "framer-motion";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { HiDotsVertical } from "react-icons/hi";
 import Card0 from "./items/card0";
-import { MdFavorite } from "react-icons/md";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
 
 export default function Notes({
-  datasetA,
-  datasetB,
+  dataset,
+  favarites,
 }: {
-  datasetA: Note_Item;
-  datasetB: Note_Item;
+  dataset: nexSubject[];
+  favarites: { id: string }[];
 }) {
-  const pathname = usePathname();
-  const params = useSearchParams();
-  const { replace } = useRouter();
-  function handleRoute(term: string, type?: string) {
-    const param = new URLSearchParams(params);
-    if (term) {
-      if (type) {
-        param.set("t", type);
-      }
-      param.set("u", term);
-    } else {
-      param.delete("t");
-      param.delete("u");
-    }
-    replace(`${pathname}?${param.toString()}`, { scroll: false });
-  }
-  const currentRoute = params.get("u");
+  const fav_dataset: nexSubject[] = [];
+  const suggestion_dataset: nexSubject[] = [];
 
+  dataset.forEach((item) => {
+    if (favarites.find((fav) => fav.id === item.id)) {
+      fav_dataset.push(item);
+    } else {
+      suggestion_dataset.push(item);
+    }
+  });
+  
   return (
     <div className="noteContainer">
       <div className="favorites">
@@ -44,7 +34,7 @@ export default function Notes({
           <GrFavorite />
           <span> Favorites</span>
         </motion.div>
-        <Card0 dataset={datasetA} type="favorites" />
+        <Card0 dataset={fav_dataset} type="favorites" />
       </div>{" "}
       <div className="suggestions">
         <motion.div
@@ -56,7 +46,7 @@ export default function Notes({
           <GiWorld />
           <span> Suggestions</span>
         </motion.div>
-        <Card0 dataset={datasetB} type="Suggestions" />
+        <Card0 dataset={suggestion_dataset} type="Suggestions" />
       </div>
     </div>
   );

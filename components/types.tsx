@@ -8,11 +8,69 @@ export type Note_dataSet = {
     description: string;
   }[];
 };
-export type Note_Item = {
+export type Subject = {
   id: string;
   title: string;
   description: string;
 }[];
+
+export type nexSubject = {
+  id: string;
+  title: string;
+  description: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+};
+export type nexTopic = {
+  id: string;
+  subjectID: string;
+  title: string;
+  description: string;
+  slug: string;
+  createdAt: string;
+  updatedAt: string;
+};
+export type baseNote = {
+  type: "note";
+  content: string; // markdown content
+};
+export type pdfNote = {
+  type: "pdf";
+  url: string;
+  sizeInMB: number;
+  pageCount?: number;
+};
+export type nexQuestion = {
+  id: string;
+  question: string;
+  options: {
+    id: string;
+    option: string;
+  }[];
+  answerID: string[];
+};
+export type quizNote = {
+  type: "quiz";
+  content: nexQuestion[];
+};
+
+export type nexNoteAbout = {
+  id: string;
+  topicID: string;
+  title: string;
+  description: string;
+  type: "note" | "pdf" | "quiz";
+  slug: string;
+  published: boolean;
+  publishedBy: string; // userID
+  createdAt: string;
+  updatedAt: string;
+};
+export type nexNoteData = {
+  noteId: string;
+  context: pdfNote | baseNote | quizNote;
+};
 
 export type nexProjectData = {
   id: string;

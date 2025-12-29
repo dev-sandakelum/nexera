@@ -1,40 +1,59 @@
 import { motion } from "framer-motion";
-import Card1, { Card1Props } from "./items/card1";
-import { Note_dataSet } from "@/components/types";
+import Card1 from "./items/card1";
+import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
+import { useSearchParams } from "next/navigation";
+import { nexeraUsers } from "@/public/json/users";
+import NotePreviewPage from "./preview/note/note";
 
-export default function Notes_Sub({dataset} : {dataset : Note_dataSet[]} ) {
+export default function Notes_Sub({
+  topics,
+  noteAbouts,
+}: {
+  topics: nexTopic[];
+  noteAbouts: nexNoteAbout[];
+}) {
+  const params = useSearchParams();
+  const sub = params.get("u");
+  const note = params.get("note");
+  if (note) {
+    return <NotePreviewPage note_id={note}/>;
+  }
+
+  const subject_topics = topics.filter((topic) => topic.subjectID === sub);
   return (
     <motion.div className="NotesPage" initial="hidden" animate="visible">
-      {dataset.map((category, idx) => (
-        <motion.div key={category.catogory}>
+      {subject_topics.map((topic, idx) => {
+        const topic_notes = noteAbouts.filter(
+          (note) => note.topicID === topic.id
+        );
+        return(
+        <motion.div key={topic.id}>
           <motion.h1
             className="catogory"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: idx * 0.1 }}
           >
-            {category.catogory}
+            {topic.title}
           </motion.h1>
           <motion.div className="topic">
-            {category.data.map((item, idx2) => (
+            {topic_notes.map((item, idx2) => (
               <motion.div
-                key={item.ID}
+                key={item.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  delay: (idx * category.data.length + idx2) * 0.1,
+                  delay: (idx * topic_notes.length + idx2) * 0.1,
                   duration: 0.4,
                 }}
               >
-                <Card1 data={item} />
+                <Card1 data={item} users={nexeraUsers}/>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
-      ))}
-      <div className="footer-space">
-        -- End of Notes --
-      </div>
+      )})}
+      <div className="footer-space">-- End of Notes --</div>
     </motion.div>
   );
 }

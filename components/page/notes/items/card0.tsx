@@ -1,9 +1,10 @@
-import { Note_Item } from "@/components/types";
+
+import { nexSubject } from "@/components/types";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function Card0({ dataset ,type}: { dataset: Note_Item , type?: string}) {
+export default function Card0({ dataset ,type}: { dataset: nexSubject[] , type?: string}) {
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -31,12 +32,9 @@ export default function Card0({ dataset ,type}: { dataset: Note_Item , type?: st
   const params = useSearchParams();
   const pathname = "/";
   const router = useRouter();
-  function handleRoute(term: string, type?: string) {
+  function handleRoute(term: string) {
     const param = new URLSearchParams(params);
     if (term) {
-      if (type) {
-        param.set("t", type);
-      }
       param.set("u", term);
     } else {
       param.delete("t");
@@ -70,7 +68,7 @@ export default function Card0({ dataset ,type}: { dataset: Note_Item , type?: st
               <p className="description">{item.description}</p>
               <button
                 onClick={() => {
-                  handleRoute(item.id, type ?? "favorites");
+                  handleRoute(item.id);
                 }}
               >
                 Open {">>"}

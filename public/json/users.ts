@@ -23,8 +23,23 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_006" }, // nexDev
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_101" }] },
-      projects: { favorites: [{ id: "p_500" }], contributions: [{ id: "p_500" }] },
+      notes: {
+        favorites: [
+          { id: "sub_01" }, // Intro to Programming
+          { id: "sub_04" }, // Web Technologies
+          { id: "sub_06" }, // Operating Systems
+          { id: "sub_07" }, // Cloud Computing
+          { id: "sub_08" }, // DSA
+          { id: "sub_10" }, // Software Engineering
+          { id: "sub_16" }, // Systems Analysis
+          { id: "sub_19" }, // DevOps
+        ],
+        uploads: [{ id: "sub_04" }, { id: "sub_07" }],
+      },
+      projects: {
+        favorites: [{ id: "p_500" }],
+        contributions: [{ id: "p_500" }],
+      },
       applications: { favorites: [], uploads: [] },
     },
   },
@@ -49,7 +64,17 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_002" }, // nexAdmin
     ],
     data: {
-      notes: { favorites: [{ id: "n_200" }], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_02" }, // Data Comm & Networking
+          { id: "sub_05" }, // Cybersecurity Essentials
+          { id: "sub_06" }, // Operating Systems
+          { id: "sub_17" }, // Digital Forensics
+          { id: "sub_18" }, // Blockchain
+          { id: "sub_23" }, // IT Law and Ethics
+        ],
+        uploads: [{ id: "sub_05" }, { id: "sub_02" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_99" }] },
     },
@@ -76,8 +101,21 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_010" }, // nexLink
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_301" }, { id: "n_302" }] },
-      projects: { favorites: [{ id: "p_501" }], contributions: [{ id: "p_501" }] },
+      notes: {
+        favorites: [
+          { id: "sub_09" }, // Artificial Intelligence
+          { id: "sub_14" }, // Data Science
+          { id: "sub_08" }, // DSA
+          { id: "sub_25" }, // Parallel Computing
+          { id: "sub_01" }, // Programming
+          { id: "sub_03" }, // DBMS
+        ],
+        uploads: [{ id: "sub_09" }, { id: "sub_14" }],
+      },
+      projects: {
+        favorites: [{ id: "p_501" }],
+        contributions: [{ id: "p_501" }],
+      },
       applications: { favorites: [], uploads: [] },
     },
   },
@@ -103,7 +141,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_008" }, // nexVision
     ],
     data: {
-      notes: { favorites: [{ id: "n_400" }], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_13" }, // Human-Computer Interaction
+          { id: "sub_04" }, // Web Technologies
+          { id: "sub_11" }, // Mobile App Dev
+          { id: "sub_15" }, // Graphics & Multimedia
+          { id: "sub_16" }, // Systems Analysis
+        ],
+        uploads: [{ id: "sub_13" }],
+      },
       projects: { favorites: [{ id: "p_502" }], contributions: [] },
       applications: { favorites: [{ id: "a_100" }], uploads: [] },
     },
@@ -129,7 +176,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_19" }, // DevOps
+          { id: "sub_07" }, // Cloud Computing
+          { id: "sub_06" }, // Operating Systems
+          { id: "sub_02" }, // Networking
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_25" }, // Parallel Computing
+          { id: "sub_01" }, // Programming
+        ],
+        uploads: [{ id: "sub_07" }, { id: "sub_19" }],
+      },
       projects: { favorites: [], contributions: [{ id: "p_503" }] },
       applications: { favorites: [], uploads: [{ id: "a_101" }] },
     },
@@ -156,8 +214,20 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_007" }, // nexPulse
     ],
     data: {
-      notes: { favorites: [{ id: "n_601" }], uploads: [{ id: "n_602" }] },
-      projects: { favorites: [{ id: "p_504" }], contributions: [{ id: "p_504" }] },
+      notes: {
+        favorites: [
+          { id: "sub_04" }, // Web Technologies
+          { id: "sub_13" }, // HCI
+          { id: "sub_15" }, // Graphics
+          { id: "sub_01" }, // Programming
+          { id: "sub_11" }, // Mobile App Dev
+        ],
+        uploads: [{ id: "sub_04" }],
+      },
+      projects: {
+        favorites: [{ id: "p_504" }],
+        contributions: [{ id: "p_504" }],
+      },
       applications: { favorites: [], uploads: [] },
     },
   },
@@ -182,7 +252,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_008" }, // nexVision
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_701" }, { id: "n_702" }, { id: "n_703" }] },
+      notes: {
+        favorites: [
+          { id: "sub_01" }, // Intro to Programming
+          { id: "sub_23" }, // IT Ethics
+          { id: "sub_13" }, // HCI
+          { id: "sub_24" }, // MIS
+          { id: "sub_04" }, // Web Technologies
+        ],
+        uploads: [{ id: "sub_01" }, { id: "sub_23" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [] },
     },
@@ -208,9 +287,25 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_004" }, // nexNova
     ],
     data: {
-      notes: { favorites: [{ id: "n_800" }], uploads: [] },
-      projects: { favorites: [{ id: "p_505" }], contributions: [{ id: "p_505" }] },
-      applications: { favorites: [{ id: "a_102" }], uploads: [{ id: "a_103" }] },
+      notes: {
+        favorites: [
+          { id: "sub_11" }, // Mobile App Dev
+          { id: "sub_04" }, // Web Technologies
+          { id: "sub_01" }, // Programming
+          { id: "sub_10" }, // Software Engineering
+          { id: "sub_13" }, // HCI
+          { id: "sub_03" }, // DBMS
+        ],
+        uploads: [{ id: "sub_11" }],
+      },
+      projects: {
+        favorites: [{ id: "p_505" }],
+        contributions: [{ id: "p_505" }],
+      },
+      applications: {
+        favorites: [{ id: "a_102" }],
+        uploads: [{ id: "a_103" }],
+      },
     },
   },
   {
@@ -235,7 +330,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_901" }] },
+      notes: {
+        favorites: [
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_17" }, // Digital Forensics
+          { id: "sub_02" }, // Networking
+          { id: "sub_06" }, // OS
+          { id: "sub_18" }, // Blockchain
+          { id: "sub_23" }, // IT Ethics
+          { id: "sub_07" }, // Cloud
+        ],
+        uploads: [{ id: "sub_17" }, { id: "sub_05" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [] },
     },
@@ -262,7 +368,17 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_010" }, // nexLink
     ],
     data: {
-      notes: { favorites: [{ id: "n_1001" }], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_10" }, // Software Engineering
+          { id: "sub_24" }, // MIS
+          { id: "sub_16" }, // Systems Analysis
+          { id: "sub_21" }, // ERP
+          { id: "sub_23" }, // IT Ethics
+          { id: "sub_04" }, // Web Tech
+        ],
+        uploads: [{ id: "sub_10" }],
+      },
       projects: { favorites: [{ id: "p_506" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_104" }] },
     },
@@ -288,7 +404,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_006" }, // nexDev
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_1101" }] },
+      notes: {
+        favorites: [
+          { id: "sub_07" }, // Cloud Computing
+          { id: "sub_19" }, // DevOps
+          { id: "sub_25" }, // Parallel & Distributed
+          { id: "sub_06" }, // OS
+          { id: "sub_02" }, // Networking
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_03" }, // DBMS
+        ],
+        uploads: [{ id: "sub_07" }],
+      },
       projects: { favorites: [], contributions: [{ id: "p_507" }] },
       applications: { favorites: [], uploads: [] },
     },
@@ -315,8 +442,21 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_007" }, // nexPulse
     ],
     data: {
-      notes: { favorites: [{ id: "n_1201" }], uploads: [] },
-      projects: { favorites: [{ id: "p_508" }], contributions: [{ id: "p_508" }] },
+      notes: {
+        favorites: [
+          { id: "sub_22" }, // Game Development
+          { id: "sub_15" }, // Graphics & Multimedia
+          { id: "sub_09" }, // AI
+          { id: "sub_01" }, // Programming
+          { id: "sub_08" }, // DSA
+          { id: "sub_13" }, // HCI
+        ],
+        uploads: [{ id: "sub_22" }, { id: "sub_15" }],
+      },
+      projects: {
+        favorites: [{ id: "p_508" }],
+        contributions: [{ id: "p_508" }],
+      },
       applications: { favorites: [], uploads: [] },
     },
   },
@@ -341,7 +481,17 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_1301" }] },
+      notes: {
+        favorites: [
+          { id: "sub_14" }, // Data Science
+          { id: "sub_03" }, // DBMS
+          { id: "sub_16" }, // Systems Analysis
+          { id: "sub_24" }, // MIS
+          { id: "sub_01" }, // Programming
+          { id: "sub_21" }, // ERP
+        ],
+        uploads: [{ id: "sub_14" }],
+      },
       projects: { favorites: [{ id: "p_509" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_105" }] },
     },
@@ -368,7 +518,15 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_008" }, // nexVision
     ],
     data: {
-      notes: { favorites: [{ id: "n_1401" }], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_01" }, // Programming
+          { id: "sub_12" }, // IoT (Hardware/Synth)
+          { id: "sub_15" }, // Multimedia
+          { id: "sub_08" }, // DSA
+        ],
+        uploads: [{ id: "sub_15" }],
+      },
       projects: { favorites: [], contributions: [{ id: "p_510" }] },
       applications: { favorites: [{ id: "a_106" }], uploads: [] },
     },
@@ -395,8 +553,23 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_009" }, // nexGuard
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_1501" }] },
-      projects: { favorites: [{ id: "p_511" }], contributions: [{ id: "p_511" }] },
+      notes: {
+        favorites: [
+          { id: "sub_03" }, // DBMS
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_07" }, // Cloud
+          { id: "sub_08" }, // DSA
+          { id: "sub_06" }, // OS
+          { id: "sub_19" }, // DevOps
+          { id: "sub_25" }, // Distributed Comp
+          { id: "sub_02" }, // Networking
+        ],
+        uploads: [{ id: "sub_03" }, { id: "sub_08" }],
+      },
+      projects: {
+        favorites: [{ id: "p_511" }],
+        contributions: [{ id: "p_511" }],
+      },
       applications: { favorites: [], uploads: [] },
     },
   },
@@ -422,8 +595,21 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [{ id: "n_1601" }], uploads: [] },
-      projects: { favorites: [{ id: "p_512" }], contributions: [{ id: "p_512" }] },
+      notes: {
+        favorites: [
+          { id: "sub_18" }, // Blockchain
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_01" }, // Programming
+          { id: "sub_02" }, // Networking
+          { id: "sub_23" }, // IT Law (Smart Contracts)
+          { id: "sub_08" }, // DSA
+        ],
+        uploads: [{ id: "sub_18" }],
+      },
+      projects: {
+        favorites: [{ id: "p_512" }],
+        contributions: [{ id: "p_512" }],
+      },
       applications: { favorites: [], uploads: [{ id: "a_107" }] },
     },
   },
@@ -448,7 +634,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_009" }, // nexGuard
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_1701" }] },
+      notes: {
+        favorites: [
+          { id: "sub_10" }, // Software Engineering
+          { id: "sub_01" }, // Programming
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_03" }, // DBMS
+          { id: "sub_16" }, // Systems Analysis
+        ],
+        uploads: [{ id: "sub_10" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_108" }], uploads: [] },
     },
@@ -474,7 +669,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_010" }, // nexLink
     ],
     data: {
-      notes: { favorites: [{ id: "n_1801" }], uploads: [{ id: "n_1802" }] },
+      notes: {
+        favorites: [
+          { id: "sub_14" }, // Data Science
+          { id: "sub_09" }, // AI
+          { id: "sub_03" }, // DBMS
+          { id: "sub_01" }, // Programming
+          { id: "sub_24" }, // MIS
+        ],
+        uploads: [{ id: "sub_14" }],
+      },
       projects: { favorites: [{ id: "p_513" }], contributions: [] },
       applications: { favorites: [], uploads: [] },
     },
@@ -501,8 +705,21 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [], uploads: [] },
-      projects: { favorites: [{ id: "p_514" }], contributions: [{ id: "p_514" }] },
+      notes: {
+        favorites: [
+          { id: "sub_12" }, // IoT
+          { id: "sub_20" }, // Computer Architecture
+          { id: "sub_06" }, // OS
+          { id: "sub_01" }, // Programming
+          { id: "sub_02" }, // Networking
+          { id: "sub_09" }, // AI
+        ],
+        uploads: [{ id: "sub_12" }, { id: "sub_20" }],
+      },
+      projects: {
+        favorites: [{ id: "p_514" }],
+        contributions: [{ id: "p_514" }],
+      },
       applications: { favorites: [], uploads: [{ id: "a_109" }] },
     },
   },
@@ -524,15 +741,28 @@ export const nexeraUsers: NexeraUser[] = [
       graduationYear: 2025,
     },
     badges: [
-      { id: "nex_002" }, // nexAdmin (Hidden role)
+      { id: "nex_002" }, // nexAdmin
       { id: "nex_009" }, // nexGuard
     ],
     data: {
-      notes: { favorites: [{ id: "n_2001" }], uploads: [{ id: "n_2002" }] },
+      notes: {
+        favorites: [
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_02" }, // Networking
+          { id: "sub_06" }, // OS
+          { id: "sub_17" }, // Forensics
+          { id: "sub_23" }, // IT Ethics
+          { id: "sub_01" }, // Programming
+          { id: "sub_18" }, // Blockchain
+          { id: "sub_04" }, // Web Tech
+        ],
+        uploads: [{ id: "sub_05" }, { id: "sub_17" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_110" }], uploads: [] },
     },
-  },{
+  },
+  {
     id: "u_021",
     name: "Ursula Vance",
     email: "u@nex.com",
@@ -553,7 +783,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_008" }, // nexVision
     ],
     data: {
-      notes: { favorites: [{ id: "n_2101" }], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_13" }, // HCI
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_16" }, // Systems Analysis
+          { id: "sub_11" }, // Mobile Dev
+          { id: "sub_15" }, // Graphics
+        ],
+        uploads: [{ id: "sub_13" }],
+      },
       projects: { favorites: [{ id: "p_515" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_111" }] },
     },
@@ -580,7 +819,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_009" }, // nexGuard
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_2201" }] },
+      notes: {
+        favorites: [
+          { id: "sub_06" }, // OS
+          { id: "sub_02" }, // Networking
+          { id: "sub_19" }, // DevOps
+          { id: "sub_07" }, // Cloud
+          { id: "sub_20" }, // Comp Architecture
+          { id: "sub_05" }, // Cybersecurity
+          { id: "sub_01" }, // Programming
+        ],
+        uploads: [{ id: "sub_06" }, { id: "sub_02" }],
+      },
       projects: { favorites: [], contributions: [{ id: "p_516" }] },
       applications: { favorites: [{ id: "a_112" }], uploads: [] },
     },
@@ -607,8 +857,23 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_006" }, // nexDev
     ],
     data: {
-      notes: { favorites: [{ id: "n_2301" }, { id: "n_2302" }], uploads: [] },
-      projects: { favorites: [{ id: "p_517" }], contributions: [{ id: "p_517" }] },
+      notes: {
+        favorites: [
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_03" }, // DBMS
+          { id: "sub_07" }, // Cloud
+          { id: "sub_01" }, // Programming
+          { id: "sub_08" }, // DSA
+          { id: "sub_10" }, // Soft Eng
+          { id: "sub_19" }, // DevOps
+          { id: "sub_02" }, // Networking
+        ],
+        uploads: [{ id: "sub_04" }, { id: "sub_03" }],
+      },
+      projects: {
+        favorites: [{ id: "p_517" }],
+        contributions: [{ id: "p_517" }],
+      },
       applications: { favorites: [], uploads: [{ id: "a_113" }] },
     },
   },
@@ -633,7 +898,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_003" }, // nexPrime
     ],
     data: {
-      notes: { favorites: [], uploads: [{ id: "n_2401" }] },
+      notes: {
+        favorites: [
+          { id: "sub_09" }, // AI
+          { id: "sub_14" }, // Data Science
+          { id: "sub_25" }, // Parallel Comp
+          { id: "sub_08" }, // DSA
+          { id: "sub_01" }, // Programming
+          { id: "sub_03" }, // DBMS
+          { id: "sub_07" }, // Cloud
+        ],
+        uploads: [{ id: "sub_09" }],
+      },
       projects: { favorites: [{ id: "p_518" }], contributions: [] },
       applications: { favorites: [{ id: "a_114" }], uploads: [] },
     },
@@ -660,7 +936,16 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_007" }, // nexPulse
     ],
     data: {
-      notes: { favorites: [{ id: "n_2501" }], uploads: [{ id: "n_2502" }] },
+      notes: {
+        favorites: [
+          { id: "sub_23" }, // IT Ethics
+          { id: "sub_13" }, // HCI
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_01" }, // Programming
+          { id: "sub_24" }, // MIS
+        ],
+        uploads: [{ id: "sub_23" }],
+      },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_115" }], uploads: [] },
     },
@@ -686,7 +971,18 @@ export const nexeraUsers: NexeraUser[] = [
       { id: "nex_005" }, // nexCore
     ],
     data: {
-      notes: { favorites: [], uploads: [] },
+      notes: {
+        favorites: [
+          { id: "sub_24" }, // MIS
+          { id: "sub_16" }, // Systems Analysis
+          { id: "sub_10" }, // Software Engineering
+          { id: "sub_21" }, // ERP
+          { id: "sub_04" }, // Web Tech
+          { id: "sub_13" }, // HCI
+          { id: "sub_23" }, // IT Ethics
+        ],
+        uploads: [{ id: "sub_24" }],
+      },
       projects: { favorites: [{ id: "p_519" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_116" }] },
     },
