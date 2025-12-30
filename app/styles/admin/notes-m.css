@@ -1,3 +1,4 @@
+/* --- EXISTING STYLES --- */
 .notesManagementContainer {
   width: 100%;
   max-width: 1400px;
@@ -22,9 +23,60 @@
   opacity: 0.7;
 }
 
+/* Filter Controls */
+.notesManagementContainer .filterControls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px;
+  background: var(--components-background);
+  border-radius: 12px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.notesManagementContainer .filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.notesManagementContainer .filterLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.notesManagementContainer .filterSelect {
+  padding: 10px 12px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 8px;
+  color: var(--theme-colorB);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .filterSelect:hover {
+  border-color: var(--theme-colorA);
+}
+
+.notesManagementContainer .filterSelect:focus {
+  outline: none;
+  border-color: var(--theme-colorA);
+  box-shadow: 0 0 0 3px rgba(var(--theme-colorA-rgb), 0.1);
+}
+
 .notesManagementContainer .loading,
 .notesManagementContainer .emptyState {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 60px 24px;
@@ -155,6 +207,7 @@
   color: white;
 }
 
+/* --- MODAL STYLES --- */
 .notesManagementContainer .modalOverlay {
   position: fixed;
   top: 0;
@@ -174,7 +227,7 @@
   padding: 24px;
   max-width: 500px;
   width: 90%;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
@@ -214,16 +267,128 @@
   color: var(--danger-soft);
 }
 
-.notesManagementContainer .modalContent {
+/* --- NEW FORM STYLES --- */
+.notesManagementContainer .formGrid {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+}
+
+.notesManagementContainer .formRow {
+  display: flex;
   gap: 16px;
 }
 
-.notesManagementContainer .field {
+/* Allow form rows to stack on small screens */
+@media (max-width: 480px) {
+  .notesManagementContainer .formRow {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.notesManagementContainer .formGroup {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
+}
+
+.notesManagementContainer .formGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+/* Shared Input Styles */
+.notesManagementContainer .formInput,
+.notesManagementContainer .formSelect,
+.notesManagementContainer .formTextarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 8px;
+  color: var(--theme-colorB);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .formTextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.notesManagementContainer .formInput:focus,
+.notesManagementContainer .formSelect:focus,
+.notesManagementContainer .formTextarea:focus {
+  outline: none;
+  border-color: var(--theme-colorA);
+  box-shadow: 0 0 0 3px rgba(var(--theme-colorA-rgb), 0.1);
+  background: var(--components-background);
+}
+
+/* Modal Bottom Actions */
+.notesManagementContainer .modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--theme-colorE75);
+}
+
+.notesManagementContainer .cancelBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--background);
+  color: var(--theme-colorB);
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .cancelBtn:hover {
+  background: var(--theme-colorE75);
+}
+
+.notesManagementContainer .saveBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--theme-colorA);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .saveBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.notesManagementContainer .saveBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Existing View Field Styles */
+.notesManagementContainer .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .notesManagementContainer .field label {
@@ -237,11 +402,23 @@
 
 .notesManagementContainer .field p {
   font-size: 14px;
+  line-height: 1.5;
   color: var(--theme-colorB);
   word-break: break-word;
   margin: 0;
 }
 
+/* --- ANIMATIONS --- */
+.notesManagementContainer .spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Confirm Modal Styles (Existing) */
 .notesManagementContainer .confirmModal {
   background: var(--components-background);
   border-radius: 16px;

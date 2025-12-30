@@ -1,7 +1,6 @@
 import { createNote, deleteNote, fetchNotes, updateNote } from '@/components/firebase/notes-management';
 import { NextRequest, NextResponse } from 'next/server';
 
-
 export async function GET() {
   try {
     const notes = await fetchNotes();

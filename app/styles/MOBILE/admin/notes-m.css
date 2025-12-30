@@ -1,0 +1,196 @@
+/* =========================
+   MOBILE STYLES (max-width: 768px)
+========================= */
+
+@media (max-width: 768px) {
+  .notesManagementContainer {
+    padding: 80px 16px 24px;
+  }
+
+  .notesManagementContainer .header h1 {
+    font-size: 24px;
+  }
+
+  .notesManagementContainer .header p {
+    font-size: 13px;
+  }
+
+  /* --- Filter Controls --- */
+  .notesManagementContainer .filterControls {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .notesManagementContainer .filterGroup {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .notesManagementContainer .filterSelect {
+    width: 100%;
+  }
+
+  /* --- Table to Card Layout --- */
+  .notesManagementContainer .tableWrapper {
+    border-radius: 12px;
+    background: transparent; /* Remove bg to let cards stand out */
+    box-shadow: none;
+  }
+
+  .notesManagementContainer .notesTable thead {
+    display: none;
+  }
+
+  .notesManagementContainer .notesTable,
+  .notesManagementContainer .notesTable tbody,
+  .notesManagementContainer .notesTable tr {
+    display: block;
+    width: 100%;
+  }
+
+  .notesManagementContainer .notesTable tbody tr {
+    margin-bottom: 16px;
+    border: 1px solid var(--theme-colorE75);
+    border-radius: 12px;
+    padding: 16px;
+    background: var(--components-background);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .notesManagementContainer .notesTable td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border: none;
+    text-align: right;
+  }
+
+  /* Add labels via data-attribute */
+  .notesManagementContainer .notesTable td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--theme-colorB);
+    opacity: 0.7;
+    flex-shrink: 0;
+    text-align: left;
+    margin-right: 16px;
+  }
+
+  .notesManagementContainer .titleCell {
+    max-width: none;
+    white-space: normal;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .notesManagementContainer .actionsCell {
+    justify-content: flex-end;
+    padding-top: 16px;
+    margin-top: 8px;
+    border-top: 1px solid var(--theme-colorE75);
+  }
+  
+  /* Hide the "Actions" label for the button row to keep it clean */
+  .notesManagementContainer .actionsCell::before {
+    display: none; 
+  }
+
+  /* --- NEW: Form & Edit Modal Mobile Styles --- */
+  
+  /* Stack the side-by-side form inputs (Type/Status) */
+  .notesManagementContainer .formRow {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Inputs larger for touch targets */
+  .notesManagementContainer .formInput,
+  .notesManagementContainer .formSelect,
+  .notesManagementContainer .formTextarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 12px;
+  }
+
+  /* Modal Adjustments */
+  .notesManagementContainer .modal {
+    width: 95%;
+    max-width: none;
+    padding: 20px;
+    margin: 16px;
+    max-height: 90vh; /* Allow more height on mobile */
+  }
+
+  .notesManagementContainer .modalHeader h2 {
+    font-size: 18px;
+  }
+
+  /* Modal Bottom Actions */
+  .notesManagementContainer .modalActions {
+    flex-direction: column-reverse; /* Save button on top/first */
+    gap: 12px;
+  }
+
+  .notesManagementContainer .saveBtn,
+  .notesManagementContainer .cancelBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+  }
+
+  /* Confirm Modal */
+  .notesManagementContainer .confirmModal {
+    width: 95%;
+    margin: 16px;
+    padding: 24px;
+  }
+
+  .notesManagementContainer .confirmButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .notesManagementContainer .confirmBtn {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Action Buttons Mobile */
+  .notesManagementContainer .actionBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notesManagementContainer {
+    padding: 72px 12px 20px;
+  }
+
+  .notesManagementContainer .header h1 {
+    font-size: 20px;
+  }
+  
+  .notesManagementContainer .notesTable tbody tr {
+    padding: 12px;
+  }
+
+  .notesManagementContainer .notesTable td {
+    font-size: 13px;
+  }
+
+  .notesManagementContainer .actionsCell {
+    gap: 8px;
+  }
+
+  .notesManagementContainer .actionBtn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
