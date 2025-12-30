@@ -40,9 +40,9 @@ export default function Card1({
   function handleRoute(term: string) {
     const param = new URLSearchParams(params);
     if (term) {
-      param.set("note", term);
+      param.set("n", term);
     } else {
-      param.delete("note");
+      param.delete("n");
     }
     router.replace(`${pathname}?${param.toString()}`, {
       scroll: false,

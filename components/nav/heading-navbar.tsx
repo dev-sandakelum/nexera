@@ -1,9 +1,11 @@
 "use client";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
+import { useSearchParams } from "next/navigation";
+import { Route } from "next";
 
 export default function HeadingNavBar({
   data,
@@ -37,7 +39,26 @@ export default function HeadingNavBar({
       }, 300 + data.length * 80 + 500); // Exit + stagger delays + active delay
     }
   }, [data, displayData]);
+  
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const { replace } = useRouter();
 
+  function handleRoute(u: string, n?: string) {
+    const param = new URLSearchParams(params);
+    if (u) {
+      param.set("u", u);
+      if (n) {
+        param.set("n", n);
+      } else {
+        param.delete("n");
+      }
+    } else {
+      param.delete("u");
+    }
+    const url = `${pathname}?${param.toString()}`;
+    replace(url as Route, { scroll: false });
+  }
   return (
     <div className="heading-navbar">
       <div
@@ -51,6 +72,7 @@ export default function HeadingNavBar({
               key={`${item}-${index}`}
               className="route-item"
               style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}
+              onClick={()=>handleRoute(item === "Notes" ? "" : item)}
             >
               {item}
               <span className="separator"> &gt; </span>

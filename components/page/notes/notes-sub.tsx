@@ -14,7 +14,7 @@ export default function Notes_Sub({
 }) {
   const params = useSearchParams();
   const sub = params.get("u");
-  const note = params.get("note");
+  const note = params.get("n");
   if (note) {
     return <NotePreviewPage note_id={note}/>;
   }

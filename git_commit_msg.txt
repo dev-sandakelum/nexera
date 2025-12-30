@@ -1,4 +1,6 @@
-Add ICT subjects and topics data for curriculum enhancement
+feat: Enhance mobile and heading navigation with improved routing and styles
 
-- Introduced a comprehensive list of ICT subjects in `subjects.ts`, covering key areas such as Programming, Networking, Database Management, Web Technologies, Cybersecurity, Operating Systems, Cloud Computing, Data Structures, AI, Software Engineering, and more.
-- Added detailed topics for each subject in `topics.ts`, including essential concepts, methodologies, and practical applications to support the learning objectives.
+- Added cursor pointer style to navigation items in mobile and heading nav for better user interaction.
+- Implemented new routing functions in both MobileNavBar and HeadingNavBar components to handle URL parameters more effectively.
+- Updated parameter names for consistency across components, changing 'note' to 'n' in relevant places.
+- Enhanced click handling on navigation items to improve user experience.
