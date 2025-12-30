@@ -4,10 +4,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Card1({
   data,
-  users,
+  userNames,
 }: {
   data: nexNoteAbout;
-  users: NexeraUser[];
+  userNames: {
+    id: string;
+    name: string;
+  }[];
 }) {
   let fileTypeIcon = "";
   let fileTypeStyle: React.CSSProperties = {};
@@ -59,7 +62,7 @@ export default function Card1({
           <span>{data.id}</span>
         </p>
         <p className="username">
-          {users.find((user) => user.id === data.publishedBy)?.name ||
+          {userNames.find((user) => user.id === data.publishedBy)?.name ||
             data.publishedBy}
         </p>
       </div>
