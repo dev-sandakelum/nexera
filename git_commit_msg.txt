@@ -1,6 +1,6 @@
-feat: Enhance mobile and heading navigation with improved routing and styles
+feat: Add note preview styles and enhance content structure
 
-- Added cursor pointer style to navigation items in mobile and heading nav for better user interaction.
-- Implemented new routing functions in both MobileNavBar and HeadingNavBar components to handle URL parameters more effectively.
-- Updated parameter names for consistency across components, changing 'note' to 'n' in relevant places.
-- Enhanced click handling on navigation items to improve user experience.
+- Imported new CSS for note preview styling to improve visual presentation.
+- Refactored the NotePreviewPage component for better layout and readability.
+- Updated note content in `notesData.ts` to provide comprehensive information on computer networks, including definitions, applications, and hardware components.
+- Enhanced the organization of content with clear headings and structured sections for improved user experience.

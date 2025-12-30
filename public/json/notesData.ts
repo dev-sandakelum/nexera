@@ -457,37 +457,215 @@ do {
     noteId: "n_13",
     context: {
       type: "note",
-      content: `# Break and Continue
+      content: `# Computer Networks
 
-These statements allow you to alter the normal flow of loops.
+## What is a Computer Network?
 
-## The \`break\` Statement
-The \`break\` statement terminates the loop immediately when encountered. Control is passed to the statement following the loop.
+A set of communication elements connected by communication links. A network can be defined as two or more computers/nodes connected together in such a way that they can share resources.
 
-**Example: Search for a number**
-\`\`\`c
-for (int i = 0; i < 10; i++) {
-    if (i == 5) {
-        break; // Stop loop when i is 5
-    }
-    printf("%d ", i);
-}
-// Output: 0 1 2 3 4
-\`\`\`
+**More specifically:**
 
-## The \`continue\` Statement
-The \`continue\` statement skips the *current* iteration and jumps back to the condition/update part of the loop.
+A set of systems/nodes interconnected by communication links that is primarily used for information transfer (information = messages/data from applications)
 
-**Example: Skip even numbers**
-\`\`\`c
-for (int i = 0; i < 5; i++) {
-    if (i % 2 == 0) {
-        continue; // Skip the rest of the body for even numbers
-    }
-    printf("%d ", i);
-}
-// Output: 1 3
-\`\`\``,
+- **Systems:** Computers and other end systems (tablets, smartphones, sensors), switches, routers
+- **Links:** Wired (twisted pair, Twinax, coaxial cable, optical fiber)
+
+## Why We are Using Computer Networks
+
+- Before computer networks, people sent and received information by hand, using the postal service. This is slow and can be unreliable.
+- Computer networks enable faster, more efficient modes of communication (email, video conferencing).
+- Computer networks and the sharing of electronic data encourages the use of standard policies and procedures.
+- Computer networks provide backup and recovery support for our data redundancy.
+- Computer networks lead to cost savings.
+
+## Uses of Computer Networks
+
+### 1️⃣ Business Applications
+- Resources sharing
+- Communication
+- Business with other companies
+- A client is a program requesting services. Services is a program providing services.
+
+### 2️⃣ Home Applications
+- Access to remote information
+- Person-to person communication
+- Interactive Entertainment
+- Electronic Commerce
+
+### 3️⃣ Mobile Users
+- Combinations of wireless networks and mobile computing.
+
+### 4️⃣ Social Issues
+- Government versus citizen
+- Spam mail
+- Identity theft
+- Many problems could be solved if the computer security is taken seriously.
+
+## Network Hardware
+
+Network hardware components can be categorized into:
+
+- Local Area Networks (LAN)
+- Metropolitan Area Networks (MAN)
+- Wide Area Networks (WAN)
+- Wireless Networks
+- Home Networks
+- Internetworks
+
+### Transmission Technologies:
+
+#### 📡 Broadcast Links
+- Single Communication channel that is shared by all the machines on the network.
+- Messages on the network are called packets.
+- **Broadcasting:** A packet transmitted is received by every machine.
+- **Multicasting:** Transmission to a subset of the machines.
+
+#### 🔗 Point-to-Point Links
+- Point-to-point networks consist of many connections between individual pairs of machines.
+- Point-to-point transmission with one sender and receiver is sometimes called unicasting.
+
+## Local Area Networks (LAN)
+
+LAN is a network which is designed to operate over a small physical area such as an office, factory or a group of buildings.
+
+**Characteristics:**
+- **Size:** Restricted to particular geographic region (office building, single department)
+- **Transmission Technology:** 10 Mbps to 10 Gbps
+- **Topology:** bus, star and ring
+- Usually a privately owned network
+
+### LAN Topologies:
+
+#### ⭕ Ring Topology
+- Each computer connects to two other computers, joining them in a circle creating a unidirectional path.
+- No need of server to control the connectivity among the nodes.
+- Each entity participating in the ring reads a message, then regenerates it and hands it to its neighbor.
+- The ring makes it difficult to add new computers.
+- Unlike a star topology network, the ring topology network will go down if one entity is removed.
+- Minimum collision (in single ring)
+- **Single ring:** All devices share a single cable
+- **Dual ring:** Data can be sent in both directions
+
+#### 🚌 Bus Topology
+- Simplest physical topology consisting of a single cable that runs to every workstation
+- Uses the least amount of cabling, but covers the shortest distance
+- Each computer shares the same data and address path
+- Messages pass through the trunk, and each workstation checks if the message is addressed to itself
+- Difficult to add a workstation
+- If main cable breaks, the entire network is disrupted
+- Very expensive to maintain
+
+#### ⭐ Star Topology
+- Branches each network device off a central device called a hub
+- Very easy to add a new workstation
+- If any workstation goes down, it does not affect the entire network
+- If the central device goes down, the entire network goes down
+- Resembles spokes in a bicycle wheel
+- Easy to install - cable is run from each workstation to the hub
+- More expensive to install than bus networks due to more cables and hubs needed
+
+## Metropolitan Area Network (MAN)
+
+- Computer network larger than a LAN and connects clients and servers from multiple buildings over a larger area.
+- A MAN may use different transmission technology and different media, such as fiber and wireless because of the greater distance it covers.
+- Utilized across multiple buildings.
+- Commonly used in school campuses or large companies with multiple buildings.
+- Larger than a LAN, but smaller than a WAN.
+- Also used to mean the interconnection of several LANs by bridging them together (campus network).
+
+## Wide Area Network (WAN)
+
+A Wide Area Network is a computer network that covers a broad area (i.e., any network whose communications links cross metropolitan, regional, or national boundaries). Or, less formally, a network that uses routers and public communications links.
+
+- The largest and most well-known example of a WAN is the Internet.
+- WANs are used to connect LANs and other types of networks together.
+- Users and computers in one location can communicate with users and computers in other locations.
+
+### 📶 Wireless WAN
+- A wide area network where separate areas of coverage or cells are connected wirelessly to provide service to a large geographic area.
+- WWANs make use of technologies that focus on modulation of voice and data.
+- Exclusively use Radio Frequency signals designed to accommodate many users.
+
+## Home Network
+
+Every device in the home will be capable of communicating with every other device, and all of them will be accessible over the Internet.
+
+- **Computers:** Desktop PC, notebook PC, PDA, shared peripherals
+- **Telecommunications:** Telephone, Mobile telephone, intercom, fax
+- **Appliances:** Microwave, refrigerator, clock, furnace, airco, lights, AC
+- **Telemetry:** Utility meter, smoke/burglar alarm, thermostat, babycam
+
+## Internetworks
+
+A collection of interconnected networks is called an internetwork or internet. Internetworking devices are products used to connect networks.
+
+As computer networks grow in size and complexity, so do the internetworking devices used to connect them.
+
+**Internetworking Devices:**
+- Repeaters
+- Hubs
+- Bridges
+- Switches
+- Routers
+- Gateways
+
+## Network Software
+
+### 📋 Functions of Network Software
+- Helps to set up and install computer networks
+- Enables users to have access to network resources in a seamless manner
+- Allows administrations to add or remove users from the network
+- Helps to define locations of data storage and allows users to access that data
+- Helps administrators and security system to protect the network from data breaches, unauthorized access and attacks
+- Enables network virtualizations
+
+### 🏗️ Protocol Hierarchies
+- Networks are organized as a series of layers.
+- Layer n on a host communicated with layer n on another host.
+- **Layer n protocol:** Rules and conventions for this communication.
+- The entities on each host implementing the layer n protocol are peers.
+
+### 🎯 Design Issues for the Layers
+- **Addressing:** Some form of addressing is needed to specify a specific destination.
+- **Rules for data transfer:** Simplex, Half-duplex and full duplex transmission.
+- **Error control:** Both ends must agree on error detecting and correcting codes.
+- **Sequencing and reassembly:** Messages may arrive out of order and need proper reassembly.
+- **Flow control:** Need to regulate flow of data to avoid swamping receiver.
+- **Message size handling:** Disassembling, transmitting and reassembling messages.
+- **Routing:** Choosing a path when there are multiple paths between source and destination.
+
+## Connection-Oriented vs Connectionless Service
+
+### 🔗 Connection-oriented Service
+- Connection established and terminated
+- Modeled after the telephone system
+- Messages arrive in the order they are sent
+- **Example:** TCP
+
+### 📦 Connectionless Service
+- Also called datagram service
+- Modeled after the postal system
+- No guarantees on message ordering
+- Unreliable: Messages may be lost
+- **Example:** UDP
+
+## Service Primitives
+
+A service is formally specified by a set of primitives (operations) available to a user process to access the service.
+
+| Primitive | Meaning |
+|-----------|---------|
+| LISTEN | Block waiting for an incoming connection |
+| CONNECT | Establish a connection with a waiting peer |
+| ACCEPT | Accept an incoming connection from a peer |
+| RECEIVE | Block waiting for an incoming message |
+| SEND | Send a message to the peer |
+| DISCONNECT | Terminate a connection |
+
+## Relationship of Services to Protocols
+
+- **Service:** A set of primitives (operations) that a layer provides to the layer above it.
+- **Protocol:** A set of rules governing the format and meaning of the frames, packets, or messages that are exchanged by the peer entities within layer.`,
     },
   },
   {

@@ -21,6 +21,8 @@ import "./styles/admin/dashboard/ctrl-btn.css";
 
 import "./styles/auth/main.css";
 
+import "./styles/notes/preview/md.css";
+
 // Mobile
 
 import "./styles/MOBILE/main.css";
