@@ -129,6 +129,7 @@
 
 .mobile-route .path .route-item {
   display: inline-block;
+  cursor: pointer;
 }
 
 .mobile-route .path .separator {

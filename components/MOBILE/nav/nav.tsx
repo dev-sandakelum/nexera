@@ -5,6 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { UserInfo } from "@/components/nav/heading-navbar";
 import { NexeraUser } from "@/components/types";
+import { Route } from "next";
 
 // --- 1. Smooth & Calm Configuration ---
 
@@ -109,10 +110,24 @@ export default function MobileNavBar({
     } else {
       param.delete("r");
     }
-    replace(`${pathname}?${param.toString()}` as any, { scroll: false });
+    replace(`${pathname}?${param.toString()}` as Route, { scroll: false });
     setActiveIcon(activeTab[0] || "Home");
   }
-
+  function handleRoute2(u: string, n?: string) {
+    const param = new URLSearchParams(params);
+    if (u) {
+      param.set("u", u);
+      if (n) {
+        param.set("n", n);
+      } else {
+        param.delete("n");
+      }
+    } else {
+      param.delete("u");
+    }
+    const url = `${pathname}?${param.toString()}`;
+    replace(url as Route, { scroll: false });
+  }
   const navigationItems = [
     { value: "Home", icon: "Home", alt: "Home Icon" },
     { value: "Notes", icon: "Notes", alt: "Notes Icon" },
@@ -261,6 +276,7 @@ export default function MobileNavBar({
                   animate="animate"
                   exit="exit"
                   layout
+                  onClick={()=>handleRoute2(item === "Notes" ? "" : item)}
                 >
                   {item}
                   <span className="separator"> &gt; </span>
