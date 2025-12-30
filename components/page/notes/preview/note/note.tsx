@@ -1,51 +1,52 @@
-import { useSearchParams } from "next/navigation";
+"use client";
+
 import { noteContexts } from "@/public/json/notesData";
-import { baseNote, pdfNote, quizNote } from "@/components/types";
-import remarkGfm from "remark-gfm";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-// Adjust import path to where your types file actually is
+import remarkGfm from "remark-gfm";
 
 export default function NotePreviewPage({ note_id }: { note_id?: string }) {
-  // 2. Variable definition
-  let note: baseNote | pdfNote | quizNote | null = null;
-  let errorMessage: string | null = null;
+  const [content, setContent] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
-  if (note_id) {
-    const foundData = noteContexts.find(
+  useEffect(() => {
+    if (!note_id) {
+      setError("No note ID provided.");
+      return;
+    }
+
+    const meta = noteContexts.find(
       (n) => n.noteId === decodeURIComponent(note_id)
     );
 
-    if (foundData) {
-      note = foundData.context;
-    } else {
-      errorMessage = "No note found.";
+    if (!meta) {
+      setError("No note found.");
+      return;
     }
-  } else {
-    errorMessage = "No note ID provided.";
-  }
 
-  // 3. Helper to render content based on type
+    if (meta.context.type !== "note" || !meta.context.url) {
+      setError("No valid URL found for this note.");
+      return;
+    }
+
+    fetch(meta.context.url)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load note");
+        return res.text();
+      })
+      .then(setContent)
+      .catch(() => setError("Error loading markdown file"));
+  }, [note_id]);
+
+  // if (error) return <p>{error}</p>;
 
   return (
-    <div
-      style={{
-        
-      }}
-      className="notePreviewContainer"
-    >
+    <div className="notePreviewContainer">
       <div className="inside">
-        {errorMessage ? (
-          <p>{errorMessage}</p>
+        {error ? (
+          <p>{error}</p>
         ) : (
-          note && (
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {"content" in note
-                ? typeof note.content === "string"
-                  ? note.content
-                  : JSON.stringify(note.content)
-                : "Content not available"}
-            </ReactMarkdown>
-          )
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
         )}
       </div>
     </div>
