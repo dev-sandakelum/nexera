@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 import Card1 from "./items/card1";
 import { nexNoteAbout, nexTopic } from "@/components/types";
 import { useSearchParams } from "next/navigation";
-import { nexeraUsers } from "@/public/json/users";
 import NotePreviewPage from "./preview/note/note";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
+import { GetUserNameList } from "@/components/firebase/get-list";
 
 export default function Notes_Sub({
   topics,
-  noteAbouts,
+  noteAbouts
 }: {
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
@@ -36,6 +36,12 @@ export default function Notes_Sub({
     });
     return map;
   }, [noteAbouts]);
+ 
+  const [userNames, setUserNames] = useState<{id: string, name: string}[]>([]);
+
+  useEffect(() => {
+    GetUserNameList().then(setUserNames);
+  }, []);
 
   return (
     <motion.div className="NotesPage" initial="hidden" animate="visible">
@@ -62,7 +68,7 @@ export default function Notes_Sub({
                     duration: 0.4,
                   }}
                 >
-                  <Card1 data={item} users={nexeraUsers} />
+                  <Card1 data={item} userNames={userNames} />
                 </motion.div>
               ))}
             </motion.div>

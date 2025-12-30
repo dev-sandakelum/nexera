@@ -1,6 +1,6 @@
 import { NexeraUser } from "@/components/types";
 
-export const nexeraUsers: NexeraUser[] = [
+export const nexeraUsersR: NexeraUser[] = [
   {
     id: "u_001",
     name: "Alex Rivera",

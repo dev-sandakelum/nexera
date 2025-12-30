@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import HomeContent from "./home-content";
-import { nexeraUsers } from "@/public/json/users";
 import { NexeraUser } from "@/components/types";
 import { cookies } from "next/headers";
+import { GetUserByEmail, GetUserById, LogAllUsers } from "@/components/firebase/get-user-by";
 
 export const guestUser: NexeraUser = {
   id: "guest_000",
@@ -34,12 +34,12 @@ export const guestUser: NexeraUser = {
 export default async function Home() {
   const cookieStore = await cookies(); 
   const token = cookieStore.get("auth-token")?.value;
-  const user = nexeraUsers.find(
-    (u) => u.email == token
-  );
+
+  const user = await GetUserByEmail(token || "");
+
   return (
     // <Suspense fallback={<div>Loading...</div>}>
-      <HomeContent user={user ? user : guestUser} />
+      <HomeContent user={user ? user as NexeraUser : guestUser} />
     // </Suspense>
   );
 }

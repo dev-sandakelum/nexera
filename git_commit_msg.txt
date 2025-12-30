@@ -1,6 +1,8 @@
-feat: Optimize notes component performance and structure
+feat: integrate Firebase for user management
 
-- Refactored the Notes_Sub component to utilize useMemo for filtering topics and precomputing notes by topic, improving performance.
-- Simplified the rendering logic by replacing repeated filter calls with a memoized structure.
-- Updated the Notes component to use useMemo for separating favorites and suggestions, enhancing efficiency in data handling.
-- Cleaned up imports by removing unused variables, streamlining the codebase.
+- Added Firebase dependency to package.json.
+- Created firebase configuration and Firestore initialization in firebase.ts.
+- Implemented user fetching functions in get-list.tsx and get-user-by.tsx.
+- Added batch upload functionality for users in upload.tsx.
+- Updated user data structure in users.ts to match new requirements.
+- Created a build script for easier deployment.

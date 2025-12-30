@@ -8,6 +8,7 @@ import { LuCopyPlus } from "react-icons/lu";
 import { AuthBlock, NoteBlock, PendingBlock } from "./items/blocks";
 import { PiPowerDuotone } from "react-icons/pi";
 import { DisableRegistrationButton, MakeAdminsONLY, PowerButton } from "./items/control-btn";
+import { UploadUsersFast } from "@/components/test/upload";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -62,7 +63,7 @@ export default function MainAdminPage() {
       <motion.div variants={itemVariants} className="item">
         6
       </motion.div>
-      <motion.div variants={itemVariants} className="item">
+      <motion.div variants={itemVariants} className="item" onClick={async ()=> await UploadUsersFast()}>
         7
       </motion.div>
       <motion.div variants={itemVariants} className="item">

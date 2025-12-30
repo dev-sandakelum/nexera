@@ -1,7 +1,6 @@
 "use client";
 
 import { Projects_data } from "@/public/json/project";
-import { nexeraUsers } from "@/public/json/users";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { BsGithub, BsLinkedin, BsCodeSlash } from "react-icons/bs";
@@ -9,6 +8,8 @@ import { MdVerified, MdLock, MdShare, MdEdit } from "react-icons/md";
 import { HiGlobe, HiTerminal, HiExternalLink } from "react-icons/hi";
 import { BiShieldQuarter } from "react-icons/bi";
 import { FiLayout, FiDatabase } from "react-icons/fi";
+import { GetProfilePicList, GetUserNameList } from "@/components/firebase/get-list";
+import { NexeraUser } from "@/components/types";
 
 // Icon mapping from string names to React components
 const iconMap: Record<string, React.ComponentType> = {
@@ -52,7 +53,9 @@ const cardVariants = {
   },
 };
 
-const users = nexeraUsers;
+const users = await GetProfilePicList() as { id: string; profilePic: string; }[];
+
+console.log("Fetched users in Projects page:", users);
 export default function Projects() {
   return (
     <div className="projectsPage">
@@ -145,7 +148,7 @@ export default function Projects() {
                     <div className="Contributions">
                       {project.contributions.map((contribution, idx) => {
                         const user = users?.find((u) => u.id === contribution.userID);
-                        const profilePicture = user?.profilePicture;
+                        const profilePicture = user?.profilePic;
                         
                         if (!profilePicture) return null;
                         
