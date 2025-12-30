@@ -1,6 +1,6 @@
-feat: Add note preview styles and enhance content structure
+feat: Revamp note preview styles and enhance data structure
 
-- Imported new CSS for note preview styling to improve visual presentation.
-- Refactored the NotePreviewPage component for better layout and readability.
-- Updated note content in `notesData.ts` to provide comprehensive information on computer networks, including definitions, applications, and hardware components.
-- Enhanced the organization of content with clear headings and structured sections for improved user experience.
+- Updated CSS for mobile-first markdown styles in note previews, improving layout and responsiveness.
+- Refactored the NotePreviewPage component to utilize URLs for note content, enhancing data handling.
+- Modified note data structure in `notesData.ts` to replace markdown content with URLs, streamlining content management.
+- Added responsive adjustments for better viewing on smaller screens.

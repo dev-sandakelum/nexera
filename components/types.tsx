@@ -33,7 +33,7 @@ export type nexTopic = {
 };
 export type baseNote = {
   type: "note";
-  content: string; // markdown content
+  url: string;
 };
 export type pdfNote = {
   type: "pdf";
