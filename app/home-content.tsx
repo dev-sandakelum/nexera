@@ -23,6 +23,9 @@ import "./styles/projects/main.css";
 import "./styles/admin/main.css";
 import "./styles/admin/dashboard/card.css";
 import "./styles/admin/dashboard/ctrl-btn.css";
+import "./styles/admin/notes-m.css";
+import "./styles/admin/user-m.css";
+
 
 import "./styles/auth/main.css";
 
@@ -38,6 +41,8 @@ import "./styles/MOBILE/notes-sub/card1.css";
 import "./styles/MOBILE/projects/main.css";
 
 import "./styles/MOBILE/auth/main.css";
+import "./styles/MOBILE/admin/user-m.css";
+
 
 // Components
 import NavBar from "@/components/nav/main";

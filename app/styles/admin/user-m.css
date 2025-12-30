@@ -1,0 +1,306 @@
+.userManagementContainer {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 96px 24px;
+  }
+  
+  .userManagementContainer .header {
+    margin-bottom: 32px;
+  }
+  
+  .userManagementContainer .header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--theme-colorB);
+    margin-bottom: 8px;
+  }
+  
+  .userManagementContainer .header p {
+    font-size: 14px;
+    color: var(--theme-colorB);
+    opacity: 0.7;
+  }
+  
+  .userManagementContainer .loading,
+  .userManagementContainer .emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    font-size: 16px;
+    color: var(--theme-colorB);
+    opacity: 0.6;
+  }
+  
+  .userManagementContainer .tableWrapper {
+    background: var(--components-background);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userManagementContainer .usersTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .userManagementContainer .usersTable thead {
+    background: var(--background);
+    border-bottom: 1px solid var(--theme-colorE75);
+  }
+  
+  .userManagementContainer .usersTable th {
+    padding: 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--theme-colorB);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .userManagementContainer .usersTable tbody tr {
+    border-bottom: 1px solid var(--theme-colorE75);
+    transition: background-color 0.2s ease;
+  }
+  
+  .userManagementContainer .usersTable tbody tr:hover {
+    background-color: var(--background);
+  }
+  
+  .userManagementContainer .usersTable td {
+    padding: 16px;
+    font-size: 14px;
+    color: var(--theme-colorB);
+  }
+  
+  .userManagementContainer .userCell {
+    display: flex;
+    align-items: center;
+  }
+  
+  .userManagementContainer .userInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .userManagementContainer .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  
+  .userManagementContainer .dateCell {
+    font-size: 13px;
+    color: var(--theme-colorB);
+    opacity: 0.7;
+  }
+  
+  .userManagementContainer .badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  
+  .userManagementContainer .badge.role {
+    background: var(--badge-01-bg);
+    color: var(--badge-01-fg);
+  }
+  
+  .userManagementContainer .badge.status-active {
+    background: var(--badge-05-bg);
+    color: var(--badge-05-fg);
+  }
+  
+  .userManagementContainer .badge.status-disabled {
+    background: var(--badge-09-bg);
+    color: var(--badge-09-fg);
+  }
+  
+  .userManagementContainer .actionsCell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .userManagementContainer .actionBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: var(--background);
+    color: var(--theme-colorB);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s ease;
+  }
+  
+  .userManagementContainer .actionBtn:hover {
+    background: var(--theme-colorA);
+    color: white;
+  }
+  
+  .userManagementContainer .statusBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .userManagementContainer .statusBtn.active {
+    background: var(--badge-05-bg);
+    color: var(--badge-05-fg);
+  }
+  
+  .userManagementContainer .statusBtn.disabled {
+    background: var(--badge-09-bg);
+    color: var(--badge-09-fg);
+  }
+  
+  .userManagementContainer .statusBtn:hover {
+    opacity: 0.8;
+  }
+  
+  .userManagementContainer .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .userManagementContainer .modal,
+  .userManagementContainer .roleModal {
+    background: var(--components-background);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userManagementContainer .roleModal {
+    max-width: 400px;
+  }
+  
+  .userManagementContainer .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--theme-colorE75);
+  }
+  
+  .userManagementContainer .modalHeader h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--theme-colorB);
+    margin: 0;
+  }
+  
+  .userManagementContainer .closeBtn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--theme-colorB);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .userManagementContainer .closeBtn:hover {
+    color: var(--danger-soft);
+  }
+  
+  .userManagementContainer .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .userManagementContainer .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .userManagementContainer .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--theme-colorB);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+  }
+  
+  .userManagementContainer .field p {
+    font-size: 14px;
+    color: var(--theme-colorB);
+    word-break: break-word;
+    margin: 0;
+  }
+  
+  .userManagementContainer .roleList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .userManagementContainer .roleOption {
+    padding: 12px 16px;
+    border: 2px solid var(--background);
+    background: var(--background);
+    border-radius: 8px;
+    color: var(--theme-colorB);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+  
+  .userManagementContainer .roleOption:hover {
+    border-color: var(--theme-colorA);
+    background: rgba(123, 125, 238, 0.05);
+  }
+  
+  .userManagementContainer .roleOption.selected {
+    border-color: var(--theme-colorA);
+    background: var(--theme-colorA);
+    color: white;
+  }
+  

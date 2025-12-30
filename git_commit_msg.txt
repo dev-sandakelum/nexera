@@ -1,1 +1,1 @@
-feat: enhance user management and loading states with API integration
+feat: Implement mobile-first styles for user and notes management, enhance user and notes management components with CRUD functionality, and add modals for viewing and editing details.
