@@ -1,17 +1,22 @@
 "use client";
-import HeadingNavBar from "@/components/nav/heading-navbar";
+
+import "./styles/fonts.css";
+
+// Base Styles
 import "./styles/app/main.css";
+
 import "./styles/app/nav.css";
 import "./styles/app/heading-navbar.css";
+
 import "./styles/app/scroll-bar.css";
 
 import "./styles/home/main.css";
 
 import "./styles/notes/main.css";
 import "./styles/notes/card0.css";
-
 import "./styles/notes-sub/main.css";
 import "./styles/notes-sub/card1.css";
+import "./styles/notes/preview/md.css";
 
 import "./styles/projects/main.css";
 
@@ -21,16 +26,12 @@ import "./styles/admin/dashboard/ctrl-btn.css";
 
 import "./styles/auth/main.css";
 
-import "./styles/notes/preview/md.css";
-
 // Mobile
-
 import "./styles/MOBILE/main.css";
 import "./styles/MOBILE/nav.css";
 
 import "./styles/MOBILE/notes/main.css";
 import "./styles/MOBILE/notes/card0.css";
-
 import "./styles/MOBILE/notes-sub/main.css";
 import "./styles/MOBILE/notes-sub/card1.css";
 
@@ -38,63 +39,99 @@ import "./styles/MOBILE/projects/main.css";
 
 import "./styles/MOBILE/auth/main.css";
 
-import "./styles/fonts.css";
+// Components
 import NavBar from "@/components/nav/main";
-import {
-  redirect,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import { useEffect, useState } from "react";
-import Notes from "@/components/page/notes/notes";
-import Notes_Sub from "@/components/page/notes/notes-sub";
-import Projects from "@/components/page/projects/projects";
-import Admin from "@/components/page/admin/admin";
 import MobileNavBar from "@/components/MOBILE/nav/nav";
+import HeadingNavBar from "@/components/nav/heading-navbar";
 import Login from "@/components/auth/login";
 import Register from "@/components/auth/register";
-import HomePage from "@/components/page/home/home";
+
 import { NexeraUser } from "@/components/types";
+import { useEffect, useState, useRef, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
+
+// Dynamic imports for heavy components
+import dynamic from "next/dynamic";
+const HomePage = dynamic(() => import("@/components/page/home/home"));
+const Notes = dynamic(() => import("@/components/page/notes/notes"));
+const Notes_Sub = dynamic(() => import("@/components/page/notes/notes-sub"));
+const Projects = dynamic(() => import("@/components/page/projects/projects"));
+const Admin = dynamic(() => import("@/components/page/admin/admin"));
+
+// Data
 import { nexIctSubjects } from "@/public/json/subjects";
 import { ictTopics } from "@/public/json/topics";
-import { noteContexts } from "@/public/json/notesData";
 import { ictNotes } from "@/public/json/notes";
 
-export default function HomeContent({user}:{user:NexeraUser}) {
-  const params = useSearchParams();
-  const route = params.get("r");
-  const sub = params.get("u");
-  const routeList = Array.from(params.values());
+// Throttle helper
+const throttle = (func: Function, limit: number) => {
+  let lastFunc: any;
+  let lastRan: number;
+  return function (this: any, ...args: any[]) {
+    if (!lastRan) {
+      func.apply(this, args);
+      lastRan = Date.now();
+    } else {
+      clearTimeout(lastFunc);
+      lastFunc = setTimeout(() => {
+        if (Date.now() - lastRan >= limit) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - lastRan));
+    }
+  };
+};
 
+export default function HomeContent({ user }: { user: NexeraUser }) {
+  const params = useSearchParams();
+  const routeList = Array.from(params.values());
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const usableAreaRef = useRef<HTMLDivElement>(null);
 
-  const { replace } = useRouter();
-
+  // Detect mobile screen size with throttle
   useEffect(() => {
-    const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
+    const checkScreenSize = throttle(
+      () => setIsMobile(window.innerWidth < 768),
+      200
+    );
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Update activeIcon when route changes
   useEffect(() => {
     setActiveIcon(routeList.length === 0 ? "Home" : routeList[0]);
-  }, [route]);
+  }, [params.toString()]);
 
+  // Scroll to top when activeIcon changes
   useEffect(() => {
-    const area = document.querySelector(".UsableArea");
-    area?.scrollTo(0, 0);
-  }, [activeIcon, sub]);
+    usableAreaRef.current?.scrollTo(0, 0);
+  }, [activeIcon]);
+
+  // Memoized content to prevent unnecessary re-renders
+  const ContentComponent = useMemo(() => {
+    if (activeIcon === "login") return <Login />;
+    if (activeIcon === "register") return <Register />;
+    if (activeIcon === "Home") return <HomePage />;
+    if (activeIcon === "Notes" && !params.get("u"))
+      return (
+        <Notes dataset={nexIctSubjects} favarites={user.data.notes.favorites} />
+      );
+    if (activeIcon === "Notes" && params.get("u"))
+      return <Notes_Sub topics={ictTopics} noteAbouts={ictNotes} />;
+    if (activeIcon === "Projects") return <Projects />;
+    if (activeIcon === "Admin")
+      return <Admin subRoute={params.get("u") || "null"} />;
+    return null;
+  }, [activeIcon, params.toString(), user]);
 
   return (
     <div className="page root" suppressHydrationWarning>
-      {activeIcon === "login" && <Login />}
-      {activeIcon === "register" && <Register />}
-
       {!(activeIcon === "login" || activeIcon === "register") && (
         <>
           {isMobile ? (
@@ -110,20 +147,14 @@ export default function HomeContent({user}:{user:NexeraUser}) {
               <HeadingNavBar data={routeList} user={user} />
             </>
           )}
-
-          <div className="ContentArea">
-            <div className="UsableArea" key={activeIcon + sub}>
-              {activeIcon === "Home" && <HomePage />}
-              {activeIcon === "Notes" && !sub && (
-                <Notes dataset={nexIctSubjects} favarites={user.data.notes.favorites} />
-              )}
-              {activeIcon === "Notes" && sub && <Notes_Sub topics={ictTopics} noteAbouts={ictNotes} />}
-              {activeIcon === "Projects" && <Projects />}
-              {activeIcon === "Admin" && <Admin subRoute={sub || "null"} />}
-            </div>
-          </div>
         </>
       )}
+
+      <div className="ContentArea">
+        <div className="UsableArea" ref={usableAreaRef}>
+          {ContentComponent}
+        </div>
+      </div>
     </div>
   );
 }
