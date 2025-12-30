@@ -135,6 +135,7 @@
   color: var(--navbar-foreground);
 }
 
+
 @media (prefers-color-scheme: dark) {
   .logo {
     /* filter: invert(); */

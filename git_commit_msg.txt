@@ -1,8 +1,1 @@
-feat: integrate Firebase for user management
-
-- Added Firebase dependency to package.json.
-- Created firebase configuration and Firestore initialization in firebase.ts.
-- Implemented user fetching functions in get-list.tsx and get-user-by.tsx.
-- Added batch upload functionality for users in upload.tsx.
-- Updated user data structure in users.ts to match new requirements.
-- Created a build script for easier deployment.
+feat: enhance user management and loading states with API integration
