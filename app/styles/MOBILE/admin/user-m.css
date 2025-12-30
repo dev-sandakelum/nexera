@@ -1,0 +1,211 @@
+@media (max-width: 768px) {
+    /* =========================
+   Mobile-First User Management Styles
+========================= */
+
+.userManagementContainer {
+  width: 100%;
+  padding: 24px 16px;
+  box-sizing: border-box;
+}
+
+.userManagementContainer .header {
+  margin-bottom: 24px;
+}
+
+.userManagementContainer .header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userManagementContainer .header p {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userManagementContainer .loading,
+.userManagementContainer .emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  font-size: 14px;
+  color: var(--theme-colorB);
+  opacity: 0.6;
+}
+
+.userManagementContainer .tableWrapper {
+  background: var(--components-background);
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.05), 0px 1px 2px rgba(0,0,0,0.1);
+}
+
+.userManagementContainer .usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* allows horizontal scroll on small screens */
+}
+
+.userManagementContainer .usersTable th,
+.userManagementContainer .usersTable td {
+  padding: 12px 8px;
+  font-size: 12px;
+  color: var(--theme-colorB);
+  text-align: left;
+}
+
+.userManagementContainer .usersTable thead {
+  background: var(--background);
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.userManagementContainer .usersTable tbody tr {
+  border-bottom: 1px solid var(--theme-colorE75);
+  transition: background-color 0.2s ease;
+}
+
+.userManagementContainer .usersTable tbody tr:hover {
+  background-color: var(--background);
+}
+
+.userManagementContainer .userCell {
+  display: flex;
+  align-items: center;
+}
+
+.userManagementContainer .userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userManagementContainer .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.userManagementContainer .dateCell {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.userManagementContainer .badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.userManagementContainer .badge.role {
+  background: var(--badge-01-bg);
+  color: var(--badge-01-fg);
+}
+
+.userManagementContainer .badge.status-active {
+  background: var(--badge-05-bg);
+  color: var(--badge-05-fg);
+}
+
+.userManagementContainer .badge.status-disabled {
+  background: var(--badge-09-bg);
+  color: var(--badge-09-fg);
+}
+
+.userManagementContainer .actionsCell {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.userManagementContainer .actionBtn {
+  width: 28px;
+  height: 28px;
+  font-size: 14px;
+}
+
+.userManagementContainer .statusBtn {
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.userManagementContainer .modalOverlay {
+  padding: 12px;
+}
+
+.userManagementContainer .modal,
+.userManagementContainer .roleModal {
+  max-width: 95%;
+  width: auto;
+  padding: 16px;
+  border-radius: 12px;
+  max-height: 90vh;
+}
+
+.userManagementContainer .modalHeader h2 {
+  font-size: 18px;
+}
+
+.userManagementContainer .field label {
+  font-size: 10px;
+}
+
+.userManagementContainer .field p {
+  font-size: 12px;
+}
+
+.userManagementContainer .roleOption {
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (min-width: 768px) {
+  .userManagementContainer {
+    max-width: 1024px;
+    padding: 48px 24px;
+  }
+
+  .userManagementContainer .header h1 {
+    font-size: 26px;
+  }
+
+  .userManagementContainer .usersTable th,
+  .userManagementContainer .usersTable td {
+    padding: 14px 12px;
+    font-size: 13px;
+  }
+
+  .userManagementContainer .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .userManagementContainer .actionBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .userManagementContainer .statusBtn {
+    font-size: 12px;
+  }
+}
+
+
+}

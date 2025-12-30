@@ -113,6 +113,8 @@ export type NexeraUser = {
   bio: string;
   location: string;
   joinedAt: string;
+  lastLogin?: string;
+  status?: 'active' | 'disabled';
   academic: {
     institution: string;
     degree: string;

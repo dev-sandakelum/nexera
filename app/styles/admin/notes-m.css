@@ -1,0 +1,293 @@
+.notesManagementContainer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 96px 24px;
+}
+
+.notesManagementContainer .header {
+  margin-bottom: 32px;
+}
+
+.notesManagementContainer .header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 8px;
+}
+
+.notesManagementContainer .header p {
+  font-size: 14px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.notesManagementContainer .loading,
+.notesManagementContainer .emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  font-size: 16px;
+  color: var(--theme-colorB);
+  opacity: 0.6;
+}
+
+.notesManagementContainer .tableWrapper {
+  background: var(--components-background);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05), 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.notesManagementContainer .notesTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.notesManagementContainer .notesTable thead {
+  background: var(--background);
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.notesManagementContainer .notesTable th {
+  padding: 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.notesManagementContainer .notesTable tbody tr {
+  border-bottom: 1px solid var(--theme-colorE75);
+  transition: background-color 0.2s ease;
+}
+
+.notesManagementContainer .notesTable tbody tr:hover {
+  background-color: var(--background);
+}
+
+.notesManagementContainer .notesTable td {
+  padding: 16px;
+  font-size: 14px;
+  color: var(--theme-colorB);
+}
+
+.notesManagementContainer .titleCell {
+  font-weight: 500;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notesManagementContainer .dateCell,
+.notesManagementContainer .authorCell {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.notesManagementContainer .badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.notesManagementContainer .badge.type-note {
+  background: var(--badge-02-bg);
+  color: var(--badge-02-fg);
+}
+
+.notesManagementContainer .badge.type-pdf {
+  background: var(--badge-09-bg);
+  color: var(--badge-09-fg);
+}
+
+.notesManagementContainer .badge.type-quiz {
+  background: var(--badge-08-bg);
+  color: var(--badge-08-fg);
+}
+
+.notesManagementContainer .badge.status-published {
+  background: var(--badge-05-bg);
+  color: var(--badge-05-fg);
+}
+
+.notesManagementContainer .badge.status-draft {
+  background: var(--badge-07-bg);
+  color: var(--badge-07-fg);
+}
+
+.notesManagementContainer .actionsCell {
+  display: flex;
+  gap: 8px;
+}
+
+.notesManagementContainer .actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background: var(--background);
+  color: var(--theme-colorB);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .actionBtn:hover {
+  background: var(--theme-colorA);
+  color: white;
+}
+
+.notesManagementContainer .actionBtn.delete:hover {
+  background: var(--danger-soft);
+  color: white;
+}
+
+.notesManagementContainer .modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.notesManagementContainer .modal {
+  background: var(--components-background);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.notesManagementContainer .modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.notesManagementContainer .modalHeader h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin: 0;
+}
+
+.notesManagementContainer .closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--theme-colorB);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .closeBtn:hover {
+  color: var(--danger-soft);
+}
+
+.notesManagementContainer .modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notesManagementContainer .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notesManagementContainer .field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.notesManagementContainer .field p {
+  font-size: 14px;
+  color: var(--theme-colorB);
+  word-break: break-word;
+  margin: 0;
+}
+
+.notesManagementContainer .confirmModal {
+  background: var(--components-background);
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.notesManagementContainer .confirmModal p {
+  font-size: 16px;
+  color: var(--theme-colorB);
+  margin-bottom: 24px;
+}
+
+.notesManagementContainer .confirmButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.notesManagementContainer .confirmBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notesManagementContainer .confirmBtn.cancel {
+  background: var(--background);
+  color: var(--theme-colorB);
+}
+
+.notesManagementContainer .confirmBtn.cancel:hover {
+  background: var(--theme-colorE75);
+}
+
+.notesManagementContainer .confirmBtn.danger {
+  background: var(--danger-soft);
+  color: white;
+}
+
+.notesManagementContainer .confirmBtn.danger:hover {
+  opacity: 0.9;
+}
