@@ -1,0 +1,123 @@
+/* =========================
+   404 PAGE STYLES
+========================= */
+
+.notFoundContainer {
+  width: 100%;
+  min-height: 80vh; /* Takes up most of the screen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 24px;
+  text-align: center;
+}
+
+.notFoundContainer .contentWrapper {
+  background: var(--components-background);
+  padding: 48px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid var(--theme-colorE75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Icon Animation Wrapper */
+.notFoundContainer .iconContainer {
+  width: 80px;
+  height: 80px;
+  background: rgba(123, 125, 238, 0.1); /* Low opacity theme color */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--theme-colorA);
+  font-size: 32px;
+}
+
+.notFoundContainer .errorCode {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 0 0 16px 0;
+  background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -2px;
+}
+
+.notFoundContainer .title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin: 0 0 16px 0;
+}
+
+.notFoundContainer .joke {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+  margin-bottom: 32px;
+}
+
+/* Code block style for the joke */
+.notFoundContainer .joke code {
+  background: var(--background);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--theme-colorE75);
+  font-family: monospace;
+  color: var(--theme-colorA);
+  font-size: 0.9em;
+}
+
+.notFoundContainer .homeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--theme-colorA);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(var(--theme-colorA-rgb), 0.2);
+}
+
+.notFoundContainer .homeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(var(--theme-colorA-rgb), 0.3);
+  opacity: 0.95;
+}
+.notFoundContainer .excuse {
+  /* Very small fluid font size */
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem); 
+  color: var(--theme-colorB);
+  opacity: 0.4;
+  font-style: italic;
+  
+  /* Layout adjustments */
+  margin-top: -1.5rem; /* Pull it up closer to the joke */
+  margin-bottom: 1.5rem; /* Push the button down */
+}
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .notFoundContainer .contentWrapper {
+    padding: 32px 20px;
+  }
+
+  .notFoundContainer .errorCode {
+    font-size: 48px;
+  }
+
+  .notFoundContainer .title {
+    font-size: 20px;
+  }
+}

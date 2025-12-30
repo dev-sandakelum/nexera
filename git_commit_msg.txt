@@ -1,1 +1,6 @@
-feat: Introduce admin user and notes management features with dedicated UI components, styling, and API routes.
+feat: Enhance admin page functionality and styling
+
+- Added NotFound component for better error handling in admin routes.
+- Implemented smooth scrolling to the top on component mount or subRoute change.
+- Updated NoteBlock and AuthBlock components to accept setRoute prop for improved navigation.
+- Refactored MainAdminPage to manage route changes more effectively.

@@ -4,7 +4,7 @@ import { FiSettings } from "react-icons/fi";
 import { GoHistory } from "react-icons/go";
 import { LuCopyPlus } from "react-icons/lu";
 
-export function NoteBlock() {
+export function NoteBlock({ setRoute }: { setRoute: (icon: string) => void }) {
   return (
     <div
       className="CountStatus"
@@ -26,7 +26,9 @@ export function NoteBlock() {
         <p className="description">Total notes created</p>
       </div>
       <div className="bottom">
-        <button className="btn">Manage</button>
+        <button className="btn" onClick={() => setRoute("NM")}>
+          Manage
+        </button>
         <div className="icon">
           <FiSettings />
         </div>
@@ -38,14 +40,17 @@ export function NoteBlock() {
   );
 }
 
-export function AuthBlock() {
+export function AuthBlock({ setRoute }: { setRoute: (icon: string) => void }) {
   return (
-    <div className="CountStatus"style={
-      {
-        "--color": "var(--success-soft)",
-        "--bg": "var(--success-soft-bg)",
-      } as React.CSSProperties
-    }>
+    <div
+      className="CountStatus"
+      style={
+        {
+          "--color": "var(--success-soft)",
+          "--bg": "var(--success-soft-bg)",
+        } as React.CSSProperties
+      }
+    >
       <div className="top">
         <div className="icon">
           <BiShieldQuarter />
@@ -57,7 +62,9 @@ export function AuthBlock() {
         <p className="description">Total registed users</p>
       </div>
       <div className="bottom">
-        <button className="btn">Manage</button>
+        <button className="btn" onClick={() => setRoute("UM")}>
+          Manage
+        </button>
         <div className="icon">
           <FiSettings />
         </div>
@@ -71,12 +78,15 @@ export function AuthBlock() {
 
 export function PendingBlock() {
   return (
-    <div className="CountStatus"style={
-      {
-        "--color": "var(--danger-soft)",
-        "--bg": "var(--danger-soft-bg)",
-      } as React.CSSProperties
-    }>
+    <div
+      className="CountStatus"
+      style={
+        {
+          "--color": "var(--danger-soft)",
+          "--bg": "var(--danger-soft-bg)",
+        } as React.CSSProperties
+      }
+    >
       <div className="top">
         <div className="icon">
           <BiHistory />

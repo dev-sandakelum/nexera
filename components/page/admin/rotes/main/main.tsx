@@ -7,8 +7,15 @@ import { FiFile, FiSettings } from "react-icons/fi";
 import { LuCopyPlus } from "react-icons/lu";
 import { AuthBlock, NoteBlock, PendingBlock } from "./items/blocks";
 import { PiPowerDuotone } from "react-icons/pi";
-import { DisableRegistrationButton, MakeAdminsONLY, PowerButton } from "./items/control-btn";
+import {
+  DisableRegistrationButton,
+  MakeAdminsONLY,
+  PowerButton,
+} from "./items/control-btn";
 import { UploadUsersFast } from "@/components/test/upload";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Route } from "next";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,6 +45,26 @@ const itemVariants = {
 };
 
 export default function MainAdminPage() {
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const [route, setRoute] = useState(params.get("u") || "");
+  const { replace } = useRouter();
+
+  function handleRoute(term: string) {
+    const param = new URLSearchParams(params);
+    if (term) {
+      param.set("r","Admin")
+      param.set("u", term);
+    } else {
+      param.delete("u");
+    }
+    const url = `${pathname}?${param.toString()}`;
+    replace(url as Route, { scroll: false });
+  }
+
+  useEffect(() => {
+    handleRoute(route);
+  }, [route]);
   return (
     <motion.div
       className="MainAdminPage"
@@ -46,7 +73,7 @@ export default function MainAdminPage() {
       animate="show"
     >
       <motion.div variants={itemVariants} className="item">
-        <AuthBlock />
+        <AuthBlock setRoute={setRoute}/>
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         <PendingBlock />
@@ -63,18 +90,22 @@ export default function MainAdminPage() {
       <motion.div variants={itemVariants} className="item">
         6
       </motion.div>
-      <motion.div variants={itemVariants} className="item" onClick={async ()=> await UploadUsersFast()}>
+      <motion.div
+        variants={itemVariants}
+        className="item"
+        onClick={async () => await UploadUsersFast()}
+      >
         7
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         <div className="controlBtns">
-          <PowerButton/>
-          <DisableRegistrationButton/>
-          <MakeAdminsONLY/>
+          <PowerButton />
+          <DisableRegistrationButton />
+          <MakeAdminsONLY />
         </div>
       </motion.div>
       <motion.div variants={itemVariants} className="item">
-        <NoteBlock />
+        <NoteBlock setRoute={setRoute}/>
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         10

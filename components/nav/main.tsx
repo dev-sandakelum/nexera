@@ -46,7 +46,7 @@ export default function NavBar({
 
     setActiveIcon(activeTab[0] || "Home");
   }
-  const currentRoute = params.get("r");
+
 
   return (
     <nav

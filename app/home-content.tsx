@@ -1,6 +1,7 @@
 "use client";
 
 import "./styles/fonts.css";
+import "./styles/not-found.css";
 
 // Base Styles
 import "./styles/app/main.css";
