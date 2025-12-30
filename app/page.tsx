@@ -1,14 +1,12 @@
 import { Suspense } from "react";
 import HomeContent from "./home-content";
 import { NexeraUser } from "@/components/types";
-import { cookies } from "next/headers";
-import { GetUserByEmail, GetUserById, LogAllUsers } from "@/components/firebase/get-user-by";
 
 export const guestUser: NexeraUser = {
   id: "guest_000",
   name: "Guest User",
   email: "guest@nex.com",
-  password: "", 
+  password: "",
   profilePicture: "/img/profile_pic/0.jpg", // Default placeholder
   headline: "Exploring Nexera",
   bio: "I am currently visiting as a guest.",
@@ -22,8 +20,7 @@ export const guestUser: NexeraUser = {
     graduationYear: 0,
   },
   // Satisfying the "min 2 badges" requirement
-  badges: [
-  ],
+  badges: [],
   data: {
     notes: { favorites: [], uploads: [] },
     projects: { favorites: [], contributions: [] },
@@ -31,15 +28,10 @@ export const guestUser: NexeraUser = {
   },
 };
 
-export default async function Home() {
-  const cookieStore = await cookies(); 
-  const token = cookieStore.get("auth-token")?.value;
-
-  const user = await GetUserByEmail(token || "");
-
+export default function Home() {
   return (
-    // <Suspense fallback={<div>Loading...</div>}>
-      <HomeContent user={user ? user as NexeraUser : guestUser} />
-    // </Suspense>
+    <Suspense fallback={<div style={{ width: '100vw', height: '100vh', background: 'transparent' }} />}>
+      <HomeContent />
+    </Suspense>
   );
 }

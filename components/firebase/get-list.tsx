@@ -1,3 +1,4 @@
+'use cache';
 import { db } from "@/app/api/firebase";
 import {
   collection,
@@ -9,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { NexeraUser } from "../types";
 // your firebase config file
+
 
 export async function GetUserNameList() {
   try {

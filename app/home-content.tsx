@@ -47,8 +47,9 @@ import Login from "@/components/auth/login";
 import Register from "@/components/auth/register";
 
 import { NexeraUser } from "@/components/types";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { guestUser } from "./page";
 
 // Dynamic imports for heavy components
 import dynamic from "next/dynamic";
@@ -83,14 +84,36 @@ const throttle = (func: Function, limit: number) => {
   };
 };
 
-export default function HomeContent({ user }: { user: NexeraUser }) {
+export default function HomeContent({ user: initialUser }: { user?: NexeraUser }) {
   const params = useSearchParams();
   const routeList = Array.from(params.values());
   const [activeIcon, setActiveIcon] = useState<string>(
     routeList.length === 0 ? "Home" : routeList[0]
   );
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [user, setUser] = useState<NexeraUser>(initialUser || guestUser);
   const usableAreaRef = useRef<HTMLDivElement>(null);
+
+  // Fetch user data from API
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await fetch('/api/user');
+        if (response.ok) {
+          const userData = await response.json();
+          if (userData) {
+            setUser(userData);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    }
+    
+    if (!initialUser) {
+      fetchUser();
+    }
+  }, [initialUser]);
 
   // Detect mobile screen size with throttle
   useEffect(() => {
@@ -152,7 +175,9 @@ export default function HomeContent({ user }: { user: NexeraUser }) {
 
       <div className="ContentArea">
         <div className="UsableArea" ref={usableAreaRef}>
-          {ContentComponent}
+          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>}>
+            {ContentComponent}
+          </Suspense>
         </div>
       </div>
     </div>

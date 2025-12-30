@@ -9,7 +9,7 @@ import { HiGlobe, HiTerminal, HiExternalLink } from "react-icons/hi";
 import { BiShieldQuarter } from "react-icons/bi";
 import { FiLayout, FiDatabase } from "react-icons/fi";
 import { GetProfilePicList, GetUserNameList } from "@/components/firebase/get-list";
-import { NexeraUser } from "@/components/types";
+import { useState, useEffect } from "react";
 
 // Icon mapping from string names to React components
 const iconMap: Record<string, React.ComponentType> = {
@@ -53,10 +53,22 @@ const cardVariants = {
   },
 };
 
-const users = await GetProfilePicList() as { id: string; profilePic: string; }[];
-
-console.log("Fetched users in Projects page:", users);
 export default function Projects() {
+  const [users, setUsers] = useState<{ id: string; profilePic: string; }[]>([]);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const fetchedUsers = await GetProfilePicList() as { id: string; profilePic: string; }[];
+        console.log("Fetched users in Projects page:", fetchedUsers);
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
+    fetchUsers();
+  }, []);
+
   return (
     <div className="projectsPage">
       <div className="projects-header">

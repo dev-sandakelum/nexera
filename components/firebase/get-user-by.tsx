@@ -1,3 +1,4 @@
+'use cache';
 import { db } from "@/app/api/firebase";
 import { log } from "console";
 import {
@@ -9,6 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 // your firebase config file
+
 
 export async function GetUserById(userId: string) {
   try {
