@@ -32,14 +32,14 @@ export const guestUser: NexeraUser = {
 };
 
 export default async function Home() {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies(); 
   const token = cookieStore.get("auth-token")?.value;
   const user = nexeraUsers.find(
     (u) => u.email == token
   );
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    // <Suspense fallback={<div>Loading...</div>}>
       <HomeContent user={user ? user : guestUser} />
-    </Suspense>
+    // </Suspense>
   );
 }

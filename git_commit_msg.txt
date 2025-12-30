@@ -1,6 +1,7 @@
-feat: Revamp note preview styles and enhance data structure
+feat: Refactor HomeContent component and enhance styles
 
-- Updated CSS for mobile-first markdown styles in note previews, improving layout and responsiveness.
-- Refactored the NotePreviewPage component to utilize URLs for note content, enhancing data handling.
-- Modified note data structure in `notesData.ts` to replace markdown content with URLs, streamlining content management.
-- Added responsive adjustments for better viewing on smaller screens.
+- Updated HomeContent component to utilize dynamic imports for better performance and loading efficiency.
+- Implemented a throttle function to optimize mobile screen size detection.
+- Enhanced the layout and usability of the content area with a refactored structure.
+- Added new CSS styles for note previews, improving visual consistency and responsiveness across devices.
+- Adjusted styles in md.css for better readability and aesthetics, including color updates and padding adjustments.
