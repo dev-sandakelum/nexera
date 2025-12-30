@@ -1,8 +1,9 @@
-import { nexSubject, Subject } from "@/components/types";
+import { nexSubject } from "@/components/types";
 import { motion } from "framer-motion";
 import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
+import { useMemo } from "react";
 
 export default function Notes({
   dataset,
@@ -11,17 +12,28 @@ export default function Notes({
   dataset: nexSubject[];
   favarites: { id: string }[];
 }) {
-  const fav_dataset: nexSubject[] = [];
-  const suggestion_dataset: nexSubject[] = [];
+  // Convert favorites to a Set for faster lookup
+  const favSet = useMemo(
+    () => new Set(favarites.map((f) => f.id)),
+    [favarites]
+  );
 
-  dataset.forEach((item) => {
-    if (favarites.find((fav) => fav.id === item.id)) {
-      fav_dataset.push(item);
-    } else {
-      suggestion_dataset.push(item);
-    }
-  });
-  
+  // Separate favorites and suggestions
+  const { fav_dataset, suggestion_dataset } = useMemo(() => {
+    const fav_dataset: nexSubject[] = [];
+    const suggestion_dataset: nexSubject[] = [];
+
+    dataset.forEach((item) => {
+      if (favSet.has(item.id)) {
+        fav_dataset.push(item);
+      } else {
+        suggestion_dataset.push(item);
+      }
+    });
+
+    return { fav_dataset, suggestion_dataset };
+  }, [dataset, favSet]);
+
   return (
     <div className="noteContainer">
       <div className="favorites">
@@ -35,7 +47,8 @@ export default function Notes({
           <span> Favorites</span>
         </motion.div>
         <Card0 dataset={fav_dataset} type="favorites" />
-      </div>{" "}
+      </div>
+
       <div className="suggestions">
         <motion.div
           className="header"

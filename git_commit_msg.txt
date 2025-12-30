@@ -1,7 +1,6 @@
-feat: Refactor HomeContent component and enhance styles
+feat: Optimize notes component performance and structure
 
-- Updated HomeContent component to utilize dynamic imports for better performance and loading efficiency.
-- Implemented a throttle function to optimize mobile screen size detection.
-- Enhanced the layout and usability of the content area with a refactored structure.
-- Added new CSS styles for note previews, improving visual consistency and responsiveness across devices.
-- Adjusted styles in md.css for better readability and aesthetics, including color updates and padding adjustments.
+- Refactored the Notes_Sub component to utilize useMemo for filtering topics and precomputing notes by topic, improving performance.
+- Simplified the rendering logic by replacing repeated filter calls with a memoized structure.
+- Updated the Notes component to use useMemo for separating favorites and suggestions, enhancing efficiency in data handling.
+- Cleaned up imports by removing unused variables, streamlining the codebase.
