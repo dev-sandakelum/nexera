@@ -127,14 +127,18 @@ export default function HomeContent({
         }
       } catch (error) {
         console.error("Error fetching user:", error);
+      } finally {
+        setIsFetchingUser(false);
+        setIsFetchedUser(true);
       }
     }
 
     if (!initialUser || initialUser.id === "guest_000") {
       fetchUser();
+    } else {
+      setIsFetchingUser(false);
+      setIsFetchedUser(true);
     }
-    setIsFetchingUser(false);
-    setIsFetchedUser(true);
   }, [initialUser]);
 
   // Detect mobile screen size with throttle
@@ -173,14 +177,10 @@ export default function HomeContent({
     if (activeIcon === "Admin")
       return <Admin subRoute={params.get("u") || "null"} />;
     if (activeIcon === "Settings") {
-      if (user && isFetchingUser) {
-        return (
-          <div className="w-full h-full flex justify-center items-center text-black">
-            waiting...
-          </div>
-        );
+      if (isFetchingUser) {
+        return null; // Return null to trigger Suspense fallback
       }
-      if (user && isFetchedUser) return <Settings user={user} />;
+      if (isFetchedUser) return <Settings user={user} />;
     }
     return null;
   };

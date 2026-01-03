@@ -1,1 +1,1 @@
-feat: fix UpdateUser call by removing unnecessary empty object parameter
+feat: improve user fetching logic by updating state management and handling loading states
