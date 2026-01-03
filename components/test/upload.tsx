@@ -26,14 +26,14 @@ export async function UploadUsersFast() {
         bucket: "users",
         path: `profile_pic2/${user.id}`,
       });
-      
+
       if (error) {
         console.error("Error uploading user avatar:", error);
         continue;
       }
 
       if (imageURL) {
-        await UpdateUser(user.id, {}, "profilePicture", imageURL);
+        await UpdateUser(user.id, "profilePicture", imageURL);
       }
     } catch (err: any) {
       console.error("Error uploading user avatar:", err.message);

@@ -1,1 +1,1 @@
-feat: enhance user fetching logic with loading states in HomeContent component
+feat: fix UpdateUser call by removing unnecessary empty object parameter
