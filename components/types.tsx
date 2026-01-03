@@ -62,10 +62,12 @@ export type nexNoteAbout = {
   description: string;
   type: "note" | "pdf" | "quiz";
   slug: string;
+  createdAt: string;
   published: boolean;
   publishedBy: string; // userID
-  createdAt: string;
   updatedAt: string;
+  status: "pending" | "approved" | "rejected";
+  approvedBy?: string;
 };
 export type nexNoteData = {
   noteId: string;
@@ -114,7 +116,7 @@ export type NexeraUser = {
   location: string;
   joinedAt: string;
   lastLogin?: string;
-  status?: 'active' | 'disabled';
+  status: "active" | "disabled";
   academic: {
     institution: string;
     degree: string;

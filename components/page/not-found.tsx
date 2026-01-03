@@ -52,7 +52,7 @@ export default function NotFound() {
 
         <Link href="/" className="homeBtn">
           <FiHome />
-          Back to Dashboard
+          Back to Home
         </Link>
       </motion.div>
     </div>
