@@ -1,1 +1,1 @@
-feat: remove avatar upload API and refactor user profile management components
+feat: refactor HomeContent component for improved readability and user fetching logic

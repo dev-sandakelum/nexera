@@ -29,8 +29,6 @@ import "./styles/admin/user-m.css";
 
 import "./styles/admin/settings/main.css";
 
-
-
 import "./styles/auth/main.css";
 
 // Mobile
@@ -49,7 +47,6 @@ import "./styles/MOBILE/admin/notes-m.css";
 import "./styles/MOBILE/admin/user-m.css";
 
 import "./styles/MOBILE/admin/settings/main.css";
-
 
 // Components
 import NavBar from "@/components/nav/main";
@@ -97,7 +94,11 @@ const throttle = (func: Function, limit: number) => {
   };
 };
 
-export default function HomeContent({ user: initialUser }: { user?: NexeraUser }) {
+export default function HomeContent({
+  user: initialUser,
+}: {
+  user?: NexeraUser;
+}) {
   const params = useSearchParams();
   const routeList = Array.from(params.values());
   const [activeIcon, setActiveIcon] = useState<string>(
@@ -111,8 +112,8 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch('/api/user',{
-          cache: 'no-store'
+        const response = await fetch("/api/user", {
+          cache: "no-store",
         });
         if (response.ok) {
           const userData = await response.json();
@@ -121,10 +122,10 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
           }
         }
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error("Error fetching user:", error);
       }
     }
-    
+
     if (!initialUser || initialUser.id === "guest_000") {
       fetchUser();
     }
@@ -165,7 +166,14 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
     if (activeIcon === "Projects") return <Projects />;
     if (activeIcon === "Admin")
       return <Admin subRoute={params.get("u") || "null"} />;
-    if (activeIcon === "Settings") return <Settings user={user} />;
+    if (activeIcon === "Settings") {
+      if (user && user.id == "guest_000") {
+        <div className="w-full h-full flex justify-center items-center text-black">
+          waiting...
+        </div>;
+      }
+      return <Settings user={user} />;
+    }
     return null;
   };
 
@@ -191,7 +199,13 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
 
       <div className="ContentArea">
         <div className="UsableArea" ref={usableAreaRef}>
-          <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div style={{ padding: "20px", textAlign: "center" }}>
+                Loading...
+              </div>
+            }
+          >
             {renderContent()}
           </Suspense>
         </div>
