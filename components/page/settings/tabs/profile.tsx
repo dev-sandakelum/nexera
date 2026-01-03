@@ -5,18 +5,12 @@ import { FiCamera, FiTrash2 } from "react-icons/fi";
 
 export default function Profile({
   user,
-  setUser,
-  editData,
   isEditing,
   setShowAvatarModal,
-  setEditData,
 }: {
   user: NexeraUser;
-  setUser: (user: NexeraUser) => void;
-  editData: NexeraUser;
   isEditing: boolean;
   setShowAvatarModal: (show: boolean) => void;
-  setEditData: (data: NexeraUser) => void;
 }) {
   return (
     <div className="profileSection">
@@ -46,15 +40,7 @@ export default function Profile({
                 >
                   <FiCamera /> Change
                 </button>
-                <button
-                  className="avatarBtn danger"
-                  onClick={() =>
-                    setUser({
-                      ...user,
-                      profilePicture: "/img/profile_pic/0.jpg",
-                    })
-                  }
-                >
+                <button className="avatarBtn danger">
                   <FiTrash2 /> Remove
                 </button>
               </div>
@@ -71,10 +57,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.name || ""}
-                  onChange={(e) =>
-                    setEditData({ ...editData, name: e.target.value })
-                  }
+                  defaultValue={user.name}
                 />
               ) : (
                 <p className="formValue">{user.name}</p>
@@ -93,10 +76,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.headline || ""}
-                  onChange={(e) =>
-                    setEditData({ ...editData, headline: e.target.value })
-                  }
+                  defaultValue={user.headline}
                   placeholder="Your professional headline"
                 />
               ) : (
@@ -109,10 +89,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.location || ""}
-                  onChange={(e) =>
-                    setEditData({ ...editData, location: e.target.value })
-                  }
+                  defaultValue={user.location}
                   placeholder="City, Country"
                 />
               ) : (
@@ -126,10 +103,7 @@ export default function Profile({
             {isEditing ? (
               <textarea
                 className="formTextarea"
-                value={editData.bio || ""}
-                onChange={(e) =>
-                  setEditData({ ...editData, bio: e.target.value })
-                }
+                defaultValue={user.bio}
                 placeholder="Tell us about yourself..."
                 rows={4}
               />
@@ -150,16 +124,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.academic?.institution || ""}
-                  onChange={(e) =>
-                    setEditData({
-                      ...editData,
-                      academic: {
-                        ...editData.academic!,
-                        institution: e.target.value,
-                      },
-                    })
-                  }
+                  defaultValue={user.academic.institution}
                 />
               ) : (
                 <p className="formValue">{user.academic.institution || "-"}</p>
@@ -171,16 +136,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.academic?.degree || ""}
-                  onChange={(e) =>
-                    setEditData({
-                      ...editData,
-                      academic: {
-                        ...editData.academic!,
-                        degree: e.target.value,
-                      },
-                    })
-                  }
+                  defaultValue={user.academic.degree}
                 />
               ) : (
                 <p className="formValue">{user.academic.degree || "-"}</p>
@@ -195,16 +151,7 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  value={editData.academic?.fieldOfStudy || ""}
-                  onChange={(e) =>
-                    setEditData({
-                      ...editData,
-                      academic: {
-                        ...editData.academic!,
-                        fieldOfStudy: e.target.value,
-                      },
-                    })
-                  }
+                  defaultValue={user.academic.fieldOfStudy}
                 />
               ) : (
                 <p className="formValue">{user.academic.fieldOfStudy || "-"}</p>
@@ -216,16 +163,7 @@ export default function Profile({
                 <input
                   type="number"
                   className="formInput"
-                  value={editData.academic?.graduationYear || ""}
-                  onChange={(e) =>
-                    setEditData({
-                      ...editData,
-                      academic: {
-                        ...editData.academic!,
-                        graduationYear: parseInt(e.target.value),
-                      },
-                    })
-                  }
+                  defaultValue={user.academic.graduationYear}
                 />
               ) : (
                 <p className="formValue">

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import {
   FiUser,
   FiShield,
@@ -15,35 +15,27 @@ import {
   FiCamera,
   FiTrash2,
   FiMail,
-  FiPhone,
-  FiCalendar,
-  FiMapPin,
+  FiBell,
   FiRefreshCw,
   FiEye,
   FiEyeOff,
   FiCheck,
   FiAlertCircle,
-  FiBell,
   FiMonitor,
   FiDownload,
   FiLogOut,
   FiGlobe,
-  FiClock,
 } from "react-icons/fi";
 import { BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
 import Image from "next/image";
 import { NexeraUser } from "@/components/types";
-import Profile from "./tabs/profile";
-import Preferences from "./tabs/preferences";
 import Security from "./tabs/security";
+import Preferences from "./tabs/preferences";
 import Privacy from "./tabs/privacy";
 import Activity from "./tabs/activity";
 import Connected from "./tabs/connected";
 import Danger from "./tabs/danger";
-import ShowPasswordModal from "./models/PasswordModal";
-import ShowAvatarModal from "./models/AvatarModal";
-import ShowDeleteModal from "./models/DeleteModal";
-import ShowSessionsModal from "./models/SessionsModal";
+import Profile from "./tabs/profile";
 
 type TabType =
   | "profile"
@@ -69,11 +61,9 @@ export default function UserProfile({
 }: {
   initialUser: NexeraUser;
 }) {
-  const [user, setUser] = useState<NexeraUser>(initialUser);
+  const [user] = useState<NexeraUser>(initialUser);
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [editData, setEditData] = useState<Partial<NexeraUser>>({});
 
   // Modals
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -81,7 +71,7 @@ export default function UserProfile({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSessionsModal, setShowSessionsModal] = useState(false);
 
-  // Password fields
+  // Dummy states
   const [passwordData, setPasswordData] = useState({
     current: "",
     new: "",
@@ -91,158 +81,17 @@ export default function UserProfile({
     showConfirm: false,
   });
 
-  // Avatar upload
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-
-  // Delete account
-  const [deleteConfirmText, setDeleteConfirmText] = useState("");
-
-  // Profile completeness
-  const [completeness, setCompleteness] = useState(0);
-
-  useEffect(() => {
-    calculateCompleteness();
-  }, [user]);
-
-  const calculateCompleteness = () => {
-    const fields = [
-      user.name,
-      user.email,
-      user.profilePicture && user.profilePicture !== "/img/profile_pic/0.jpg",
-      user.headline,
-      user.bio,
-      user.location,
-      user.academic.institution,
-      user.academic.degree,
-      user.academic.fieldOfStudy,
-    ];
-    const filled = fields.filter(Boolean).length;
-    setCompleteness(Math.round((filled / fields.length) * 100));
-  };
-
-  const handleEditToggle = () => {
-    if (isEditing) {
-      setEditData({});
-      setIsEditing(false);
-    } else {
-      setEditData({ ...user });
-      setIsEditing(true);
-    }
-  };
-
-  const handleSave = async () => {
-    setIsSaving(true);
-    try {
-      const response = await fetch("/api/user/profile", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editData),
-      });
-
-      if (response.ok) {
-        const updated = await response.json();
-        setUser(updated);
-        setIsEditing(false);
-        setEditData({});
-      }
-    } catch (error) {
-      console.error("Failed to save profile:", error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  const [completeness] = useState(75); // Dummy completeness
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setAvatarFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setAvatarPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAvatarUpload = async () => {
-    if (!avatarFile) return;
-
-    const formData = new FormData();
-    formData.append("avatar", avatarFile);
-    formData.append("userId", user.id);
-
-    try {
-      const response = await fetch("/api/user/avatar", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        const { url } = await response.json();
-        setUser({ ...user, profilePicture: url });
-        setShowAvatarModal(false);
-        setAvatarPreview(null);
-        setAvatarFile(null);
-      }
-    } catch (error) {
-      console.error("Failed to upload avatar:", error);
-    }
-  };
-
-  const handlePasswordChange = async () => {
-    if (passwordData.new !== passwordData.confirm) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/user/password", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          currentPassword: passwordData.current,
-          newPassword: passwordData.new,
-        }),
-      });
-
-      if (response.ok) {
-        setShowPasswordModal(false);
-        setPasswordData({
-          current: "",
-          new: "",
-          confirm: "",
-          showCurrent: false,
-          showNew: false,
-          showConfirm: false,
-        });
-        alert("Password changed successfully");
-      }
-    } catch (error) {
-      console.error("Failed to change password:", error);
-    }
-  };
-
-  const handleDeleteAccount = async () => {
-    if (deleteConfirmText !== "DELETE") {
-      alert("Please type DELETE to confirm");
-      return;
-    }
-
-    try {
-      const response = await fetch("/api/user/delete", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id }),
-      });
-
-      if (response.ok) {
-        alert("Account deleted successfully");
-        // Redirect to home or logout
-        window.location.href = "/";
-      }
-    } catch (error) {
-      console.error("Failed to delete account:", error);
     }
   };
 
@@ -273,21 +122,16 @@ export default function UserProfile({
         </div>
         <div className="headerActions">
           {!isEditing ? (
-            <button className="editBtn" onClick={handleEditToggle}>
+            <button className="editBtn" onClick={() => setIsEditing(true)}>
               <FiEdit2 /> Edit Profile
             </button>
           ) : (
             <>
-              <button className="cancelBtn" onClick={handleEditToggle}>
+              <button className="cancelBtn" onClick={() => setIsEditing(false)}>
                 <FiX /> Cancel
               </button>
-              <button
-                className="saveBtn"
-                onClick={handleSave}
-                disabled={isSaving}
-              >
-                {isSaving ? <FiRefreshCw className="spin" /> : <FiSave />}
-                {isSaving ? "Saving..." : "Save Changes"}
+              <button className="saveBtn" onClick={() => setIsEditing(false)}>
+                <FiSave /> Save Changes
               </button>
             </>
           )}
@@ -337,22 +181,15 @@ export default function UserProfile({
       >
         {/* PROFILE TAB */}
         {activeTab === "profile" && (
-          <Profile
-            user={user}
-            setUser={setUser}
-            editData={editData as NexeraUser}
-            isEditing={isEditing}
-            setEditData={setEditData}
-            setShowAvatarModal={setShowAvatarModal}
-          />
+         <Profile user={user} isEditing={isEditing} setShowAvatarModal={setShowAvatarModal} />
         )}
 
         {/* SECURITY TAB */}
         {activeTab === "security" && (
           <Security
-            user={user}
             setShowPasswordModal={setShowPasswordModal}
             setShowSessionsModal={setShowSessionsModal}
+            user={user}
           />
         )}
 
@@ -366,51 +203,314 @@ export default function UserProfile({
         {activeTab === "activity" && <Activity />}
 
         {/* CONNECTED TAB */}
-        {activeTab === "connected" && <Connected />}
+        {activeTab === "connected" && (
+         <Connected/>
+        )}
 
         {/* DANGER ZONE TAB */}
         {activeTab === "danger" && (
-          <Danger setShowDeleteModal={setShowDeleteModal} />
+         <Danger setShowDeleteModal={setShowDeleteModal}/>
         )}
       </motion.div>
 
       {/* PASSWORD MODAL */}
       {showPasswordModal && (
-        <ShowPasswordModal
-          setShowPasswordModal={setShowPasswordModal}
-          passwordData={passwordData}
-          setPasswordData={setPasswordData}
-          passwordStrength={passwordStrength}
-          handlePasswordChange={handlePasswordChange}
-        />
+        <div
+          className="modalOverlay"
+          onClick={() => setShowPasswordModal(false)}
+        >
+          <motion.div
+            className="modal passwordModal"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="modalHeader">
+              <h2>Change Password</h2>
+              <button
+                className="closeBtn"
+                onClick={() => setShowPasswordModal(false)}
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <div className="modalContent">
+              <div className="formGroup">
+                <label>Current Password</label>
+                <div className="passwordInput">
+                  <input
+                    type={passwordData.showCurrent ? "text" : "password"}
+                    className="formInput"
+                    value={passwordData.current}
+                    onChange={(e) =>
+                      setPasswordData({
+                        ...passwordData,
+                        current: e.target.value,
+                      })
+                    }
+                  />
+                  <button
+                    className="passwordToggle"
+                    onClick={() =>
+                      setPasswordData({
+                        ...passwordData,
+                        showCurrent: !passwordData.showCurrent,
+                      })
+                    }
+                  >
+                    {passwordData.showCurrent ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="formGroup">
+                <label>New Password</label>
+                <div className="passwordInput">
+                  <input
+                    type={passwordData.showNew ? "text" : "password"}
+                    className="formInput"
+                    value={passwordData.new}
+                    onChange={(e) =>
+                      setPasswordData({ ...passwordData, new: e.target.value })
+                    }
+                  />
+                  <button
+                    className="passwordToggle"
+                    onClick={() =>
+                      setPasswordData({
+                        ...passwordData,
+                        showNew: !passwordData.showNew,
+                      })
+                    }
+                  >
+                    {passwordData.showNew ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
+                <div className="passwordStrength">
+                  <div className="strengthBar">
+                    <motion.div
+                      className="strengthFill"
+                      style={{ backgroundColor: passwordStrength.color }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${passwordStrength.strength}%` }}
+                    />
+                  </div>
+                  <span style={{ color: passwordStrength.color }}>
+                    {passwordStrength.label}
+                  </span>
+                </div>
+              </div>
+
+              <div className="formGroup">
+                <label>Confirm New Password</label>
+                <div className="passwordInput">
+                  <input
+                    type={passwordData.showConfirm ? "text" : "password"}
+                    className="formInput"
+                    value={passwordData.confirm}
+                    onChange={(e) =>
+                      setPasswordData({
+                        ...passwordData,
+                        confirm: e.target.value,
+                      })
+                    }
+                  />
+                  <button
+                    className="passwordToggle"
+                    onClick={() =>
+                      setPasswordData({
+                        ...passwordData,
+                        showConfirm: !passwordData.showConfirm,
+                      })
+                    }
+                  >
+                    {passwordData.showConfirm ? <FiEyeOff /> : <FiEye />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="modalActions">
+                <button
+                  className="cancelBtn"
+                  onClick={() => setShowPasswordModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="saveBtn"
+                  onClick={() => setShowPasswordModal(false)}
+                >
+                  Update Password
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       )}
 
       {/* AVATAR MODAL */}
       {showAvatarModal && (
-        <ShowAvatarModal
-          setShowAvatarModal={setShowAvatarModal}
-          avatarPreview={avatarPreview}
-          avatarFile={avatarFile}
-          handleAvatarChange={handleAvatarChange}
-          handleAvatarUpload={handleAvatarUpload}
-        />
+        <div className="modalOverlay" onClick={() => setShowAvatarModal(false)}>
+          <motion.div
+            className="modal avatarModal"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="modalHeader">
+              <h2>Change Profile Picture</h2>
+              <button
+                className="closeBtn"
+                onClick={() => setShowAvatarModal(false)}
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <div className="modalContent avatarContent">
+              <div className="avatarPreview">
+                {avatarPreview ? (
+                  <Image
+                    src={avatarPreview}
+                    alt="Preview"
+                    width={150}
+                    height={150}
+                    style={{ borderRadius: "50%" }}
+                  />
+                ) : (
+                  <div className="avatarPlaceholder large">
+                    <FiCamera />
+                  </div>
+                )}
+              </div>
+
+              <input
+                type="file"
+                id="avatarInput"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                style={{ display: "none" }}
+              />
+
+              <label htmlFor="avatarInput" className="uploadBtn">
+                <FiCamera /> Choose Photo
+              </label>
+
+              <div className="modalActions">
+                <button
+                  className="cancelBtn"
+                  onClick={() => setShowAvatarModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="saveBtn"
+                  onClick={() => setShowAvatarModal(false)}
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       )}
 
       {/* DELETE ACCOUNT MODAL */}
       {showDeleteModal && (
-       <ShowDeleteModal
-         setShowDeleteModal={setShowDeleteModal}
-         deleteConfirmText={deleteConfirmText}
-         setDeleteConfirmText={setDeleteConfirmText}
-         handleDeleteAccount={handleDeleteAccount}
-       />
+        <div className="modalOverlay" onClick={() => setShowDeleteModal(false)}>
+          <motion.div
+            className="modal deleteModal"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="modalHeader danger">
+              <FiAlertCircle />
+              <h2>Delete Account</h2>
+            </div>
+
+            <div className="modalContent">
+              <p className="warningText">
+                This action is <strong>permanent</strong> and cannot be undone.
+                All your data will be permanently deleted.
+              </p>
+
+              <div className="formGroup">
+                <label>Type "DELETE" to confirm</label>
+                <input type="text" className="formInput" placeholder="DELETE" />
+              </div>
+
+              <div className="modalActions">
+                <button
+                  className="cancelBtn"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="deleteBtn"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Delete My Account
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       )}
 
       {/* SESSIONS MODAL */}
       {showSessionsModal && (
-        <ShowSessionsModal 
-          setShowSessionsModal={setShowSessionsModal}
-        />
+        <div
+          className="modalOverlay"
+          onClick={() => setShowSessionsModal(false)}
+        >
+          <motion.div
+            className="modal sessionsModal"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="modalHeader">
+              <h2>Active Sessions</h2>
+              <button
+                className="closeBtn"
+                onClick={() => setShowSessionsModal(false)}
+              >
+                <FiX />
+              </button>
+            </div>
+
+            <div className="modalContent">
+              <div className="sessionsList">
+                <div className="sessionItem current">
+                  <FiMonitor />
+                  <div className="sessionInfo">
+                    <h4>Chrome on Windows</h4>
+                    <p>Colombo, Sri Lanka • 192.168.1.1</p>
+                    <span>Current session</span>
+                  </div>
+                  <span className="currentBadge">Active</span>
+                </div>
+
+                <div className="sessionItem">
+                  <FiMonitor />
+                  <div className="sessionInfo">
+                    <h4>Firefox on MacOS</h4>
+                    <p>New York, USA • 192.168.1.2</p>
+                    <span>Last active: 2 days ago</span>
+                  </div>
+                  <button className="logoutBtn">Logout</button>
+                </div>
+              </div>
+
+              <button className="logoutAllBtn">
+                <FiLogOut /> Logout from all devices
+              </button>
+            </div>
+          </motion.div>
+        </div>
       )}
     </div>
   );
