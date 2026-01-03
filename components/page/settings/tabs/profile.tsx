@@ -1,16 +1,22 @@
 import { NexeraUser } from "@/components/types";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { FiCamera, FiTrash2 } from "react-icons/fi";
 
 export default function Profile({
   user,
+  formUser,
+  setFormUser,
   isEditing,
   setShowAvatarModal,
+  handleUpdateUser,
 }: {
   user: NexeraUser;
+  formUser: NexeraUser;
+  setFormUser: React.Dispatch<React.SetStateAction<NexeraUser>>;
   isEditing: boolean;
   setShowAvatarModal: (show: boolean) => void;
+  handleUpdateUser: () => void;
 }) {
   return (
     <div className="profileSection">
@@ -57,15 +63,18 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.name}
+                  defaultValue={formUser.name}
+                  onChange={(e) =>
+                    setFormUser((pre) => ({ ...pre!, name: e.target.value }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.name}</p>
+                <p className="formValue">{formUser.name}</p>
               )}
             </div>
             <div className="formGroup">
               <label>Email</label>
-              <p className="formValue">{user.email}</p>
+              <p className="formValue">{formUser.email}</p>
             </div>
           </div>
 
@@ -76,11 +85,17 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.headline}
+                  defaultValue={formUser.headline}
                   placeholder="Your professional headline"
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      headline: e.target.value,
+                    }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.headline || "-"}</p>
+                <p className="formValue">{formUser.headline || "-"}</p>
               )}
             </div>
             <div className="formGroup">
@@ -89,11 +104,17 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.location}
+                  defaultValue={formUser.location}
                   placeholder="City, Country"
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      location: e.target.value,
+                    }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.location || "-"}</p>
+                <p className="formValue">{formUser.location || "-"}</p>
               )}
             </div>
           </div>
@@ -103,12 +124,15 @@ export default function Profile({
             {isEditing ? (
               <textarea
                 className="formTextarea"
-                defaultValue={user.bio}
+                defaultValue={formUser.bio}
                 placeholder="Tell us about yourself..."
                 rows={4}
+                onChange={(e) =>
+                  setFormUser((pre) => ({ ...pre!, bio: e.target.value }))
+                }
               />
             ) : (
-              <p className="formValue bio">{user.bio || "-"}</p>
+              <p className="formValue bio">{formUser.bio || "-"}</p>
             )}
           </div>
 
@@ -124,10 +148,21 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.academic.institution}
+                  defaultValue={formUser.academic.institution}
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      academic: {
+                        ...pre!.academic,
+                        institution: e.target.value,
+                      },
+                    }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.academic.institution || "-"}</p>
+                <p className="formValue">
+                  {formUser.academic.institution || "-"}
+                </p>
               )}
             </div>
             <div className="formGroup">
@@ -136,10 +171,16 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.academic.degree}
+                  defaultValue={formUser.academic.degree}
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      academic: { ...pre!.academic, degree: e.target.value },
+                    }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.academic.degree || "-"}</p>
+                <p className="formValue">{formUser.academic.degree || "-"}</p>
               )}
             </div>
           </div>
@@ -151,10 +192,21 @@ export default function Profile({
                 <input
                   type="text"
                   className="formInput"
-                  defaultValue={user.academic.fieldOfStudy}
+                  defaultValue={formUser.academic.fieldOfStudy}
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      academic: {
+                        ...pre!.academic,
+                        fieldOfStudy: e.target.value,
+                      },
+                    }))
+                  }
                 />
               ) : (
-                <p className="formValue">{user.academic.fieldOfStudy || "-"}</p>
+                <p className="formValue">
+                  {formUser.academic.fieldOfStudy || "-"}
+                </p>
               )}
             </div>
             <div className="formGroup">
@@ -163,11 +215,20 @@ export default function Profile({
                 <input
                   type="number"
                   className="formInput"
-                  defaultValue={user.academic.graduationYear}
+                  defaultValue={formUser.academic.graduationYear}
+                  onChange={(e) =>
+                    setFormUser((pre) => ({
+                      ...pre!,
+                      academic: {
+                        ...pre!.academic,
+                        graduationYear: Number(e.target.value),
+                      },
+                    }))
+                  }
                 />
               ) : (
                 <p className="formValue">
-                  {user.academic.graduationYear || "-"}
+                  {formUser.academic.graduationYear || "-"}
                 </p>
               )}
             </div>

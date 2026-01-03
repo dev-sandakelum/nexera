@@ -9,22 +9,29 @@ import {
   where,
   updateDoc,
 } from "firebase/firestore";
+import { NexeraUser } from "../types";
 // your firebase config file
+
+type UpdateUserResult = {
+  success: boolean;
+  error?: string;
+};
 
 export async function UpdateUser(
   userId: string,
-  attribute: string,
-  value: any
-) {
+  user : NexeraUser
+): Promise<UpdateUserResult> {
   try {
-    console.log("Updating user with ID:", userId);
+    console.log("Updating user with ID:", userId , user);
     const userRef = doc(db, "TestUsers", userId);
     await updateDoc(userRef, {
-      [attribute]: value,
-      lastLogin: new Date().toISOString(),
+      ...user,
     });
-    return "success";
+    return { success: true };
   } catch (error) {
-    return `error : ${error}`;
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 }

@@ -40,6 +40,7 @@ import ShowPasswordModal from "./models/PasswordModal";
 import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
 import ShowSessionsModal from "./models/SessionsModal";
+import { UpdateUser } from "@/components/firebase/update-user";
 
 type TabType =
   | "profile"
@@ -68,6 +69,9 @@ export default function UserProfile({
   const [user] = useState<NexeraUser>(initialUser);
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
+
+  //profile
+  const [formUser, setFormUser] = useState<NexeraUser>(user);
 
   // Modals
   const [showPasswordModal, setShowPasswordModal] = useState(false);
@@ -98,7 +102,15 @@ export default function UserProfile({
       reader.readAsDataURL(file);
     }
   };
-
+  async function handleUpdateUser() {
+    const updatedUser = { ...user, ...formUser };
+    const response = await UpdateUser(user.id, updatedUser);
+    if (response.success) {
+      console.log("User updated successfully");
+    } else {
+      console.log(response.error || "Update failed");
+    }
+  }
   const getPasswordStrength = (password: string) => {
     if (!password)
       return {
@@ -134,7 +146,13 @@ export default function UserProfile({
               <button className="cancelBtn" onClick={() => setIsEditing(false)}>
                 <FiX /> Cancel
               </button>
-              <button className="saveBtn" onClick={() => setIsEditing(false)}>
+              <button
+                className="saveBtn"
+                onClick={() => {
+                  handleUpdateUser();
+                  setIsEditing(false);
+                }}
+              >
                 <FiSave /> Save Changes
               </button>
             </>
@@ -187,8 +205,11 @@ export default function UserProfile({
         {activeTab === "profile" && (
           <Profile
             user={user}
+            formUser={formUser}
+            setFormUser={setFormUser}
             isEditing={isEditing}
             setShowAvatarModal={setShowAvatarModal}
+            handleUpdateUser={handleUpdateUser}
           />
         )}
 

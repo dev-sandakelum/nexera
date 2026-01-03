@@ -33,7 +33,7 @@ export async function UploadUsersFast() {
       }
 
       if (imageURL) {
-        await UpdateUser(user.id, "profilePicture", imageURL);
+        await UpdateUser(user.id,  user);
       }
     } catch (err: any) {
       console.error("Error uploading user avatar:", err.message);

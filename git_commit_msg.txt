@@ -1,1 +1,1 @@
-feat: improve user fetching logic by updating state management and handling loading states
+feat: refactor UpdateUser function and integrate user state management in Profile component
