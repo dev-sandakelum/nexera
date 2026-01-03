@@ -168,9 +168,11 @@ export default function HomeContent({
       return <Admin subRoute={params.get("u") || "null"} />;
     if (activeIcon === "Settings") {
       if (user && user.id == "guest_000") {
-        <div className="w-full h-full flex justify-center items-center text-black">
-          waiting...
-        </div>;
+        return (
+          <div className="w-full h-full flex justify-center items-center text-black">
+            waiting...
+          </div>
+        );
       }
       return <Settings user={user} />;
     }

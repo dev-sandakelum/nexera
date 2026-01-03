@@ -36,6 +36,10 @@ import Activity from "./tabs/activity";
 import Connected from "./tabs/connected";
 import Danger from "./tabs/danger";
 import Profile from "./tabs/profile";
+import ShowPasswordModal from "./models/PasswordModal";
+import ShowAvatarModal from "./models/AvatarModal";
+import ShowDeleteModal from "./models/DeleteModal";
+import ShowSessionsModal from "./models/SessionsModal";
 
 type TabType =
   | "profile"
@@ -181,7 +185,11 @@ export default function UserProfile({
       >
         {/* PROFILE TAB */}
         {activeTab === "profile" && (
-         <Profile user={user} isEditing={isEditing} setShowAvatarModal={setShowAvatarModal} />
+          <Profile
+            user={user}
+            isEditing={isEditing}
+            setShowAvatarModal={setShowAvatarModal}
+          />
         )}
 
         {/* SECURITY TAB */}
@@ -203,314 +211,41 @@ export default function UserProfile({
         {activeTab === "activity" && <Activity />}
 
         {/* CONNECTED TAB */}
-        {activeTab === "connected" && (
-         <Connected/>
-        )}
+        {activeTab === "connected" && <Connected />}
 
         {/* DANGER ZONE TAB */}
         {activeTab === "danger" && (
-         <Danger setShowDeleteModal={setShowDeleteModal}/>
+          <Danger setShowDeleteModal={setShowDeleteModal} />
         )}
       </motion.div>
 
       {/* PASSWORD MODAL */}
       {showPasswordModal && (
-        <div
-          className="modalOverlay"
-          onClick={() => setShowPasswordModal(false)}
-        >
-          <motion.div
-            className="modal passwordModal"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className="modalHeader">
-              <h2>Change Password</h2>
-              <button
-                className="closeBtn"
-                onClick={() => setShowPasswordModal(false)}
-              >
-                <FiX />
-              </button>
-            </div>
-
-            <div className="modalContent">
-              <div className="formGroup">
-                <label>Current Password</label>
-                <div className="passwordInput">
-                  <input
-                    type={passwordData.showCurrent ? "text" : "password"}
-                    className="formInput"
-                    value={passwordData.current}
-                    onChange={(e) =>
-                      setPasswordData({
-                        ...passwordData,
-                        current: e.target.value,
-                      })
-                    }
-                  />
-                  <button
-                    className="passwordToggle"
-                    onClick={() =>
-                      setPasswordData({
-                        ...passwordData,
-                        showCurrent: !passwordData.showCurrent,
-                      })
-                    }
-                  >
-                    {passwordData.showCurrent ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="formGroup">
-                <label>New Password</label>
-                <div className="passwordInput">
-                  <input
-                    type={passwordData.showNew ? "text" : "password"}
-                    className="formInput"
-                    value={passwordData.new}
-                    onChange={(e) =>
-                      setPasswordData({ ...passwordData, new: e.target.value })
-                    }
-                  />
-                  <button
-                    className="passwordToggle"
-                    onClick={() =>
-                      setPasswordData({
-                        ...passwordData,
-                        showNew: !passwordData.showNew,
-                      })
-                    }
-                  >
-                    {passwordData.showNew ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                </div>
-                <div className="passwordStrength">
-                  <div className="strengthBar">
-                    <motion.div
-                      className="strengthFill"
-                      style={{ backgroundColor: passwordStrength.color }}
-                      initial={{ width: 0 }}
-                      animate={{ width: `${passwordStrength.strength}%` }}
-                    />
-                  </div>
-                  <span style={{ color: passwordStrength.color }}>
-                    {passwordStrength.label}
-                  </span>
-                </div>
-              </div>
-
-              <div className="formGroup">
-                <label>Confirm New Password</label>
-                <div className="passwordInput">
-                  <input
-                    type={passwordData.showConfirm ? "text" : "password"}
-                    className="formInput"
-                    value={passwordData.confirm}
-                    onChange={(e) =>
-                      setPasswordData({
-                        ...passwordData,
-                        confirm: e.target.value,
-                      })
-                    }
-                  />
-                  <button
-                    className="passwordToggle"
-                    onClick={() =>
-                      setPasswordData({
-                        ...passwordData,
-                        showConfirm: !passwordData.showConfirm,
-                      })
-                    }
-                  >
-                    {passwordData.showConfirm ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                </div>
-              </div>
-
-              <div className="modalActions">
-                <button
-                  className="cancelBtn"
-                  onClick={() => setShowPasswordModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="saveBtn"
-                  onClick={() => setShowPasswordModal(false)}
-                >
-                  Update Password
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        <ShowPasswordModal
+          setShowPasswordModal={setShowPasswordModal}
+          passwordData={passwordData}
+          setPasswordData={setPasswordData}
+          passwordStrength={passwordStrength}
+        />
       )}
 
       {/* AVATAR MODAL */}
       {showAvatarModal && (
-        <div className="modalOverlay" onClick={() => setShowAvatarModal(false)}>
-          <motion.div
-            className="modal avatarModal"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className="modalHeader">
-              <h2>Change Profile Picture</h2>
-              <button
-                className="closeBtn"
-                onClick={() => setShowAvatarModal(false)}
-              >
-                <FiX />
-              </button>
-            </div>
-
-            <div className="modalContent avatarContent">
-              <div className="avatarPreview">
-                {avatarPreview ? (
-                  <Image
-                    src={avatarPreview}
-                    alt="Preview"
-                    width={150}
-                    height={150}
-                    style={{ borderRadius: "50%" }}
-                  />
-                ) : (
-                  <div className="avatarPlaceholder large">
-                    <FiCamera />
-                  </div>
-                )}
-              </div>
-
-              <input
-                type="file"
-                id="avatarInput"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                style={{ display: "none" }}
-              />
-
-              <label htmlFor="avatarInput" className="uploadBtn">
-                <FiCamera /> Choose Photo
-              </label>
-
-              <div className="modalActions">
-                <button
-                  className="cancelBtn"
-                  onClick={() => setShowAvatarModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="saveBtn"
-                  onClick={() => setShowAvatarModal(false)}
-                >
-                  Upload
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        <ShowAvatarModal
+          setShowAvatarModal={setShowAvatarModal}
+          avatarPreview={avatarPreview}
+          handleAvatarChange={handleAvatarChange}
+        />
       )}
 
       {/* DELETE ACCOUNT MODAL */}
       {showDeleteModal && (
-        <div className="modalOverlay" onClick={() => setShowDeleteModal(false)}>
-          <motion.div
-            className="modal deleteModal"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className="modalHeader danger">
-              <FiAlertCircle />
-              <h2>Delete Account</h2>
-            </div>
-
-            <div className="modalContent">
-              <p className="warningText">
-                This action is <strong>permanent</strong> and cannot be undone.
-                All your data will be permanently deleted.
-              </p>
-
-              <div className="formGroup">
-                <label>Type "DELETE" to confirm</label>
-                <input type="text" className="formInput" placeholder="DELETE" />
-              </div>
-
-              <div className="modalActions">
-                <button
-                  className="cancelBtn"
-                  onClick={() => setShowDeleteModal(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="deleteBtn"
-                  onClick={() => setShowDeleteModal(false)}
-                >
-                  Delete My Account
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        <ShowDeleteModal setShowDeleteModal={setShowDeleteModal} />
       )}
 
       {/* SESSIONS MODAL */}
       {showSessionsModal && (
-        <div
-          className="modalOverlay"
-          onClick={() => setShowSessionsModal(false)}
-        >
-          <motion.div
-            className="modal sessionsModal"
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className="modalHeader">
-              <h2>Active Sessions</h2>
-              <button
-                className="closeBtn"
-                onClick={() => setShowSessionsModal(false)}
-              >
-                <FiX />
-              </button>
-            </div>
-
-            <div className="modalContent">
-              <div className="sessionsList">
-                <div className="sessionItem current">
-                  <FiMonitor />
-                  <div className="sessionInfo">
-                    <h4>Chrome on Windows</h4>
-                    <p>Colombo, Sri Lanka • 192.168.1.1</p>
-                    <span>Current session</span>
-                  </div>
-                  <span className="currentBadge">Active</span>
-                </div>
-
-                <div className="sessionItem">
-                  <FiMonitor />
-                  <div className="sessionInfo">
-                    <h4>Firefox on MacOS</h4>
-                    <p>New York, USA • 192.168.1.2</p>
-                    <span>Last active: 2 days ago</span>
-                  </div>
-                  <button className="logoutBtn">Logout</button>
-                </div>
-              </div>
-
-              <button className="logoutAllBtn">
-                <FiLogOut /> Logout from all devices
-              </button>
-            </div>
-          </motion.div>
-        </div>
+        <ShowSessionsModal setShowSessionsModal={setShowSessionsModal} />
       )}
     </div>
   );

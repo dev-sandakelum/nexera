@@ -22,7 +22,6 @@ interface PasswordModalProps {
   passwordData: PasswordData;
   setPasswordData: (data: PasswordData) => void;
   passwordStrength: PasswordStrength;
-  handlePasswordChange: () => void;
 }
 
 export default function ShowPasswordModal({
@@ -30,7 +29,6 @@ export default function ShowPasswordModal({
   passwordData,
   setPasswordData,
   passwordStrength,
-  handlePasswordChange,
 }: PasswordModalProps) {
   return (
     <div className="modalOverlay" onClick={() => setShowPasswordModal(false)}>
@@ -152,7 +150,10 @@ export default function ShowPasswordModal({
             >
               Cancel
             </button>
-            <button className="saveBtn" onClick={handlePasswordChange}>
+            <button
+              className="saveBtn"
+              onClick={() => setShowPasswordModal(false)}
+            >
               Update Password
             </button>
           </div>

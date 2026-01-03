@@ -13,7 +13,6 @@ import {
 
 export async function UpdateUser(
   userId: string,
-  updateData: any,
   attribute: string,
   value: any
 ) {
@@ -22,9 +21,10 @@ export async function UpdateUser(
     const userRef = doc(db, "TestUsers", userId);
     await updateDoc(userRef, {
       [attribute]: value,
+      lastLogin: new Date().toISOString(),
     });
-    return true;
+    return "success";
   } catch (error) {
-    return false;
+    return `error : ${error}`;
   }
 }

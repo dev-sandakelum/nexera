@@ -6,17 +6,13 @@ import Image from "next/image";
 interface AvatarModalProps {
   setShowAvatarModal: (show: boolean) => void;
   avatarPreview: string | null;
-  avatarFile: File | null;
   handleAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleAvatarUpload: () => void;
 }
 
 export default function ShowAvatarModal({
   setShowAvatarModal,
   avatarPreview,
-  avatarFile,
   handleAvatarChange,
-  handleAvatarUpload,
 }: AvatarModalProps) {
   return (
     <div className="modalOverlay" onClick={() => setShowAvatarModal(false)}>
@@ -74,8 +70,7 @@ export default function ShowAvatarModal({
             </button>
             <button
               className="saveBtn"
-              onClick={handleAvatarUpload}
-              disabled={!avatarFile}
+              onClick={() => setShowAvatarModal(false)}
             >
               Upload
             </button>
