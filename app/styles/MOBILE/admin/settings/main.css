@@ -1,0 +1,417 @@
+/* app/styles/MOBILE/user/profile.css */
+
+@media (max-width: 768px) {
+  .userProfileContainer {
+    padding: 80px 16px 24px;
+  }
+
+  /* ==================== HEADER ==================== */
+  .userProfileContainer .profileHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .userProfileContainer .headerContent h1 {
+    font-size: 24px;
+  }
+
+  .userProfileContainer .headerContent p {
+    font-size: 13px;
+  }
+
+  .userProfileContainer .headerActions {
+    width: 100%;
+  }
+
+  .userProfileContainer .editBtn,
+  .userProfileContainer .saveBtn,
+  .userProfileContainer .cancelBtn {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  /* ==================== COMPLETENESS BAR ==================== */
+  .userProfileContainer .completenessBar {
+    padding: 12px 16px;
+  }
+
+  .userProfileContainer .completenessHeader {
+    font-size: 12px;
+  }
+
+  .userProfileContainer .completenessPercent {
+    font-size: 14px;
+  }
+
+  /* ==================== TABS ==================== */
+  .userProfileContainer .profileTabs {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .userProfileContainer .tab {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .userProfileContainer .tab span {
+    display: none;
+  }
+
+  .userProfileContainer .tab svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* ==================== TAB CONTENT ==================== */
+  .userProfileContainer .tabContent {
+    padding: 20px 16px;
+  }
+
+  /* ==================== PROFILE SECTION ==================== */
+  .userProfileContainer .profileSection .sectionGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .userProfileContainer .avatarSection {
+    order: -1;
+  }
+
+  .userProfileContainer .avatarLarge {
+    width: 120px;
+    height: 120px;
+    font-size: 36px;
+  }
+
+  .userProfileContainer .avatarActions {
+    flex-direction: column;
+  }
+
+  .userProfileContainer .avatarBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .userProfileContainer .formRow {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .userProfileContainer .formInput,
+  .userProfileContainer .formSelect,
+  .userProfileContainer .formTextarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+  }
+
+  .userProfileContainer .subsectionHeader h3 {
+    font-size: 15px;
+  }
+
+  /* ==================== SECURITY SECTION ==================== */
+  .userProfileContainer .securityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .userProfileContainer .securityCard {
+    padding: 16px;
+  }
+
+  .userProfileContainer .cardHeader {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .userProfileContainer .cardHeader svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .userProfileContainer .cardHeader h3 {
+    font-size: 15px;
+  }
+
+  .userProfileContainer .cardAction {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .userProfileContainer .infoCard {
+    padding: 16px;
+  }
+
+  .userProfileContainer .infoRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  /* ==================== PREFERENCES SECTION ==================== */
+  .userProfileContainer .prefCard {
+    width: 100%;
+  }
+
+  .userProfileContainer .formSelect {
+    font-size: 16px;
+  }
+
+  .userProfileContainer .notifSection h3 {
+    font-size: 15px;
+  }
+
+  .userProfileContainer .notifItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .userProfileContainer .notifInfo {
+    width: 100%;
+  }
+
+  .userProfileContainer .toggleSwitch {
+    align-self: flex-end;
+  }
+
+  /* ==================== PRIVACY SECTION ==================== */
+  .userProfileContainer .privacyCard {
+    padding: 16px;
+  }
+
+  .userProfileContainer .privacyCard h3 {
+    font-size: 15px;
+  }
+
+  .userProfileContainer .privacyToggle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .userProfileContainer .dataCard {
+    padding: 16px;
+  }
+
+  .userProfileContainer .dataCard h3 {
+    font-size: 15px;
+  }
+
+  .userProfileContainer .dataBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ==================== ACTIVITY SECTION ==================== */
+  .userProfileContainer .activityItem {
+    padding: 12px;
+  }
+
+  .userProfileContainer .activityIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .userProfileContainer .activityDetails h4 {
+    font-size: 14px;
+  }
+
+  .userProfileContainer .activityDetails p {
+    font-size: 12px;
+  }
+
+  /* ==================== CONNECTED SECTION ==================== */
+  .userProfileContainer .connectedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .userProfileContainer .connectedCard {
+    padding: 16px;
+  }
+
+  .userProfileContainer .providerIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .userProfileContainer .connectBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ==================== DANGER ZONE ==================== */
+  .userProfileContainer .dangerCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .userProfileContainer .dangerHeader {
+    flex-direction: column;
+  }
+
+  .userProfileContainer .dangerHeader svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .userProfileContainer .dangerHeader h3 {
+    font-size: 15px;
+  }
+
+  .userProfileContainer .dangerBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ==================== MODALS ==================== */
+  .userProfileContainer .modal {
+    width: 95%;
+    max-width: none;
+    margin: 16px;
+    max-height: 90vh;
+  }
+
+  .userProfileContainer .modalHeader {
+    padding: 16px 20px;
+  }
+
+  .userProfileContainer .modalHeader h2 {
+    font-size: 16px;
+  }
+
+  .userProfileContainer .modalContent {
+    padding: 20px;
+  }
+
+  .userProfileContainer .modalActions {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .userProfileContainer .saveBtn,
+  .userProfileContainer .cancelBtn,
+  .userProfileContainer .editBtn {
+    width: 100%;
+  }
+
+  /* Password Modal */
+  .userProfileContainer .passwordInput input {
+    font-size: 16px;
+    padding-right: 48px;
+  }
+
+  .userProfileContainer .passwordStrength {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .userProfileContainer .strengthBar {
+    order: -1;
+  }
+
+  .userProfileContainer .passwordStrength span {
+    align-self: flex-end;
+  }
+
+  /* Avatar Modal */
+  .userProfileContainer .avatarPreview {
+    width: 120px;
+    height: 120px;
+  }
+
+  .userProfileContainer .avatarPlaceholder.large {
+    width: 120px;
+    height: 120px;
+  }
+
+  .userProfileContainer .uploadBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Delete Modal */
+  .userProfileContainer .warningText {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .userProfileContainer .deleteBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Sessions Modal */
+  .userProfileContainer .sessionItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .userProfileContainer .currentBadge {
+    align-self: flex-end;
+  }
+
+  .userProfileContainer .logoutBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .userProfileContainer {
+    padding: 72px 12px 20px;
+  }
+
+  .userProfileContainer .headerContent h1 {
+    font-size: 20px;
+  }
+
+  .userProfileContainer .tabContent {
+    padding: 16px 12px;
+  }
+
+  .userProfileContainer .avatarLarge {
+    width: 100px;
+    height: 100px;
+    font-size: 32px;
+  }
+
+  .userProfileContainer .formInput,
+  .userProfileContainer .formSelect,
+  .userProfileContainer .formTextarea {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+
+  .userProfileContainer .securityCard,
+  .userProfileContainer .privacyCard,
+  .userProfileContainer .dataCard,
+  .userProfileContainer .activityItem,
+  .userProfileContainer .connectedCard,
+  .userProfileContainer .dangerCard {
+    padding: 12px;
+  }
+
+  .userProfileContainer .notifItem {
+    padding: 10px;
+  }
+
+  .userProfileContainer .modalContent {
+    padding: 16px;
+  }
+
+  .userProfileContainer .tab {
+    padding: 10px;
+  }
+
+  .userProfileContainer .tab svg {
+    width: 18px;
+    height: 18px;
+  }
+}

@@ -27,6 +27,9 @@ import "./styles/admin/dashboard/ctrl-btn.css";
 import "./styles/admin/notes-m.css";
 import "./styles/admin/user-m.css";
 
+import "./styles/admin/settings/main.css";
+
+
 
 import "./styles/auth/main.css";
 
@@ -44,6 +47,8 @@ import "./styles/MOBILE/projects/main.css";
 import "./styles/MOBILE/auth/main.css";
 import "./styles/MOBILE/admin/notes-m.css";
 import "./styles/MOBILE/admin/user-m.css";
+
+import "./styles/MOBILE/admin/settings/main.css";
 
 
 // Components
@@ -65,6 +70,7 @@ const Notes = dynamic(() => import("@/components/page/notes/notes"));
 const Notes_Sub = dynamic(() => import("@/components/page/notes/notes-sub"));
 const Projects = dynamic(() => import("@/components/page/projects/projects"));
 const Admin = dynamic(() => import("@/components/page/admin/admin"));
+const Settings = dynamic(() => import("@/components/page/settings/settings"));
 
 // Data
 import { nexIctSubjects } from "@/public/json/subjects";
@@ -159,6 +165,7 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
     if (activeIcon === "Projects") return <Projects />;
     if (activeIcon === "Admin")
       return <Admin subRoute={params.get("u") || "null"} />;
+    if (activeIcon === "Settings") return <Settings user={user} />;
     return null;
   };
 

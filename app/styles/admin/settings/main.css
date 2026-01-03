@@ -1,0 +1,1195 @@
+/* app/styles/user/profile.css */
+
+.userProfileContainer {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 96px 24px 24px;
+  min-height: 100vh;
+}
+
+/* ==================== HEADER ==================== */
+.userProfileContainer .profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.userProfileContainer .headerContent h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .headerContent p {
+  font-size: 14px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userProfileContainer .headerActions {
+  display: flex;
+  gap: 12px;
+}
+
+.userProfileContainer .editBtn,
+.userProfileContainer .saveBtn,
+.userProfileContainer .cancelBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.userProfileContainer .editBtn {
+  background: var(--theme-colorA);
+  color: white;
+  box-shadow: 0 2px 8px rgba(var(--theme-colorA-rgb, 123, 125, 238), 0.2);
+}
+
+.userProfileContainer .editBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.userProfileContainer .saveBtn {
+  background: var(--success-soft);
+  color: white;
+}
+
+.userProfileContainer .saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.userProfileContainer .cancelBtn {
+  background: var(--background);
+  color: var(--theme-colorB);
+  border: 1px solid var(--theme-colorE75);
+}
+
+/* ==================== COMPLETENESS BAR ==================== */
+.userProfileContainer .completenessBar {
+  background: var(--components-background);
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.userProfileContainer .completenessHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+}
+
+.userProfileContainer .completenessPercent {
+  color: var(--theme-colorA);
+  font-size: 16px;
+}
+
+.userProfileContainer .completenessTrack {
+  width: 100%;
+  height: 8px;
+  background: var(--background);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.userProfileContainer .completenessFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--theme-colorA), var(--success-soft));
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+
+/* ==================== TABS ==================== */
+.userProfileContainer .profileTabs {
+  display: flex;
+  gap: 8px;
+  background: var(--components-background);
+  padding: 8px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.userProfileContainer .tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--theme-colorB);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.userProfileContainer .tab:hover {
+  background: var(--background);
+  opacity: 1;
+}
+
+.userProfileContainer .tab.active {
+  background: var(--theme-colorA);
+  color: white;
+  opacity: 1;
+}
+
+.userProfileContainer .tab svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==================== TAB CONTENT ==================== */
+.userProfileContainer .tabContent {
+  background: var(--components-background);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05);
+  min-height: 400px;
+}
+
+/* ==================== PROFILE SECTION ==================== */
+.userProfileContainer .profileSection .sectionGrid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
+}
+
+.userProfileContainer .avatarSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userProfileContainer .avatarSection label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.userProfileContainer .avatarWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.userProfileContainer .avatarLarge {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 48px;
+  font-weight: 600;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.userProfileContainer .avatarActions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.userProfileContainer .avatarBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--theme-colorB);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .avatarBtn:hover {
+  border-color: var(--theme-colorA);
+  background: var(--accent-soft-bg);
+}
+
+.userProfileContainer .avatarBtn.danger:hover {
+  border-color: var(--danger-soft);
+  background: var(--danger-soft-bg);
+  color: var(--danger-soft);
+}
+
+.userProfileContainer .formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.userProfileContainer .formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.userProfileContainer .formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.userProfileContainer .formGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.userProfileContainer .formInput,
+.userProfileContainer .formSelect,
+.userProfileContainer .formTextarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 8px;
+  color: var(--theme-colorB);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .formTextarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.userProfileContainer .formInput:focus,
+.userProfileContainer .formSelect:focus,
+.userProfileContainer .formTextarea:focus {
+  outline: none;
+  border-color: var(--theme-colorA);
+  box-shadow: 0 0 0 3px rgba(var(--theme-colorA-rgb, 123, 125, 238), 0.1);
+  background: var(--components-background);
+}
+
+.userProfileContainer .formValue {
+  padding: 12px 14px;
+  background: var(--background);
+  border-radius: 8px;
+  color: var(--theme-colorB);
+  font-size: 14px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.userProfileContainer .formValue.bio {
+  min-height: 100px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+
+.userProfileContainer .subsectionHeader {
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .subsectionHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 16px;
+}
+
+/* ==================== SECURITY SECTION ==================== */
+.userProfileContainer .securityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.userProfileContainer .securityCard {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--theme-colorE75);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userProfileContainer .cardHeader {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.userProfileContainer .cardHeader svg {
+  width: 24px;
+  height: 24px;
+  color: var(--theme-colorA);
+  flex-shrink: 0;
+}
+
+.userProfileContainer .cardHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .cardHeader p {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userProfileContainer .cardAction {
+  padding: 8px 16px;
+  background: var(--theme-colorA);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .cardAction:hover {
+  opacity: 0.9;
+}
+
+.userProfileContainer .toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.userProfileContainer .toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.userProfileContainer .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--theme-colorE75);
+  transition: 0.3s;
+  border-radius: 26px;
+}
+
+.userProfileContainer .slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.userProfileContainer input:checked + .slider {
+  background-color: var(--success-soft);
+}
+
+.userProfileContainer input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.userProfileContainer .infoCard {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--theme-colorE75);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userProfileContainer .infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .infoRow:last-child {
+  border-bottom: none;
+}
+
+.userProfileContainer .infoLabel {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userProfileContainer .infoValue {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--theme-colorB);
+}
+
+.userProfileContainer .statusBadge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.userProfileContainer .statusBadge.active {
+  background: var(--badge-05-bg);
+  color: var(--badge-05-fg);
+}
+
+.userProfileContainer .statusBadge.disabled {
+  background: var(--badge-09-bg);
+  color: var(--badge-09-fg);
+}
+
+.userProfileContainer .verifiedBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--success-soft);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ==================== PREFERENCES SECTION ==================== */
+.userProfileContainer .prefGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.userProfileContainer .prefCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.userProfileContainer .prefCard label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.userProfileContainer .notifSection h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .notifList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userProfileContainer .notifItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 12px;
+}
+
+.userProfileContainer .notifInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userProfileContainer .notifInfo svg {
+  width: 20px;
+  height: 20px;
+  color: var(--theme-colorA);
+}
+
+.userProfileContainer .notifInfo h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 2px;
+}
+
+.userProfileContainer .notifInfo p {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+/* ==================== PRIVACY SECTION ==================== */
+.userProfileContainer .privacyGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.userProfileContainer .privacyCard {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .privacyCard h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 8px;
+}
+
+.userProfileContainer .privacyCard > p {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+  margin-bottom: 16px;
+}
+
+.userProfileContainer .privacyToggles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userProfileContainer .privacyToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .privacyToggle:last-child {
+  border-bottom: none;
+}
+
+.userProfileContainer .privacyToggle span {
+  font-size: 14px;
+  color: var(--theme-colorB);
+}
+
+.userProfileContainer .dataCard {
+  background: var(--background);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--theme-colorE75);
+  text-align: center;
+}
+
+.userProfileContainer .dataCard h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 16px;
+}
+
+.userProfileContainer .dataBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--theme-colorA);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.userProfileContainer .dataBtn:hover {
+  opacity: 0.9;
+}
+
+.userProfileContainer .dataInfo {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+/* ==================== ACTIVITY SECTION ==================== */
+.userProfileContainer .activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userProfileContainer .activityItem {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 12px;
+}
+
+.userProfileContainer .activityIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.userProfileContainer .activityIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.userProfileContainer .activityIcon.login {
+  background: var(--badge-02-bg);
+  color: var(--badge-02-fg);
+}
+
+.userProfileContainer .activityIcon.edit {
+  background: var(--badge-06-bg);
+  color: var(--badge-06-fg);
+}
+
+.userProfileContainer .activityIcon.security {
+  background: var(--badge-05-bg);
+  color: var(--badge-05-fg);
+}
+
+.userProfileContainer .activityDetails h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .activityDetails p {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .activityTime {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  opacity: 0.5;
+}
+
+/* ==================== CONNECTED SECTION ==================== */
+.userProfileContainer .connectedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.userProfileContainer .connectedCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 12px;
+}
+
+.userProfileContainer .providerIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.userProfileContainer .providerIcon.google {
+  color: #DB4437;
+}
+
+.userProfileContainer .providerIcon.github {
+  color: #333;
+}
+
+.userProfileContainer .providerIcon.facebook {
+  color: #1877F2;
+}
+
+.userProfileContainer .connectedInfo {
+  flex: 1;
+}
+
+.userProfileContainer .connectedInfo h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 2px;
+}
+
+.userProfileContainer .connectedInfo p {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userProfileContainer .connectBtn {
+  padding: 8px 16px;
+  background: var(--theme-colorA);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .connectBtn:hover {
+  opacity: 0.9;
+}
+
+/* ==================== DANGER ZONE ==================== */
+.userProfileContainer .dangerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userProfileContainer .dangerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 12px;
+}
+
+.userProfileContainer .dangerCard.severe {
+  border-color: var(--danger-soft);
+  background: var(--danger-soft-bg);
+}
+
+.userProfileContainer .dangerHeader {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+}
+
+.userProfileContainer .dangerHeader svg {
+  width: 24px;
+  height: 24px;
+  color: var(--danger-soft);
+  flex-shrink: 0;
+}
+
+.userProfileContainer .dangerHeader h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .dangerHeader p {
+  font-size: 13px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+}
+
+.userProfileContainer .dangerBtn {
+  padding: 8px 16px;
+  background: var(--theme-colorE75);
+  color: var(--theme-colorB);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .dangerBtn:hover {
+  background: var(--danger-soft);
+  color: white;
+}
+
+.userProfileContainer .dangerBtn.severe {
+  background: var(--danger-soft);
+  color: white;
+}
+
+.userProfileContainer .dangerBtn.severe:hover {
+  opacity: 0.9;
+}
+
+/* ==================== MODALS ==================== */
+.userProfileContainer .modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.userProfileContainer .modal {
+  background: var(--components-background);
+  border-radius: 16px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.userProfileContainer .modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--theme-colorE75);
+}
+
+.userProfileContainer .modalHeader.danger {
+  gap: 12px;
+  justify-content: flex-start;
+  border-bottom-color: var(--danger-soft);
+}
+
+.userProfileContainer .modalHeader.danger svg {
+  color: var(--danger-soft);
+  width: 24px;
+  height: 24px;
+}
+
+.userProfileContainer .modalHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin: 0;
+}
+
+.userProfileContainer .closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--theme-colorB);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+  margin-left: auto;
+}
+
+.userProfileContainer .closeBtn:hover {
+  color: var(--danger-soft);
+}
+
+.userProfileContainer .modalContent {
+  padding: 24px;
+}
+
+.userProfileContainer .modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--theme-colorE75);
+}
+
+/* Password Modal */
+.userProfileContainer .passwordInput {
+  position: relative;
+}
+
+.userProfileContainer .passwordToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--theme-colorB);
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.userProfileContainer .passwordToggle:hover {
+  opacity: 0.8;
+}
+
+.userProfileContainer .passwordStrength {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.userProfileContainer .strengthBar {
+  flex: 1;
+  height: 6px;
+  background: var(--background);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.userProfileContainer .strengthFill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease;
+}
+
+.userProfileContainer .passwordStrength span {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Avatar Modal */
+.userProfileContainer .avatarContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.userProfileContainer .avatarPreview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.userProfileContainer .avatarPlaceholder.large {
+  width: 150px;
+  height: 150px;
+  background: var(--background);
+  border: 2px dashed var(--theme-colorE75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-colorB);
+  opacity: 0.5;
+}
+
+.userProfileContainer .uploadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--theme-colorA);
+  color: white;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .uploadBtn:hover {
+  opacity: 0.9;
+}
+
+/* Delete Modal */
+.userProfileContainer .warningText {
+  padding: 16px;
+  background: var(--danger-soft-bg);
+  border: 1px solid var(--danger-soft);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--theme-colorB);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.userProfileContainer .warningText strong {
+  font-weight: 700;
+  color: var(--danger-soft);
+}
+
+.userProfileContainer .deleteBtn {
+  padding: 10px 20px;
+  background: var(--danger-soft);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .deleteBtn:hover {
+  opacity: 0.9;
+}
+
+/* Sessions Modal */
+.userProfileContainer .sessionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.userProfileContainer .sessionItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 12px;
+}
+
+.userProfileContainer .sessionItem.current {
+  border-color: var(--theme-colorA);
+  background: var(--accent-soft-bg);
+}
+
+.userProfileContainer .sessionItem svg {
+  width: 24px;
+  height: 24px;
+  color: var(--theme-colorB);
+  flex-shrink: 0;
+}
+
+.userProfileContainer .sessionInfo {
+  flex: 1;
+}
+
+.userProfileContainer .sessionInfo h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 4px;
+}
+
+.userProfileContainer .sessionInfo p {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+
+.userProfileContainer .sessionInfo span {
+  font-size: 11px;
+  color: var(--theme-colorB);
+  opacity: 0.5;
+}
+
+.userProfileContainer .currentBadge {
+  padding: 4px 12px;
+  background: var(--success-soft);
+  color: white;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.userProfileContainer .logoutBtn {
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--danger-soft);
+  border: 1px solid var(--danger-soft);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .logoutBtn:hover {
+  background: var(--danger-soft);
+  color: white;
+}
+
+.userProfileContainer .logoutAllBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--danger-soft);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.userProfileContainer .logoutAllBtn:hover {
+  opacity: 0.9;
+}
+
+/* Loading Spinner */
+.userProfileContainer .spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
