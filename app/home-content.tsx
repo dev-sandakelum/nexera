@@ -105,7 +105,9 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch('/api/user');
+        const response = await fetch('/api/user',{
+          cache: 'no-store'
+        });
         if (response.ok) {
           const userData = await response.json();
           if (userData) {
@@ -117,7 +119,7 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
       }
     }
     
-    if (!initialUser) {
+    if (!initialUser || initialUser.id === "guest_000") {
       fetchUser();
     }
   }, [initialUser]);

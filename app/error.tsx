@@ -1,6 +1,7 @@
 // app/error.tsx
 'use client';
 
+import { redirect, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Error({
@@ -10,6 +11,17 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+    const pathName = usePathname();
+    const params = new URLSearchParams();
+    params.append('from', pathName || '/');
+    const param_r = params.get("r");
+    const param_u = params.get("u");
+    const param_n = params.get("n");
+
+    if(param_r == "notes" && param_u && param_n){
+        redirect(pathName);
+    }
+
   useEffect(() => {
     console.error('Application error:', error);
   }, [error]);
