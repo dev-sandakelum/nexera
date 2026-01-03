@@ -146,7 +146,7 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
   }, [activeIcon]);
 
   // Memoized content to prevent unnecessary re-renders
-  const ContentComponent = useMemo(() => {
+  const renderContent = () => {
     if (activeIcon === "login") return <Login />;
     if (activeIcon === "register") return <Register />;
     if (activeIcon === "Home") return <HomePage />;
@@ -160,7 +160,7 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
     if (activeIcon === "Admin")
       return <Admin subRoute={params.get("u") || "null"} />;
     return null;
-  }, [activeIcon, params.toString(), user]);
+  };
 
   return (
     <div className="page root" suppressHydrationWarning>
@@ -185,7 +185,7 @@ export default function HomeContent({ user: initialUser }: { user?: NexeraUser }
       <div className="ContentArea">
         <div className="UsableArea" ref={usableAreaRef}>
           <Suspense fallback={<div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>}>
-            {ContentComponent}
+            {renderContent()}
           </Suspense>
         </div>
       </div>

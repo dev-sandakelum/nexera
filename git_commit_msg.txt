@@ -1,1 +1,1 @@
-feat: enhance error handling and user fetching logic with improved redirects and cache control
+feat: refactor rendering logic in HomeContent and improve state management in Notes_Sub

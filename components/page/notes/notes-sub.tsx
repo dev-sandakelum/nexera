@@ -8,7 +8,7 @@ import { GetUserNameList } from "@/components/firebase/get-list";
 
 export default function Notes_Sub({
   topics,
-  noteAbouts
+  noteAbouts,
 }: {
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
@@ -17,9 +17,9 @@ export default function Notes_Sub({
   const sub = params.get("u");
   const note = params.get("n");
 
-  if (note) {
-    return <NotePreviewPage note_id={note} />;
-  }
+  const [userNames, setUserNames] = useState<{ id: string; name: string }[]>(
+    []
+  );
 
   // Filter topics for this subject
   const subject_topics = useMemo(
@@ -36,13 +36,14 @@ export default function Notes_Sub({
     });
     return map;
   }, [noteAbouts]);
- 
-  const [userNames, setUserNames] = useState<{id: string, name: string}[]>([]);
 
   useEffect(() => {
     GetUserNameList().then(setUserNames);
   }, []);
 
+  if (note) {
+    return <NotePreviewPage note_id={note} />;
+  }
   return (
     <motion.div className="NotesPage" initial="hidden" animate="visible">
       {subject_topics.map((topic, idx) => {
