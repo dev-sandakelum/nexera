@@ -2,15 +2,13 @@ import { writeBatch, collection, doc } from "firebase/firestore";
 
 import { nexeraUsersR } from "@/public/json/users";
 import { db } from "@/app/api/firebase";
-import { ictNotes } from "@/public/json/notes";
-import { nexBadges } from "@/public/json/badges";
 import { BlobToFile } from "../converts/blob-to-file";
 import { UploadFile } from "@/utils/supabase/storage/client";
 import { UpdateUser } from "../firebase/update-user";
 
 export async function UploadUsersFast() {
   const batch = writeBatch(db);
-  const usersCollection = collection(db, "nexBadges");
+  const usersCollection = collection(db, "nexeraUsers");
 
   // nexBadges.forEach((user) => {
   //   const userRef = doc(usersCollection, user.id);
@@ -19,14 +17,14 @@ export async function UploadUsersFast() {
 
   for (const user of nexeraUsersR) {
     try {
-      const avatarUrl = user.profilePicture;
+      const avatarUrl = "/img/profile_pic/26.jpg";
       const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
       const { imageURL, error } = await UploadFile({
         userId: user.id,
         file: imgBlob,
         bucket: "users",
-        path: `profile_pic/${user.id}`,
+        path: `profile_pic2/${user.id}`,
       });
       
       if (error) {

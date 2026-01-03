@@ -1,8 +1,1 @@
-feat: Implement user profile management with tabs for profile, security, preferences, privacy, activity, connected accounts, and danger zone
-
-- Added Profile-Management component to handle user profile settings
-- Created individual tab components: Profile, Security, Preferences, Privacy, Activity, Connected, and Danger
-- Integrated modals for changing password, updating avatar, deleting account, and managing sessions
-- Implemented functionality for editing user details, uploading avatar, changing password, and deleting account
-- Added profile completeness calculation and display
-- Enhanced user experience with animations using framer-motion
+feat: remove avatar upload API and refactor user profile management components
