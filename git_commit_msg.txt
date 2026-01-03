@@ -1,1 +1,1 @@
-feat: refactor user profile modals for improved structure and functionality
+feat: enhance user fetching logic with loading states in HomeContent component
