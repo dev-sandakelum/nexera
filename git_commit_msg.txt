@@ -1,6 +1,7 @@
-feat: Enhance admin page functionality and styling
+feat: add avatar upload API and error handling component
 
-- Added NotFound component for better error handling in admin routes.
-- Implemented smooth scrolling to the top on component mount or subRoute change.
-- Updated NoteBlock and AuthBlock components to accept setRoute prop for improved navigation.
-- Refactored MainAdminPage to manage route changes more effectively.
+- Implemented a new API route for uploading user avatars, which fetches an image from a provided URL and saves it to the server.
+- Added a custom error component to handle application errors gracefully.
+- Integrated Supabase client for user avatar management, including upload and download functionalities.
+- Updated user and notes data structures to include a status field for better tracking.
+- Enhanced package dependencies with Supabase and fs for improved functionality.

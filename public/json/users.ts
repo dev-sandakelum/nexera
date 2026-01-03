@@ -11,6 +11,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Building the digital infrastructure of tomorrow. Lover of clean code and strong coffee.",
     location: "San Francisco, CA",
     joinedAt: "2023-01-15T08:00:00Z",
+    status: "active",
     academic: {
       institution: "Stanford University",
       degree: "M.Sc.",
@@ -53,6 +54,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Keeping the Nexus safe from threats. Cybersecurity enthusiast.",
     location: "Lisbon, Portugal",
     joinedAt: "2023-02-10T14:30:00Z",
+    status: "active",
     academic: {
       institution: "University of Lisbon",
       degree: "B.Sc.",
@@ -89,6 +91,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Exploring the boundaries of machine learning and neural networks.",
     location: "Toronto, Canada",
     joinedAt: "2023-03-05T09:15:00Z",
+    status: "active",
     academic: {
       institution: "University of Toronto",
       degree: "PhD",
@@ -129,6 +132,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Crafting beautiful and intuitive user experiences. Pixel perfectionist.",
     location: "London, UK",
     joinedAt: "2023-03-22T11:00:00Z",
+    status: "active",
     academic: {
       institution: "Royal College of Art",
       degree: "M.A.",
@@ -165,6 +169,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Automating everything. Infrastructure as Code advocate.",
     location: "Berlin, Germany",
     joinedAt: "2023-04-18T16:45:00Z",
+    status: "active",
     academic: {
       institution: "Technical University of Munich",
       degree: "B.Sc.",
@@ -202,6 +207,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Turning coffee into components. Passionate about accessibility.",
     location: "Chicago, IL",
     joinedAt: "2023-05-01T10:20:00Z",
+    status: "active",
     academic: {
       institution: "University of Illinois",
       degree: "B.Sc.",
@@ -241,6 +247,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Documenting the journey. Simplifier of complex concepts.",
     location: "Santa Fe, NM",
     joinedAt: "2023-05-15T13:00:00Z",
+    status: "active",
     academic: {
       institution: "St. John's College",
       degree: "B.A.",
@@ -276,6 +283,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Building apps that people love to use. Swift & Kotlin expert.",
     location: "Seoul, South Korea",
     joinedAt: "2023-06-02T08:30:00Z",
+    status: "active",
     academic: {
       institution: "KAIST",
       degree: "M.Sc.",
@@ -318,6 +326,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "White hat hacker. Protecting data privacy one exploit at a time.",
     location: "Sydney, Australia",
     joinedAt: "2023-06-20T15:10:00Z",
+    status: "active",
     academic: {
       institution: "UNSW Sydney",
       degree: "B.Sc.",
@@ -356,6 +365,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Agile enthusiast. Keeping teams aligned and projects on track.",
     location: "New York, NY",
     joinedAt: "2023-07-04T12:00:00Z",
+    status: "active",
     academic: {
       institution: "NYU",
       degree: "MBA",
@@ -393,6 +403,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Designing scalable cloud solutions. AWS & Azure certified.",
     location: "Seattle, WA",
     joinedAt: "2023-07-15T09:45:00Z",
+    status: "active",
     academic: {
       institution: "University of Washington",
       degree: "B.Sc.",
@@ -430,6 +441,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Creating immersive worlds. Unity & Unreal Engine pro.",
     location: "Derby, UK",
     joinedAt: "2023-08-01T14:20:00Z",
+    status: "active",
     academic: {
       institution: "University of Derby",
       degree: "B.A.",
@@ -470,6 +482,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Turning data into actionable insights. SQL & Python wizard.",
     location: "Singapore",
     joinedAt: "2023-08-10T10:00:00Z",
+    status: "active",
     academic: {
       institution: "NUS",
       degree: "B.Sc.",
@@ -506,6 +519,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Blending audio and code. Developing next-gen VSTs.",
     location: "Paris, France",
     joinedAt: "2023-08-25T16:30:00Z",
+    status: "active",
     academic: {
       institution: "IRCAM",
       degree: "M.Sc.",
@@ -541,6 +555,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Structuring data and logic. Node.js & Go enthusiast.",
     location: "Dublin, Ireland",
     joinedAt: "2023-09-05T09:00:00Z",
+    status: "active",
     academic: {
       institution: "Trinity College Dublin",
       degree: "B.Sc.",
@@ -583,6 +598,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Decentralizing the web. Smart contract auditor.",
     location: "Mumbai, India",
     joinedAt: "2023-09-20T13:45:00Z",
+    status: "active",
     academic: {
       institution: "IIT Bombay",
       degree: "B.Tech",
@@ -623,6 +639,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Breaking things so you don't have to. Automated testing expert.",
     location: "Austin, TX",
     joinedAt: "2023-10-01T11:15:00Z",
+    status: "active",
     academic: {
       institution: "University of Texas",
       degree: "B.Sc.",
@@ -658,6 +675,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Applying ML to athletic performance. Data-driven coaching.",
     location: "Madrid, Spain",
     joinedAt: "2023-10-15T15:30:00Z",
+    status: "active",
     academic: {
       institution: "Technical University of Madrid",
       degree: "M.Sc.",
@@ -693,6 +711,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Programming the physical world. IoT and robotics.",
     location: "Los Angeles, CA",
     joinedAt: "2023-11-02T08:50:00Z",
+    status: "active",
     academic: {
       institution: "Caltech",
       degree: "PhD",
@@ -733,6 +752,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Security consultant. Finding holes in the system before the bad guys do.",
     location: "Wilmington, DE",
     joinedAt: "2023-11-20T22:00:00Z",
+    status: "active",
     academic: {
       institution: "University of Delaware",
       degree: "B.Sc.",
@@ -772,6 +792,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Understanding user behavior to drive design decisions. Empathy is key.",
     location: "Vancouver, Canada",
     joinedAt: "2023-12-01T09:10:00Z",
+    status: "active",
     academic: {
       institution: "UBC",
       degree: "M.Sc.",
@@ -807,6 +828,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Keeping the servers humming. Linux enthusiast and shell scripter.",
     location: "Detroit, MI",
     joinedAt: "2023-12-05T14:45:00Z",
+    status: "active",
     academic: {
       institution: "Wayne State University",
       degree: "B.Sc.",
@@ -845,6 +867,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Weaving magic with code. Specializing in MERN stack.",
     location: "Westview, NJ",
     joinedAt: "2023-12-10T11:00:00Z",
+    status: "active",
     academic: {
       institution: "Rutgers University",
       degree: "B.Sc.",
@@ -887,6 +910,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Training models to solve complex problems. Python & TensorFlow.",
     location: "Zurich, Switzerland",
     joinedAt: "2023-12-15T16:20:00Z",
+    status: "active",
     academic: {
       institution: "ETH Zurich",
       degree: "PhD",
@@ -924,6 +948,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Building bridges between developers. fostering inclusive tech spaces.",
     location: "Boston, MA",
     joinedAt: "2023-12-20T10:30:00Z",
+    status: "active",
     academic: {
       institution: "Harvard University",
       degree: "B.A.",
@@ -960,6 +985,7 @@ export const nexeraUsersR: NexeraUser[] = [
     bio: "Defining the roadmap. Balancing user needs with business goals.",
     location: "San Diego, CA",
     joinedAt: "2023-12-28T13:00:00Z",
+    status: "active",
     academic: {
       institution: "UCSD",
       degree: "MBA",

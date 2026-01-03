@@ -1,15 +1,15 @@
-// firebaseConfig.ts
+// app/api/firebase.ts
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDoel5SucClWcbswQr__HhDUSQloySogbM",
-  authDomain: "nexera-a2938.firebaseapp.com",
-  projectId: "nexera-a2938",
-  storageBucket: "nexera-a2938.firebasestorage.app",
-  messagingSenderId: "844183674110",
-  appId: "1:844183674110:web:9d3f5822bc3c09fd9199af",
-  measurementId: "G-JLHY4E8QMJ",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

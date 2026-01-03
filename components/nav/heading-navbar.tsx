@@ -72,7 +72,7 @@ export default function HeadingNavBar({
               key={`${item}-${index}`}
               className="route-item"
               style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}
-              onClick={()=>handleRoute(item === "Notes" ? "" : item)}
+              onClick={()=>handleRoute(item === "Notes" || "Admin" || "Projects" ? "" : item)}
             >
               {item}
               <span className="separator"> &gt; </span>
