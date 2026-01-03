@@ -4,8 +4,9 @@ import { nexeraUsersR } from "@/public/json/users";
 import { db } from "@/app/api/firebase";
 import { ictNotes } from "@/public/json/notes";
 import { nexBadges } from "@/public/json/badges";
-import { UploadUserAvatar } from "@/utils/supabase/upload";
-import { LoadUserAvatar } from "@/utils/supabase/load";
+import { BlobToFile } from "../converts/blob-to-file";
+import { UploadFile } from "@/utils/supabase/storage/client";
+import { UpdateUser } from "../firebase/update-user";
 
 export async function UploadUsersFast() {
   const batch = writeBatch(db);
@@ -16,27 +17,30 @@ export async function UploadUsersFast() {
   //   batch.set(userRef, user);
   // });
 
-  nexeraUsersR.forEach(async (user) => {
-     try {
-      const res = await fetch("/api/upload-avatar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ avatarUrl: user.profilePicture }),
-      });
+  for (const user of nexeraUsersR) {
+    try {
+      const avatarUrl = user.profilePicture;
+      const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
-      if (!res.ok) {
-        const err = await res.json();
-        
-        return;
+      const { imageURL, error } = await UploadFile({
+        userId: user.id,
+        file: imgBlob,
+        bucket: "users",
+        path: `profile_pic/${user.id}`,
+      });
+      
+      if (error) {
+        console.error("Error uploading user avatar:", error);
+        continue;
       }
 
-      const data = await res.json();
-      
+      if (imageURL) {
+        await UpdateUser(user.id, {}, "profilePicture", imageURL);
+      }
     } catch (err: any) {
-      
-    } finally {
+      console.error("Error uploading user avatar:", err.message);
     }
-  });
+  }
 
   // const data = await LoadUserAvatar({
   //   userId: "u_005",

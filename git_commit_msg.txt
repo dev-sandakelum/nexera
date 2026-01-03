@@ -1,1 +1,1 @@
-feat: refactor rendering logic in HomeContent and improve state management in Notes_Sub
+feat: implement user avatar upload functionality with image compression and error handling
