@@ -6,14 +6,16 @@ import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
 import { useSearchParams } from "next/navigation";
 import { Route } from "next";
+import { useUser } from "@/contexts/UserContext";
 
 export default function HeadingNavBar({
   data,
-  user,
 }: {
   data: any;
-  user: NexeraUser;
 }) {
+
+  const { user, setUser, refreshUser } = useUser();
+ 
   const [displayData, setDisplayData] = useState(data);
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(false);

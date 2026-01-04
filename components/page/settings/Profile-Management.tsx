@@ -62,13 +62,7 @@ const tabs = [
   { id: "danger" as TabType, label: "Danger Zone", icon: FiAlertCircle },
 ];
 
-export default function UserProfile({
-  initialUser,
-  fetchUser,
-}: {
-  initialUser: NexeraUser;
-  fetchUser: () => void;
-}) {
+export default function UserProfile() {
   const { user, setUser, refreshUser } = useUser();
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);

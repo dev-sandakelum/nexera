@@ -1,1 +1,1 @@
-feat: implement UserContext for user state management and refactor user fetching in Profile component
+feat: simplify Settings and UserProfile components by removing unused props and integrating user context
