@@ -46,34 +46,20 @@ const itemVariants = {
 
 export default function MainAdminPage() {
   const pathname = usePathname();
-  const params = useSearchParams();
-  const [route, setRoute] = useState(params.get("u") || "");
-  const { replace } = useRouter();
+  
 
-  function handleRoute(term: string) {
-    const param = new URLSearchParams(params);
-    if (term) {
-      param.set("r","Admin")
-      param.set("u", term);
-    } else {
-      param.delete("u");
-    }
-    const url = `${pathname}?${param.toString()}`;
-    replace(url as Route, { scroll: false });
-  }
-
-  useEffect(() => {
-    handleRoute(route);
-  }, [route]);
+  
+  
   return (
     <motion.div
+      key={pathname}
       className="MainAdminPage"
       variants={containerVariants}
       initial="hidden"
       animate="show"
     >
       <motion.div variants={itemVariants} className="item">
-        <AuthBlock setRoute={setRoute}/>
+        <AuthBlock />
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         <PendingBlock />
@@ -105,7 +91,7 @@ export default function MainAdminPage() {
         </div>
       </motion.div>
       <motion.div variants={itemVariants} className="item">
-        <NoteBlock setRoute={setRoute}/>
+        <NoteBlock />
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         10

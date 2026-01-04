@@ -81,7 +81,10 @@
   background: var(--bg);
   border-radius: 16px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   box-shadow: none;
   color: inherit;

@@ -1,10 +1,11 @@
+import Link from "next/link";
 import React from "react";
 import { BiHistory, BiShieldQuarter } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { GoHistory } from "react-icons/go";
 import { LuCopyPlus } from "react-icons/lu";
 
-export function NoteBlock({ setRoute }: { setRoute: (icon: string) => void }) {
+export function NoteBlock() {
   return (
     <div
       className="CountStatus"
@@ -26,9 +27,9 @@ export function NoteBlock({ setRoute }: { setRoute: (icon: string) => void }) {
         <p className="description">Total notes created</p>
       </div>
       <div className="bottom">
-        <button className="btn" onClick={() => setRoute("NM")}>
+        <Link href={"/Admin/notes-management"} className="btn">
           Manage
-        </button>
+        </Link>
         <div className="icon">
           <FiSettings />
         </div>
@@ -40,7 +41,7 @@ export function NoteBlock({ setRoute }: { setRoute: (icon: string) => void }) {
   );
 }
 
-export function AuthBlock({ setRoute }: { setRoute: (icon: string) => void }) {
+export function AuthBlock() {
   return (
     <div
       className="CountStatus"
@@ -62,9 +63,9 @@ export function AuthBlock({ setRoute }: { setRoute: (icon: string) => void }) {
         <p className="description">Total registed users</p>
       </div>
       <div className="bottom">
-        <button className="btn" onClick={() => setRoute("UM")}>
+        <Link href={"/Admin/user-management"} className="btn">
           Manage
-        </button>
+        </Link>
         <div className="icon">
           <FiSettings />
         </div>
