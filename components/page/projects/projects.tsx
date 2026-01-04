@@ -8,8 +8,9 @@ import { MdVerified, MdLock, MdShare, MdEdit } from "react-icons/md";
 import { HiGlobe, HiTerminal, HiExternalLink } from "react-icons/hi";
 import { BiShieldQuarter } from "react-icons/bi";
 import { FiLayout, FiDatabase } from "react-icons/fi";
-import { GetProfilePicList, GetUserNameList } from "@/components/firebase/get-list";
+import { GetProfilePicList } from "@/components/firebase/get-list";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 // Icon mapping from string names to React components
 const iconMap: Record<string, React.ComponentType> = {
@@ -55,7 +56,7 @@ const cardVariants = {
 
 export default function Projects() {
   const [users, setUsers] = useState<{ id: string; profilePic: string; }[]>([]);
-
+  const pathname = usePathname();
   useEffect(() => {
     async function fetchUsers() {
       try {
@@ -70,7 +71,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <div className="projectsPage">
+    <div className="projectsPage" key={pathname}>
       <div className="projects-header">
         <motion.h1
           className="projects-header-title"

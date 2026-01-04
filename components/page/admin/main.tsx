@@ -5,13 +5,13 @@ import { BiPowerOff, BiShieldQuarter } from "react-icons/bi";
 import { CiSettings } from "react-icons/ci";
 import { FiFile, FiSettings } from "react-icons/fi";
 import { LuCopyPlus } from "react-icons/lu";
-import { AuthBlock, NoteBlock, PendingBlock } from "./items/blocks";
+import { AuthBlock, NoteBlock, PendingBlock } from "./rotes/main/items/blocks";
 import { PiPowerDuotone } from "react-icons/pi";
 import {
   DisableRegistrationButton,
   MakeAdminsONLY,
   PowerButton,
-} from "./items/control-btn";
+} from "./rotes/main/items/control-btn";
 import { UploadUsersFast } from "@/components/test/upload";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

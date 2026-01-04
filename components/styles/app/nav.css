@@ -19,7 +19,21 @@
   border: 1px solid var(--navbar-border);
   z-index: 11;
 }
+.navbar > .logoContainerFixBorder {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 76px;
+  z-index: 122;
+  transform: translateX(58px) ;
+  border-bottom:  1px solid var(--navbar-border);
+  opacity: 0;
+  transition: opacity 1s;
 
+}
+.navbar > .logoContainerFixBorder.active {
+  opacity: 1;
+}
 .navbar > .navigations {
   position: absolute;
   width: 64px;
@@ -157,7 +171,7 @@
   position: absolute;
   width: 72px;
   height: 100%;
-  top: 74px;
+  top: 76px;
   /* border: 1px solid rgb(0, 17, 255); */
   overflow: hidden;
   z-index: 9;

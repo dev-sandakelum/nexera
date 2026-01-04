@@ -47,12 +47,15 @@
   font-weight: 400;
   font-size: 12px;
 }
-.noteContainer .objects .object .info button {
+.noteContainer .objects .object .info .openLink {
   box-sizing: border-box;
   width: 100px;
   height: 32px;
   background: none;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   border: 1px solid var(--theme-colorA);
   color: var(--theme-colorA);

@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+
 
 const containerVariants = {
   hidden: {},
@@ -19,7 +21,7 @@ const itemVariants = (idx: number) => ({
     opacity: 0,
   },
   show: {
-    y: 500 - (50 *  idx),
+    y: 500 - 50 * idx,
     opacity: 1,
     transition: {
       type: "spring" as const,
@@ -30,44 +32,42 @@ const itemVariants = (idx: number) => ({
 });
 
 export default function HomePage() {
+  const pathname = usePathname();
   return (
-    <div className="homeContainer">
+    <div className="homeContainer" style={{ border: "1px solid red" }}>
       <motion.div
+        key={pathname}
         className="bg"
         variants={containerVariants}
         initial="hidden"
         animate="show"
       >
-        {[ 
-          "#42a5f5",
-          "#64b5f6",
-          "#90caf9",
-          "#bbdefb",
-          "#e3f2fd",
-        ].map((bg, idx) => (
-          <motion.div
-            key={idx + "bg"}
-            className="bgC"
-            custom={idx}
-            variants={itemVariants(idx)}
-            style={
-              {
-                "--idx": idx,
-                "--bg": bg,
-              } as React.CSSProperties
-            }
-            initial={{
-              x: `calc(70vw - 20vw * ${idx})`,
-              y: `calc(70vh - (10vh * ${idx}) + 600px)`,
-              rotateZ: 35,
-            }}
-            animate={{
-              x: `calc(70vw - 20vw * ${idx})`,
-              y: `calc(70vh - (10vh * ${idx})+ 200px)`,
-              rotateZ: 35,
-            }}
-          />
-        ))}
+        {["#42a5f5", "#64b5f6", "#90caf9", "#bbdefb", "#e3f2fd"].map(
+          (bg, idx) => (
+            <motion.div
+              key={idx + "bg"}
+              className="bgC"
+              custom={idx}
+              variants={itemVariants(idx)}
+              style={
+                {
+                  "--idx": idx,
+                  "--bg": bg,
+                } as React.CSSProperties
+              }
+              initial={{
+                x: `calc(70vw - 20vw * ${idx})`,
+                y: `calc(70vh - (10vh * ${idx}) + 600px)`,
+                rotateZ: 35,
+              }}
+              animate={{
+                x: `calc(70vw - 20vw * ${idx})`,
+                y: `calc(70vh - (10vh * ${idx})+ 200px)`,
+                rotateZ: 35,
+              }}
+            />
+          )
+        )}
       </motion.div>
     </div>
   );

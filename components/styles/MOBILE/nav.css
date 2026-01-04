@@ -61,6 +61,12 @@
   border: var(--accent-soft-border);
 }
 
+.mobile-nav .deactivated {
+  display: none;
+}
+.mobile-nav .icon.active {
+  display: block;
+}
 .mobile-nav .nav-sideIcon .navigation-btn {
   width: 48px;
   height: 48px;

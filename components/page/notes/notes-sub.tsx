@@ -1,10 +1,14 @@
+'use client';
+
 import { motion } from "framer-motion";
 import Card1 from "./items/card1";
 import { nexNoteAbout, nexTopic } from "@/components/types";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import NotePreviewPage from "./preview/note/note";
 import { useMemo, useEffect, useState } from "react";
 import { GetUserNameList } from "@/components/firebase/get-list";
+import { nexIctSubjects } from "@/public/json/subjects";
+
 
 export default function Notes_Sub({
   topics,
@@ -13,20 +17,23 @@ export default function Notes_Sub({
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
 }) {
+  const pathname = usePathname();
+  const paths = pathname.split("/");
   const params = useSearchParams();
-  const sub = params.get("u");
+  const sub_slug = paths[paths.length - 1];
   const note = params.get("n");
-
+  console.log("Sub :", sub_slug);
   const [userNames, setUserNames] = useState<{ id: string; name: string }[]>(
     []
   );
-
+  const subject_id = nexIctSubjects.find((sub) => sub.slug === sub_slug)?.id;
+  console.log("Subject ID:", subject_id);
   // Filter topics for this subject
   const subject_topics = useMemo(
-    () => topics.filter((topic) => topic.subjectID === sub),
-    [topics, sub]
+    () => topics.filter((topic) => topic.subjectID === subject_id),
+    [topics, subject_id]
   );
-
+  
   // Precompute notes by topic to avoid repeated filter calls
   const notesByTopic = useMemo(() => {
     const map: Record<string, nexNoteAbout[]> = {};

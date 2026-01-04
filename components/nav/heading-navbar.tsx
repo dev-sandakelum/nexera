@@ -1,66 +1,29 @@
 "use client";
-import Image from "next/image";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
-import { useSearchParams } from "next/navigation";
-import { Route } from "next";
 import { useUser } from "@/contexts/UserContext";
 
-export default function HeadingNavBar({
-  data,
-}: {
-  data: any;
-}) {
-
+export default function HeadingNavBar() {
   const { user, setUser, refreshUser } = useUser();
- 
-  const [displayData, setDisplayData] = useState(data);
+
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
-  const previousRoutes = displayData.slice(0, -1);
-  const activeRoute = displayData[displayData.length - 1];
-
-  useEffect(() => {
-    if (JSON.stringify(data) !== JSON.stringify(displayData)) {
-      // Start exit animation
-      setIsExiting(true);
-
-      // After exit completes, swap content and start enter animation
-      setTimeout(() => {
-        setDisplayData(data);
-        setIsExiting(false);
-        setIsEntering(true);
-      }, 300); // Exit duration
-
-      // End enter animation
-      setTimeout(() => {
-        setIsEntering(false);
-      }, 300 + data.length * 80 + 500); // Exit + stagger delays + active delay
-    }
-  }, [data, displayData]);
-  
   const pathname = usePathname();
-  const params = useSearchParams();
-  const { replace } = useRouter();
+  const paths = pathname.split("/");
 
-  function handleRoute(u: string, n?: string) {
-    const param = new URLSearchParams(params);
-    if (u) {
-      param.set("u", u);
-      if (n) {
-        param.set("n", n);
-      } else {
-        param.delete("n");
-      }
-    } else {
-      param.delete("u");
-    }
-    const url = `${pathname}?${param.toString()}`;
-    replace(url as Route, { scroll: false });
+  function getBreadcrumb() {
+    const paths = pathname.split("/").filter(Boolean);
+    if (paths.length === 0) return ["Home"];
+    return paths.map((path) => path.charAt(0).toUpperCase() + path.slice(1));
   }
+
+  const breadcrumb = getBreadcrumb();
+  const previousRoutes = breadcrumb.slice(0, -1);
+  const activeRoute = breadcrumb[breadcrumb.length - 1];
+
   return (
     <div className="heading-navbar">
       <div
@@ -74,7 +37,6 @@ export default function HeadingNavBar({
               key={`${item}-${index}`}
               className="route-item"
               style={{ "--delay": `${index * 0.08}s` } as React.CSSProperties}
-              onClick={()=>handleRoute(item === "Notes" || "Admin" || "Projects" ? "" : item)}
             >
               {item}
               <span className="separator"> &gt; </span>
@@ -84,7 +46,7 @@ export default function HeadingNavBar({
             className="active route-item"
             style={
               {
-                "--delay": `${previousRoutes.length * 0.08}s`,
+                "--delay": `${paths.length * 0.08}s`,
               } as React.CSSProperties
             }
           >
