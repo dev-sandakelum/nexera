@@ -1,4 +1,3 @@
-"use cache";
 import { db } from "@/app/api/firebase";
 import {
   collection,
@@ -17,17 +16,29 @@ type UpdateUserResult = {
   error?: string;
 };
 
+// components/firebase/update-user.tsx
 export async function UpdateUser(
   userId: string,
-  user : NexeraUser
-): Promise<UpdateUserResult> {
+  updates: Partial<NexeraUser>
+): Promise<{ success: boolean; user?: NexeraUser; error?: string }> {
   try {
-    console.log("Updating user with ID:", userId , user);
     const userRef = doc(db, "TestUsers", userId);
+    
+    // Update with timestamp
     await updateDoc(userRef, {
-      ...user,
+      ...updates,
+      lastLogin: new Date().toISOString(),
     });
-    return { success: true };
+    
+    // Fetch updated user
+    const updatedDoc = await getDoc(userRef);
+    if (!updatedDoc.exists()) {
+      return { success: false, error: "User not found after update" };
+    }
+    
+    const updatedUser = { id: updatedDoc.id, ...updatedDoc.data() } as NexeraUser;
+    return { success: true, user: updatedUser };
+    
   } catch (error) {
     return {
       success: false,

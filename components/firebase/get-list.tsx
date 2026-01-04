@@ -1,4 +1,4 @@
-'use cache';
+
 import { db } from "@/app/api/firebase";
 import {
   collection,

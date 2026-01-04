@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
   FiUser,
@@ -41,6 +41,7 @@ import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
 import ShowSessionsModal from "./models/SessionsModal";
 import { UpdateUser } from "@/components/firebase/update-user";
+import { useUser } from "@/contexts/UserContext";
 
 type TabType =
   | "profile"
@@ -63,14 +64,17 @@ const tabs = [
 
 export default function UserProfile({
   initialUser,
+  fetchUser,
 }: {
   initialUser: NexeraUser;
+  fetchUser: () => void;
 }) {
-  const [user] = useState<NexeraUser>(initialUser);
+  const { user, setUser, refreshUser } = useUser();
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  //profile
+  //profile form state
   const [formUser, setFormUser] = useState<NexeraUser>(user);
 
   // Modals
@@ -102,15 +106,37 @@ export default function UserProfile({
       reader.readAsDataURL(file);
     }
   };
+  // Sync formUser with user context when user changes
+  useEffect(() => {
+    setFormUser(user);
+  }, [user]);
+
   async function handleUpdateUser() {
-    const updatedUser = { ...user, ...formUser };
-    const response = await UpdateUser(user.id, updatedUser);
-    if (response.success) {
-      console.log("User updated successfully");
-    } else {
-      console.log(response.error || "Update failed");
+    setIsSaving(true);
+
+    try {
+      const response = await UpdateUser(user.id, formUser);
+
+      if (response.success && response.user) {
+        // ✅ Update context with new user data
+        setUser(response.user);
+
+        // ✅ Also refresh from server to be sure
+        await refreshUser();
+
+        setIsEditing(false);
+        alert("Profile updated successfully!");
+      } else {
+        alert(response.error || "Update failed");
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Failed to update profile");
+    } finally {
+      setIsSaving(false);
     }
   }
+
   const getPasswordStrength = (password: string) => {
     if (!password)
       return {
@@ -148,12 +174,10 @@ export default function UserProfile({
               </button>
               <button
                 className="saveBtn"
-                onClick={() => {
-                  handleUpdateUser();
-                  setIsEditing(false);
-                }}
+                onClick={handleUpdateUser}
+                disabled={isSaving}
               >
-                <FiSave /> Save Changes
+                {isSaving ? "Saving..." : "Save Changes"}
               </button>
             </>
           )}
@@ -204,7 +228,7 @@ export default function UserProfile({
         {/* PROFILE TAB */}
         {activeTab === "profile" && (
           <Profile
-            user={user}
+            user={formUser}
             formUser={formUser}
             setFormUser={setFormUser}
             isEditing={isEditing}
@@ -218,7 +242,7 @@ export default function UserProfile({
           <Security
             setShowPasswordModal={setShowPasswordModal}
             setShowSessionsModal={setShowSessionsModal}
-            user={user}
+            user={formUser}
           />
         )}
 

@@ -73,6 +73,7 @@ const Settings = dynamic(() => import("@/components/page/settings/settings"));
 import { nexIctSubjects } from "@/public/json/subjects";
 import { ictTopics } from "@/public/json/topics";
 import { ictNotes } from "@/public/json/notes";
+import { UserProvider } from "@/contexts/UserContext";
 
 // Throttle helper
 const throttle = (func: Function, limit: number) => {
@@ -111,28 +112,31 @@ export default function HomeContent({
   const usableAreaRef = useRef<HTMLDivElement>(null);
 
   // Fetch user data from API
-  useEffect(() => {
-    async function fetchUser() {
-      setIsFetchingUser(true);
-      setIsFetchedUser(false);
-      try {
-        const response = await fetch("/api/user", {
-          cache: "no-store",
-        });
-        if (response.ok) {
-          const userData = await response.json();
-          if (userData) {
-            setUser(userData);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      } finally {
-        setIsFetchingUser(false);
-        setIsFetchedUser(true);
-      }
-    }
 
+  async function fetchUser() {
+    setIsFetchingUser(true);
+    setIsFetchedUser(false);
+    try {
+      const response = await fetch("/api/user", {
+        cache: "no-store",
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        if (userData) {
+          setUser(userData);
+        } else {
+          setUser(guestUser);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    } finally {
+      setIsFetchingUser(false);
+      setIsFetchedUser(true);
+    }
+  }
+
+  useEffect(() => {
     if (!initialUser || initialUser.id === "guest_000") {
       fetchUser();
     } else {
@@ -180,44 +184,46 @@ export default function HomeContent({
       if (isFetchingUser) {
         return null; // Return null to trigger Suspense fallback
       }
-      if (isFetchedUser) return <Settings user={user} />;
+      if (isFetchedUser) return <Settings user={user} fetchUser={fetchUser} />;
     }
     return null;
   };
 
   return (
-    <div className="page root" suppressHydrationWarning>
-      {!(activeIcon === "login" || activeIcon === "register") && (
-        <>
-          {isMobile ? (
-            <MobileNavBar
-              data={routeList}
-              activeIcon={activeIcon}
-              setActiveIcon={setActiveIcon}
-              user={user}
-            />
-          ) : (
-            <>
-              <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-              <HeadingNavBar data={routeList} user={user} />
-            </>
-          )}
-        </>
-      )}
+    <UserProvider initialUser={initialUser}>
+      <div className="page root" suppressHydrationWarning>
+        {!(activeIcon === "login" || activeIcon === "register") && (
+          <>
+            {isMobile ? (
+              <MobileNavBar
+                data={routeList}
+                activeIcon={activeIcon}
+                setActiveIcon={setActiveIcon}
+                user={user}
+              />
+            ) : (
+              <>
+                <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+                <HeadingNavBar data={routeList} user={user} />
+              </>
+            )}
+          </>
+        )}
 
-      <div className="ContentArea">
-        <div className="UsableArea" ref={usableAreaRef}>
-          <Suspense
-            fallback={
-              <div style={{ padding: "20px", textAlign: "center" }}>
-                Loading...
-              </div>
-            }
-          >
-            {renderContent()}
-          </Suspense>
+        <div className="ContentArea">
+          <div className="UsableArea" ref={usableAreaRef}>
+            <Suspense
+              fallback={
+                <div style={{ padding: "20px", textAlign: "center" }}>
+                  Loading...
+                </div>
+              }
+            >
+              {renderContent()}
+            </Suspense>
+          </div>
         </div>
       </div>
-    </div>
+    </UserProvider>
   );
 }

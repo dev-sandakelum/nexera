@@ -3,6 +3,12 @@ import UserProfile from "./Profile-Management";
 import { nexeraUsersR } from "@/public/json/users";
 import { NexeraUser } from "@/components/types";
 
-export default function Settings({ user }: { user: NexeraUser }) {
-  return <UserProfile initialUser={user} />;
+export default function Settings({
+  user,
+  fetchUser,
+}: {
+  user: NexeraUser;
+  fetchUser: () => void;
+}) {
+  return <UserProfile initialUser={user} fetchUser={fetchUser} />;
 }
