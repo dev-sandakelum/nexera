@@ -184,7 +184,7 @@ export default function HomeContent({
       if (isFetchingUser) {
         return null; // Return null to trigger Suspense fallback
       }
-      if (isFetchedUser) return <Settings user={user} fetchUser={fetchUser} />;
+      if (isFetchedUser) return <Settings />;
     }
     return null;
   };
@@ -204,7 +204,7 @@ export default function HomeContent({
             ) : (
               <>
                 <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-                <HeadingNavBar data={routeList} user={user} />
+                <HeadingNavBar data={routeList}/>
               </>
             )}
           </>
