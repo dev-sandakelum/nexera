@@ -1,9 +1,1 @@
-Add comprehensive styles for navigation, scrollbar, authentication, home, not found, notes, and projects pages
-
-- Implemented a new navigation bar with fixed positioning and custom styles.
-- Added custom scrollbar styles for usability in various components.
-- Enhanced authentication page styles for better spacing and usability.
-- Created a structured layout for the home page with background elements.
-- Designed a user-friendly 404 not found page with responsive styles.
-- Developed styles for notes and projects pages, including card layouts and responsive design.
-- Introduced custom fonts and improved overall visual consistency across components.
+feat: remove HomeContent component and associated styles
