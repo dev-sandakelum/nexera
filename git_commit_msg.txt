@@ -1,1 +1,1 @@
-feat: remove unused imports for HomeContent and Suspense in page component
+feat: refactor NoteBlock and AuthBlock components to remove setRoute prop and use Link for navigation
