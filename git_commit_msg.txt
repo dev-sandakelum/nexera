@@ -1,1 +1,1 @@
-feat: remove HomeContent component and associated styles
+feat: remove unused imports for HomeContent and Suspense in page component

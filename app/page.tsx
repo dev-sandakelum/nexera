@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import HomeContent from "./home-content";
 import { NexeraUser } from "@/components/types";
 import { redirect } from "next/navigation";
 
