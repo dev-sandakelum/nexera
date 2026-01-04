@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import HomeContent from "./home-content";
 import { NexeraUser } from "@/components/types";
+import { redirect } from "next/navigation";
 
 export const guestUser: NexeraUser = {
   id: "guest_000",
@@ -31,9 +32,10 @@ export const guestUser: NexeraUser = {
 };
 
 export default function Home() {
-  return (
-    <Suspense fallback={<div style={{ width: '100vw', height: '100vh', background: 'transparent' }} />}>
-      <HomeContent />
-    </Suspense>
-  );
+  redirect('/Home');
+  // return (
+  //   <Suspense fallback={<div style={{ width: '100vw', height: '100vh', background: 'transparent' }} />}>
+  //     {/* <HomeContent /> */}
+  //   </Suspense>
+  // );
 }

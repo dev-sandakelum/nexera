@@ -1,244 +1,134 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { UserInfo } from "@/components/nav/heading-navbar";
-import { NexeraUser } from "@/components/types";
-import { Route } from "next";
-
-// --- 1. Smooth & Calm Configuration ---
-
-const smoothTransition = {
-  type: "spring" as const,
-  stiffness: 120, // Lower = Slower/Softer tension
-  damping: 20, // Controls the "bounciness" (20 is smooth, not too bouncy)
-  mass: 1, // Weight of the object
-};
-
-const sidebarItemVariants: Variants = {
-  open: (i: number) => ({
-    y: (i + 1) * 68,
-    transition: {
-      ...smoothTransition,
-      delay: i * 0.1, // Slower stagger (100ms between items)
-    },
-  }),
-  closed: (i: number) => ({
-    y: 0,
-    transition: {
-      ...smoothTransition,
-      // When closing, we speed it up slightly so it doesn't feel sluggish
-      delay: (6 - i) * 0.05,
-    },
-  }),
-};
-
-const iconVariants: Variants = {
-  initial: { opacity: 0, scale: 0.6, rotate: -90 },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    transition: { duration: 0.5, ease: "easeInOut" }, // Slow, smooth rotation
-  },
-  exit: {
-    opacity: 0,
-    scale: 0.6,
-    rotate: 90,
-    transition: { duration: 0.4, ease: "easeInOut" },
-  },
-};
-
-const breadcrumbVariants: Variants = {
-  initial: { opacity: 0, x: -15 },
-  animate: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.6, ease: "easeOut" }, // Slow drift in
-  },
-  exit: {
-    opacity: 0,
-    x: 15,
-    transition: { duration: 0.4, ease: "easeIn" },
-  },
-};
+import { useUser } from "@/contexts/UserContext";
 
 export default function MobileNavBar({
-  data,
   activeIcon,
   setActiveIcon,
-  user,
 }: {
-  data: string[];
   activeIcon: string;
   setActiveIcon: (icon: string) => void;
-  user: NexeraUser;
 }) {
-  const params = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
-  const [displayData, setDisplayData] = useState(data);
 
-  useEffect(() => {
-    if (params.size === 0) {
-      setActiveIcon("Home");
-      handleRoute("Home");
-    }
-  }, []);
+  const { user } = useUser();
 
-  useEffect(() => {
-    const currentRoute = params.get("r");
-    if (currentRoute) {
-      const routeParts = currentRoute.split("/r/");
-      setDisplayData(routeParts);
-    } else {
-      setDisplayData(["Home"]);
-    }
-  }, [params]);
+  console.log("path =>" + pathname);
 
-  useEffect(() => {
-    setDisplayData(data);
-  }, [data]);
-
-  function handleRoute(term: string) {
-    const param = new URLSearchParams();
-    const activeTab = term ? term.split("/r/") : [];
-    if (term) {
-      param.set("r", term);
-    } else {
-      param.delete("r");
-    }
-    replace(`${pathname}?${param.toString()}` as Route, { scroll: false });
-    setActiveIcon(activeTab[0] || "Home");
+  function handleRoute() {
+    const firstRoute = pathname.split("/")[1] || "Home";
+    setActiveIcon(firstRoute.charAt(0).toUpperCase() + firstRoute.slice(1));
   }
-  function handleRoute2(u: string, n?: string) {
-    const param = new URLSearchParams(params);
-    if (u) {
-      param.set("u", u);
-      if (n) {
-        param.set("n", n);
-      } else {
-        param.delete("n");
-      }
-    } else {
-      param.delete("u");
-    }
-    const url = `${pathname}?${param.toString()}`;
-    replace(url as Route, { scroll: false });
-  }
-  const navigationItems = [
-    { value: "Home", icon: "Home", alt: "Home Icon" },
-    { value: "Notes", icon: "Notes", alt: "Notes Icon" },
-    { value: "Projects", icon: "Projects", alt: "Projects Icon" },
-    { value: "Applications", icon: "Applications", alt: "Applications Icon" },
-    { value: "Admin", icon: "Admin", alt: "Admin Icon" },
-    { value: "Info", icon: "Info", alt: "Info Icon" },
-    { value: "Settings", icon: "Settings", alt: "Settings Icon" },
-  ];
 
-  const previousRoutes = displayData.slice(0, -1);
-  const activeRoute = displayData[displayData.length - 1];
+  useEffect(() => {
+    handleRoute();
+  }, [pathname]);
+
+  function iconAdder(idx: number) {
+    const icons = [
+      "Home",
+      "Notes",
+      "Projects",
+      "Applications",
+      "Admin",
+      "Info",
+      "Settings",
+    ];
+
+    const isActive = activeIcon === icons[idx];
+    const currentRoute = pathname.split("/")[1];
+    const isCurrentView =
+      currentRoute.toLowerCase() === icons[idx].toLowerCase();
+    console.log(
+      "Current Route: " +
+        currentRoute +
+        " | Icon: " +
+        icons[idx] +
+        " | isCurrentView: " +
+        isCurrentView +
+        " | isActive: " +
+        isActive
+    );
+    return (
+      <li
+        className={`nav-sideIcon ${isActive ? "active" : ""}`}
+        style={{
+          zIndex: isCurrentView ? 32 : 30 - idx,
+          position: "absolute",
+          top: 0,
+          transform: openPanel
+            ? `translateY(${(idx + 1) * 68}px)`
+            : "translateY(0)",
+          transition: "transform 0.3s ease",
+        }}
+      >
+        <Link
+          href={`/${icons[idx]}`}
+          type="button"
+          className="navigation-btn"
+          onClick={() => {
+            if (isCurrentView) {
+              setOpenPanel(!openPanel);
+            } else {
+              setOpenPanel(false);
+            }
+          }}
+        >
+          <Image
+            src={`/icons/nav/${icons[idx]}.png`}
+            alt={`${icons[idx]} Icon`}
+            width={24}
+            height={24}
+            className={`icon ${isActive ? "deactivated" : "active"}`}
+          />
+          <Image
+            src={`/icons/nav/active/${icons[idx]}.png`}
+            alt={`${icons[idx]} Icon`}
+            width={24}
+            height={24}
+            className={`icon ${isActive ? "active" : "deactivated"}`}
+          />
+        </Link>
+      </li>
+    );
+  }
+
+  // Get breadcrumb from pathname
+  function getBreadcrumb() {
+    const paths = pathname.split("/").filter(Boolean);
+    if (paths.length === 0) return ["Home"];
+    return paths.map((path) => path.charAt(0).toUpperCase() + path.slice(1));
+  }
+
+  const breadcrumb = getBreadcrumb();
+  const previousRoutes = breadcrumb.slice(0, -1);
+  const activeRoute = breadcrumb[breadcrumb.length - 1];
 
   return (
     <>
       <div className="mobile-nav">
-        {" "}
         <div
-          className={`returningBG ${openPanel && "open"}`}
+          className={`returningBG ${openPanel ? "open" : ""}`}
           onClick={() => {
             openPanel && setOpenPanel(false);
           }}
         ></div>
-        <ul className={`nav-sideIcons ${openPanel && "open"}`}>
-          {navigationItems.map(({ value, icon, alt }, idx) => {
-            const isActive = activeIcon === value;
-            const isCurrentView = displayData[0] === value;
 
-            return (
-              <motion.li
-                key={value}
-                className={`nav-sideIcon ${isActive && "active"}`}
-                custom={idx}
-                variants={sidebarItemVariants}
-                initial="closed"
-                animate={openPanel ? "open" : "closed"}
-                style={{
-                  zIndex: isCurrentView ? 32 : 30 - idx,
-                  position: "absolute",
-                  top: 0,
-                }}
-              >
-                <motion.button
-                  type="button"
-                  className="navigation-btn"
-                  whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    if (isCurrentView) {
-                      setOpenPanel(!openPanel);
-                      if (openPanel) {
-                        setActiveIcon(value);
-                        handleRoute(value);
-                      }
-                    } else {
-                      setOpenPanel(false);
-                      setActiveIcon(value);
-                      handleRoute(value);
-                    }
-                  }}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    {isActive ? (
-                      <motion.div
-                        key="active"
-                        variants={iconVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        style={{
-                          position: "absolute",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Image
-                          src={`/icons/nav/active/${icon}.png`}
-                          alt={alt}
-                          width={24}
-                          height={24}
-                        />
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key="inactive"
-                        variants={iconVariants}
-                        initial="initial"
-                        animate="animate"
-                        exit="exit"
-                        style={{
-                          position: "absolute",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Image
-                          src={`/icons/nav/${icon}.png`}
-                          alt={alt}
-                          width={24}
-                          height={24}
-                        />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.button>
-              </motion.li>
-            );
-          })}
+        <ul className={`nav-sideIcons ${openPanel ? "open" : ""}`}>
+          {iconAdder(0)}
+          {iconAdder(1)}
+          {iconAdder(2)}
+          {iconAdder(3)}
+          {iconAdder(4)}
+          {iconAdder(5)}
+          {iconAdder(6)}
         </ul>
+
         <div className="logoContainer">
           <div className="logo">
             <Image
@@ -250,53 +140,26 @@ export default function MobileNavBar({
             />
           </div>
         </div>
+
         <div className="nav-sideIcons">
           <UserInfo user={user} />
         </div>
       </div>
 
       <div className="mobile-route">
-        <motion.div
-          className="path"
-          layout
-          initial={{ y: 15, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }} // Very slow entry for path container
-        >
+        <div className="path">
           <p
             style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
           >
-            <AnimatePresence mode="popLayout">
-              {previousRoutes.map((item, index) => (
-                <motion.span
-                  key={`${item}-${index}`}
-                  className="route-item"
-                  variants={breadcrumbVariants}
-                  initial="initial"
-                  animate="animate"
-                  exit="exit"
-                  layout
-                  onClick={()=>handleRoute2(item === "Notes" ? "" : item)}
-                >
-                  {item}
-                  <span className="separator"> &gt; </span>
-                </motion.span>
-              ))}
-
-              <motion.span
-                key={`active-${activeRoute}`}
-                className="active route-item"
-                variants={breadcrumbVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                layout
-              >
-                {activeRoute}
-              </motion.span>
-            </AnimatePresence>
+            {previousRoutes.map((item, index) => (
+              <span key={`${item}-${index}`} className="route-item">
+                {item}
+                <span className="separator"> &gt; </span>
+              </span>
+            ))}
+            <span className="active route-item">{activeRoute}</span>
           </p>
-        </motion.div>
+        </div>
       </div>
     </>
   );

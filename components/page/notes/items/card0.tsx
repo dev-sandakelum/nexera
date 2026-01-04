@@ -1,10 +1,10 @@
-
+"use client";
 import { nexSubject } from "@/components/types";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function Card0({ dataset ,type}: { dataset: nexSubject[] , type?: string}) {
+export default function Card0({ dataset }: { dataset: nexSubject[]}) {
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -29,21 +29,7 @@ export default function Card0({ dataset ,type}: { dataset: nexSubject[] , type?:
       },
     },
   };
-  const params = useSearchParams();
-  const pathname = "/";
-  const router = useRouter();
-  function handleRoute(term: string) {
-    const param = new URLSearchParams(params);
-    if (term) {
-      param.set("u", term);
-    } else {
-      param.delete("t");
-      param.delete("u");
-    }
-    router.replace(`${pathname}?${param.toString()}`, {
-      scroll: false,
-    });
-  }
+  
 
   return (
     <motion.div
@@ -66,13 +52,10 @@ export default function Card0({ dataset ,type}: { dataset: nexSubject[] , type?:
             <div className="info">
               <p className="title">{item.title}</p>
               <p className="description">{item.description}</p>
-              <button
-                onClick={() => {
-                  handleRoute(item.id);
-                }}
+              <Link href={ "/Notes/"+item.slug} className="openLink"
               >
                 Open {">>"}
-              </button>
+              </Link>
             </div>
             <div className="btn">
               <HiDotsVertical />

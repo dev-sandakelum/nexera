@@ -1,6 +1,5 @@
 import { NexeraUser, nexNoteAbout } from "@/components/types";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Card1({
   data,
@@ -37,25 +36,11 @@ export default function Card1({
     } as React.CSSProperties;
   }
 
-  const params = useSearchParams();
-  const pathname = "/";
-  const router = useRouter();
-  function handleRoute(term: string) {
-    const param = new URLSearchParams(params);
-    if (term) {
-      param.set("n", term);
-    } else {
-      param.delete("n");
-    }
-    router.replace(`${pathname}?${param.toString()}`, {
-      scroll: false,
-    });
-  }
+  
   return (
     <div
       className="objects"
       style={fileTypeStyle}
-      onClick={() => handleRoute(encodeURIComponent(data.id))}
     >
       <div className="user">
         <p className="date">
