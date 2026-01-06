@@ -4,5 +4,5 @@ import { nexeraUsersR } from "@/public/json/users";
 import { NexeraUser } from "@/components/types";
 
 export default function Settings() {
-  return <UserProfile  />;
+  return <UserProfile user={{} as NexeraUser}  />;
 }

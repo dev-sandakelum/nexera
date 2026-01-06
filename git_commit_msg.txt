@@ -1,1 +1,1 @@
-feat: enhance user authentication and profile management with token handling and user data fetching
+feat: pass user prop to UserProfile component in Settings
