@@ -1,27 +1,44 @@
-export type Note_dataSet = {
-  catogory: string;
-  data: {
-    ID: string;
-    username: string;
-    fileType: "pdf" | "note" | "quiz";
-    name: string;
-    description: string;
-  }[];
-};
-export type Subject = {
-  id: string;
-  title: string;
-  description: string;
-}[];
+// export type Note_dataSet = {
+//   catogory: string;
+//   data: {
+//     ID: string;
+//     username: string;
+//     fileType: "pdf" | "note" | "quiz";
+//     name: string;
+//     description: string;
+//   }[];
+// };
+// export type Subject = {
+//   id: string;
+//   title: string;
+//   description: string;
+// }[];
 
 export type nexSubject = {
   id: string;
   title: string;
   description: string;
   slug: string;
+
+  departmentID: string;   // 🔑
+  academicYear: number;   // 🔑 (1, 2, 3, 4)
+  semester?: number;      // optional 1,2
+
+  createdBy: string;      // userID
+  createdByRole: "nexRoot" | "nexPrime" | "nexUser";
+
+  isOfficial: boolean;    // 🔑 admin-approved
+
   createdAt: string;
   updatedAt: string;
 };
+
+export type uniDepartment = {
+  id: string;
+  name: string;   // Computer Science
+  code: string;   // CS
+};
+
 export type nexTopic = {
   id: string;
   subjectID: string;

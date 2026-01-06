@@ -1,1 +1,1 @@
-feat: enhance MobileNavBar with icon handling and loading animation, update styles for better visibility
+feat: update nexSubject and uniDepartment types with additional fields and comments for clarity
