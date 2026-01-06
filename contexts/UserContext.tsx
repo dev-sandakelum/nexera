@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { NexeraUser } from '@/components/types';
 import { guestUser } from '@/app/page';
+import { getUserFromClerk } from '@/lib/server/user-helpers';
 
 interface UserContextType {
   user: NexeraUser | null;
@@ -21,22 +22,7 @@ export function UserProvider({ children, initialUser }: { children: ReactNode; i
   // Fetch user from API
   const fetchUser = useCallback(async () => {
     try {
-      setLoading(true);
-      const res = await fetch('/api/user', {
-        method: 'GET',
-        cache: 'no-store',
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
-      });
-
-      const data = await res.json();
-      
-      if (data.success && data.message) {
-        setUser(data.message);
-      } else {
-        setUser(guestUser);
-      }
+      const user = await getUserFromClerk();
     } catch (error) {
       console.error('Error fetching user:', error);
       setUser(guestUser);

@@ -90,7 +90,7 @@ export default function RootLayout({
               style={{
                 width: "100vw",
                 height: "100vh",
-                background: "#000",
+                background: "#ba0a0aff",
               }}
             />
           }
