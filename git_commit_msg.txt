@@ -1,1 +1,1 @@
-feat: refactor authentication flow and user context integration
+feat: enhance user authentication and profile management with token handling and user data fetching

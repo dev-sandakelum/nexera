@@ -15,12 +15,12 @@ export async function POST(req: Request) {
 
   if (user) {
     if (user.password == password) {
-
+      const isProduction = process.env.NODE_ENV === "production";
       cookieStore.set("nexera_auth", user.email, {
-        httpOnly: true,
-        secure: true,
+        httpOnly: false,
+        secure: false,
         sameSite: "strict",
-        maxAge: 60 * 10 , // 10 minutes
+        maxAge: 60 * 10, // 10 minutes
       });
 
       return NextResponse.json(
