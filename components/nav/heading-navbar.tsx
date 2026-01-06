@@ -1,9 +1,8 @@
 "use client";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
-import { useUser } from "@/contexts/UserContext";
 import { useClerk } from "@clerk/nextjs";
 
 export default function HeadingNavBar({ User }: { User: NexeraUser }) {
@@ -61,19 +60,20 @@ export default function HeadingNavBar({ User }: { User: NexeraUser }) {
 export function UserInfo({ user }: { user: NexeraUser }) {
   const [is_UserInfo_open, set_is_UserInfo_open] = useState(false);
   const [is_UserInfo_mobile, set_is_UserInfo_mobile] = useState(false);
-  const { replace } = useRouter();
-  const { logout: contextLogout, refreshUser } = useUser();
   const { signOut } = useClerk();
   const pickedBadges: nexBadge[] = [];
-
+  console.log("UserInfo user:", user);
   // Fix: Check if both user AND user.badges exist
-  if (user && user.badges && Array.isArray(user.badges)) {
-    user.badges.forEach((nexBadge) => {
-      const foundBadge = nexBadges.find((badge) => badge.id === nexBadge.id);
-      if (foundBadge) {
-        pickedBadges.push(foundBadge);
-      }
-    });
+  if (user) {
+    if (user?.badges) {
+      Object.values(user.badges).forEach((userBadge) => {
+        const foundBadge = nexBadges.find((badge) => badge.id === userBadge.id);
+
+        if (foundBadge) {
+          pickedBadges.push(foundBadge);
+        }
+      });
+    }
   }
 
   useEffect(() => {

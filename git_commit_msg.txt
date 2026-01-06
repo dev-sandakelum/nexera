@@ -1,1 +1,1 @@
-feat: update avatar handling in UserProfile and AvatarModal components
+feat: update user badge handling and improve user management functionality

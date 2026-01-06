@@ -6,7 +6,7 @@ import { FiEdit2, FiEye, FiRefreshCw, FiSearch, FiCheck, FiXCircle } from 'react
 import Image from 'next/image';
 import { NexeraUser } from '@/components/types';
 
-const ROLE_BADGES = ['B1','B2','B3','B4','B5','B6','B7','B8','B9','B10'];
+const ROLE_BADGES = ['nex_001','nex_002','nex_003','nex_004','nex_005','nex_006','nex_007','nex_008','nex_009','nex_010'];
 
 export default function UserManagement() {
   const [users, setUsers] = useState<NexeraUser[]>([]);
