@@ -1,1 +1,1 @@
-feat: add dynamic export to DashboardLayout component
+feat: remove cacheComponents option from Next.js configuration
