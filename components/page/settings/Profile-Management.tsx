@@ -91,7 +91,7 @@ export default function UserProfile() {
     showConfirm: false,
   });
 
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(user.profilePicture || null);
   const [completeness] = useState(75); // Dummy completeness
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,6 +201,7 @@ export default function UserProfile() {
                 onClick={() => {
                   setIsEditing(false);
                   setFormUser(user);
+                  setAvatarUpdated(false);
                 }}
               >
                 <FiX /> Cancel
@@ -265,6 +266,8 @@ export default function UserProfile() {
             formUser={formUser}
             setFormUser={setFormUser}
             isEditing={isEditing}
+            avatarPreview={avatarPreview}
+            avatarUpdated={avatarUpdated}
             setShowAvatarModal={setShowAvatarModal}
             handleUpdateUser={handleUpdateUser}
           />
