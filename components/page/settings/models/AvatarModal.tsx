@@ -7,12 +7,16 @@ interface AvatarModalProps {
   setShowAvatarModal: (show: boolean) => void;
   avatarPreview: string | null;
   handleAvatarChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAvatarUpdate: () => void;
+  setAvatarUpdated: (updated: boolean) => void;
 }
 
 export default function ShowAvatarModal({
   setShowAvatarModal,
   avatarPreview,
   handleAvatarChange,
+  handleAvatarUpdate,
+  setAvatarUpdated,
 }: AvatarModalProps) {
   return (
     <div className="modalOverlay" onClick={() => setShowAvatarModal(false)}>
@@ -64,13 +68,20 @@ export default function ShowAvatarModal({
           <div className="modalActions">
             <button
               className="cancelBtn"
-              onClick={() => setShowAvatarModal(false)}
+              onClick={() => {
+                setAvatarUpdated(false);
+                setShowAvatarModal(false);
+              }}
             >
               Cancel
             </button>
             <button
               className="saveBtn"
-              onClick={() => setShowAvatarModal(false)}
+              onClick={() => {
+                setAvatarUpdated(true);
+                handleAvatarUpdate();
+                setShowAvatarModal(false);
+              }}
             >
               Upload
             </button>

@@ -39,6 +39,9 @@ import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
 import ShowSessionsModal from "./models/SessionsModal";
 import { UpdateUser } from "@/components/firebase/update-user";
+import { useUser } from "@/contexts/UserContext";
+import { BlobToFile } from "@/components/converts/blob-to-file";
+import { UploadFile } from "@/utils/supabase/storage/client";
 
 type TabType =
   | "profile"
@@ -59,11 +62,12 @@ const tabs = [
   { id: "danger" as TabType, label: "Danger Zone", icon: FiAlertCircle },
 ];
 
-export default function UserProfile({user}: {user: NexeraUser}) {
+export default function UserProfile({ user }: { user: NexeraUser }) {
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
+  const { refreshUser, updateUser: updateUserContext } = useUser();
   //profile form state
   const [formUser, setFormUser] = useState<NexeraUser>(user);
 
@@ -72,6 +76,7 @@ export default function UserProfile({user}: {user: NexeraUser}) {
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSessionsModal, setShowSessionsModal] = useState(false);
+  const [avatarUpdated, setAvatarUpdated] = useState(false);
 
   // Dummy states
   const [passwordData, setPasswordData] = useState({
@@ -96,6 +101,11 @@ export default function UserProfile({user}: {user: NexeraUser}) {
       reader.readAsDataURL(file);
     }
   };
+
+  const handleAvatarUpdate = () => {
+    console.log("Avatar updated with preview URL:", avatarPreview);
+  };
+
   // Sync formUser with user context when user changes
   useEffect(() => {
     setFormUser(user);
@@ -103,16 +113,40 @@ export default function UserProfile({user}: {user: NexeraUser}) {
 
   async function handleUpdateUser() {
     setIsSaving(true);
+    if (avatarUpdated && avatarPreview) {
+      try {
+        const avatarUrl = avatarPreview;
+        const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
+        const { imageURL, error } = await UploadFile({
+          userId: user.id,
+          file: imgBlob,
+          bucket: "users",
+          path: `profile_pic3/${user.id}`,
+        });
+
+        if (error) {
+          console.error("Error uploading user avatar:", error);
+          throw new Error(error.message);
+        }
+
+        if (imageURL) {
+          formUser.profilePicture = imageURL;
+        }
+      } catch (err: any) {
+        console.error("Error uploading user avatar:", err.message);
+      }
+    }
+    setAvatarUpdated(false);
     try {
       const response = await UpdateUser(user.id, formUser);
 
       if (response.success && response.user) {
         // ✅ Update context with new user data
-        // setUser(response.user);
+        updateUserContext(response.user);
 
         // ✅ Also refresh from server to be sure
-        // await refreshUser();
+        await refreshUser();
 
         setIsEditing(false);
         alert("Profile updated successfully!");
@@ -159,7 +193,13 @@ export default function UserProfile({user}: {user: NexeraUser}) {
             </button>
           ) : (
             <>
-              <button className="cancelBtn" onClick={() => setIsEditing(false)}>
+              <button
+                className="cancelBtn"
+                onClick={() => {
+                  setIsEditing(false);
+                  setFormUser(user);
+                }}
+              >
                 <FiX /> Cancel
               </button>
               <button
@@ -270,6 +310,8 @@ export default function UserProfile({user}: {user: NexeraUser}) {
           setShowAvatarModal={setShowAvatarModal}
           avatarPreview={avatarPreview}
           handleAvatarChange={handleAvatarChange}
+          handleAvatarUpdate={handleAvatarUpdate}
+          setAvatarUpdated={setAvatarUpdated}
         />
       )}
 

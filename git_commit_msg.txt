@@ -1,1 +1,1 @@
-feat: pass user prop to MobileNavBar component in NavbarControler
+feat: integrate user context and enhance user profile management with avatar upload functionality

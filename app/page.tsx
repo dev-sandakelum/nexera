@@ -30,10 +30,5 @@ export const guestUser: NexeraUser = {
 };
 
 export default function Home() {
-  redirect('/Home');
-  // return (
-  //   <Suspense fallback={<div style={{ width: '100vw', height: '100vh', background: 'transparent' }} />}>
-  //     {/* <HomeContent /> */}
-  //   </Suspense>
-  // );
+  
 }

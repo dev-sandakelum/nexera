@@ -4,17 +4,16 @@ import MobileNavBar from "@/components/MOBILE/nav/nav";
 import HeadingNavBar from "@/components/nav/heading-navbar";
 import NavBar from "@/components/nav/main";
 import { NexeraUser } from "@/components/types";
+import { useUser } from "@/contexts/UserContext";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-export default function NavbarControler({ user }: { user: NexeraUser }) {
+export default function NavbarControler() {
   const pathname = usePathname();
   const activeRoute = pathname.split("/")[1];
-
+  const { user, loading } = useUser(); 
   const [isMobile, setIsMobile] = useState(false);
   const [activeIcon, setActiveIcon] = useState(activeRoute);
-  // const [user, setUser] = useState<NexeraUser | null>(null);
-  const [loading, setLoading] = useState(true);
 
   /* =======================
      Throttle helper (memoized)
@@ -55,9 +54,9 @@ export default function NavbarControler({ user }: { user: NexeraUser }) {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, [throttle]);
 
-  /* =======================
-     Rendering
-  ======================= */
+  if (loading || !user) {
+    return null; 
+  }
 
   if (isMobile) {
     return (
