@@ -1,42 +1,27 @@
-import { GetUserByEmail } from "@/components/firebase/get-user-by";
 import { NexeraUser } from "@/components/types";
-import { log } from "console";
 import { NextResponse } from "next/server";
+import { initAdmin } from "@/components/firebase/firebaseAdmin";
+import { User } from "@/components/firebase/firebase";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
-
-  if (!email || !password) {
+  await initAdmin();
+  const users = await User();
+  const user = users.find((u) => u.email == email);
+  if (user) {
+    if (user.password == password) {
+      return NextResponse.json(
+        { success: true, message: { email: user.email } },
+        { status: 200 }
+      );
+    }
     return NextResponse.json(
-      { success: false, message: "Email and password required" },
-      { status: 400 }
-    );
-  }
-
-  const user = (await GetUserByEmail(email)) as NexeraUser | null;
-  log("User fetched for login:", user);
-
-  if (!user || user.password !== password) {
-    return NextResponse.json(
-      { success: false, message: "Invalid credentials" },
+      { success: true, message: {err : "password did not matched"} },
       { status: 401 }
     );
   }
-
-  const response = NextResponse.json({
-    success: true,
-    user: { email: user.email, name: user.name },
-  });
-
-  response.cookies.set({
-    name: "auth-token",
-    value: user.email, // or a JWT
-    httpOnly: true,
-    maxAge: 60 * 60 * 24, // 1 day
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-  });
-
-  return response;
+  return NextResponse.json(
+    { success: false, message: {err : "user not exist"} },
+    { status: 404 }
+  );
 }
