@@ -51,6 +51,7 @@ import "@/components/styles/MOBILE/admin/user-m.css";
 import "@/components/styles/MOBILE/admin/settings/main.css";
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
+import LoadingAnimation from "@/components/page/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,13 +87,7 @@ export default function RootLayout({
       >
         <Suspense
           fallback={
-            <div
-              style={{
-                width: "100vw",
-                height: "100vh",
-                background: "#7302f4ff",
-              }}
-            />
+            <LoadingAnimation />
           }
         >
           {children}

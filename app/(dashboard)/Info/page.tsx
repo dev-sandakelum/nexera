@@ -1,7 +1,6 @@
-import React from 'react'
+import LoadingAnimation from "@/components/page/loading";
+import React from "react";
 
 export default function page() {
-  return (
-    <div>page</div>
-  )
+  return <LoadingAnimation />;
 }
