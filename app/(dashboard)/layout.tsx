@@ -3,6 +3,8 @@ import { UserProvider } from "@/contexts/UserContext";
 import { getUserFromClerk } from "@/lib/server/user-helpers";
 import NavbarControler from "./navbar-controler";
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardLayout({
   children,
 }: {
