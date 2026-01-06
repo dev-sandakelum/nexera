@@ -1,1 +1,1 @@
-feat: remove cacheComponents option from Next.js configuration
+feat: enable dynamic rendering for login page and remove user context refresh on login
