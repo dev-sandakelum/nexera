@@ -63,7 +63,9 @@ export function UserInfo({ user }: { user: NexeraUser }) {
   const { replace } = useRouter();
 
   const pickedBadges: nexBadge[] = [];
-  if (user){
+  
+  // Fix: Check if both user AND user.badges exist
+  if (user && user.badges && Array.isArray(user.badges)) {
     user.badges.forEach((nexBadge) => {
       const foundBadge = nexBadges.find((badge) => badge.id === nexBadge.id);
       if (foundBadge) {
@@ -71,6 +73,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
       }
     });
   }
+
   useEffect(() => {
     const checkScreenSize = () => {
       set_is_UserInfo_mobile(window.innerWidth < 768);
@@ -82,7 +85,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
 
   const handleLogOut = async () => {
     await fetch("/api/logout", { method: "POST" });
-    replace("/?r=login");
+    replace("/login");
   };
 
   return (
@@ -98,10 +101,10 @@ export function UserInfo({ user }: { user: NexeraUser }) {
         }}
       ></div>
       <div className="user-details">
-        <div className="user-name">{user.name}</div>
-        <div className="user-Email">{user.email}</div>
+        <div className="user-name">{user?.name || 'Guest'}</div>
+        <div className="user-Email">{user?.email || 'guest@nex.com'}</div>
         <div className="user-role">
-          {user.badges.length > 0 &&
+          {pickedBadges.length > 0 &&
             pickedBadges.map((badge) => (
               <div
                 key={badge.id}
@@ -117,13 +120,13 @@ export function UserInfo({ user }: { user: NexeraUser }) {
         </div>
         <div className="signOut">
           <button onClick={handleLogOut}>
-            {user.id == "guest_000" ? "Sign In" : "Sign Out"}
+            {user?.id == "guest_000" ? "Sign In" : "Sign Out"}
           </button>
         </div>
       </div>
       <div
         className="user-avatar"
-        style={{ "--bg": `url(${user.profilePicture})` } as React.CSSProperties}
+        style={{ "--bg": `url(${user?.profilePicture || '/img/profile_pic/0.jpg'})` } as React.CSSProperties}
         onClick={() => {
           !is_UserInfo_open && set_is_UserInfo_open(true);
         }}

@@ -1,16 +1,23 @@
+import { cookies } from "next/headers";
 import NavbarControler from "./navbar-controler";
-import { Suspense } from "react";
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("nexera_auth")?.value || "";
   const user = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`, {
+    method: "GET",
     cache: "no-store",
-    headers: { "Cache-Control": "no-cache" },
+    headers: {
+      "Cache-Control": "no-cache",
+      Authorization: `Bearer ${token}`, // Pass token in header
+    },
   }).then((res) => res.json());
-  console.log("User in layout:", user);
+
+  // console.log("User in layout:", user);
   const User = user.message;
   return (
     <div className="page root">

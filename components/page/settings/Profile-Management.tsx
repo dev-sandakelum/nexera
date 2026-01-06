@@ -26,8 +26,6 @@ import {
   FiLogOut,
   FiGlobe,
 } from "react-icons/fi";
-import { BsGithub, BsGoogle, BsFacebook } from "react-icons/bs";
-import Image from "next/image";
 import { NexeraUser } from "@/components/types";
 import Security from "./tabs/security";
 import Preferences from "./tabs/preferences";
@@ -41,7 +39,6 @@ import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
 import ShowSessionsModal from "./models/SessionsModal";
 import { UpdateUser } from "@/components/firebase/update-user";
-import { useUser } from "@/contexts/UserContext";
 
 type TabType =
   | "profile"
@@ -62,8 +59,7 @@ const tabs = [
   { id: "danger" as TabType, label: "Danger Zone", icon: FiAlertCircle },
 ];
 
-export default function UserProfile() {
-  const { user, setUser, refreshUser } = useUser();
+export default function UserProfile({user}: {user: NexeraUser}) {
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -113,10 +109,10 @@ export default function UserProfile() {
 
       if (response.success && response.user) {
         // ✅ Update context with new user data
-        setUser(response.user);
+        // setUser(response.user);
 
         // ✅ Also refresh from server to be sure
-        await refreshUser();
+        // await refreshUser();
 
         setIsEditing(false);
         alert("Profile updated successfully!");
