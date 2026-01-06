@@ -1,1 +1,1 @@
-feat: add remote pattern for images from img.clerk.com in Next.js configuration
+feat: update UsableArea styling and change background color in RootLayout

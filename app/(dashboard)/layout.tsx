@@ -17,7 +17,7 @@ export default async function DashboardLayout({
       <div className="page root">
         <NavbarControler />
         <div className="ContentArea">
-          <div className="UsableArea" style={{ border: "1px solid red" }}>
+          <div className="UsableArea">
             {children}
           </div>
         </div>
