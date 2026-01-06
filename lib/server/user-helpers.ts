@@ -96,7 +96,7 @@ export async function createNewUser(
       password: "",
       joinedAt: new Date().toISOString(),
       bio: "",
-      badges: [],
+      badges: [{id : 'nex_004'}],
       academic: {
         institution: "",
         degree: "",
@@ -166,7 +166,7 @@ export async function getUserFromClerk(): Promise<NexeraUser | null> {
     } else {
       console.log(`User found: ${user.id}`);
     }
-
+    console.log(user);
     return user;
   } catch (error) {
     console.error("Error getting user from Clerk:", error);
