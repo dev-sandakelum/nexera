@@ -1,1 +1,8 @@
-feat: refactor NoteBlock and AuthBlock components to remove setRoute prop and use Link for navigation
+feat: update dependencies and add Firebase admin integration
+
+- Added new dependencies: @elysiajs/node, elysia, firebase-admin, and server-only.
+- Updated @types/node and typescript versions in devDependencies.
+- Modified proxy logic to include new protected routes and improved token handling.
+- Created login and register pages under the auth directory.
+- Implemented Firebase Firestore user retrieval in firebase.ts.
+- Added Firebase Admin initialization and configuration in firebaseAdmin.ts.

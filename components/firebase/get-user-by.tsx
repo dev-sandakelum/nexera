@@ -1,5 +1,5 @@
-
 import { db } from "@/app/api/firebase";
+import { nexeraUsersR } from "@/public/json/users";
 import { log } from "console";
 import {
   collection,
@@ -9,8 +9,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { NexeraUser } from "../types";
 // your firebase config file
-
 
 export async function GetUserById(userId: string) {
   try {
@@ -36,15 +36,7 @@ export async function GetUserByEmail(email: string) {
     const usersCol = collection(db, "TestUsers");
     const q = query(usersCol, where("email", "==", email));
     const userSnap = await getDocs(q as any);
-
-    if (!userSnap.empty) {
-      const userData = userSnap.docs[0].data();
-      console.log("User data:", userData);
-      return userData;
-    } else {
-      console.log("No such user!");
-      return null;
-    }
+    return userSnap.docs.map((doc) => doc.data());
   } catch (error) {
     console.error("Error fetching user:", error);
     return null;
