@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
 import { useUser } from "@/contexts/UserContext";
+import { useClerk } from "@clerk/nextjs";
 
 export default function HeadingNavBar({ User }: { User: NexeraUser }) {
   const [isExiting, setIsExiting] = useState(false);
@@ -62,6 +63,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
   const [is_UserInfo_mobile, set_is_UserInfo_mobile] = useState(false);
   const { replace } = useRouter();
   const { logout: contextLogout, refreshUser } = useUser();
+  const { signOut } = useClerk();
   const pickedBadges: nexBadge[] = [];
 
   // Fix: Check if both user AND user.badges exist
@@ -84,9 +86,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
   }, []);
 
   const handleLogOut = async () => {
-    await fetch("/api/logout", { method: "POST" });
-    contextLogout();
-    replace("/login");
+    await signOut();
   };
 
   return (
