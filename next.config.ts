@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         hostname: process.env.NEXT_PUBLIC_SUPABASE_URL?.replace('https://', '').replace('/','') || '',
         pathname: '/storage/v1/object/public/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com',
+        pathname: '/**',
+      },
     ],
   },
 };

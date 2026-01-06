@@ -1,1 +1,1 @@
-feat: integrate Clerk sign-out functionality in UserInfo component and update proxy middleware
+feat: add remote pattern for images from img.clerk.com in Next.js configuration
