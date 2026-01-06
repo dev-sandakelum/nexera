@@ -7,7 +7,7 @@ import { NexeraUser } from "@/components/types";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-export default function NavbarControler({user}: {user: NexeraUser}) {
+export default function NavbarControler({ user }: { user: NexeraUser }) {
   const pathname = usePathname();
   const activeRoute = pathname.split("/")[1];
 
@@ -62,6 +62,7 @@ export default function NavbarControler({user}: {user: NexeraUser}) {
   if (isMobile) {
     return (
       <MobileNavBar
+        user={user}
         activeIcon={activeIcon}
         setActiveIcon={setActiveIcon}
       />
