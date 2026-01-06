@@ -1,7 +1,7 @@
 // contexts/UserContext.tsx
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 import { NexeraUser } from '@/components/types';
 import { guestUser } from '@/app/page';
 

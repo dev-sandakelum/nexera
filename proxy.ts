@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function proxy(req: NextRequest) {
-  const token = req.cookies.get("auth-token")?.value || "";
+  const token = req.cookies.get("nexera_auth")?.value || "";
   const pathname = req.nextUrl.pathname;
   const route = pathname.split("/")[1];
   if (pathname.startsWith("/api/")) {
@@ -22,7 +22,7 @@ export function proxy(req: NextRequest) {
 
   // If user tries to access a protected route without token → redirect
   if (!token && protectedRoutes.includes(route)) {
-    // return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
   // Otherwise allow

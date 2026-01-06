@@ -3,59 +3,75 @@
 import MobileNavBar from "@/components/MOBILE/nav/nav";
 import HeadingNavBar from "@/components/nav/heading-navbar";
 import NavBar from "@/components/nav/main";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { NexeraUser } from "@/components/types";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
-export default function NavbarControler() {
+export default function NavbarControler({user}: {user: NexeraUser}) {
   const pathname = usePathname();
-  const path = pathname.split("/")[1];
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [activeIcon, setActiveIcon] = useState<string>(pathname.split("/")[1]);
+  const activeRoute = pathname.split("/")[1];
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeIcon, setActiveIcon] = useState(activeRoute);
+  // const [user, setUser] = useState<NexeraUser | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Throttle helper
-  const throttle = (func: Function, limit: number) => {
-    let lastFunc: any;
-    let lastRan: number;
-    return function (this: any, ...args: any[]) {
-      if (!lastRan) {
-        func.apply(this, args);
-        lastRan = Date.now();
-      } else {
-        clearTimeout(lastFunc);
-        lastFunc = setTimeout(() => {
-          if (Date.now() - lastRan >= limit) {
-            func.apply(this, args);
-            lastRan = Date.now();
-          }
-        }, limit - (Date.now() - lastRan));
-      }
+  /* =======================
+     Throttle helper (memoized)
+  ======================= */
+  const throttle = useMemo(() => {
+    return (func: () => void, limit: number) => {
+      let lastRun = 0;
+      let timeout: any;
+
+      return () => {
+        const now = Date.now();
+        if (now - lastRun >= limit) {
+          lastRun = now;
+          func();
+        } else {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            lastRun = Date.now();
+            func();
+          }, limit);
+        }
+      };
     };
-  };
+  }, []);
 
-  // Detect mobile screen size with throttle
+  /* =======================
+     Screen size detection
+  ======================= */
   useEffect(() => {
     const checkScreenSize = throttle(
       () => setIsMobile(window.innerWidth < 768),
       200
     );
+
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
 
-  if (isMobile)
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, [throttle]);
+
+  /* =======================
+     Rendering
+  ======================= */
+
+  if (isMobile) {
     return (
       <MobileNavBar
         activeIcon={activeIcon}
         setActiveIcon={setActiveIcon}
       />
     );
-  else
-    return (
-      <>
-        <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-        <HeadingNavBar />
-      </>
-    );
+  }
+
+  return (
+    <>
+      <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+      <HeadingNavBar User={user} />
+    </>
+  );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
-
 import "@/components/styles/fonts.css";
 import "@/components/styles/not-found.css";
 
@@ -50,6 +49,7 @@ import "@/components/styles/MOBILE/admin/notes-m.css";
 import "@/components/styles/MOBILE/admin/user-m.css";
 
 import "@/components/styles/MOBILE/admin/settings/main.css";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,7 +60,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-})
+});
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -78,8 +78,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${geistMono.variable}`} suppressHydrationWarning>
-        {children}
+      <body
+        className={`${poppins.variable} ${geistMono.variable}`}
+        suppressHydrationWarning
+      >
+        <Suspense
+          fallback={
+            <div
+              style={{
+                width: "100vw",
+                height: "100vh",
+                background: "#000",
+              }}
+            />
+          }
+        >
+          {children}
+        </Suspense>
       </body>
     </html>
   );

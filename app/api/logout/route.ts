@@ -5,7 +5,7 @@ export async function POST() {
   const response = NextResponse.json({ success: true });
 
   response.cookies.set({
-    name: "auth-token",
+    name: "nexera_auth",
     value: "",
     maxAge: 0, // deletes cookie
     path: "/",

@@ -55,12 +55,15 @@ const cardVariants = {
 };
 
 export default function Projects() {
-  const [users, setUsers] = useState<{ id: string; profilePic: string; }[]>([]);
+  const [users, setUsers] = useState<{ id: string; profilePic: string }[]>([]);
   const pathname = usePathname();
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const fetchedUsers = await GetProfilePicList() as { id: string; profilePic: string; }[];
+        const fetchedUsers = (await GetProfilePicList()) as {
+          id: string;
+          profilePic: string;
+        }[];
         console.log("Fetched users in Projects page:", fetchedUsers);
         setUsers(fetchedUsers);
       } catch (error) {
@@ -160,11 +163,13 @@ export default function Projects() {
                     </div>
                     <div className="Contributions">
                       {project.contributions.map((contribution, idx) => {
-                        const user = users?.find((u) => u.id === contribution.userID);
+                        const user = users?.find(
+                          (u) => u.id === contribution.userID
+                        );
                         const profilePicture = user?.profilePic;
-                        
+
                         if (!profilePicture) return null;
-                        
+
                         return (
                           <Image
                             key={contribution.userID}
