@@ -5,18 +5,20 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserInfo } from "@/components/nav/heading-navbar";
 import { useUser } from "@/contexts/UserContext";
+import { NexeraUser } from "@/components/types";
 
 export default function MobileNavBar({
+  user,
   activeIcon,
   setActiveIcon,
 }: {
+  user:NexeraUser;
   activeIcon: string;
   setActiveIcon: (icon: string) => void;
 }) {
   const pathname = usePathname();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
 
-  const { user } = useUser();
 
   console.log("path =>" + pathname);
 
