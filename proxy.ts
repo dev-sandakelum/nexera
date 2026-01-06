@@ -1,33 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export function proxy(req: NextRequest) {
-  const token = req.cookies.get("nexera_auth")?.value || "";
-  const pathname = req.nextUrl.pathname;
-  const route = pathname.split("/")[1];
-  if (pathname.startsWith("/api/")) {
-    return NextResponse.next();
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)'])
+
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect()
   }
-  // Define which routes need login
-  const protectedRoutes = [
-    "Admin",
-    "Notes",
-    "Projects",
-    "Applications",
-    "Info",
-    "Settings",
-  ];
+})
 
-  // Allow public routes
-  const publicRoutes = ["Home", "login", "register"];
-
-  // If user tries to access a protected route without token → redirect
-  if(route == ""){
-    return NextResponse.redirect(new URL("/Home", req.url));
-  }
-  if (!token && protectedRoutes.includes(route)) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
-
-  // Otherwise allow
-  return NextResponse.next();
+export const config = {
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 }

@@ -29,3 +29,10 @@ export const AllUsers = async () => {
   }));
   return documents;
 };
+
+export const UsersCount = async () => {
+  const firestore = getFirestore();
+  const userSnapshot = await firestore.collection("TestUsers").get();
+  return userSnapshot.size;
+}
+
