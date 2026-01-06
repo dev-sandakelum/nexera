@@ -6,10 +6,12 @@ import { useState } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/contexts/UserContext";
 
 export default function Login() {
   const [showEmailLogin, setShowEmailLogin] = useState(false);
   const { replace } = useRouter();
+  const { refreshUser } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +27,8 @@ export default function Login() {
 
     if (data.success) {
       // cookie is set by server automatically
-      replace("/?r=Home"); // redirect after login
+      await refreshUser(); // Refresh user context after login
+      replace("/Home"); // redirect after login
     } else {
       alert("Invalid credentials");
     }

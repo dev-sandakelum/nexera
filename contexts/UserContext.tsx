@@ -1,61 +1,84 @@
-// contexts/UserContext.tsx
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { NexeraUser } from '@/components/types';
 import { guestUser } from '@/app/page';
 
-type UserContextType = {
-  user: NexeraUser;
-  setUser: (user: NexeraUser) => void;
+interface UserContextType {
+  user: NexeraUser | null;
+  loading: boolean;
   refreshUser: () => Promise<void>;
-  isLoading: boolean;
-};
+  updateUser: (userData: Partial<NexeraUser>) => void;
+  logout: () => void;
+}
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export function UserProvider({ 
-  children, 
-  initialUser 
-}: { 
-  children: ReactNode; 
-  initialUser?: NexeraUser 
-}) {
-  const [user, setUser] = useState<NexeraUser>(initialUser || guestUser);
-  const [isLoading, setIsLoading] = useState(false);
+export function UserProvider({ children, initialUser }: { children: ReactNode; initialUser?: NexeraUser }) {
+  const [user, setUser] = useState<NexeraUser | null>(initialUser || null);
+  const [loading, setLoading] = useState(!initialUser);
 
-  const refreshUser = async () => {
-    setIsLoading(true);
+  // Fetch user from API
+  const fetchUser = useCallback(async () => {
     try {
-      const response = await fetch("/api/user", {
-        cache: "no-store",
-        headers: { 'Cache-Control': 'no-cache' }
+      setLoading(true);
+      const res = await fetch('/api/user', {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       });
+
+      const data = await res.json();
       
-      if (response.ok) {
-        const userData = await response.json();
-        if (userData) {
-          setUser(userData);
-        }
+      if (data.success && data.message) {
+        setUser(data.message);
+      } else {
+        setUser(guestUser);
       }
     } catch (error) {
-      console.error("Error refreshing user:", error);
+      console.error('Error fetching user:', error);
+      setUser(guestUser);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
-  };
+  }, []);
+
+  // Refresh user data
+  const refreshUser = useCallback(async () => {
+    await fetchUser();
+  }, [fetchUser]);
+
+  // Update user locally (optimistic update)
+  const updateUser = useCallback((userData: Partial<NexeraUser>) => {
+    setUser(prev => prev ? { ...prev, ...userData } : null);
+  }, []);
+
+  // Logout
+  const logout = useCallback(() => {
+    setUser(guestUser);
+  }, []);
+
+  // Initial fetch if no initial user provided
+  useEffect(() => {
+    if (!initialUser) {
+      fetchUser();
+    }
+  }, [initialUser, fetchUser]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, refreshUser, isLoading }}>
+    <UserContext.Provider value={{ user, loading, refreshUser, updateUser, logout }}>
       {children}
     </UserContext.Provider>
   );
 }
 
+// Custom hook to use the user context
 export function useUser() {
   const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within UserProvider');
+  if (context === undefined) {
+    throw new Error('useUser must be used within a UserProvider');
   }
   return context;
 }

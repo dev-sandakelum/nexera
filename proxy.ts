@@ -21,6 +21,9 @@ export function proxy(req: NextRequest) {
   const publicRoutes = ["Home", "login", "register"];
 
   // If user tries to access a protected route without token → redirect
+  if(route == ""){
+    return NextResponse.redirect(new URL("/Home", req.url));
+  }
   if (!token && protectedRoutes.includes(route)) {
     return NextResponse.redirect(new URL("/login", req.url));
   }

@@ -1,48 +1,41 @@
-import { db } from "@/app/api/firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-  updateDoc,
-} from "firebase/firestore";
-import { NexeraUser } from "../types";
-// your firebase config file
+import { NexeraUser } from "@/components/types";
 
-type UpdateUserResult = {
+interface UpdateUserResponse {
   success: boolean;
+  user?: NexeraUser;
   error?: string;
-};
+}
 
-// components/firebase/update-user.tsx
 export async function UpdateUser(
   userId: string,
   updates: Partial<NexeraUser>
-): Promise<{ success: boolean; user?: NexeraUser; error?: string }> {
+): Promise<UpdateUserResponse> {
   try {
-    const userRef = doc(db, "TestUsers", userId);
-    
-    // Update with timestamp
-    await updateDoc(userRef, {
-      ...updates,
-      lastLogin: new Date().toISOString(),
+    const response = await fetch(`/api/user-update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: userId,
+        ...updates,
+      }),
     });
-    
-    // Fetch updated user
-    const updatedDoc = await getDoc(userRef);
-    if (!updatedDoc.exists()) {
-      return { success: false, error: "User not found after update" };
+
+    if (!response.ok) {
+      throw new Error("Failed to update user");
     }
-    
-    const updatedUser = { id: updatedDoc.id, ...updatedDoc.data() } as NexeraUser;
-    return { success: true, user: updatedUser };
-    
+
+    const data = await response.json();
+    return {
+      success: true,
+      user: data.user,
+    };
   } catch (error) {
+    console.error("Error updating user:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : String(error),
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }

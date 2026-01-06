@@ -61,9 +61,9 @@ export function UserInfo({ user }: { user: NexeraUser }) {
   const [is_UserInfo_open, set_is_UserInfo_open] = useState(false);
   const [is_UserInfo_mobile, set_is_UserInfo_mobile] = useState(false);
   const { replace } = useRouter();
-
+  const { logout: contextLogout, refreshUser } = useUser();
   const pickedBadges: nexBadge[] = [];
-  
+
   // Fix: Check if both user AND user.badges exist
   if (user && user.badges && Array.isArray(user.badges)) {
     user.badges.forEach((nexBadge) => {
@@ -85,6 +85,7 @@ export function UserInfo({ user }: { user: NexeraUser }) {
 
   const handleLogOut = async () => {
     await fetch("/api/logout", { method: "POST" });
+    contextLogout();
     replace("/login");
   };
 
@@ -101,8 +102,8 @@ export function UserInfo({ user }: { user: NexeraUser }) {
         }}
       ></div>
       <div className="user-details">
-        <div className="user-name">{user?.name || 'Guest'}</div>
-        <div className="user-Email">{user?.email || 'guest@nex.com'}</div>
+        <div className="user-name">{user?.name || "Guest"}</div>
+        <div className="user-Email">{user?.email || "guest@nex.com"}</div>
         <div className="user-role">
           {pickedBadges.length > 0 &&
             pickedBadges.map((badge) => (
@@ -126,7 +127,11 @@ export function UserInfo({ user }: { user: NexeraUser }) {
       </div>
       <div
         className="user-avatar"
-        style={{ "--bg": `url(${user?.profilePicture || '/img/profile_pic/0.jpg'})` } as React.CSSProperties}
+        style={
+          {
+            "--bg": `url(${user?.profilePicture || "/img/profile_pic/0.jpg"})`,
+          } as React.CSSProperties
+        }
         onClick={() => {
           !is_UserInfo_open && set_is_UserInfo_open(true);
         }}
