@@ -11,7 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 export default function NavbarControler() {
   const pathname = usePathname();
   const activeRoute = pathname.split("/")[1];
-  const { user, loading } = useUser(); 
+  const { user, loading } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [activeIcon, setActiveIcon] = useState(activeRoute);
 
@@ -54,14 +54,10 @@ export default function NavbarControler() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, [throttle]);
 
-  if (loading || !user) {
-    return null; 
-  }
-
   if (isMobile) {
     return (
       <MobileNavBar
-        user={user}
+        user={user || ({} as NexeraUser)}
         activeIcon={activeIcon}
         setActiveIcon={setActiveIcon}
       />
@@ -71,7 +67,7 @@ export default function NavbarControler() {
   return (
     <>
       <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-      <HeadingNavBar User={user} />
+      <HeadingNavBar User={user || ({} as NexeraUser)} />
     </>
   );
 }

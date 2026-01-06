@@ -1,1 +1,1 @@
-feat: integrate Clerk for authentication and refactor user profile management
+feat: refactor user fetching logic and update layout styles
