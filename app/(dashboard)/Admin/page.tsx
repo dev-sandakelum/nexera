@@ -1,7 +1,5 @@
-import MainAdminPage from '@/components/page/admin/main'
+import MainAdminPage from "@/components/page/admin/main";
 
-export default function page() {
-  return (
-    <MainAdminPage />
-  )
+export default async function page() {
+  return <MainAdminPage />;
 }

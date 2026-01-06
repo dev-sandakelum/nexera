@@ -1,34 +1,30 @@
 // app/api/user/route.ts
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { GetUserByEmail } from "@/components/firebase/get-user-by";
+import { UserData } from "@/components/firebase/firebase";
+import { initAdmin } from "@/components/firebase/firebaseAdmin";
 
 export async function GET() {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("auth-token")?.value;
-    
-    if (!token) {
-      return NextResponse.json(null, {
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-        }
-      });
-    }
-    
-    const user = await GetUserByEmail(token);
-    
-    return NextResponse.json(user, {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
-      }
-    });
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return NextResponse.json(null, {
-      headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate',
-      }
-    });
+  const cookieStore = await cookies();
+  const token = cookieStore.get("nexera_auth")?.value || "";
+  console.log("token:", token);
+  if (!token) {
+    return NextResponse.json(
+      { success: false, message: { err: "not authenticated" } },
+      { status: 401 }
+    );
   }
+  await initAdmin();
+  const user = await UserData(token);
+  if (user) {
+    const { ...userData } = user;
+    return NextResponse.json(
+      { success: true, message: userData },
+      { status: 200 }
+    );
+  }
+  return NextResponse.json(
+    { success: false, message: { err: "user not found" } },
+    { status: 404 }
+  );
 }

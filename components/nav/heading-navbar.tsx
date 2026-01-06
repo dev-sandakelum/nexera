@@ -5,9 +5,7 @@ import { nexBadge, NexeraUser } from "../types";
 import { nexBadges } from "@/public/json/badges";
 import { useUser } from "@/contexts/UserContext";
 
-export default function HeadingNavBar() {
-  const { user, setUser, refreshUser } = useUser();
-
+export default function HeadingNavBar({ User }: { User: NexeraUser }) {
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
@@ -54,7 +52,7 @@ export default function HeadingNavBar() {
           </span>
         </p>
       </div>
-      <UserInfo user={user} />
+      <UserInfo user={User} />
     </div>
   );
 }
@@ -65,13 +63,14 @@ export function UserInfo({ user }: { user: NexeraUser }) {
   const { replace } = useRouter();
 
   const pickedBadges: nexBadge[] = [];
-  user.badges.forEach((nexBadge) => {
-    const foundBadge = nexBadges.find((badge) => badge.id === nexBadge.id);
-    if (foundBadge) {
-      pickedBadges.push(foundBadge);
-    }
-  });
-
+  if (user){
+    user.badges.forEach((nexBadge) => {
+      const foundBadge = nexBadges.find((badge) => badge.id === nexBadge.id);
+      if (foundBadge) {
+        pickedBadges.push(foundBadge);
+      }
+    });
+  }
   useEffect(() => {
     const checkScreenSize = () => {
       set_is_UserInfo_mobile(window.innerWidth < 768);
