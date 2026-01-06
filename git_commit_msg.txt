@@ -1,1 +1,1 @@
-feat: integrate user context and enhance user profile management with avatar upload functionality
+feat: integrate Clerk for authentication and refactor user profile management

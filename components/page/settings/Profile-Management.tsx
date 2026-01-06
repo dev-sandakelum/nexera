@@ -62,15 +62,18 @@ const tabs = [
   { id: "danger" as TabType, label: "Danger Zone", icon: FiAlertCircle },
 ];
 
-export default function UserProfile({ user }: { user: NexeraUser }) {
+export default function UserProfile() {
   const [activeTab, setActiveTab] = useState<TabType>("profile");
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
   const { refreshUser, updateUser: updateUserContext } = useUser();
   //profile form state
-  const [formUser, setFormUser] = useState<NexeraUser>(user);
-
+  const { user } = useUser();
+  const [formUser, setFormUser] = useState<NexeraUser>(user || {} as NexeraUser);
+  if(!user){
+    return <div>Loading...</div>;
+  }
   // Modals
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -119,10 +122,10 @@ export default function UserProfile({ user }: { user: NexeraUser }) {
         const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
         const { imageURL, error } = await UploadFile({
-          userId: user.id,
+          userId: user?.id || "",
           file: imgBlob,
           bucket: "users",
-          path: `profile_pic3/${user.id}`,
+          path: `profile_pic3/${user?.id || ""}`,
         });
 
         if (error) {
@@ -139,7 +142,7 @@ export default function UserProfile({ user }: { user: NexeraUser }) {
     }
     setAvatarUpdated(false);
     try {
-      const response = await UpdateUser(user.id, formUser);
+      const response = await UpdateUser(user?.id || "", formUser);
 
       if (response.success && response.user) {
         // ✅ Update context with new user data

@@ -50,6 +50,7 @@ import "@/components/styles/MOBILE/admin/user-m.css";
 
 import "@/components/styles/MOBILE/admin/settings/main.css";
 import { Suspense } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
       <body
         className={`${poppins.variable} ${geistMono.variable}`}
@@ -96,6 +98,6 @@ export default function RootLayout({
           {children}
         </Suspense>
       </body>
-    </html>
+    </html></ClerkProvider>
   );
 }
