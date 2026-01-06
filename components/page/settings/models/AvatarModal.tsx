@@ -30,7 +30,7 @@ export default function ShowAvatarModal({
           <h2>Change Profile Picture</h2>
           <button
             className="closeBtn"
-            onClick={() => setShowAvatarModal(false)}
+            onClick={() => {setShowAvatarModal(false) ; setAvatarUpdated(false);}}
           >
             <FiX />
           </button>

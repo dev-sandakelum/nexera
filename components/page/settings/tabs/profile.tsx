@@ -8,6 +8,8 @@ export default function Profile({
   formUser,
   setFormUser,
   isEditing,
+  avatarPreview,
+  avatarUpdated,
   setShowAvatarModal,
   handleUpdateUser,
 }: {
@@ -15,6 +17,8 @@ export default function Profile({
   formUser: NexeraUser;
   setFormUser: React.Dispatch<React.SetStateAction<NexeraUser>>;
   isEditing: boolean;
+  avatarPreview: string | null;
+  avatarUpdated: boolean;
   setShowAvatarModal: (show: boolean) => void;
   handleUpdateUser: () => void;
 }) {
@@ -28,7 +32,11 @@ export default function Profile({
             <div className="avatarLarge">
               {user.profilePicture ? (
                 <Image
-                  src={user.profilePicture}
+                  src={
+                    avatarUpdated
+                      ? avatarPreview || user.profilePicture
+                      : user.profilePicture
+                  }
                   alt={user.name}
                   width={120}
                   height={120}
