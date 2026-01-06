@@ -4,21 +4,30 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UserInfo } from "@/components/nav/heading-navbar";
-import { useUser } from "@/contexts/UserContext";
 import { NexeraUser } from "@/components/types";
+import {
+  LuCircleHelp,
+  LuCpu,
+  LuFileText,
+  LuGraduationCap,
+  LuSettings,
+  LuWarehouse,
+} from "react-icons/lu";
+import { TbHexagons } from "react-icons/tb";
+import LoadingAnimation from "@/components/page/loading";
 
 export default function MobileNavBar({
   user,
   activeIcon,
   setActiveIcon,
 }: {
-  user:NexeraUser;
+  user: NexeraUser;
   activeIcon: string;
   setActiveIcon: (icon: string) => void;
 }) {
   const pathname = usePathname();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
-
+  const [whileRouting, setWhileRouting] = useState<boolean>(false);
 
   console.log("path =>" + pathname);
 
@@ -31,6 +40,12 @@ export default function MobileNavBar({
     handleRoute();
   }, [pathname]);
 
+  useEffect(() => {
+    if (whileRouting) {
+      setWhileRouting(false);
+    }
+  }, [pathname]);
+
   function iconAdder(idx: number) {
     const icons = [
       "Home",
@@ -41,7 +56,16 @@ export default function MobileNavBar({
       "Info",
       "Settings",
     ];
-
+    const NAV_ICONS: Record<string, React.ElementType> = {
+      Home: LuWarehouse,
+      Notes: LuFileText,
+      Projects: LuGraduationCap,
+      Applications: TbHexagons,
+      Admin: LuCpu,
+      Info: LuCircleHelp,
+      Settings: LuSettings,
+    };
+    const IconComponent = NAV_ICONS[icons[idx]];
     const isActive = activeIcon === icons[idx];
     const currentRoute = pathname.split("/")[1];
     const isCurrentView =
@@ -68,34 +92,43 @@ export default function MobileNavBar({
             : "translateY(0)",
           transition: "transform 0.3s ease",
         }}
+        onClick={() => {
+          // 🔥 Update icon immediately
+          setActiveIcon(icons[idx]);
+
+          if (isCurrentView) {
+            setOpenPanel(!openPanel);
+          } else {
+            setWhileRouting(true);
+            setOpenPanel(false);
+          }
+        }}
       >
-        <Link
-          href={`/${icons[idx]}`}
-          type="button"
-          className="navigation-btn"
-          onClick={() => {
-            if (isCurrentView) {
-              setOpenPanel(!openPanel);
-            } else {
-              setOpenPanel(false);
-            }
-          }}
-        >
-          <Image
-            src={`/icons/nav/${icons[idx]}.png`}
-            alt={`${icons[idx]} Icon`}
-            width={24}
-            height={24}
-            className={`icon ${isActive ? "deactivated" : "active"}`}
-          />
-          <Image
-            src={`/icons/nav/active/${icons[idx]}.png`}
-            alt={`${icons[idx]} Icon`}
-            width={24}
-            height={24}
-            className={`icon ${isActive ? "active" : "deactivated"}`}
-          />
-        </Link>
+        {currentRoute != icons[idx] ||
+        (pathname.split("/").length > 2 && openPanel) ? (
+          <Link
+            href={`/${icons[idx]}`}
+            type="button"
+            className="navigation-btn"
+          >
+            <IconComponent
+              size={24}
+              className={`icon ${
+                currentRoute === icons[idx] ? "active" : "deactivated"
+              }`}
+            />
+          </Link>
+        ) : (
+          <div className="navigation-btn">
+            <IconComponent
+              size={24}
+              className={`icon ${isActive ? "active" : "deactivated"}`}
+            />
+          </div>
+        )}
+        <div className={`navigation-icon-name ${openPanel && "active"}`}>
+          {icons[idx]}
+        </div>
       </li>
     );
   }
@@ -113,6 +146,11 @@ export default function MobileNavBar({
 
   return (
     <>
+      {whileRouting && (
+        <div className="whileRouting">
+          <LoadingAnimation />
+        </div>
+      )}
       <div className="mobile-nav">
         <div
           className={`returningBG ${openPanel ? "open" : ""}`}
@@ -120,7 +158,6 @@ export default function MobileNavBar({
             openPanel && setOpenPanel(false);
           }}
         ></div>
-
         <ul className={`nav-sideIcons ${openPanel ? "open" : ""}`}>
           {iconAdder(0)}
           {iconAdder(1)}

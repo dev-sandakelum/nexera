@@ -125,7 +125,8 @@
 }
 .returningBG.open {
   display: block;
-  filter: blur(20px);
+  background: linear-gradient(#323232 ,#0e0e0f,#5c5c5c );
+  opacity: 0.15;
 }
 .footer-space {
   height: 100px;

@@ -1,1 +1,1 @@
-Refactor code structure for improved readability and maintainability
+feat: enhance MobileNavBar with icon handling and loading animation, update styles for better visibility
