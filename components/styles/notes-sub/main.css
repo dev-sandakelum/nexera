@@ -39,6 +39,8 @@
   margin: 0 auto;
   padding: 96px 24px 24px;
   color: #34343e;
+  scroll-behavior: smooth;
+  padding-bottom: 60px;
 }
 /* ---------- Header ---------- */
 
