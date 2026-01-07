@@ -1,1 +1,1 @@
-feat: Add mobile responsive styles for NoteCard and NoteTypeSection components
+feat: Enhance mobile navigation and notes styles for improved layout and responsiveness

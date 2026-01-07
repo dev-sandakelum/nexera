@@ -142,11 +142,18 @@
   border-radius: 20px 20px 0px 0px;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text-overflow: ellipsis; */
 }
 
 .mobile-route .path p {
+  /* border: 1px solid #82a1e7; */
   margin: 0;
+  min-width: 100vw;
+  padding: 0 8px;
+  justify-content: center;
   display: flex;
   align-items: center;
 }
