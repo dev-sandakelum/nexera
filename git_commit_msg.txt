@@ -1,1 +1,1 @@
-feat: Integrate user and badge data into Notes and Card0 components for enhanced functionality
+feat: Update Card0 and OptionPanel components to manage selected subject state and enhance badge display

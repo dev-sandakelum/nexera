@@ -1,6 +1,15 @@
-import { nexSubject } from "@/components/types";
+import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
+import { nexBadges } from "@/public/json/badges";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiBookOpen, FiCalendar, FiExternalLink, FiHeart, FiShield, FiUser, FiX } from "react-icons/fi";
+import {
+  FiBookOpen,
+  FiCalendar,
+  FiExternalLink,
+  FiHeart,
+  FiShield,
+  FiUser,
+  FiX,
+} from "react-icons/fi";
 
 export default function OptionPanel({
   handleModalClose,
@@ -9,6 +18,8 @@ export default function OptionPanel({
   subject,
   showModal,
   method,
+  badges,
+  users,
 }: {
   handleModalClose: (e?: any) => void;
   handleFavoriteClick: (subjectId: string, method: string) => void;
@@ -16,7 +27,13 @@ export default function OptionPanel({
   subject: nexSubject;
   showModal: boolean;
   method: string;
+  badges: nexBadge[];
+  users: NexeraUser[];
 }) {
+  const badge = badges.find(
+    (b) =>
+      b.id === users.find((u) => u.id === subject.createdBy)?.badges["0"].id
+  );
   return (
     <AnimatePresence>
       {showModal && (
@@ -66,12 +83,10 @@ export default function OptionPanel({
                 <div className="infoRow">
                   <div className="infoItem">
                     <FiUser size={14} />
-                    <span className="infoLabel">Created by</span>
+                    <span className="infoLabel">Created under the authority of : </span>
                   </div>
-                  <span
-                    className={`badge badge-role badge-role-${subject.createdByRole}`}
-                  >
-                    {subject.createdByRole}
+                  <span className={`badge badge-role badge-role-`}>
+                    {badge?.name || "Unknown User"}
                   </span>
                 </div>
 

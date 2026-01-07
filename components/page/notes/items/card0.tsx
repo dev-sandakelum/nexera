@@ -19,7 +19,9 @@ export default function Card0({
   badges: nexBadge[];
 }) {
   const [showModal, setShowModal] = useState(false);
-  const handleModalOpen = (e: any) => {
+  const [selectedSubjectID, setSelectedSubjectID] = useState("");
+  const handleModalOpen = (e: any, subject: nexSubject) => {
+    setSelectedSubjectID(subject.id);
     e.preventDefault();
     e.stopPropagation();
     setShowModal(true);
@@ -119,7 +121,10 @@ export default function Card0({
                           )}
                         </div>
 
-                        <button className="moreBtn" onClick={handleModalOpen}>
+                        <button
+                          className="moreBtn"
+                          onClick={(e) => handleModalOpen(e, subject)}
+                        >
                           <FiMoreVertical size={18} />
                         </button>
                       </div>
@@ -157,7 +162,7 @@ export default function Card0({
                               marginTop: "1px",
                               color: "#626262ff",
                               fontWeight: "500",
-                              marginLeft : "4px",
+                              marginLeft: "4px",
                             }}
                           >
                             {badge ? badge.name : "Unknown Creator"}
@@ -197,7 +202,11 @@ export default function Card0({
         handleModalClose={handleModalClose}
         isFavorite={type === "favorites"}
         showModal={showModal}
-        subject={dataset[0]}
+        subject={
+          dataset.find((s) => s.id == selectedSubjectID) || ({} as nexSubject)
+        }
+        badges={badges}
+        users={users}
         method={type === "favorites" ? "remove" : "add"}
       />
     </>
