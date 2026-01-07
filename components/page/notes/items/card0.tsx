@@ -4,7 +4,15 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { HiDotsVertical } from "react-icons/hi";
 
-export default function Card0({ dataset }: { dataset: nexSubject[]}) {
+export default function Card0({
+  dataset,
+  type,
+  updateUserFavorites,
+}: {
+  dataset: nexSubject[];
+  type: string;
+  updateUserFavorites: (subjectId: string, method: string) => void;
+}) {
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -29,7 +37,6 @@ export default function Card0({ dataset }: { dataset: nexSubject[]}) {
       },
     },
   };
-  
 
   return (
     <motion.div
@@ -43,6 +50,7 @@ export default function Card0({ dataset }: { dataset: nexSubject[]}) {
           className="object"
           key={item.id}
           variants={itemVariants}
+          layout
           whileTap={{
             scale: 0.98,
             transition: { duration: 0.08 },
@@ -52,12 +60,19 @@ export default function Card0({ dataset }: { dataset: nexSubject[]}) {
             <div className="info">
               <p className="title">{item.title}</p>
               <p className="description">{item.description}</p>
-              <Link href={ "/Notes/"+item.slug} className="openLink"
-              >
+              <Link href={"/Notes/" + item.slug} className="openLink">
                 Open {">>"}
               </Link>
             </div>
-            <div className="btn">
+            <div
+              className="btn"
+              onClick={() =>
+                updateUserFavorites(
+                  item.id,
+                  type === "favorites" ? "remove" : "add"
+                )
+              }
+            >
               <HiDotsVertical />
             </div>
           </div>
