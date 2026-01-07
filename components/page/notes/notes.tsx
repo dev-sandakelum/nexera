@@ -55,39 +55,30 @@ export default function Notes({ data }: { data: nexSubject[] }) {
 
   // Update Logic
   const updateUserFavorites = async (subjectId: string, method: string) => {
-    if (method === "add") {
-      setUser((prevUser) => ({
-        ...prevUser,
-        data: {
-          ...prevUser.data,
-          notes: {
-            ...prevUser.data.notes,
-            favorites: [...prevUser.data.notes.favorites, { id: subjectId }],
-          },
-        },
-      }));
-    } else if (method === "remove") {
-      setUser((prevUser) => ({
-        ...prevUser,
-        data: {
-          ...prevUser.data,
-          notes: {
-            ...prevUser.data.notes,
-            favorites: prevUser.data.notes.favorites.filter(
-              (fav) => fav.id !== subjectId
-            ),
-          },
-        },
-      }));
-    }
-
     // Call your API here (assuming UpdateUser exists in context)
     // await UpdateUser(user?.id || "", updatedUser);
-  };
 
-  // Wrapper for the toggle click
-  const handleToggle = (item: nexSubject, isFav: boolean) => {
-    updateUserFavorites(item.id, isFav ? "remove" : "add");
+    const updatedUser: NexeraUser = {
+      ...User,
+      data: {
+        ...User.data,
+        notes: {
+          ...User.data.notes,
+          favorites:
+            method === "add"
+              ? [...User.data.notes.favorites, { id: subjectId }]
+              : User.data.notes.favorites.filter((fav) => fav.id !== subjectId),
+        },
+      },
+    };
+    const response = await UpdateUser(User.id, updatedUser);
+    if (response.success) {
+      console.log("User favorites updated successfully");
+      setUser(updatedUser);
+    } else {
+      console.error("Failed to update user favorites");
+      alert("Failed to update favorites. Please try again.");
+    }
   };
 
   if (!User?.data) {
