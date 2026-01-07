@@ -1,1 +1,1 @@
-feat: Remove unused Fav_dataset and Suggestion_dataset files to clean up the codebase
+feat: Refactor updateUserFavorites function to streamline favorite management and improve error handling
