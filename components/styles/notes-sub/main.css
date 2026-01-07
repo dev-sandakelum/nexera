@@ -12,11 +12,11 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
-  
+
   display: flex;
   align-items: center;
   text-align: center;
-  
+
   color: #000000;
   margin-top: 24px;
   margin-bottom: 16px;
@@ -31,4 +31,232 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.notesSubPage {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 96px 24px 24px;
+  color: #34343e;
+}
+/* ---------- Header ---------- */
+
+.notesSubPage-header {
+  margin-bottom: 32px;
+}
+
+.notesSubPage-header-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.notesSubPage-title-box {
+  flex: 1;
+  min-width: 250px;
+}
+
+.notesSubPage-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #34343e;
+  margin: 0 0 12px 0;
+}
+
+/* ---------- Badges ---------- */
+
+.notesSubPage-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-official {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-department {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-year {
+  background: #e0d7ff;
+  color: #5b31d8;
+}
+
+.badge-semester {
+  background: #cffafe;
+  color: #0e7490;
+}
+
+/* ---------- Header Buttons ---------- */
+
+.notesSubPage-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.notes-btn {
+  padding: 8px 16px;
+  background: #eff3fc;
+  color: #34343e;
+  border: 1px solid #caced5;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ---------- Filters ---------- */
+
+.notes-filter-box {
+  background: #fbfbfb;
+  border-radius: 12px;
+  border: 1px solid #caced5;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.notes-filter-toggle {
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #34343e;
+}
+
+.notes-filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-filter-content {
+  overflow: hidden;
+}
+
+.notes-filter-grid {
+  display: flex;
+  gap: 12px;
+  padding: 0 16px 16px;
+  flex-wrap: wrap;
+}
+
+.notes-filter-item {
+  flex: 1;
+  min-width: 200px;
+}
+
+.notes-filter-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #34343e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.notes-filter-select {
+  width: 100%;
+  padding: 8px 12px;
+  background: #eff3fc;
+  border: 1px solid #caced5;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #34343e;
+  cursor: pointer;
+}
+.notsSub-list{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.topic-card {
+  background: #fbfbfb;
+  border: 1px solid #caced5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.topic-header {
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  transition: background 0.2s;
+}
+
+.topic-header.expanded {
+  background: #eff3fc;
+}
+
+.topic-header-left {
+  flex: 1;
+}
+
+.topic-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #34343e;
+  margin: 0 0 6px 0;
+}
+
+.topic-subinfo {
+  font-size: 13px;
+  color: #34343e;
+  opacity: 0.6;
+  display: flex;
+  gap: 16px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.topic-toggle-icon {
+  font-size: 20px;
+  color: #7b7dee;
+  transition: transform 0.3s;
+}
+
+.topic-toggle-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.topic-content {
+  padding: 0 20px 20px;
+  border-top: 1px solid #caced5;
+  overflow: hidden;
+}
+
+.topic-empty {
+  padding: 40px;
+  text-align: center;
+  color: #34343e;
+  opacity: 0.5;
 }

@@ -1,1 +1,7 @@
-feat: Refactor updateUserFavorites function to streamline favorite management and improve error handling
+refactor: remove old NotesSubRedesign component and replace with modular NoteCard and TypeSection components
+
+- Deleted the existing NotesSubRedesign component and its associated mock data.
+- Introduced NoteCard component for rendering individual notes with status badges and actions.
+- Created TypeSection component to group notes by type and display them with titles and counts.
+- Updated CSS styles for NoteCard and TypeSection to enhance layout and design consistency.
+- Added new main CSS file for the notes subpage layout and styling.
