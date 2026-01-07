@@ -1,1 +1,1 @@
-feat: Add user favorites functionality to Card0 component and update subject data structure
+feat: Implement OptionPanel component for subject details and favorite management in Card0

@@ -105,6 +105,8 @@ export default function Notes({ data }: { data: nexSubject[] }) {
   console.log("suggestions:", suggestions);
 
   return (
+    <>
+    
     <motion.div
       key={pathname}
       className="noteContainer"
@@ -138,6 +140,6 @@ export default function Notes({ data }: { data: nexSubject[] }) {
           updateUserFavorites={updateUserFavorites}
         />
       </div>
-    </motion.div>
+    </motion.div></>
   );
 }
