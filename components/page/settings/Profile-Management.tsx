@@ -121,7 +121,7 @@ export default function UserProfile() {
         const avatarUrl = avatarPreview;
         const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
-        const { imageURL, error } = await UploadFile({
+        const { fileURL, error } = await UploadFile({
           userId: user?.id || "",
           file: imgBlob,
           bucket: "users",
@@ -133,8 +133,8 @@ export default function UserProfile() {
           throw new Error(error.message);
         }
 
-        if (imageURL) {
-          formUser.profilePicture = imageURL;
+        if (fileURL) {
+          formUser.profilePicture = fileURL;
         }
       } catch (err: any) {
         console.error("Error uploading user avatar:", err.message);

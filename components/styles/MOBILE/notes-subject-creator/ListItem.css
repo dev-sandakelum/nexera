@@ -1,0 +1,69 @@
+/* ========================================
+   MOBILE RESPONSIVE - LIST ITEM
+   Prefix: nsc- (notes-subject-creator)
+   ======================================== */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .nsc-list-item {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .nsc-list-item-title {
+    font-size: 15px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .nsc-list-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+    gap: 12px;
+    border-radius: 8px;
+  }
+
+  .nsc-list-item-content {
+    width: 100%;
+  }
+
+  .nsc-list-item-badges {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .nsc-list-item-title {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .nsc-list-item-desc {
+    font-size: 12px;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .nsc-list-item-meta {
+    font-size: 11px;
+  }
+
+  .nsc-list-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+/* Extra small mobile (360px and below) */
+@media (max-width: 360px) {
+  .nsc-list-item {
+    padding: 12px;
+  }
+
+  .nsc-list-item-title {
+    font-size: 13px;
+  }
+}

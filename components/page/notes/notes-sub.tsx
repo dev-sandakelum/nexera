@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Card1 from "./items/card1";
-import { nexNoteAbout, nexTopic } from "@/components/types";
+import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
 import { usePathname, useSearchParams } from "next/navigation";
 import NotePreviewPage from "./preview/note/note";
 import { useMemo, useEffect, useState, useRef } from "react";
@@ -17,13 +17,16 @@ import "@/components/styles/MOBILE/notes-sub/NoteCard.css";
 import "@/components/styles/MOBILE/notes-sub/NoteTypeSection.css";
 
 export default function Notes_Sub({
+  selectedSubject,
   topics,
   noteAbouts,
-  users
+  users,
 }: {
+  selectedSubject:nexSubject;
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
-  users : { id: string; name: string }[];
+  users: { id: string; name: string }[];
+
 }) {
   const pathname = usePathname();
   const paths = pathname.split("/");
@@ -34,7 +37,7 @@ export default function Notes_Sub({
   const [userNames, setUserNames] = useState<{ id: string; name: string }[]>(
     []
   );
-  const subject_id = nexIctSubjects.find((sub) => sub.slug === sub_slug)?.id;
+  const subject_id = selectedSubject?.id;
 
   const subject_topics = useMemo(
     () => topics.filter((topic) => topic.subjectID === subject_id),
@@ -47,8 +50,6 @@ export default function Notes_Sub({
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
-
-  const mockSubject = nexIctSubjects.find((sub) => sub.id === subject_id)!;
 
   const expandAll = () => {
     const allExpanded: Record<string, boolean> = {};
@@ -116,23 +117,23 @@ export default function Notes_Sub({
       <div className="notesSubPage-header">
         <div className="notesSubPage-header-content">
           <div className="notesSubPage-title-box">
-            <h1 className="notesSubPage-title">{mockSubject.title}</h1>
+            <h1 className="notesSubPage-title">{selectedSubject.title}</h1>
 
             <div className="notesSubPage-badges">
-              {mockSubject.isOfficial && (
+              {selectedSubject.isOfficial && (
                 <span className="badge badge-official">
                   <FiShield /> Official
                 </span>
               )}
               <span className="badge badge-department">
-                {mockSubject.departmentID}
+                {selectedSubject.departmentID}
               </span>
               <span className="badge badge-year">
-                Year {mockSubject.academicYear}
+                Year {selectedSubject.academicYear}
               </span>
-              {mockSubject.semester && (
+              {selectedSubject.semester && (
                 <span className="badge badge-semester">
-                  Semester {mockSubject.semester}
+                  Semester {selectedSubject.semester}
                 </span>
               )}
             </div>
@@ -236,7 +237,7 @@ export default function Notes_Sub({
               >
                 <div className="topic-header-left">
                   <h3 className="topic-title">{topic.title}</h3>
-                  <p  className="topic-description">{topic.description}</p>
+                  <p className="topic-description">{topic.description}</p>
                   <div className="topic-subinfo">
                     <span>📝 {groupedNotes.note.length} Notes</span>
                     <span>📄 {groupedNotes.pdf.length} PDFs</span>

@@ -1,0 +1,59 @@
+/* ========================================
+   NOTES SUBJECT CREATOR - LIST ITEM
+   Prefix: nsc- (notes-subject-creator)
+   ======================================== */
+
+.nsc-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fbfbfb;
+  border: 1px solid #caced5;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s;
+  gap: 16px;
+}
+
+.nsc-list-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.nsc-list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.nsc-list-item-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.nsc-list-item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #34343e;
+  margin: 0 0 6px 0;
+}
+
+.nsc-list-item-desc {
+  font-size: 13px;
+  color: #34343e;
+  opacity: 0.7;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.nsc-list-item-meta {
+  font-size: 12px;
+  color: #34343e;
+  opacity: 0.6;
+}
+
+.nsc-list-item-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}

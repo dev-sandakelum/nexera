@@ -10,6 +10,7 @@ export const ictTopics: nexTopic[] = [
     slug: "variables-and-data-types",
     createdAt: "2023-09-01T09:00:00Z",
     updatedAt: "2023-09-01T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_02",
@@ -19,6 +20,7 @@ export const ictTopics: nexTopic[] = [
     slug: "control-structures",
     createdAt: "2023-09-02T10:00:00Z",
     updatedAt: "2023-09-02T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_03",
@@ -28,6 +30,7 @@ export const ictTopics: nexTopic[] = [
     slug: "functions-and-modular-coding",
     createdAt: "2023-09-03T11:00:00Z",
     updatedAt: "2023-09-03T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 02: Data Communication & Networking
@@ -39,6 +42,7 @@ export const ictTopics: nexTopic[] = [
     slug: "the-osi-model",
     createdAt: "2023-09-04T09:00:00Z",
     updatedAt: "2023-09-04T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_05",
@@ -48,6 +52,7 @@ export const ictTopics: nexTopic[] = [
     slug: "ip-addressing-and-subnetting",
     createdAt: "2023-09-05T10:00:00Z",
     updatedAt: "2023-09-05T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_06",
@@ -57,6 +62,7 @@ export const ictTopics: nexTopic[] = [
     slug: "routing-protocols",
     createdAt: "2023-09-06T11:00:00Z",
     updatedAt: "2023-09-06T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 03: Database Management Systems
@@ -68,6 +74,7 @@ export const ictTopics: nexTopic[] = [
     slug: "er-modeling",
     createdAt: "2023-09-07T09:00:00Z",
     updatedAt: "2023-09-07T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_08",
@@ -77,6 +84,7 @@ export const ictTopics: nexTopic[] = [
     slug: "sql-fundamentals",
     createdAt: "2023-09-08T10:00:00Z",
     updatedAt: "2023-09-08T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_09",
@@ -86,6 +94,7 @@ export const ictTopics: nexTopic[] = [
     slug: "normalization",
     createdAt: "2023-09-09T11:00:00Z",
     updatedAt: "2023-09-09T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 04: Web Technologies
@@ -97,6 +106,7 @@ export const ictTopics: nexTopic[] = [
     slug: "semantic-html-and-css",
     createdAt: "2023-09-10T09:00:00Z",
     updatedAt: "2023-09-10T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_11",
@@ -106,6 +116,7 @@ export const ictTopics: nexTopic[] = [
     slug: "javascript-dom-manipulation",
     createdAt: "2023-09-11T10:00:00Z",
     updatedAt: "2023-09-11T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_12",
@@ -115,6 +126,7 @@ export const ictTopics: nexTopic[] = [
     slug: "nextjs-fundamentals",
     createdAt: "2023-09-12T11:00:00Z",
     updatedAt: "2023-09-12T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 05: Cybersecurity Essentials
@@ -126,6 +138,7 @@ export const ictTopics: nexTopic[] = [
     slug: "types-of-malware",
     createdAt: "2023-09-13T09:00:00Z",
     updatedAt: "2023-09-13T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_14",
@@ -135,6 +148,7 @@ export const ictTopics: nexTopic[] = [
     slug: "cryptography-basics",
     createdAt: "2023-09-14T10:00:00Z",
     updatedAt: "2023-09-14T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_15",
@@ -144,6 +158,7 @@ export const ictTopics: nexTopic[] = [
     slug: "network-security",
     createdAt: "2023-09-15T11:00:00Z",
     updatedAt: "2023-09-15T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 06: Operating Systems
@@ -155,6 +170,7 @@ export const ictTopics: nexTopic[] = [
     slug: "process-management",
     createdAt: "2023-09-16T09:00:00Z",
     updatedAt: "2023-09-16T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_17",
@@ -164,6 +180,7 @@ export const ictTopics: nexTopic[] = [
     slug: "memory-management",
     createdAt: "2023-09-17T10:00:00Z",
     updatedAt: "2023-09-17T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_18",
@@ -173,6 +190,7 @@ export const ictTopics: nexTopic[] = [
     slug: "file-systems",
     createdAt: "2023-09-18T11:00:00Z",
     updatedAt: "2023-09-18T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 07: Cloud Computing
@@ -184,6 +202,7 @@ export const ictTopics: nexTopic[] = [
     slug: "service-models",
     createdAt: "2023-09-19T09:00:00Z",
     updatedAt: "2023-09-19T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_20",
@@ -193,6 +212,7 @@ export const ictTopics: nexTopic[] = [
     slug: "virtualization",
     createdAt: "2023-09-20T10:00:00Z",
     updatedAt: "2023-09-20T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_21",
@@ -202,6 +222,7 @@ export const ictTopics: nexTopic[] = [
     slug: "cloud-storage",
     createdAt: "2023-09-21T11:00:00Z",
     updatedAt: "2023-09-21T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 08: Data Structures & Algorithms
@@ -213,6 +234,7 @@ export const ictTopics: nexTopic[] = [
     slug: "sorting-algorithms",
     createdAt: "2023-09-22T09:00:00Z",
     updatedAt: "2023-09-22T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_23",
@@ -222,6 +244,7 @@ export const ictTopics: nexTopic[] = [
     slug: "trees-and-graphs",
     createdAt: "2023-09-23T10:00:00Z",
     updatedAt: "2023-09-23T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_24",
@@ -231,6 +254,7 @@ export const ictTopics: nexTopic[] = [
     slug: "complexity-analysis",
     createdAt: "2023-09-24T11:00:00Z",
     updatedAt: "2023-09-24T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 09: Artificial Intelligence
@@ -242,6 +266,7 @@ export const ictTopics: nexTopic[] = [
     slug: "machine-learning-basics",
     createdAt: "2023-09-25T09:00:00Z",
     updatedAt: "2023-09-25T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_26",
@@ -251,6 +276,7 @@ export const ictTopics: nexTopic[] = [
     slug: "neural-networks",
     createdAt: "2023-09-26T10:00:00Z",
     updatedAt: "2023-09-26T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_27",
@@ -260,6 +286,7 @@ export const ictTopics: nexTopic[] = [
     slug: "natural-language-processing",
     createdAt: "2023-09-27T11:00:00Z",
     updatedAt: "2023-09-27T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 
   // Subject 10: Software Engineering
@@ -271,6 +298,7 @@ export const ictTopics: nexTopic[] = [
     slug: "sdlc-models",
     createdAt: "2023-09-28T09:00:00Z",
     updatedAt: "2023-09-28T09:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_29",
@@ -280,6 +308,7 @@ export const ictTopics: nexTopic[] = [
     slug: "software-testing",
     createdAt: "2023-09-29T10:00:00Z",
     updatedAt: "2023-09-29T10:00:00Z",
+    createdBy: "user_admin_01",
   },
   {
     id: "top_30",
@@ -289,5 +318,6 @@ export const ictTopics: nexTopic[] = [
     slug: "uml-diagrams",
     createdAt: "2023-09-30T11:00:00Z",
     updatedAt: "2023-09-30T11:00:00Z",
+    createdBy: "user_admin_01",
   },
 ];

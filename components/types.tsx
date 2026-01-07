@@ -25,7 +25,6 @@ export type nexSubject = {
   semester?: number;      // optional 1,2
 
   createdBy: string;      // userID
-  createdByRole: "nexRoot" | "nexPrime" | "nexUser";
 
   isOfficial: boolean;    // 🔑 admin-approved
 
@@ -45,6 +44,7 @@ export type nexTopic = {
   title: string;
   description: string;
   slug: string;
+  createdBy: string;      // userID
   createdAt: string;
   updatedAt: string;
 };
@@ -58,18 +58,18 @@ export type pdfNote = {
   sizeInMB: number;
   pageCount?: number;
 };
-export type nexQuestion = {
-  id: string;
-  question: string;
-  options: {
-    id: string;
-    option: string;
-  }[];
-  answerID: string[];
-};
+// export type nexQuestion = {
+//   id: string;
+//   question: string;
+//   options: {
+//     id: string;
+//     option: string;
+//   }[];
+//   answerID: string[];
+// };
 export type quizNote = {
   type: "quiz";
-  content: nexQuestion[];
+  quizUrl: string;
 };
 
 export type nexNoteAbout = {
