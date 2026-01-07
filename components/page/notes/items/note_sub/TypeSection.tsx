@@ -3,10 +3,12 @@ import NoteCard from "./NoteCard";
 export default function NoteTypeSection({
   title,
   notes,
+  users,
   getStatusBadge,
 }: {
   title: string;
   notes: any[];
+  users : { id: string; name: string }[];
   getStatusBadge: (status: string) => { bg: string; fg: string; text: string };
 }) {
   return (
@@ -16,7 +18,7 @@ export default function NoteTypeSection({
       </h4>
       <div className="note-list">
         {notes.map((note: any) => (
-          <NoteCard key={note.id} note={note} getStatusBadge={getStatusBadge} />
+          <NoteCard key={note.id} note={note} getStatusBadge={getStatusBadge} users={users} />
         ))}
       </div>
     </div>

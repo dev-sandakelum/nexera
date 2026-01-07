@@ -6,11 +6,11 @@ import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
 import { UpdateUser } from "@/components/firebase/update-user";
-import { FiChevronDown, FiFilter, FiHeart } from "react-icons/fi";
+import { FiChevronDown, FiFilter } from "react-icons/fi";
 
 export default function Notes({ data }: { data: nexSubject[] }) {
   // ------------------------------------------------------

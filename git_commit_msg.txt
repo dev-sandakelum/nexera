@@ -1,1 +1,8 @@
-feat: Enhance mobile navigation and notes styles for improved layout and responsiveness
+feat: Add user management and note creation functionality
+
+- Updated Notes_Sub component to accept users as props for better user context.
+- Refactored Notes component to remove unused imports and streamline code.
+- Implemented UploadUsersFast function to batch upload topics to Firestore.
+- Created new page for subject management with Notes_Sub integration.
+- Added new page for creating subjects, topics, and notes with comprehensive CRUD operations.
+- Developed NotesSubjectCreator component for managing subjects, topics, and notes with modals for creation and editing.

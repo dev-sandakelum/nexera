@@ -5,40 +5,43 @@ import { db } from "@/app/api/firebase";
 import { BlobToFile } from "../converts/blob-to-file";
 import { UploadFile } from "@/utils/supabase/storage/client";
 import { UpdateUser } from "../firebase/update-user";
+import { nexIctSubjects } from "@/public/json/subjects";
+import { noteContexts } from "@/public/json/notesData";
+import { ictTopics } from "@/public/json/topics";
 
 export async function UploadUsersFast() {
   const batch = writeBatch(db);
-  const usersCollection = collection(db, "nexeraUsers");
+  const usersCollection = collection(db, "nexNoteTopics");
 
-  // nexBadges.forEach((user) => {
-  //   const userRef = doc(usersCollection, user.id);
-  //   batch.set(userRef, user);
-  // });
+  ictTopics.forEach((user) => {
+    const userRef = doc(usersCollection, user.id);
+    batch.set(userRef, user);
+  });
 
-  for (const user of nexeraUsersR) {
-    try {
-      const avatarUrl = "/img/profile_pic/26.jpg";
-      const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
+  // for (const user of nexeraUsersR) {
+  //   try {
+  //     const avatarUrl = "/img/profile_pic/26.jpg";
+  //     const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
 
-      const { imageURL, error } = await UploadFile({
-        userId: user.id,
-        file: imgBlob,
-        bucket: "users",
-        path: `profile_pic2/${user.id}`,
-      });
+  //     const { imageURL, error } = await UploadFile({
+  //       userId: user.id,
+  //       file: imgBlob,
+  //       bucket: "users",
+  //       path: `profile_pic2/${user.id}`,
+  //     });
 
-      if (error) {
-        console.error("Error uploading user avatar:", error);
-        continue;
-      }
+  //     if (error) {
+  //       console.error("Error uploading user avatar:", error);
+  //       continue;
+  //     }
 
-      if (imageURL) {
-        await UpdateUser(user.id,  user);
-      }
-    } catch (err: any) {
-      console.error("Error uploading user avatar:", err.message);
-    }
-  }
+  //     if (imageURL) {
+  //       await UpdateUser(user.id,  user);
+  //     }
+  //   } catch (err: any) {
+  //     console.error("Error uploading user avatar:", err.message);
+  //   }
+  // }
 
   // const data = await LoadUserAvatar({
   //   userId: "u_005",

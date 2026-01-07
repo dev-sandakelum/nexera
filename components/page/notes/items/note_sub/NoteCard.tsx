@@ -4,9 +4,11 @@ import { FiClock, FiDownload, FiEye, FiUser } from "react-icons/fi";
 
 export default function NoteCard({
   note,
+  users,
   getStatusBadge,
 }: {
   note: any;
+  users: { id: string; name: string }[];
   getStatusBadge: (status: string) => { bg: string; fg: string; text: string };
 }) {
   const typeColors = {
@@ -22,7 +24,7 @@ export default function NoteCard({
   return (
     <motion.div
       className="note-card"
-      whileHover={{ x: 4 }}
+      whileHover={{ x: 2 }}
       style={
         {
           "--border": typeColors[note.type as keyof typeof typeColors].border,
@@ -55,7 +57,7 @@ export default function NoteCard({
 
           <div className="note-meta">
             <span className="note-meta-item">
-              <FiUser size={12} /> {note.publishedBy}
+              <FiUser size={12} /> {users.find(user => user.id === note.publishedBy)?.name || "Unknown"}
             </span>
             <span className="note-meta-item">
               <FiClock size={12} />{" "}

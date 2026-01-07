@@ -19,9 +19,11 @@ import "@/components/styles/MOBILE/notes-sub/NoteTypeSection.css";
 export default function Notes_Sub({
   topics,
   noteAbouts,
+  users
 }: {
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
+  users : { id: string; name: string }[];
 }) {
   const pathname = usePathname();
   const paths = pathname.split("/");
@@ -267,6 +269,7 @@ export default function Notes_Sub({
                           title="📝 Markdown Notes"
                           notes={groupedNotes.note}
                           getStatusBadge={getStatusBadge}
+                          users={users}
                         />
                       )}
                       {groupedNotes.pdf.length > 0 && (
@@ -274,6 +277,7 @@ export default function Notes_Sub({
                           title="📄 PDF Documents"
                           notes={groupedNotes.pdf}
                           getStatusBadge={getStatusBadge}
+                          users={users}
                         />
                       )}
                       {groupedNotes.quiz.length > 0 && (
@@ -281,6 +285,7 @@ export default function Notes_Sub({
                           title="🧠 Quizzes"
                           notes={groupedNotes.quiz}
                           getStatusBadge={getStatusBadge}
+                          users={users}
                         />
                       )}
                       {totalNotes === 0 && (
