@@ -1,9 +1,276 @@
 @media (max-width: 768px) {
-  .noteContainer {
-    padding: 0;
+  .notesRedesignContainer {
+    padding: 80px 16px 24px;
   }
-  .noteContainer .favorites,
-  .noteContainer .suggestions {
-    border-radius: 0;
+
+  /* =========================
+     FILTER SECTION
+  ========================= */
+  .filterToggle {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .filterControls {
+    flex-direction: column;
+    padding: 0 16px 16px;
+    gap: 16px;
+  }
+
+  .filterGroup {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .filterGroup select {
+    width: 100%;
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+
+  /* =========================
+     SECTIONS
+  ========================= */
+  .sectionHeader {
+    font-size: 20px;
+    padding: 10px 16px;
+    min-width: 240px;
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .sectionHeader .count {
+    font-size: 14px;
+    padding: 3px 10px;
+  }
+
+  /* =========================
+     SUBJECTS GRID
+  ========================= */
+  .subjectsGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* =========================
+     SUBJECT CARD
+  ========================= */
+  .subjectCard {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .cardHeader {
+    margin-bottom: 10px;
+  }
+
+  .badgeGroup {
+    gap: 4px;
+  }
+
+  .badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .cardDescription {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .cardFooter {
+    padding-top: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .favoriteBtn {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  /* =========================
+     MODAL
+  ========================= */
+  .modalOverlay {
+    padding: 16px;
+  }
+
+  .subjectModal {
+    max-width: 100%;
+    border-radius: 16px;
+    max-height: 85vh;
+  }
+
+  .modalHeader {
+    padding: 20px;
+  }
+
+  .modalHeader h3 {
+    font-size: 18px;
+  }
+
+  .modalContent {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .modalBadges .badge {
+    font-size: 10px;
+  }
+
+  .modalDescription {
+    font-size: 13px;
+  }
+
+  .infoRow {
+    padding: 6px 0;
+  }
+
+  .infoItem {
+    font-size: 12px;
+  }
+
+  .infoValue {
+    font-size: 12px;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    padding: 16px 20px;
+    gap: 10px;
+  }
+
+  .modalBtn {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  /* Stack buttons vertically on mobile */
+  .modalBtn-secondary {
+    order: 3;
+  }
+
+  .modalBtn-favorite {
+    order: 2;
+  }
+
+  .modalBtn-primary {
+    order: 1;
+  }
+
+  /* =========================
+     EMPTY STATE
+  ========================= */
+  .emptyState {
+    padding: 40px 20px;
+  }
+
+  .emptyState svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .emptyState p {
+    font-size: 16px;
+  }
+
+  .emptyState span {
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   EXTRA SMALL DEVICES
+========================= */
+@media (max-width: 480px) {
+  .notesRedesignContainer {
+    padding: 72px 12px 20px;
+  }
+
+  .filterToggle {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .filterControls {
+    padding: 0 12px 12px;
+  }
+
+  .sectionHeader {
+    font-size: 18px;
+    padding: 8px 12px;
+    min-width: 200px;
+  }
+
+  .sectionHeader .count {
+    font-size: 12px;
+  }
+
+  .subjectsGrid {
+    gap: 12px;
+  }
+
+  .subjectCard {
+    padding: 14px;
+  }
+
+  .cardTitle {
+    font-size: 15px;
+  }
+
+  .cardDescription {
+    font-size: 11px;
+  }
+
+  .badge {
+    font-size: 9px;
+  }
+
+  .modalHeader {
+    padding: 16px;
+  }
+
+  .modalHeader h3 {
+    font-size: 16px;
+  }
+
+  .modalContent {
+    padding: 16px;
+  }
+
+  .modalActions {
+    padding: 12px 16px;
+  }
+
+  .modalBtn {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+}
+
+/* =========================
+   LANDSCAPE MOBILE
+========================= */
+@media (max-width: 768px) and (orientation: landscape) {
+  .subjectsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modalOverlay {
+    align-items: flex-start;
+    overflow-y: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .subjectModal {
+    margin: auto;
   }
 }

@@ -1,47 +1,120 @@
-.noteContainer {
+.notesRedesignContainer {
   width: 100%;
-  margin-top: 100px;
-  padding: 0 64px;
-  /* border: 1px solid red; */
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  min-height: 100vh;
+  padding: 96px 64px 64px;
   color: var(--theme-colorB);
 }
-.noteContainer .favorites,
-.noteContainer .suggestions {
+/* =========================
+   FILTER SECTION
+========================= */
+.filterSection {
   width: 100%;
+  margin-bottom: 32px;
+  background: var(--components-background);
   border-radius: 16px;
-  border: 1px solid var(--navbar-border);
+  border: 1px solid var(--theme-colorE75);
   overflow: hidden;
-  background-color: var(--components-background);
 }
 
-.noteContainer .header {
-  font-weight: 600;
-  font-size: 24px;
-  text-transform: capitalize;
+.filterToggle {
+  width: 100%;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  color: var(--components-background);
-  /* border: 1px solid red; */
-  width: fit-content;
-  padding: 8px 16px;
-  padding-bottom: 16px;
-  padding-right: 128px;
-  border-radius: 100% 0% 100% 0% / 0% 0% 100% 100%;
-  background: linear-gradient(
-    130.14deg,
-    rgb(116, 116, 116) 92.69%,
-    #515151 44.05%
-  );
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  cursor: pointer;
+  transition: background 0.2s;
 }
-.noteContainer .objects {
-  padding: 16px 32px;
+
+.filterToggle:hover {
+  background: var(--background);
+}
+
+.filterControls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: center;
+  gap: 20px;
+  padding: 0 20px 20px;
+  overflow: hidden;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.filterGroup label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+}
+
+.filterGroup select {
+  padding: 10px 12px;
+  background: var(--background);
+  border: 1px solid var(--theme-colorE75);
+  border-radius: 8px;
+  color: var(--theme-colorB);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterGroup select:focus {
+  outline: none;
+  border-color: var(--theme-colorA);
+  box-shadow: 0 0 0 3px rgba(123, 125, 238, 0.1);
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.notesSection {
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  margin-bottom: 24px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
+  color: white;
+  border-radius: 16px 16px 0 0;
+  width: fit-content;
+  min-width: 300px;
+}
+
+.sectionHeader .count {
+  margin-left: auto;
+  font-size: 16px;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* =========================
+   SUBJECTS GRID
+========================= */
+.subjectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
 }

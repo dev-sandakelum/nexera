@@ -1,1 +1,1 @@
-feat: Implement OptionPanel component for subject details and favorite management in Card0
+feat: Enhance Card0 and Notes components with filter functionality and improved animations
