@@ -191,7 +191,7 @@
   color: #34343e;
   cursor: pointer;
 }
-.notsSub-list{
+.notsSub-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -225,9 +225,14 @@
   font-size: 18px;
   font-weight: 600;
   color: #34343e;
+  /* margin: 0 0 6px 0; */
+}
+.topic-description {
+  font-size: 14px;
+  font-weight: 200;
+  color: #5c5c5f;
   margin: 0 0 6px 0;
 }
-
 .topic-subinfo {
   font-size: 13px;
   color: #34343e;

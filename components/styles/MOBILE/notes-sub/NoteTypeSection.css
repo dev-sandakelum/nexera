@@ -1,0 +1,54 @@
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   ======================================== */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .note-type-section {
+    margin-top: 16px;
+  }
+
+  .note-type-title {
+    font-size: 13px;
+    margin-bottom: 10px;
+    gap: 6px;
+  }
+
+  .note-list {
+    gap: 8px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .note-type-section {
+    margin-top: 16px;
+  }
+
+  .note-type-title {
+    font-size: 13px;
+    margin-bottom: 10px;
+    gap: 6px;
+  }
+
+  .note-list {
+    gap: 8px;
+  }
+}
+
+/* Extra small mobile (360px and below) */
+@media (max-width: 360px) {
+  .note-type-section {
+    margin-top: 12px;
+  }
+
+  .note-type-title {
+    font-size: 12px;
+    margin-bottom: 8px;
+    gap: 4px;
+  }
+
+  .note-list {
+    gap: 6px;
+  }
+}

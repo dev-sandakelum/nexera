@@ -13,6 +13,9 @@ import NoteTypeSection from "@/components/page/notes/items/note_sub/TypeSection"
 
 import "@/components/styles/notes-sub/NoteCard.css";
 import "@/components/styles/notes-sub/NoteTypeSection.css";
+import "@/components/styles/MOBILE/notes-sub/NoteCard.css";
+import "@/components/styles/MOBILE/notes-sub/NoteTypeSection.css";
+
 export default function Notes_Sub({
   topics,
   noteAbouts,
@@ -231,6 +234,7 @@ export default function Notes_Sub({
               >
                 <div className="topic-header-left">
                   <h3 className="topic-title">{topic.title}</h3>
+                  <p  className="topic-description">{topic.description}</p>
                   <div className="topic-subinfo">
                     <span>📝 {groupedNotes.note.length} Notes</span>
                     <span>📄 {groupedNotes.pdf.length} PDFs</span>
