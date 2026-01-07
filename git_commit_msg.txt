@@ -1,7 +1,1 @@
-feat: Enhance Notes Component with User Favorites Functionality
-
-- Updated Card0 component to accept type and updateUserFavorites props for managing user favorites.
-- Modified Notes component to handle user favorites and suggestions based on user data.
-- Implemented user favorite updates with asynchronous calls to UpdateUser function.
-- Introduced a new NotesSubRedesign component with improved UI for displaying notes, topics, and filtering options.
-- Added mock data for subjects, topics, and notes to facilitate development and testing.
+feat: Add user favorites functionality to Card0 component and update subject data structure

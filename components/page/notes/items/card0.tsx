@@ -2,6 +2,8 @@
 import { nexSubject } from "@/components/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useState } from "react";
+import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
 import { HiDotsVertical } from "react-icons/hi";
 
 export default function Card0({
@@ -13,6 +15,24 @@ export default function Card0({
   type: string;
   updateUserFavorites: (subjectId: string, method: string) => void;
 }) {
+  const [showModal, setShowModal] = useState(false);
+  const handleModalOpen = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowModal(true);
+  };
+
+  const handleModalClose = (e: any) => {
+    e?.stopPropagation();
+    setShowModal(false);
+  };
+
+  const handleFavoriteClick = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    updateUserFavorites(e.target.dataset.subjectId, e.target.dataset.method);
+    setShowModal(false);
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -45,36 +65,74 @@ export default function Card0({
       initial="hidden"
       animate="show"
     >
-      {dataset.map((item) => (
+      {dataset.map((subject) => (
         <motion.div
-          className="object"
-          key={item.id}
-          variants={itemVariants}
           layout
-          whileTap={{
-            scale: 0.98,
-            transition: { duration: 0.08 },
-          }}
+          key={subject.id}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          whileHover={{ y: -4 }}
+          className="subjectCard"
         >
-          <div className="fg">
-            <div className="info">
-              <p className="title">{item.title}</p>
-              <p className="description">{item.description}</p>
-              <Link href={"/Notes/" + item.slug} className="openLink">
-                Open {">>"}
-              </Link>
+          {/* Header with badges */}
+          <div className="cardHeader">
+            <div className="badgeGroup">
+              {subject.isOfficial && (
+                <span className="badge badge-official">
+                  <FiShield size={12} />
+                  Official
+                </span>
+              )}
+              <span className="badge badge-department">
+                {subject.departmentID}
+              </span>
+              <span className="badge badge-year">Y{subject.academicYear}</span>
+              {subject.semester && (
+                <span className="badge badge-semester">
+                  S{subject.semester}
+                </span>
+              )}
             </div>
-            <div
-              className="btn"
+
+            <button className="moreBtn" onClick={handleModalOpen}>
+              <FiMoreVertical size={18} />
+            </button>
+          </div>
+
+          {/* Content */}
+          <a href={`/Notes/${subject.slug}`} className="cardContent">
+            <h3 className="cardTitle">{subject.title}</h3>
+            <p className="cardDescription">{subject.description}</p>
+          </a>
+
+          {/* Footer */}
+          <div className="cardFooter">
+            <span
+              className={`badge badge-role badge-role-${subject.createdByRole}`}
+            >
+              {subject.createdByRole}
+            </span>
+
+            <button
+              className={`favoriteBtn ${type == "favorite" ? "active" : ""}`}
               onClick={() =>
-                updateUserFavorites(
-                  item.id,
-                  type === "favorites" ? "remove" : "add"
-                )
+                handleFavoriteClick({
+                  target: {
+                    dataset: {
+                      subjectId: subject.id,
+                      method: type == "favorites" ? "remove" : "add",
+                    },
+                  },
+                } as any)
               }
             >
-              <HiDotsVertical />
-            </div>
+              <FiHeart
+                size={14}
+                fill={type == "favorites" ? "currentColor" : "none"}
+              />
+              {type == "favorites" ? "Saved" : "Save"}
+            </button>
           </div>
         </motion.div>
       ))}
