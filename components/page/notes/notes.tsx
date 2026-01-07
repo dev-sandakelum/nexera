@@ -1,6 +1,6 @@
 "use client";
 
-import { NexeraUser, nexSubject } from "@/components/types";
+import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
 import { AnimatePresence, motion } from "framer-motion";
 import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
@@ -12,7 +12,7 @@ import { useUser } from "@/contexts/UserContext";
 import { UpdateUser } from "@/components/firebase/update-user";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
 
-export default function Notes({ data }: { data: nexSubject[] }) {
+export default function Notes({ data ,users , badges }: { data: nexSubject[]; users: NexeraUser[]; badges: nexBadge[] }) {
   // ------------------------------------------------------
   // 1. DATA LOGIC (From your original code)
   // ------------------------------------------------------
@@ -187,6 +187,8 @@ export default function Notes({ data }: { data: nexSubject[] }) {
         </div>
 
         <Card0
+          users={users}
+          badges={badges}
           dataset={visibleFavorites}
           updateUserFavorites={updateUserFavorites}
           type="favorites"
@@ -202,6 +204,8 @@ export default function Notes({ data }: { data: nexSubject[] }) {
           <span className="count">{visibleSuggestions.length}</span>
         </div>
         <Card0
+          users={users}
+          badges={badges}
           dataset={visibleSuggestions}
           updateUserFavorites={updateUserFavorites}
           type="suggestions"

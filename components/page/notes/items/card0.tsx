@@ -1,20 +1,22 @@
 "use client";
-import { nexSubject } from "@/components/types";
+import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { useState } from "react";
 import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
-import { HiDotsVertical } from "react-icons/hi";
 import OptionPanel from "../models/optionPanel";
 
 export default function Card0({
   dataset,
   type,
   updateUserFavorites,
+  users,
+  badges,
 }: {
   dataset: nexSubject[];
   type: string;
   updateUserFavorites: (subjectId: string, method: string) => void;
+  users: NexeraUser[];
+  badges: nexBadge[];
 }) {
   const [showModal, setShowModal] = useState(false);
   const handleModalOpen = (e: any) => {
@@ -78,79 +80,113 @@ export default function Card0({
               </motion.div>
             ) : (
               <>
-                {dataset.map((subject) => (
-                  <motion.div
-                    layout
-                    key={subject.id}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    whileHover={{ y: -2 }}
-                    className="subjectCard"
-                  >
-                    {/* Header with badges */}
-                    <div className="cardHeader">
-                      <div className="badgeGroup">
-                        {subject.isOfficial && (
-                          <span className="badge badge-official">
-                            <FiShield size={12} />
-                            Official
+                {dataset.map((subject) => {
+                  const badge = badges.find(
+                    (b) =>
+                      b.id ===
+                      users.find((u) => u.id === subject.createdBy)?.badges["0"]
+                        .id
+                  );
+                  return (
+                    <motion.div
+                      layout
+                      key={subject.id}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      whileHover={{ y: -2 }}
+                      className="subjectCard"
+                    >
+                      {/* Header with badges */}
+                      <div className="cardHeader">
+                        <div className="badgeGroup">
+                          {subject.isOfficial && (
+                            <span className="badge badge-official">
+                              <FiShield size={12} />
+                              Official
+                            </span>
+                          )}
+                          <span className="badge badge-department">
+                            {subject.departmentID}
                           </span>
-                        )}
-                        <span className="badge badge-department">
-                          {subject.departmentID}
-                        </span>
-                        <span className="badge badge-year">
-                          Y{subject.academicYear}
-                        </span>
-                        {subject.semester && (
-                          <span className="badge badge-semester">
-                            S{subject.semester}
+                          <span className="badge badge-year">
+                            Y{subject.academicYear}
                           </span>
-                        )}
+                          {subject.semester && (
+                            <span className="badge badge-semester">
+                              S{subject.semester}
+                            </span>
+                          )}
+                        </div>
+
+                        <button className="moreBtn" onClick={handleModalOpen}>
+                          <FiMoreVertical size={18} />
+                        </button>
                       </div>
 
-                      <button className="moreBtn" onClick={handleModalOpen}>
-                        <FiMoreVertical size={18} />
-                      </button>
-                    </div>
-
-                    {/* Content */}
-                    <a href={`/Notes/${subject.slug}`} className="cardContent">
-                      <h3 className="cardTitle">{subject.title}</h3>
-                      <p className="cardDescription">{subject.description}</p>
-                    </a>
-
-                    {/* Footer */}
-                    <div className="cardFooter">
-                      <span
-                        className={`badge badge-role badge-role-${subject.createdByRole}`}
+                      {/* Content */}
+                      <a
+                        href={`/Notes/${subject.slug}`}
+                        className="cardContent"
                       >
-                        {subject.createdByRole}
-                      </span>
+                        <h3 className="cardTitle">{subject.title}</h3>
+                        <p className="cardDescription">{subject.description}</p>
+                      </a>
 
-                      <button
-                        className={`favoriteBtn ${
-                          type == "favorite" ? "active" : ""
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          handleFavoriteClick(
-                            subject.id,
-                            type == "favorites" ? "remove" : "add"
-                          );
-                        }}
-                      >
-                        <FiHeart
-                          size={14}
-                          fill={type == "favorites" ? "currentColor" : "none"}
-                        />
-                        {type == "favorites" ? "Saved" : "Save"}
-                      </button>
-                    </div>
-                  </motion.div>
-                ))}
+                      {/* Footer */}
+                      <div className="cardFooter">
+                        <span
+                          className={` badge-role-badge `}
+                          style={{
+                            // backgroundColor: badge?.color.bgColor,
+                            // color: badge?.color.textColor,
+                            // border: `1px solid ${badge?.color.borderColor}`,
+                            borderRadius: "30px",
+                            fontSize: "8px",
+                            padding: "3px 8px",
+                            color: "#878787ff",
+                            transform: "translateY(2px)",
+                            maxWidth: "200px",
+                          }}
+                        >
+                          <p>Created under the authority of : </p>
+                          <p
+                            style={{
+                              borderRadius: "30px",
+                              fontSize: "11px",
+                              marginTop: "1px",
+                              color: "#626262ff",
+                              fontWeight: "500",
+                              marginLeft : "4px",
+                            }}
+                          >
+                            {badge ? badge.name : "Unknown Creator"}
+                          </p>
+                        </span>
+
+                        <button
+                          className={`favoriteBtn ${
+                            type == "favorites" ? "active" : ""
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleFavoriteClick(
+                              subject.id,
+                              type == "favorites" ? "remove" : "add"
+                            );
+                          }}
+                        >
+                          <FiHeart
+                            size={14}
+                            fill={type == "favorites" ? "currentColor" : "none"}
+                          />
+                          {type == "favorites" ? "Saved" : "Save"}
+                        </button>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </>
             )}
           </AnimatePresence>

@@ -1,8 +1,1 @@
-feat: Implement subject and topic update APIs with Firestore integration
-
-- Added PUT route for updating subjects in `app/api/subject-update/route.ts`
-- Added PUT route for updating topics in `app/api/topic-update/route.ts`
-- Created functions for updating notes, subjects, and topics in their respective components
-- Developed UI components for subject and topic creation and editing, including modals and list items
-- Implemented responsive styles for mobile and desktop views in the notes subject creator
-- Enhanced user experience with loading states and error handling in API calls
+feat: Integrate user and badge data into Notes and Card0 components for enhanced functionality
