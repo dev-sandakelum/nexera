@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
 import { HiDotsVertical } from "react-icons/hi";
+import OptionPanel from "../models/optionPanel";
 
 export default function Card0({
   dataset,
@@ -27,10 +28,8 @@ export default function Card0({
     setShowModal(false);
   };
 
-  const handleFavoriteClick = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    updateUserFavorites(e.target.dataset.subjectId, e.target.dataset.method);
+  const handleFavoriteClick = (subjectId: string, method: string) => {
+    updateUserFavorites(subjectId, method);
     setShowModal(false);
   };
   const containerVariants = {
@@ -59,83 +58,93 @@ export default function Card0({
   };
 
   return (
-    <motion.div
-      className="objects"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-    >
-      {dataset.map((subject) => (
-        <motion.div
-          layout
-          key={subject.id}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          whileHover={{ y: -4 }}
-          className="subjectCard"
-        >
-          {/* Header with badges */}
-          <div className="cardHeader">
-            <div className="badgeGroup">
-              {subject.isOfficial && (
-                <span className="badge badge-official">
-                  <FiShield size={12} />
-                  Official
+    <>
+      <motion.div
+        className="objects"
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+      >
+        {dataset.map((subject) => (
+          <motion.div
+            layout
+            key={subject.id}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            whileHover={{ y: -4 }}
+            className="subjectCard"
+          >
+            {/* Header with badges */}
+            <div className="cardHeader">
+              <div className="badgeGroup">
+                {subject.isOfficial && (
+                  <span className="badge badge-official">
+                    <FiShield size={12} />
+                    Official
+                  </span>
+                )}
+                <span className="badge badge-department">
+                  {subject.departmentID}
                 </span>
-              )}
-              <span className="badge badge-department">
-                {subject.departmentID}
-              </span>
-              <span className="badge badge-year">Y{subject.academicYear}</span>
-              {subject.semester && (
-                <span className="badge badge-semester">
-                  S{subject.semester}
+                <span className="badge badge-year">
+                  Y{subject.academicYear}
                 </span>
-              )}
+                {subject.semester && (
+                  <span className="badge badge-semester">
+                    S{subject.semester}
+                  </span>
+                )}
+              </div>
+
+              <button className="moreBtn" onClick={handleModalOpen}>
+                <FiMoreVertical size={18} />
+              </button>
             </div>
 
-            <button className="moreBtn" onClick={handleModalOpen}>
-              <FiMoreVertical size={18} />
-            </button>
-          </div>
+            {/* Content */}
+            <a href={`/Notes/${subject.slug}`} className="cardContent">
+              <h3 className="cardTitle">{subject.title}</h3>
+              <p className="cardDescription">{subject.description}</p>
+            </a>
 
-          {/* Content */}
-          <a href={`/Notes/${subject.slug}`} className="cardContent">
-            <h3 className="cardTitle">{subject.title}</h3>
-            <p className="cardDescription">{subject.description}</p>
-          </a>
+            {/* Footer */}
+            <div className="cardFooter">
+              <span
+                className={`badge badge-role badge-role-${subject.createdByRole}`}
+              >
+                {subject.createdByRole}
+              </span>
 
-          {/* Footer */}
-          <div className="cardFooter">
-            <span
-              className={`badge badge-role badge-role-${subject.createdByRole}`}
-            >
-              {subject.createdByRole}
-            </span>
-
-            <button
-              className={`favoriteBtn ${type == "favorite" ? "active" : ""}`}
-              onClick={() =>
-                handleFavoriteClick({
-                  target: {
-                    dataset: {
-                      subjectId: subject.id,
-                      method: type == "favorites" ? "remove" : "add",
-                    },
-                  },
-                } as any)
-              }
-            >
-              <FiHeart
-                size={14}
-                fill={type == "favorites" ? "currentColor" : "none"}
-              />
-              {type == "favorites" ? "Saved" : "Save"}
-            </button>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
+              <button
+                className={`favoriteBtn ${type == "favorite" ? "active" : ""}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleFavoriteClick(
+                    subject.id,
+                    type == "favorites" ? "remove" : "add"
+                  );
+                }}
+              >
+                <FiHeart
+                  size={14}
+                  fill={type == "favorites" ? "currentColor" : "none"}
+                />
+                {type == "favorites" ? "Saved" : "Save"}
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+      <OptionPanel
+        handleFavoriteClick={handleFavoriteClick}
+        handleModalClose={handleModalClose}
+        isFavorite={type === "favorites"}
+        showModal={showModal}
+        subject={dataset[0]}
+        method={type === "favorites" ? "remove" : "add"}
+      />
+    </>
   );
 }
