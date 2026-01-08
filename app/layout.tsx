@@ -79,19 +79,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${poppins.variable} ${geistMono.variable} `}
-          style={{
-            maxHeight: "100svh",
-            overflow: "hidden",
-          }}
-          suppressHydrationWarning
-        >
-          <Suspense fallback={<LoadingAnimation />}>{children}</Suspense>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body
+        className={`${poppins.variable} ${geistMono.variable} `}
+        style={{
+          maxHeight: "100svh",
+          overflow: "hidden",
+        }}
+        suppressHydrationWarning
+      >
+        <Suspense fallback={<LoadingAnimation />}>
+          <ClerkProvider>{children}</ClerkProvider>
+        </Suspense>
+      </body>
+    </html>
   );
 }

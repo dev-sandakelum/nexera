@@ -1,1 +1,1 @@
-feat: Implement caching for Firebase queries and enhance authentication flow with public route handling
+feat: Rearrange ClerkProvider placement within RootLayout for improved structure
