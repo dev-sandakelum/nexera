@@ -1,1 +1,1 @@
-feat: Enhance Firebase caching with error handling and increase revalidation times for improved performance
+feat: Remove revalidation time for Firebase calls in Notes pages to optimize performance
