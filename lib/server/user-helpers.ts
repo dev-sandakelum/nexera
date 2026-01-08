@@ -3,6 +3,7 @@
 
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
+import { unstable_noStore } from 'next/cache';
 import { initAdmin } from "@/components/firebase/firebaseAdmin";
 import { getCachedUserByEmail } from "@/lib/firebase-cache";
 import { revalidateUsers } from "@/lib/revalidate";
@@ -142,6 +143,7 @@ export async function createNewUser(
  * SERVER-ONLY function
  */
 export async function getUserFromClerk(): Promise<NexeraUser | null> {
+  unstable_noStore(); // Opt out of caching for auth functions
   try {
     const { userId } = await auth();
 
@@ -177,7 +179,7 @@ export async function getUserFromClerk(): Promise<NexeraUser | null> {
     console.log(user);
     return user;
   } catch (error) {
-    console.error("Error getting user from Clerk:", error);
+    // Silently return null during prerendering
     return null;
   }
 }

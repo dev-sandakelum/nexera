@@ -1,1 +1,1 @@
-feat: Rearrange ClerkProvider placement within RootLayout for improved structure
+feat: Opt out of caching for auth-dependent layouts and functions in DashboardLayout and getUserFromClerk
