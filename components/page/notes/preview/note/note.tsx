@@ -1,23 +1,29 @@
 "use client";
 
+import { nexNoteAbout, nexNoteData } from "@/components/types";
 import { noteContexts } from "@/public/json/notesData";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { use, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export default function NotePreviewPage({ note_id }: { note_id?: string }) {
+export default function NotePreviewPage({ notesAbout , notesData }: { notesAbout: nexNoteAbout[], notesData : nexNoteData[] }) {
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
+  const pathname = usePathname();
+  const note_slug = pathname.split("/").pop();
+
+  const selectedNote = notesAbout.find((n) => n.slug === note_slug);
+  const selectedNoteData = notesData.find((n) => n.noteId === selectedNote?.id);
+
   useEffect(() => {
-    if (!note_id) {
+    if (!selectedNoteData) {
       setError("No note ID provided.");
       return;
     }
 
-    const meta = noteContexts.find(
-      (n) => n.noteId === decodeURIComponent(note_id)
-    );
+    const meta = selectedNoteData;
 
     if (!meta) {
       setError("No note found.");
@@ -36,7 +42,7 @@ export default function NotePreviewPage({ note_id }: { note_id?: string }) {
       })
       .then(setContent)
       .catch(() => setError("Error loading markdown file"));
-  }, [note_id]);
+  }, [selectedNoteData, selectedNote]);
 
   // if (error) return <p>{error}</p>;
 

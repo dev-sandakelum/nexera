@@ -17,6 +17,7 @@ import {
   nexSubject, 
   nexTopic, 
   nexNoteAbout, 
+  nexNoteData,
   NexeraUser, 
   nexBadge 
 } from '@/components/types';
@@ -188,6 +189,57 @@ export async function getCachedNotesByTopicIds(topicIds: string[]): Promise<nexN
   
   const results = await Promise.all(batches);
   return results.flat();
+}
+
+// =========================================
+//  NOTE DATA
+// =========================================
+
+/**
+ * Get note data by ID (cached for 30 minutes)
+ */
+export async function getCachedNoteDataById(noteId: string): Promise<nexNoteData | null> {
+  'use cache';
+  cacheTag('note-data', `note-data-${noteId}`);
+  cacheLife({ stale: 900, revalidate: 1800, expire: 3600 });
+
+  console.log(`📖 Firebase Read: Fetching note data for ID: ${noteId}`);
+  
+  await initAdmin();
+  const db = getFirestore();
+  const doc = await db.collection('nexNoteData').doc(noteId).get();
+  
+  if (!doc.exists) return null;
+  
+  return {
+    noteId: doc.id,
+    ...doc.data(),
+  } as nexNoteData;
+}
+
+/**
+ * Get all note data (cached for 30 minutes)
+ */
+export async function getCachedNoteData(): Promise<nexNoteData[]> {
+  'use cache';
+  cacheTag('note-data');
+  cacheLife({ stale: 900, revalidate: 1800, expire: 3600 });
+
+  try {
+    console.log('📖 Firebase Read: Fetching all note data');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('nexNotePart2').get();
+    
+    return snapshot.docs.map((doc) => ({
+      noteId: doc.id,
+      ...doc.data(),
+    } as nexNoteData));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedNoteData):', error);
+    return [];
+  }
 }
 
 // =========================================

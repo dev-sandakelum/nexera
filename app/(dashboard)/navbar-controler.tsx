@@ -12,7 +12,7 @@ export default function NavbarControler() {
   const pathname = usePathname();
   const activeRoute = pathname.split("/")[1];
   const { user, loading } = useUser();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState("null");
   const [activeIcon, setActiveIcon] = useState(activeRoute);
 
   /* =======================
@@ -44,7 +44,7 @@ export default function NavbarControler() {
   ======================= */
   useEffect(() => {
     const checkScreenSize = throttle(
-      () => setIsMobile(window.innerWidth < 768),
+      () => setIsMobile(window.innerWidth < 768 ? "true" : "false"),
       200
     );
 
@@ -54,7 +54,7 @@ export default function NavbarControler() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, [throttle]);
 
-  if (isMobile) {
+  if (isMobile === "true") {
     return (
       <MobileNavBar
         user={user || ({} as NexeraUser)}
@@ -63,11 +63,13 @@ export default function NavbarControler() {
       />
     );
   }
-
-  return (
-    <>
-      <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-      <HeadingNavBar User={user || ({} as NexeraUser)} />
-    </>
-  );
+  if (isMobile === "false") {
+    return (
+      <>
+        <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
+        <HeadingNavBar User={user || ({} as NexeraUser)} />
+      </>
+    );
+  }
+  return null;
 }
