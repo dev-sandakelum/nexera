@@ -30,9 +30,8 @@ export default function Notes_Sub({
 }) {
   const pathname = usePathname();
   const paths = pathname.split("/");
-  const params = useSearchParams();
   const sub_slug = paths[paths.length - 1];
-  const note = params.get("n");
+  
 
   const [userNames, setUserNames] = useState<{ id: string; name: string }[]>(
     []
@@ -65,15 +64,6 @@ export default function Notes_Sub({
     setExpandedTopics((prev) => ({ ...prev, [topicId]: !prev[topicId] }));
   };
 
-  const notesByTopic = useMemo(() => {
-    const map: Record<string, nexNoteAbout[]> = {};
-    noteAbouts.forEach((n) => {
-      if (!map[n.topicID]) map[n.topicID] = [];
-      map[n.topicID].push(n);
-    });
-    return map;
-  }, [noteAbouts]);
-
   useEffect(() => {
     GetUserNameList().then(setUserNames);
   }, []);
@@ -99,8 +89,6 @@ export default function Notes_Sub({
     });
     return grouped;
   };
-
-  if (note) return <NotePreviewPage note_id={note} />;
 
   const getStatusBadge = (status: string) => {
     const styles = {

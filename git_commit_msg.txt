@@ -1,1 +1,1 @@
-feat: Integrate Firebase caching for notes and enhance note preview functionality
+feat: Remove unused search parameters and optimize notes handling in Notes_Sub component
