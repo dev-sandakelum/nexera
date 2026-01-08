@@ -35,9 +35,19 @@
 }
 
 .mobile-nav .nav-sideIcons {
-  max-height: 64px;
-  max-width: 64px;
+  height: 64px;
+  width: 64px;
   /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-nav .nav-sideIcons .user-profile-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  /* border: 1px solid red; */
+  background-size: cover;
 }
 
 .mobile-nav .nav-sideIcon {

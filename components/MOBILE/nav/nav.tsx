@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserInfo } from "@/components/nav/heading-navbar";
 import { NexeraUser } from "@/components/types";
 import {
@@ -89,7 +89,7 @@ export default function MobileNavBar({
           top: 0,
           transform: openPanel
             ? `translateY(${(idx + 1) * 68}px)`
-            : "translateY(0)",
+            : "translateY(-5px)",
           transition: "transform 0.3s ease",
         }}
         onClick={() => {
@@ -181,7 +181,16 @@ export default function MobileNavBar({
         </div>
 
         <div className="nav-sideIcons">
-          <UserInfo user={user} />
+          <div className="nav-sideIcon">
+            <div
+              className="user-profile-icon"
+              style={
+                {
+                  backgroundImage: `url(${user.profilePicture})`,
+                } as React.CSSProperties
+              }
+            ></div>
+          </div>
         </div>
       </div>
 

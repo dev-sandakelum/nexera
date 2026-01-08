@@ -1,1 +1,1 @@
-feat: Remove revalidation time for Firebase calls in Notes pages to optimize performance
+feat: Integrate Firebase caching for notes and enhance note preview functionality

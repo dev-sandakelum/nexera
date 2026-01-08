@@ -185,7 +185,7 @@ export default function NotesSubjectCreator({
   const handleCreateNote_FileUpload = async () => {
     if (noteFile) {
       try {
-        const fileBlob = await BlobToFile(noteFile, "uploaded_note_file");
+        const fileBlob = await BlobToFile(noteFile, "md");
 
         const { fileURL, error } = await UploadFile({
           userId: user?.id || "",
@@ -193,40 +193,19 @@ export default function NotesSubjectCreator({
           bucket: "notes",
           path: `${user?.id || ""}`,
         });
+        console.log(".File URL:", fileURL);
 
         if (error) {
           console.error(".Error uploading file:", error);
           throw new Error(error.message);
         }
-        if (fileURL) {
-          const contextType =
-            noteAbout.type === "pdf"
-              ? "pdf"
-              : noteAbout.type === "quiz"
-              ? "quiz"
-              : "note";
-          if (contextType === "pdf") {
-            setNoteData({
-              ...noteData,
-              context: { type: "pdf", url: fileURL, sizeInMB: 0 },
-            });
-          } else if (contextType === "quiz") {
-            setNoteData({
-              ...noteData,
-              context: { type: "quiz", quizUrl: fileURL },
-            });
-          } else {
-            setNoteData({
-              ...noteData,
-              context: { type: "note", url: fileURL },
-            });
-          }
-        }
+        
+        // Return the URL directly instead of using state
+        return fileURL || null;
       } catch (err: any) {
         console.error("Error uploading file:", err.message);
         return null;
       }
-      return true;
     }
     return null;
   };
@@ -236,8 +215,8 @@ export default function NotesSubjectCreator({
       alert("Please select a topic first");
       return;
     }
-    const fileLink = await handleCreateNote_FileUpload();
-    if (fileLink != null && fileLink == true) {
+    const fileURL = await handleCreateNote_FileUpload();
+    if (fileURL) {
       const noteID = `note_${Date.now()}`;
       const newNoteAbout = createNoteAbout(
         noteID,
@@ -245,7 +224,22 @@ export default function NotesSubjectCreator({
         selectedTopic,
         user?.id || "unknown"
       );
-      const newNoteData = createNoteData(noteID, noteData);
+      
+      // Build the context object directly with the returned URL
+      const contextType = noteAbout.type || "note";
+      let context: any;
+      
+      if (contextType === "pdf") {
+        context = { type: "pdf", url: fileURL, sizeInMB: 0 };
+      } else if (contextType === "quiz") {
+        context = { type: "quiz", quizUrl: fileURL };
+      } else {
+        context = { type: "note", url: fileURL };
+      }
+      
+      const newNoteData = createNoteData(noteID, { noteId: noteID, context });
+      console.log("Creating note with data:", newNoteData);
+      
       const response = await CreateNote(
         newNoteAbout.id,
         newNoteAbout,
@@ -255,9 +249,12 @@ export default function NotesSubjectCreator({
         setNotes([...notes, newNoteAbout]);
         setShowNoteModal(false);
         setNoteAbout({});
+        setNoteData({});
       } else {
         alert("Error creating note: " + response.error);
       }
+    } else {
+      alert("File upload failed. Please try again.");
     }
   };
 
