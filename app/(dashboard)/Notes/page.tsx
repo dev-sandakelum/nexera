@@ -6,6 +6,9 @@ import {
 import Notes from "@/components/page/notes/notes";
 import { Suspense } from "react";
 
+// Increase revalidation time to reduce Firebase calls during build
+export const revalidate = 300; // 5 minutes
+
 export default async function Page() {
   // All queries are now cached - subsequent visits will hit cache (0 Firebase reads)
   const [subjects, users, badges] = await Promise.all([

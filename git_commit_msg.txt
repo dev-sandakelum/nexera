@@ -1,1 +1,1 @@
-feat: Opt out of caching for auth-dependent layouts and functions in DashboardLayout and getUserFromClerk
+feat: Enhance Firebase caching with error handling and increase revalidation times for improved performance

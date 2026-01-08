@@ -33,16 +33,21 @@ export async function getCachedSubjects(): Promise<nexSubject[]> {
   cacheTag('subjects');
   cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
 
-  console.log('📖 Firebase Read: Fetching all subjects');
-  
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection('nexSubjects').get();
-  
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  } as nexSubject));
+  try {
+    console.log('📖 Firebase Read: Fetching all subjects');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('nexSubjects').get();
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as nexSubject));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedSubjects):', error);
+    return []; // Return empty array on quota/error during build
+  }
 }
 
 /**
@@ -80,16 +85,21 @@ export async function getCachedTopics(): Promise<nexTopic[]> {
   cacheTag('topics');
   cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 });
 
-  console.log('📖 Firebase Read: Fetching all topics');
-  
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection('nexNoteTopics').get();
-  
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  } as nexTopic));
+  try {
+    console.log('📖 Firebase Read: Fetching all topics');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('nexNoteTopics').get();
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as nexTopic));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedTopics):', error);
+    return []; // Return empty array on quota/error during build
+  }
 }
 
 /**
@@ -124,16 +134,21 @@ export async function getCachedNotes(): Promise<nexNoteAbout[]> {
   cacheTag('notes');
   cacheLife({ stale: 900, revalidate: 1800, expire: 3600 }); // 15min stale, 30min revalidate, 1hr expire
 
-  console.log('📖 Firebase Read: Fetching all notes');
-  
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection('management_notes').get();
-  
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  } as nexNoteAbout));
+  try {
+    console.log('📖 Firebase Read: Fetching all notes');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('management_notes').get();
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as nexNoteAbout));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedNotes):', error);
+    return []; // Return empty array on quota/error during build
+  }
 }
 
 /**
@@ -187,16 +202,21 @@ export async function getCachedUsers(): Promise<NexeraUser[]> {
   cacheTag('users');
   cacheLife({ stale: 150, revalidate: 300, expire: 600 }); // 2.5min stale, 5min revalidate, 10min expire
 
-  console.log('📖 Firebase Read: Fetching all users');
-  
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection('TestUsers').get();
-  
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  } as NexeraUser));
+  try {
+    console.log('📖 Firebase Read: Fetching all users');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('TestUsers').get();
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as NexeraUser));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedUsers):', error);
+    return []; // Return empty array on quota/error during build
+  }
 }
 
 /**
@@ -277,16 +297,21 @@ export async function getCachedBadges(): Promise<nexBadge[]> {
   cacheTag('badges');
   cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 });
 
-  console.log('📖 Firebase Read: Fetching all badges');
-  
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection('nexBadges').get();
-  
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  } as nexBadge));
+  try {
+    console.log('📖 Firebase Read: Fetching all badges');
+    
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection('nexBadges').get();
+    
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    } as nexBadge));
+  } catch (error) {
+    console.error('❌ Firebase Error (getCachedBadges):', error);
+    return []; // Return empty array on quota/error during build
+  }
 }
 
 /**
