@@ -22,16 +22,14 @@ export default function Notes_Sub({
   noteAbouts,
   users,
 }: {
-  selectedSubject:nexSubject;
+  selectedSubject: nexSubject;
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
   users: { id: string; name: string }[];
-
 }) {
   const pathname = usePathname();
   const paths = pathname.split("/");
   const sub_slug = paths[paths.length - 1];
-  
 
   const [userNames, setUserNames] = useState<{ id: string; name: string }[]>(
     []
@@ -96,9 +94,15 @@ export default function Notes_Sub({
       pending: { bg: "#fef9c3", fg: "#a16207", text: "Pending" },
       rejected: { bg: "#fee2e2", fg: "#b91c1c", text: "Rejected" },
     };
+
     return styles[status as keyof typeof styles] || styles.pending;
   };
-
+  const badgeColor = {
+    official: { bg: "var(--badge-01-bg)", fg: "var(--badge-01-fg)" },
+    department: { bg: "var(--badge-02-bg)", fg: "var(--badge-02-fg)" },
+    year: { bg: "var(--badge-03-bg)", fg: "var(--badge-03-fg)" },
+    semester: { bg: "var(--badge-04-bg)", fg: "var(--badge-04-fg)" },
+  };
   return (
     <div className="notesSubPage">
       {/* Header */}
@@ -109,18 +113,42 @@ export default function Notes_Sub({
 
             <div className="notesSubPage-badges">
               {selectedSubject.isOfficial && (
-                <span className="badge badge-official">
+                <span
+                  className="badge badge-official"
+                  style={{
+                    backgroundColor: badgeColor.official.bg,
+                    color: badgeColor.official.fg,
+                  }}
+                >
                   <FiShield /> Official
                 </span>
               )}
-              <span className="badge badge-department">
+              <span
+                className="badge badge-department"
+                style={{
+                  backgroundColor: badgeColor.department.bg,
+                  color: badgeColor.department.fg,
+                }}
+              >
                 {selectedSubject.departmentID}
               </span>
-              <span className="badge badge-year">
+              <span
+                className="badge badge-year"
+                style={{
+                  backgroundColor: badgeColor.year.bg,
+                  color: badgeColor.year.fg,
+                }}
+              >
                 Year {selectedSubject.academicYear}
               </span>
               {selectedSubject.semester && (
-                <span className="badge badge-semester">
+                <span
+                  className="badge badge-semester"
+                  style={{
+                    backgroundColor: badgeColor.semester.bg,
+                    color: badgeColor.semester.fg,
+                  }}
+                >
                   Semester {selectedSubject.semester}
                 </span>
               )}

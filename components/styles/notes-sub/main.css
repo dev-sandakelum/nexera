@@ -87,25 +87,6 @@
   font-weight: 600;
 }
 
-.badge-official {
-  background: var(--background);
-  color: #15803d;
-}
-
-.badge-department {
-  background: var(--background);
-  color: #1e40af;
-}
-
-.badge-year {
-  background: var(--background);
-  color: #5b31d8;
-}
-
-.badge-semester {
-  background: var(--background);
-  color: #0e7490;
-}
 
 /* ---------- Header Buttons ---------- */
 
@@ -189,8 +170,8 @@
   background: var(--background2);
   border: 1px solid var(--navbar-border);
   border-radius: 6px;
-    font-size: 13px;
-    color: var(--color);
+  font-size: 13px;
+  color: var(--color);
   cursor: pointer;
 }
 .notsSub-list {

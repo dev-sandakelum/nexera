@@ -1,0 +1,880 @@
+/*
+ * ============================================
+ * VS CODE THEME FOR REHYPE-PRISM-PLUS
+ * ============================================
+ * 
+ * Features VS Code-style word wrapping with:
+ * - Smart hanging indents (like VS Code's "wrapping indent")
+ * - Visual wrap indicators (↩ arrow)
+ * - Toggle between wrap/scroll modes
+ * - Preserved code structure and readability
+ * 
+ * Usage:
+ * - Default: Horizontal scroll
+ * - Add .code-wrap class for word wrap mode
+ * - Add .wrap-indicator for visual wrap arrows
+ */
+
+/* ============================================
+   CSS VARIABLES - VS CODE COLORS
+   ============================================ */
+
+:root {
+  /* ===== VS CODE DARK+ THEME (Default) ===== */
+  
+  /* Editor Colors */
+  --vscode-editor-bg: #1e1e1e;
+  --vscode-editor-fg: #d4d4d4;
+  --vscode-line-number: #858585;
+  --vscode-line-number-active: #c6c6c6;
+  --vscode-selection-bg: #264f78;
+  --vscode-line-highlight-bg: #2a2a2a;
+  
+  /* Wrap Indicator */
+  --vscode-wrap-indicator: rgba(133, 133, 133, 0.4);
+  --vscode-wrap-indicator-char: '↩';
+  
+  /* Syntax Token Colors */
+  --vscode-comment: #6a9955;
+  --vscode-keyword: #569cd6;
+  --vscode-string: #ce9178;
+  --vscode-number: #b5cea8;
+  --vscode-function: #dcdcaa;
+  --vscode-variable: #9cdcfe;
+  --vscode-constant: #4fc1ff;
+  --vscode-type: #4ec9b0;
+  --vscode-class: #4ec9b0;
+  --vscode-property: #9cdcfe;
+  --vscode-operator: #d4d4d4;
+  --vscode-punctuation: #d4d4d4;
+  --vscode-tag: #569cd6;
+  --vscode-attr-name: #9cdcfe;
+  --vscode-attr-value: #ce9178;
+  --vscode-regex: #d16969;
+  --vscode-important: #569cd6;
+  --vscode-bold: #569cd6;
+  --vscode-italic: #569cd6;
+  
+  /* Special Highlighting */
+  --vscode-highlight-line-bg: rgba(255, 255, 255, 0.1);
+  --vscode-highlight-line-border: #3794ff;
+  --vscode-inserted-bg: rgba(155, 185, 85, 0.2);
+  --vscode-deleted-bg: rgba(255, 0, 0, 0.2);
+  
+  /* Scrollbar */
+  --vscode-scrollbar-track: #1e1e1e;
+  --vscode-scrollbar-thumb: #424242;
+  --vscode-scrollbar-thumb-hover: #4e4e4e;
+  
+  /* Wrapping */
+  --vscode-wrap-indent: 2ch;
+}
+
+/* ===== VS CODE LIGHT+ THEME ===== */
+[data-theme="light"],
+.light-theme {
+  --vscode-editor-bg: #ffffff;
+  --vscode-editor-fg: #000000;
+  --vscode-line-number: #237893;
+  --vscode-line-number-active: #0b216f;
+  --vscode-selection-bg: #add6ff;
+  --vscode-line-highlight-bg: #f0f0f0;
+  
+  --vscode-wrap-indicator: rgba(35, 120, 147, 0.4);
+  
+  --vscode-comment: #008000;
+  --vscode-keyword: #0000ff;
+  --vscode-string: #a31515;
+  --vscode-number: #098658;
+  --vscode-function: #795e26;
+  --vscode-variable: #001080;
+  --vscode-constant: #0070c1;
+  --vscode-type: #267f99;
+  --vscode-class: #267f99;
+  --vscode-property: #001080;
+  --vscode-operator: #000000;
+  --vscode-punctuation: #000000;
+  --vscode-tag: #800000;
+  --vscode-attr-name: #ff0000;
+  --vscode-attr-value: #0000ff;
+  --vscode-regex: #811f3f;
+  --vscode-important: #0000ff;
+  --vscode-bold: #0000ff;
+  --vscode-italic: #0000ff;
+  
+  --vscode-highlight-line-bg: rgba(0, 0, 0, 0.05);
+  --vscode-highlight-line-border: #0070c1;
+  --vscode-inserted-bg: rgba(155, 185, 85, 0.3);
+  --vscode-deleted-bg: rgba(255, 0, 0, 0.3);
+  
+  --vscode-scrollbar-track: #ffffff;
+  --vscode-scrollbar-thumb: #c4c4c4;
+  --vscode-scrollbar-thumb-hover: #a6a6a6;
+}
+
+/* ============================================
+   BASE CODE BLOCK STRUCTURE
+   ============================================ */
+
+/* Pre (Code Block Container) - Default: Horizontal Scroll */
+pre[class*="language-"] {
+  background: var(--vscode-editor-bg);
+  color: var(--vscode-editor-fg);
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 1em;
+  margin: 1.5em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Code Element */
+code[class*="language-"] {
+  background: transparent;
+  color: var(--vscode-editor-fg);
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Inline Code */
+:not(pre) > code[class*="language-"] {
+  background: rgba(110, 118, 129, 0.4);
+  color: var(--vscode-string);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  white-space: normal;
+  font-size: 0.9em;
+}
+
+/* ============================================
+   WORD WRAP MODE (VS Code Style)
+   ============================================ */
+
+/* Enable Word Wrap - Add .code-wrap class to container */
+.code-wrap pre[class*="language-"],
+pre[class*="language-"].wrap-enabled {
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+}
+
+.code-wrap code[class*="language-"],
+pre[class*="language-"].wrap-enabled code[class*="language-"] {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ============================================
+   WRAPPING INDENT STYLES
+   ============================================ */
+
+/* Option 1: Hanging Indent (Same as line start) - DEFAULT */
+.code-wrap pre[class*="language-"],
+pre[class*="language-"].wrap-enabled {
+  /* This creates the hanging indent effect */
+  text-indent: 0;
+}
+
+.code-wrap .code-line,
+pre[class*="language-"].wrap-enabled .code-line {
+  /* Preserve structure on wrapped lines */
+  display: block;
+  text-indent: 0;
+}
+
+/* Option 2: Indent wrapped lines (add .wrap-indent class) */
+.wrap-indent.code-wrap pre[class*="language-"],
+pre[class*="language-"].wrap-enabled.wrap-indent {
+  padding-left: calc(1em + var(--vscode-wrap-indent));
+  text-indent: calc(-1 * var(--vscode-wrap-indent));
+}
+
+.wrap-indent.code-wrap .code-line,
+pre[class*="language-"].wrap-enabled.wrap-indent .code-line {
+  padding-left: var(--vscode-wrap-indent);
+  text-indent: 0;
+}
+
+/* Option 3: Deep indent (add .wrap-indent-deep class) */
+.wrap-indent-deep.code-wrap pre[class*="language-"],
+pre[class*="language-"].wrap-enabled.wrap-indent-deep {
+  padding-left: calc(1em + calc(var(--vscode-wrap-indent) * 2));
+  text-indent: calc(-1 * calc(var(--vscode-wrap-indent) * 2));
+}
+
+/* ============================================
+   VISUAL WRAP INDICATORS (↩ Arrow)
+   ============================================ */
+
+/* Enable wrap indicators - Add .wrap-indicator class */
+.wrap-indicator.code-wrap pre[class*="language-"]::after,
+pre[class*="language-"].wrap-enabled.wrap-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 2em;
+  pointer-events: none;
+  background: linear-gradient(
+    to left,
+    var(--vscode-editor-bg) 0%,
+    transparent 100%
+  );
+}
+
+/* Show wrap indicator on wrapped lines */
+.wrap-indicator.code-wrap code[class*="language-"],
+pre[class*="language-"].wrap-enabled.wrap-indicator code[class*="language-"] {
+  position: relative;
+}
+
+/* Pseudo-element for wrap arrows */
+.wrap-indicator.code-wrap pre[class*="language-"]::before,
+pre[class*="language-"].wrap-enabled.wrap-indicator::before {
+  content: var(--vscode-wrap-indicator-char);
+  position: absolute;
+  right: 0.5em;
+  color: var(--vscode-wrap-indicator);
+  font-size: 0.85em;
+  opacity: 0;
+  pointer-events: none;
+  animation: fadeInWrapIndicator 0.2s ease-in-out;
+}
+
+@keyframes fadeInWrapIndicator {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Show indicator when content wraps */
+.wrap-indicator.code-wrap pre[class*="language-"]:hover::before,
+pre[class*="language-"].wrap-enabled.wrap-indicator:hover::before {
+  opacity: 1;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+pre[class*="language-"]::-webkit-scrollbar {
+  height: 10px;
+  background: var(--vscode-scrollbar-track);
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbar-thumb);
+  border-radius: 5px;
+}
+
+pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+  background: var(--vscode-scrollbar-thumb-hover);
+}
+
+/* Hide scrollbar in wrap mode */
+.code-wrap pre[class*="language-"]::-webkit-scrollbar,
+pre[class*="language-"].wrap-enabled::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================
+   LINE HIGHLIGHTING & LINE NUMBERS
+   ============================================ */
+
+/* Code Line Container */
+.code-line {
+  display: block;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left: -1em;
+  margin-right: -1em;
+  border-left: 4px solid transparent;
+  transition: background-color 0.15s ease;
+  min-height: 1.5em;
+}
+
+/* Highlighted Line */
+.code-line.highlight-line {
+  background-color: var(--vscode-highlight-line-bg);
+  border-left-color: var(--vscode-highlight-line-border);
+}
+
+/* Inserted Line (Git Diff) */
+.code-line.inserted {
+  background-color: var(--vscode-inserted-bg);
+  border-left-color: #22863a;
+}
+
+/* Deleted Line (Git Diff) */
+.code-line.deleted {
+  background-color: var(--vscode-deleted-bg);
+  border-left-color: #cb2431;
+}
+
+/* Line Numbers */
+.code-line.line-number::before {
+  content: attr(line);
+  display: inline-block;
+  width: 2.5em;
+  margin-right: 1.5em;
+  margin-left: -0.5em;
+  color: var(--vscode-line-number);
+  text-align: right;
+  user-select: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.code-line.line-number:hover::before {
+  color: var(--vscode-line-number-active);
+}
+
+/* Adjust line numbers in wrap mode */
+.code-wrap .code-line.line-number::before,
+pre[class*="language-"].wrap-enabled .code-line.line-number::before {
+  position: sticky;
+  left: 0;
+  background: var(--vscode-editor-bg);
+  z-index: 1;
+}
+
+/* ============================================
+   TOKEN COLORS - COMPREHENSIVE COVERAGE
+   ============================================ */
+
+/* Comments */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--vscode-comment);
+  font-style: italic;
+}
+
+/* Keywords & Control Flow */
+.token.keyword,
+.token.control,
+.token.directive,
+.token.unit,
+.token.statement,
+.token.regex,
+.token.atrule {
+  color: var(--vscode-keyword);
+}
+
+/* Strings & Characters */
+.token.string,
+.token.char,
+.token.attr-value,
+.token.template-string {
+  color: var(--vscode-string);
+}
+
+/* String Interpolation */
+.token.template-string .token.interpolation {
+  color: var(--vscode-editor-fg);
+}
+
+.token.template-string .token.interpolation .token.interpolation-punctuation {
+  color: var(--vscode-keyword);
+}
+
+/* Numbers & Booleans */
+.token.number,
+.token.boolean,
+.token.constant,
+.token.symbol {
+  color: var(--vscode-number);
+}
+
+/* Functions & Methods */
+.token.function,
+.token.function-name,
+.token.method,
+.token.function-variable {
+  color: var(--vscode-function);
+}
+
+/* Variables & Parameters */
+.token.variable,
+.token.parameter,
+.token.argument {
+  color: var(--vscode-variable);
+}
+
+/* Types & Classes */
+.token.class-name,
+.token.type,
+.token.type-annotation,
+.token.builtin,
+.token.primitive {
+  color: var(--vscode-type);
+}
+
+/* Properties & Attributes */
+.token.property,
+.token.property-access,
+.token.attr-name,
+.token.attribute {
+  color: var(--vscode-property);
+}
+
+/* Tags (HTML/XML/JSX) */
+.token.tag {
+  color: var(--vscode-tag);
+}
+
+.token.tag .token.punctuation {
+  color: var(--vscode-punctuation);
+}
+
+/* Operators & Punctuation */
+.token.operator,
+.token.entity,
+.token.url {
+  color: var(--vscode-operator);
+}
+
+.token.punctuation,
+.token.delimiter {
+  color: var(--vscode-punctuation);
+}
+
+/* Special Tokens */
+.token.important,
+.token.bold {
+  color: var(--vscode-bold);
+  font-weight: bold;
+}
+
+.token.italic {
+  color: var(--vscode-italic);
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.namespace {
+  opacity: 0.8;
+}
+
+.token.regex {
+  color: var(--vscode-regex);
+}
+
+.token.selector,
+.token.rule {
+  color: var(--vscode-class);
+}
+
+.token.url-link,
+.token.url {
+  color: var(--vscode-string);
+  text-decoration: underline;
+}
+
+.token.module,
+.token.keyword.module,
+.token.keyword.control-flow {
+  color: var(--vscode-keyword);
+}
+
+/* ============================================
+   LANGUAGE-SPECIFIC ENHANCEMENTS
+   ============================================ */
+
+/* JavaScript/TypeScript */
+.language-javascript .token.keyword,
+.language-typescript .token.keyword,
+.language-jsx .token.keyword,
+.language-tsx .token.keyword {
+  color: var(--vscode-keyword);
+}
+
+.language-javascript .token.function,
+.language-typescript .token.function,
+.language-jsx .token.function,
+.language-tsx .token.function {
+  color: var(--vscode-function);
+}
+
+/* React/JSX Components */
+.language-jsx .token.tag.class-name,
+.language-tsx .token.tag.class-name {
+  color: var(--vscode-type);
+}
+
+/* CSS/SCSS */
+.language-css .token.property,
+.language-scss .token.property,
+.language-sass .token.property {
+  color: var(--vscode-property);
+}
+
+.language-css .token.selector,
+.language-scss .token.selector,
+.language-sass .token.selector {
+  color: var(--vscode-class);
+}
+
+/* Python */
+.language-python .token.keyword {
+  color: var(--vscode-keyword);
+}
+
+.language-python .token.decorator {
+  color: var(--vscode-function);
+}
+
+/* JSON */
+.language-json .token.property {
+  color: var(--vscode-property);
+}
+
+.language-json .token.string {
+  color: var(--vscode-string);
+}
+
+/* Markdown */
+.language-markdown .token.title,
+.language-markdown .token.title .token.punctuation {
+  color: var(--vscode-keyword);
+  font-weight: bold;
+}
+
+.language-markdown .token.code {
+  color: var(--vscode-string);
+}
+
+/* SQL */
+.language-sql .token.keyword {
+  color: var(--vscode-keyword);
+  text-transform: uppercase;
+}
+
+/* Bash/Shell */
+.language-bash .token.function,
+.language-shell .token.function {
+  color: var(--vscode-function);
+}
+
+.language-bash .token.variable,
+.language-shell .token.variable {
+  color: var(--vscode-variable);
+}
+
+/* YAML */
+.language-yaml .token.key,
+.language-yml .token.key {
+  color: var(--vscode-property);
+}
+
+/* Diff */
+.language-diff .token.inserted {
+  color: #22863a;
+  background-color: rgba(34, 134, 58, 0.15);
+}
+
+.language-diff .token.deleted {
+  color: #cb2431;
+  background-color: rgba(203, 36, 49, 0.15);
+}
+
+.language-diff .token.coord {
+  color: var(--vscode-comment);
+}
+
+/* ============================================
+   LANGUAGE TAG LABEL
+   ============================================ */
+
+pre[class*="language-"]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.25em 0.75em;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--vscode-line-number);
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom-left-radius: 4px;
+  letter-spacing: 0.5px;
+  user-select: none;
+  z-index: 2;
+}
+
+/* Language-specific labels */
+pre.language-javascript::before { content: 'JavaScript'; }
+pre.language-typescript::before { content: 'TypeScript'; }
+pre.language-jsx::before { content: 'JSX'; }
+pre.language-tsx::before { content: 'TSX'; }
+pre.language-python::before { content: 'Python'; }
+pre.language-java::before { content: 'Java'; }
+pre.language-css::before { content: 'CSS'; }
+pre.language-scss::before { content: 'SCSS'; }
+pre.language-html::before { content: 'HTML'; }
+pre.language-json::before { content: 'JSON'; }
+pre.language-markdown::before,
+pre.language-md::before { content: 'Markdown'; }
+pre.language-bash::before,
+pre.language-sh::before { content: 'Bash'; }
+pre.language-sql::before { content: 'SQL'; }
+pre.language-yaml::before,
+pre.language-yml::before { content: 'YAML'; }
+pre.language-xml::before { content: 'XML'; }
+pre.language-php::before { content: 'PHP'; }
+pre.language-go::before { content: 'Go'; }
+pre.language-rust::before { content: 'Rust'; }
+pre.language-c::before { content: 'C'; }
+pre.language-cpp::before { content: 'C++'; }
+pre.language-csharp::before { content: 'C#'; }
+pre.language-swift::before { content: 'Swift'; }
+pre.language-kotlin::before { content: 'Kotlin'; }
+pre.language-ruby::before { content: 'Ruby'; }
+pre.language-diff::before { content: 'Diff'; }
+
+/* ============================================
+   MOBILE & RESPONSIVE
+   ============================================ */
+
+/* Auto-enable wrap on mobile */
+@media (max-width: 768px) {
+  pre[class*="language-"] {
+    font-size: 13px;
+    padding: 0.875em;
+    margin: 1em -1rem;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    
+    /* Enable wrap by default on mobile */
+    overflow-x: auto;
+    overflow-wrap: break-word;
+  }
+  
+  /* Auto-wrap on very small screens */
+  pre[class*="language-"].mobile-wrap {
+    overflow-x: hidden;
+  }
+  
+  pre[class*="language-"].mobile-wrap code[class*="language-"] {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  .code-line.line-number::before {
+    width: 1.5em;
+    margin-right: 1em;
+  }
+  
+  pre[class*="language-"]::before {
+    font-size: 0.7em;
+    padding: 0.2em 0.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  pre[class*="language-"] {
+    font-size: 12px;
+    padding: 0.75em;
+  }
+  
+  .code-line {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  
+  .code-line.line-number::before {
+    width: 1.25em;
+    margin-right: 0.75em;
+  }
+  
+  /* Force wrap on very small screens */
+  pre[class*="language-"] {
+    overflow-x: hidden;
+  }
+  
+  pre[class*="language-"] code[class*="language-"] {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+/* ============================================
+   TOGGLE BUTTON (Optional)
+   ============================================ */
+
+.code-wrap-toggle {
+  position: absolute;
+  top: 0.5em;
+  right: 3.5em;
+  padding: 0.3em 0.6em;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--vscode-editor-fg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  font-size: 0.7em;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  z-index: 10;
+  user-select: none;
+}
+
+/* pre[class*="language-"]:hover .code-wrap-toggle {
+  opacity: 1;
+} */
+
+.code-wrap-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.code-wrap-toggle:active {
+  transform: scale(0.95);
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  pre[class*="language-"] {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    
+    /* Enable wrap for printing */
+    overflow-x: visible !important;
+    white-space: pre-wrap !important;
+  }
+  
+  pre[class*="language-"] code[class*="language-"] {
+    white-space: pre-wrap !important;
+  }
+  
+  .code-line.highlight-line {
+    background-color: #f0f0f0 !important;
+    border-left-color: #cccccc !important;
+  }
+  
+  pre[class*="language-"]::before,
+  .code-wrap-toggle {
+    display: none;
+  }
+  
+  .token {
+    text-shadow: none !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+pre[class*="language-"]:focus-visible {
+  outline: 2px solid var(--vscode-highlight-line-border);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-line,
+  .token,
+  .code-wrap-toggle {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  pre[class*="language-"] {
+    border: 2px solid currentColor;
+  }
+  
+  .code-line.highlight-line {
+    border-left-width: 6px;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Hide line numbers */
+.no-line-numbers .code-line.line-number::before {
+  display: none;
+}
+
+/* Disable language label */
+.no-language-label pre[class*="language-"]::before {
+  display: none;
+}
+
+/* Compact mode */
+.compact-code pre[class*="language-"] {
+  padding: 0.5em;
+  margin: 1em 0;
+}
+
+/* Force scroll mode (disable wrap) */
+.force-scroll pre[class*="language-"] {
+  overflow-x: auto !important;
+}
+
+.force-scroll code[class*="language-"] {
+  white-space: pre !important;
+  word-wrap: normal !important;
+}
+
+/* ============================================
+   SELECTION STYLING
+   ============================================ */
+
+pre[class*="language-"] ::selection,
+pre[class*="language-"]::selection {
+  background: var(--vscode-selection-bg);
+  color: inherit;
+}
+
+code[class*="language-"] ::selection,
+code[class*="language-"]::selection {
+  background: var(--vscode-selection-bg);
+  color: inherit;
+}
+
+/* ============================================
+   SMOOTH INTERACTIONS
+   ============================================ */
+
+pre[class*="language-"] {
+  scroll-behavior: smooth;
+  transition: padding 0.2s ease;
+}
+
+.code-line {
+  transition: background-color 0.15s ease, padding 0.2s ease;
+}
+
+/* Hover effect for better visibility */
+pre[class*="language-"]:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}

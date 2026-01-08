@@ -177,10 +177,10 @@
 }
 @media (prefers-color-scheme: dark) {
   .indicatorImage.light {
-    display: none;
+    display: block;
   }
   .indicatorImage.dark {
-    display: block;
+    display: none;
   }
 }
 .navbar .mask {

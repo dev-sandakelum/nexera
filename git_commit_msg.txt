@@ -1,1 +1,4 @@
-feat: Update background colors and styles across various components for consistency
+Add rehype-prism-plus and rehype-raw for enhanced Markdown code highlighting
+
+- Updated package.json to include rehype-prism-plus and rehype-raw dependencies.
+- Added a new CSS file for VS Code themed code highlighting with features like word wrapping, visual wrap indicators, and syntax highlighting for various languages.

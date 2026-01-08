@@ -78,7 +78,7 @@
 }
 
 /* Dark Theme Support */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --md-text-primary: #e6edf3;
     --md-text-secondary: #8d96a0;
@@ -104,7 +104,7 @@
     --md-code-inline-bg: rgba(110, 118, 129, 0.4);
     --md-code-inline-text: #79c0ff;
   }
-}
+} */
 
 /* ============================================
    BASE CONTAINER
@@ -255,6 +255,11 @@
 .md-preview a {
   color: var(--md-accent-primary);
   text-decoration: none;
+  width: 500px;
+  max-width: 80vw;
+  overflow-wrap: break-word;  /* Standard property */
+  word-break: break-all;      /* Aggressive break for very long strings */
+  hyphens: auto;              /* Optional: adds hyphens where appropriate */
   background-color: transparent;
   transition: color 0.15s ease;
 }
