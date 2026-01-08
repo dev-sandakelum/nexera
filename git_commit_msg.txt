@@ -1,1 +1,1 @@
-feat: Update cache durations and optimize Firebase query handling in firebase-cache.ts
+feat: Adjust modal height and position for better mobile display in CreatorModal.css
