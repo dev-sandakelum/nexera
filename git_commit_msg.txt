@@ -1,1 +1,1 @@
-feat: Update modal max-height for better content fitting in CreatorModal.css
+Add new dark indicator image for navigation component

@@ -34,7 +34,7 @@ const itemVariants = (idx: number) => ({
 export default function HomePage() {
   const pathname = usePathname();
   return (
-    <div className="homeContainer" style={{ border: "1px solid red" }}>
+    <div className="homeContainer">
       <motion.div
         key={pathname}
         className="bg"

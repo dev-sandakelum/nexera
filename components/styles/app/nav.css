@@ -25,11 +25,10 @@
   width: 30px;
   height: 76px;
   z-index: 122;
-  transform: translateX(58px) ;
-  border-bottom:  1px solid var(--navbar-border);
+  transform: translateX(58px);
+  border-bottom: 1px solid var(--navbar-border);
   opacity: 0;
   transition: opacity 1s;
-
 }
 .navbar > .logoContainerFixBorder.active {
   opacity: 1;
@@ -151,10 +150,12 @@
 }
 
 .navbar .deactivated {
-  opacity: 0;
+  /* opacity: 0; */
+  color: var(--theme-colorB);
 }
 .navbar .icon.active {
   opacity: 1;
+  color: var(--theme-colorA);
 }
 
 .navbar .indicater {
@@ -166,6 +167,21 @@
   /* border: 1px solid red; */
   overflow: hidden;
   z-index: 9;
+}
+
+.indicatorImage.light {
+  display: block;
+}
+.indicatorImage.dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  .indicatorImage.light {
+    display: none;
+  }
+  .indicatorImage.dark {
+    display: block;
+  }
 }
 .navbar .mask {
   position: absolute;

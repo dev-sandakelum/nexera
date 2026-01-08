@@ -4,6 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { FaBookBookmark } from "react-icons/fa6";
+import {
+  LuCircleHelp,
+  LuCpu,
+  LuFileText,
+  LuGraduationCap,
+  LuSettings,
+  LuWarehouse,
+} from "react-icons/lu";
+import { TbHexagons } from "react-icons/tb";
 
 export default function NavBar({
   activeIcon,
@@ -42,25 +52,23 @@ export default function NavBar({
       "Info",
       "Settings",
     ];
+    const NAV_ICONS: Record<string, React.ElementType> = {
+      Home: LuWarehouse,
+      Notes: LuFileText,
+      Projects: LuGraduationCap,
+      Applications: TbHexagons,
+      Admin: LuCpu,
+      Info: LuCircleHelp,
+      Settings: LuSettings,
+    };
+    const IconComponent = NAV_ICONS[icons[idx]];
+    const isActive = activeIcon === icons[idx];
+    
     return (
       <Link href={`/${icons[idx]}`} type="button" className="navLink">
-        <Image
-          src={`/icons/nav/${icons[idx]}.png`}
-          alt={`${icons[idx]} Icon`}
-          width={24}
-          height={24}
-          className={`icon ${
-            activeIcon == icons[idx] ? "deactivated" : "active"
-          }`}
-        />
-        <Image
-          src={`/icons/nav/active/${icons[idx]}.png`}
-          alt={`${icons[idx]} Icon`}
-          width={24}
-          height={24}
-          className={`icon ${
-            activeIcon == icons[idx] ? "active" : "deactivated"
-          }`}
+        <IconComponent
+          size={24}
+          className={`icon ${isActive ? "active" : "deactivated"}`}
         />
       </Link>
     );
@@ -76,15 +84,9 @@ export default function NavBar({
       ></div>
       <div className="navigations">
         <div className="logoContainer">
-          <div className="logo">
-            <Image
-              src="/logo/Vector.png"
-              alt="Applications Icon"
-              width={24}
-              height={24}
-              className="icon"
-            />
-          </div>
+            <div className="logo">
+            <FaBookBookmark size={24} className="icon" />
+            </div>
           <Image
             src="/logo/nexera-logo2.png"
             alt="Nexera Logo"
@@ -122,7 +124,14 @@ export default function NavBar({
                   alt="Indicator"
                   width={66}
                   height={180}
-                  className="indicatorImage"
+                  className="indicatorImage light"
+                />
+                <Image
+                  src="/components/nav/indicatorDark.png"
+                  alt="Indicator"
+                  width={66}
+                  height={180}
+                  className="indicatorImage dark"
                 />
               </div>
             </div>

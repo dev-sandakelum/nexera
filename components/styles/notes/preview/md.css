@@ -1,264 +1,893 @@
-/* =========================
-   Mobile-First Markdown Styles
-========================= */
+/*
+ * Modern Markdown Preview Stylesheet
+ * 
+ * Features:
+ * - GitHub-inspired design with modern enhancements
+ * - Professional typography with system font stack
+ * - Fully responsive (mobile-first)
+ * - VS Code-compatible code highlighting structure
+ * - Print-friendly styles
+ * - Accessibility-focused (WCAG AA compliant)
+ * 
+ * Usage: 
+ * Wrap your rendered markdown in a container with class "md-preview"
+ * Example: <article class="md-preview">...your markdown html...</article>
+ */
 
-.notePreviewContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: var(--theme-colorB);
-  background-color: var(--background);
-  padding: 80px 1rem;
+/* ============================================
+   CSS VARIABLES (DESIGN TOKENS)
+   ============================================ */
+
+:root {
+  /* Color Palette - Light Theme */
+  --md-text-primary: #24292f;
+  --md-text-secondary: #57606a;
+  --md-text-muted: #656d76;
+  --md-bg-primary: #ffffff;
+  --md-bg-secondary: #f6f8fa;
+  --md-bg-tertiary: #eef2f7;
+  --md-border-default: #d0d7de;
+  --md-border-muted: #e5e9ed;
+  
+  /* Accent Colors */
+  --md-accent-primary: #0969da;
+  --md-accent-hover: #0550ae;
+  --md-accent-visited: #8250df;
+  
+  /* Semantic Colors */
+  --md-success: #1a7f37;
+  --md-warning: #9a6700;
+  --md-danger: #cf222e;
+  --md-info: #0969da;
+  
+  /* Code Block Colors */
+  --md-code-text: #1f2328;
+  --md-code-bg: #f6f8fa;
+  --md-code-border: #d0d7de;
+  --md-code-inline-bg: rgba(175, 184, 193, 0.2);
+  --md-code-inline-text: #0550ae;
+  
+  /* Typography Scale */
+  --md-font-size-base: 16px;
+  --md-font-size-sm: 14px;
+  --md-font-size-lg: 18px;
+  --md-line-height-base: 1.75;
+  --md-line-height-tight: 1.25;
+  
+  /* Spacing Scale */
+  --md-space-xs: 0.25rem;
+  --md-space-sm: 0.5rem;
+  --md-space-md: 1rem;
+  --md-space-lg: 1.5rem;
+  --md-space-xl: 2rem;
+  --md-space-2xl: 3rem;
+  
+  /* Border Radius */
+  --md-radius-sm: 4px;
+  --md-radius-md: 6px;
+  --md-radius-lg: 8px;
+  
+  /* Shadows */
+  --md-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --md-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --md-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Layout */
+  --md-max-width: 860px;
+  --md-max-width-narrow: 720px;
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-text-primary: #e6edf3;
+    --md-text-secondary: #8d96a0;
+    --md-text-muted: #636c76;
+    --md-bg-primary: #0d1117;
+    --md-bg-secondary: #161b22;
+    --md-bg-tertiary: #21262d;
+    --md-border-default: #30363d;
+    --md-border-muted: #21262d;
+    
+    --md-accent-primary: #2f81f7;
+    --md-accent-hover: #539bf5;
+    --md-accent-visited: #a371f7;
+    
+    --md-success: #3fb950;
+    --md-warning: #d29922;
+    --md-danger: #f85149;
+    --md-info: #2f81f7;
+    
+    --md-code-text: #e6edf3;
+    --md-code-bg: #161b22;
+    --md-code-border: #30363d;
+    --md-code-inline-bg: rgba(110, 118, 129, 0.4);
+    --md-code-inline-text: #79c0ff;
+  }
+}
+
+/* ============================================
+   BASE CONTAINER
+   ============================================ */
+
+.md-preview {
+  /* Box Model */
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: var(--md-max-width);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  
+  /* Typography */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: var(--md-font-size-base);
+  line-height: var(--md-line-height-base);
+  color: var(--md-text-primary);
+  
+  /* Visual */
+  background-color: var(--md-bg-primary);
+  
+  /* Text Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.md-preview *,
+.md-preview *::before,
+.md-preview *::after {
   box-sizing: border-box;
 }
 
-.notePreviewContainer .inside {
-  width: 100%;
-  max-width: 1000px;
-  line-height: 1.6;
-  margin: 0 auto;
-  /* background-color: var(--components-background); */
-  border-radius: 8px;
-  padding: 1rem;
-}
+/* ============================================
+   HEADINGS
+   ============================================ */
 
-/* Headings */
-.notePreviewContainer h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 1rem 0 0.5rem;
-  line-height: 1.2;
-  border-bottom: 2px solid var(--theme-colorD);
-  padding-bottom: 0.3rem;
-}
-
-.notePreviewContainer h2 {
-  font-size: 1.6rem;
+.md-preview h1,
+.md-preview h2,
+.md-preview h3,
+.md-preview h4,
+.md-preview h5,
+.md-preview h6 {
+  margin-top: 2em;
+  margin-bottom: 0.75em;
   font-weight: 600;
-  margin: 1rem 0 0.5rem;
-  line-height: 1.3;
-  border-bottom: 1px solid var(--theme-colorD);
-  padding-bottom: 0.3rem;
+  line-height: var(--md-line-height-tight);
+  color: var(--md-text-primary);
+  scroll-margin-top: 2rem;
 }
 
-.notePreviewContainer h3 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 0.8rem 0;
-  line-height: 1.3;
-}
-
-.notePreviewContainer h4 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 0.8rem 0;
-}
-
-.notePreviewContainer h5 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0.6rem 0;
-}
-
-.notePreviewContainer h6 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0.5rem 0;
-  color: var(--theme-colorE75);
-}
-
-/* Paragraphs */
-.notePreviewContainer p {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  word-break: break-word;
-  color: var(--theme-colorB);
-}
-
-/* Links */
-.notePreviewContainer a {
-  color: var(--theme-colorA);
-  text-decoration: underline;
-  transition: color 0.2s;
-}
-.notePreviewContainer a:hover {
-  color: var(--theme-colorC);
-}
-
-/* Lists */
-.notePreviewContainer ul,
-.notePreviewContainer ol {
-  padding-left: 1.5rem;
-  margin: 0.8rem 0;
-}
-.notePreviewContainer li {
-  margin-bottom: 0.5rem;
-}
-
-/* Nested lists */
-.notePreviewContainer ul ul,
-.notePreviewContainer ol ul,
-.notePreviewContainer ul ol,
-.notePreviewContainer ol ol {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Task Lists */
-.notePreviewContainer input[type="checkbox"] {
-  margin-right: 0.5rem;
-}
-
-/* Blockquotes */
-.notePreviewContainer blockquote {
-  margin: 1rem 0;
-  padding: 0.8rem 1rem;
-  border-left: 4px solid var(--theme-colorD);
-  background-color: var(--components-background);
-  color: var(--theme-colorE);
-  font-style: italic;
-  border-radius: 4px;
-}
-
-/* Inline Code */
-.notePreviewContainer code {
-  background-color: var(--components-background);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9em;
-  font-weight: 600;
-  color: var(--theme-colorC);
-}
-
-/* Code Blocks */
-.notePreviewContainer pre {
-  background-color: var(--theme-colorA);
-  color: var(--foreground);
-  padding: 0.8rem;
-  border-radius: 6px;
-  overflow-x: auto;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.notePreviewContainer pre code {
-  background-color: transparent;
-  padding: 0;
-  color: inherit;
-  font-size: 0.9rem;
-}
-
-/* Horizontal Rule */
-.notePreviewContainer hr {
-  border: none;
-  border-top: 1px solid var(--theme-colorD);
-  margin: 2rem 0;
-}
-
-/* Tables */
-.notePreviewContainer table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1rem 0;
-  overflow-x: auto;
-  display: block;
-  border-radius: 6px;
-  background-color: var(--foreground);
-}
-
-.notePreviewContainer th,
-.notePreviewContainer td {
-  border: 1px solid var(--theme-colorD);
-  padding: 0.6rem 0.8rem;
-  text-align: left;
-  font-size: 0.9rem;
-}
-
-.notePreviewContainer th {
-  font-weight: 600;
-  background-color: var(--components-background);
-}
-
-/* Strikethrough */
-.notePreviewContainer del {
-  color: var(--theme-colorE75);
-  text-decoration: line-through;
-}
-
-/* Strong/Bold */
-.notePreviewContainer strong {
-  font-weight: 700;
-}
-
-/* Italic */
-.notePreviewContainer em {
-  font-style: italic;
-}
-
-/* Images */
-.notePreviewContainer img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin: 1rem 0;
-  display: block;
-}
-
-/* Remove top/bottom margin for first/last child */
-.notePreviewContainer > *:first-child {
+.md-preview h1 {
+  font-size: clamp(1.8rem, 4vw, 2.25rem);
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--md-border-muted);
   margin-top: 0;
 }
-.notePreviewContainer > *:last-child {
+
+.md-preview h2 {
+  font-size: clamp(1.5rem, 3.5vw, 1.875rem);
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--md-border-muted);
+}
+
+.md-preview h3 {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+}
+
+.md-preview h4 {
+  font-size: clamp(1.1rem, 2.5vw, 1.25rem);
+}
+
+.md-preview h5 {
+  font-size: 1.125rem;
+}
+
+.md-preview h6 {
+  font-size: 1rem;
+  color: var(--md-text-secondary);
+}
+
+/* First heading shouldn't have top margin */
+.md-preview > h1:first-child,
+.md-preview > h2:first-child,
+.md-preview > h3:first-child {
+  margin-top: 0;
+}
+
+/* ============================================
+   PARAGRAPHS & TEXT
+   ============================================ */
+
+.md-preview p {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+}
+
+.md-preview p:last-child {
   margin-bottom: 0;
 }
 
-/* =========================
-   Responsive Adjustments
-========================= */
-@media (max-width: 480px) {
-  .notePreviewContainer {
-    padding: 60px 0.5rem;
+/* Text Emphasis */
+.md-preview strong,
+.md-preview b {
+  font-weight: 600;
+  color: var(--md-text-primary);
+}
+
+.md-preview em,
+.md-preview i {
+  font-style: italic;
+}
+
+.md-preview mark {
+  background-color: rgba(255, 212, 38, 0.4);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+.md-preview small {
+  font-size: 0.875em;
+}
+
+.md-preview sub,
+.md-preview sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.md-preview sup {
+  top: -0.5em;
+}
+
+.md-preview sub {
+  bottom: -0.25em;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+.md-preview a {
+  color: var(--md-accent-primary);
+  text-decoration: none;
+  background-color: transparent;
+  transition: color 0.15s ease;
+}
+
+.md-preview a:hover {
+  color: var(--md-accent-hover);
+  text-decoration: underline;
+}
+
+.md-preview a:visited {
+  color: var(--md-accent-visited);
+}
+
+.md-preview a:focus-visible {
+  outline: 2px solid var(--md-accent-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* External Link Icon (Optional Enhancement) */
+.md-preview a[href^="http"]:not([href*="yourdomain.com"])::after {
+  content: "↗";
+  font-size: 0.85em;
+  margin-left: 0.2em;
+  opacity: 0.6;
+}
+
+/* ============================================
+   LISTS
+   ============================================ */
+
+.md-preview ul,
+.md-preview ol {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  padding-left: 2em;
+}
+
+.md-preview ul ul,
+.md-preview ol ol,
+.md-preview ul ol,
+.md-preview ol ul {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.md-preview li {
+  margin-bottom: 0.5em;
+  line-height: 1.75;
+}
+
+.md-preview li:last-child {
+  margin-bottom: 0;
+}
+
+.md-preview li > p {
+  margin-bottom: 0.5em;
+}
+
+/* Unordered List Styling */
+.md-preview ul {
+  list-style-type: disc;
+}
+
+.md-preview ul ul {
+  list-style-type: circle;
+}
+
+.md-preview ul ul ul {
+  list-style-type: square;
+}
+
+/* Ordered List Styling */
+.md-preview ol {
+  list-style-type: decimal;
+}
+
+/* Task Lists (GitHub-style) */
+.md-preview input[type="checkbox"] {
+  margin: 0 0.5em 0 0;
+  vertical-align: middle;
+}
+
+.md-preview .task-list-item {
+  list-style-type: none;
+  margin-left: -2em;
+  padding-left: 2em;
+}
+
+/* ============================================
+   BLOCKQUOTES
+   ============================================ */
+
+.md-preview blockquote {
+  margin: 1.5em 0;
+  padding: 0.75em 1.25em;
+  border-left: 4px solid var(--md-border-default);
+  background-color: var(--md-bg-secondary);
+  border-radius: 0 var(--md-radius-sm) var(--md-radius-sm) 0;
+  color: var(--md-text-secondary);
+}
+
+.md-preview blockquote > :first-child {
+  margin-top: 0;
+}
+
+.md-preview blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.md-preview blockquote p {
+  font-style: normal;
+}
+
+/* Nested Blockquotes */
+.md-preview blockquote blockquote {
+  margin-left: 1em;
+  border-left-color: var(--md-border-muted);
+}
+
+/* ============================================
+   CODE (INLINE & BLOCKS)
+   ============================================ */
+
+/* Inline Code */
+.md-preview code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background-color: var(--md-code-inline-bg);
+  color: var(--md-code-inline-text);
+  border-radius: var(--md-radius-sm);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Code Blocks */
+.md-preview pre {
+  margin: 1.5em 0;
+  padding: 1em 1.25em;
+  background-color: var(--md-code-bg);
+  border: 1px solid var(--md-code-border);
+  border-radius: var(--md-radius-md);
+  overflow-x: auto;
+  font-size: var(--md-font-size-sm);
+  line-height: 1.6;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-preview pre code {
+  display: block;
+  padding: 0;
+  background-color: transparent;
+  color: var(--md-code-text);
+  border-radius: 0;
+  font-size: inherit;
+  white-space: pre;
+  word-break: normal;
+}
+
+/* Scrollbar Styling for Code Blocks */
+.md-preview pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.md-preview pre::-webkit-scrollbar-track {
+  background: var(--md-bg-tertiary);
+  border-radius: 4px;
+}
+
+.md-preview pre::-webkit-scrollbar-thumb {
+  background: var(--md-border-default);
+  border-radius: 4px;
+}
+
+.md-preview pre::-webkit-scrollbar-thumb:hover {
+  background: var(--md-text-muted);
+}
+
+/* Language Label (Optional Enhancement) */
+.md-preview pre[class*="language-"]::before {
+  content: attr(data-language);
+  display: block;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--md-text-muted);
+  margin-bottom: 0.5em;
+  font-family: inherit;
+}
+
+/* ============================================
+   SYNTAX HIGHLIGHTING TOKENS
+   (VS Code Compatible - Ready for Prism.js)
+   ============================================ */
+
+/* Keywords & Control */
+.md-preview .token.keyword,
+.md-preview .token.control {
+  color: #cf222e;
+}
+
+/* Functions & Methods */
+.md-preview .token.function,
+.md-preview .token.method {
+  color: #8250df;
+}
+
+/* Strings */
+.md-preview .token.string {
+  color: #0a3069;
+}
+
+/* Comments */
+.md-preview .token.comment,
+.md-preview .token.prolog,
+.md-preview .token.doctype,
+.md-preview .token.cdata {
+  color: var(--md-text-muted);
+  font-style: italic;
+}
+
+/* Numbers & Booleans */
+.md-preview .token.number,
+.md-preview .token.boolean {
+  color: #0550ae;
+}
+
+/* Operators & Punctuation */
+.md-preview .token.operator,
+.md-preview .token.punctuation {
+  color: var(--md-text-secondary);
+}
+
+/* Classes & Types */
+.md-preview .token.class-name,
+.md-preview .token.type {
+  color: #953800;
+}
+
+/* Variables & Properties */
+.md-preview .token.variable,
+.md-preview .token.property {
+  color: #1f2328;
+}
+
+/* Tags (HTML/XML) */
+.md-preview .token.tag {
+  color: #116329;
+}
+
+.md-preview .token.attr-name {
+  color: #0550ae;
+}
+
+.md-preview .token.attr-value {
+  color: #0a3069;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+.md-preview table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-preview thead {
+  background-color: var(--md-bg-secondary);
+}
+
+.md-preview th {
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75em 1em;
+  border: 1px solid var(--md-border-default);
+}
+
+.md-preview td {
+  padding: 0.75em 1em;
+  border: 1px solid var(--md-border-default);
+  vertical-align: top;
+}
+
+.md-preview tbody tr:nth-child(odd) {
+  background-color: var(--md-bg-primary);
+}
+
+.md-preview tbody tr:nth-child(even) {
+  background-color: var(--md-bg-secondary);
+}
+
+.md-preview tbody tr:hover {
+  background-color: var(--md-bg-tertiary);
+}
+
+/* Responsive Table Wrapper */
+.md-preview-table-wrapper {
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+/* ============================================
+   HORIZONTAL RULES
+   ============================================ */
+
+.md-preview hr {
+  height: 0;
+  margin: 2em 0;
+  border: 0;
+  border-top: 1px solid var(--md-border-default);
+}
+
+/* ============================================
+   IMAGES & MEDIA
+   ============================================ */
+
+.md-preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5em auto;
+  border-radius: var(--md-radius-md);
+}
+
+.md-preview figure {
+  margin: 2em 0;
+}
+
+.md-preview figcaption {
+  margin-top: 0.75em;
+  font-size: 0.875em;
+  color: var(--md-text-secondary);
+  text-align: center;
+  font-style: italic;
+}
+
+/* Video & Iframe */
+.md-preview video,
+.md-preview iframe {
+  max-width: 100%;
+  border-radius: var(--md-radius-md);
+  display: block;
+  margin: 1.5em auto;
+}
+
+/* ============================================
+   DETAILS & SUMMARY (Collapsible)
+   ============================================ */
+
+.md-preview details {
+  margin: 1.5em 0;
+  padding: 1em;
+  border: 1px solid var(--md-border-default);
+  border-radius: var(--md-radius-md);
+  background-color: var(--md-bg-secondary);
+}
+
+.md-preview summary {
+  cursor: pointer;
+  font-weight: 600;
+  user-select: none;
+  outline: none;
+  padding: 0.5em;
+  margin: -0.5em;
+  border-radius: var(--md-radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+.md-preview summary:hover {
+  background-color: var(--md-bg-tertiary);
+}
+
+.md-preview summary:focus-visible {
+  outline: 2px solid var(--md-accent-primary);
+  outline-offset: 2px;
+}
+
+.md-preview details[open] summary {
+  margin-bottom: 0.75em;
+}
+
+/* ============================================
+   ALERT/ADMONITION BLOCKS (GitHub-style)
+   ============================================ */
+
+.md-preview .alert {
+  margin: 1.5em 0;
+  padding: 1em 1.25em;
+  border-left: 4px solid;
+  border-radius: var(--md-radius-md);
+  background-color: var(--md-bg-secondary);
+}
+
+.md-preview .alert > :first-child {
+  margin-top: 0;
+}
+
+.md-preview .alert > :last-child {
+  margin-bottom: 0;
+}
+
+.md-preview .alert-note {
+  border-color: var(--md-info);
+  background-color: rgba(9, 105, 218, 0.1);
+}
+
+.md-preview .alert-tip {
+  border-color: var(--md-success);
+  background-color: rgba(26, 127, 55, 0.1);
+}
+
+.md-preview .alert-warning {
+  border-color: var(--md-warning);
+  background-color: rgba(154, 103, 0, 0.1);
+}
+
+.md-preview .alert-important {
+  border-color: var(--md-danger);
+  background-color: rgba(207, 34, 46, 0.1);
+}
+
+/* ============================================
+   KEYBOARD KEYS
+   ============================================ */
+
+.md-preview kbd {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875em;
+  line-height: 1;
+  color: var(--md-text-primary);
+  background-color: var(--md-bg-secondary);
+  border: 1px solid var(--md-border-default);
+  border-radius: var(--md-radius-sm);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   DEFINITION LISTS
+   ============================================ */
+
+.md-preview dl {
+  margin: 1.25em 0;
+}
+
+.md-preview dt {
+  font-weight: 600;
+  margin-top: 1em;
+}
+
+.md-preview dd {
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+
+/* ============================================
+   ABBREVIATIONS
+   ============================================ */
+
+.md-preview abbr[title] {
+  border-bottom: 1px dotted var(--md-border-default);
+  text-decoration: none;
+  cursor: help;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE OVERRIDES
+   ============================================ */
+
+@media (max-width: 768px) {
+  .md-preview {
+    padding: 1.5rem;
+    font-size: 15px;
+    line-height: 1.65;
   }
 
-  .notePreviewContainer .inside {
-    padding: 0.8rem;
+  .md-preview h1 {
+    font-size: 1.75rem;
   }
 
-  .notePreviewContainer h1 {
-    font-size: 1.4rem;
-  }
-  .notePreviewContainer h2 {
-    font-size: 1.3rem;
-  }
-  .notePreviewContainer h3 {
-    font-size: 1.2rem;
-  }
-  .notePreviewContainer h4 {
-    font-size: 1.1rem;
-  }
-  .notePreviewContainer h5 {
-    font-size: 1rem;
-  }
-  .notePreviewContainer h6 {
-    font-size: 0.95rem;
+  .md-preview h2 {
+    font-size: 1.5rem;
   }
 
-  .notePreviewContainer p,
-  .notePreviewContainer li,
-  .notePreviewContainer td,
-  .notePreviewContainer th {
-    font-size: 0.95rem;
+  .md-preview h3 {
+    font-size: 1.25rem;
   }
 
-  .notePreviewContainer pre {
-    font-size: 0.85rem;
-    padding: 0.6rem;
+  .md-preview h4,
+  .md-preview h5,
+  .md-preview h6 {
+    font-size: 1.125rem;
   }
 
-  .notePreviewContainer table {
-    font-size: 0.85rem;
+  .md-preview pre {
+    padding: 0.875em;
+    font-size: 13px;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
   }
+
+  .md-preview ul,
+  .md-preview ol {
+    padding-left: 1.5em;
+  }
+
+  .md-preview blockquote {
+    padding: 0.5em 1em;
+    margin-left: -1rem;
+    margin-right: 0;
+  }
+
+  .md-preview table {
+    font-size: 14px;
+  }
+
+  .md-preview th,
+  .md-preview td {
+    padding: 0.5em;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .md-preview {
+    max-width: 100%;
+    padding: 0;
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+
+  .md-preview h1,
+  .md-preview h2,
+  .md-preview h3,
+  .md-preview h4,
+  .md-preview h5,
+  .md-preview h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+
+  .md-preview pre,
+  .md-preview blockquote,
+  .md-preview img,
+  .md-preview table {
+    page-break-inside: avoid;
+  }
+
+  .md-preview a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .md-preview a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.875em;
+  }
+
+  .md-preview pre {
+    border: 1px solid #ccc;
+    white-space: pre-wrap;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Focus Indicators */
+.md-preview :focus-visible {
+  outline: 2px solid var(--md-accent-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .md-preview *,
+  .md-preview *::before,
+  .md-preview *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .md-preview {
+    --md-border-default: currentColor;
+  }
+  
+  .md-preview code,
+  .md-preview pre {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.md-preview .text-center {
+  text-align: center;
+}
+
+.md-preview .text-right {
+  text-align: right;
+}
+
+.md-preview .text-muted {
+  color: var(--md-text-muted);
+}
+
+.md-preview .no-margin {
+  margin: 0 !important;
+}
+
+.md-preview .no-padding {
+  padding: 0 !important;
 }

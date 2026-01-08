@@ -47,7 +47,7 @@ export default function NotePreviewPage({ notesAbout , notesData }: { notesAbout
   // if (error) return <p>{error}</p>;
 
   return (
-    <div className="notePreviewContainer">
+    <div className="notePreviewContainer md-preview">
       <div className="inside">
         {error ? (
           <p>{error}</p>

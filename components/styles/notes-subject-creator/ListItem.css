@@ -7,8 +7,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fbfbfb;
-  border: 1px solid #caced5;
+  background: var(--background);
+  border: 1px solid var(--navbar-border);
   border-radius: 12px;
   padding: 20px;
   transition: all 0.2s;
@@ -16,7 +16,7 @@
 }
 
 .nsc-list-item:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px var(--foreground);
 }
 
 .nsc-list-item-content {
@@ -34,13 +34,13 @@
 .nsc-list-item-title {
   font-size: 16px;
   font-weight: 600;
-  color: #34343e;
+  color: var(--color);
   margin: 0 0 6px 0;
 }
 
 .nsc-list-item-desc {
   font-size: 13px;
-  color: #34343e;
+  color: var(--color);
   opacity: 0.7;
   margin: 0 0 8px 0;
   line-height: 1.5;
@@ -48,7 +48,7 @@
 
 .nsc-list-item-meta {
   font-size: 12px;
-  color: #34343e;
+  color: var(--color);
   opacity: 0.6;
 }
 
