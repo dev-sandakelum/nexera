@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { initAdmin } from "@/components/firebase/firebaseAdmin";
 import { getFirestore } from "firebase-admin/firestore";
+import { revalidateUsers } from "@/lib/revalidate";
 
 export async function PUT(request: NextRequest) {
   try {
@@ -36,6 +37,9 @@ export async function PUT(request: NextRequest) {
     }
 
     const user = { id: updatedDoc.id, ...updatedDoc.data() };
+
+    // Clear user cache
+    await revalidateUsers(id);
 
     return NextResponse.json({ success: true, user });
   } catch (error) {

@@ -6,6 +6,7 @@ import {
   toggleUserStatus,
   updateUserBadge,
 } from "@/components/firebase/user-management";
+import { revalidateUsers } from "@/lib/revalidate";
 
 export async function GET(request: NextRequest) {
   try {
@@ -70,6 +71,9 @@ export async function PUT(request: NextRequest) {
         { status: 404 }
       );
     }
+
+    // Clear user cache after update
+    await revalidateUsers(id);
 
     return NextResponse.json(user);
   } catch (error) {

@@ -2,8 +2,10 @@
 "use server";
 
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
 import { initAdmin } from "@/components/firebase/firebaseAdmin";
-import { UserData } from "@/components/firebase/firebase";
+import { getCachedUserByEmail } from "@/lib/firebase-cache";
+import { revalidateUsers } from "@/lib/revalidate";
 import { NexeraUser } from "@/components/types";
 import { getFirestore } from "firebase-admin/firestore";
 
@@ -69,6 +71,9 @@ export async function createNewUser(
   name: string,
   clerkProfilePicture: string
 ): Promise<NexeraUser> {
+  // Access headers to make this dynamic (required for crypto.randomUUID in Next.js 15+)
+  await headers();
+  
   const userId = crypto.randomUUID();
   let profilePicture = "";
 
@@ -121,6 +126,9 @@ export async function createNewUser(
     const userRef = db.collection("TestUsers").doc(newUser.id);
     await userRef.set(newUser);
 
+    // Note: Cache revalidation removed to prevent "unsupported during render" error
+    // The new user is returned directly, so no cache revalidation needed in this flow
+
     console.log(`User ${userId} created successfully`);
     return newUser;
   } catch (error) {
@@ -152,8 +160,8 @@ export async function getUserFromClerk(): Promise<NexeraUser | null> {
     // Initialize Firebase Admin
     await initAdmin();
 
-    // Try to get existing user
-    let user = await UserData(email);
+    // Try to get existing user (cached query)
+    let user = await getCachedUserByEmail(email);
 
     // If user doesn't exist, create new user
     if (!user) {

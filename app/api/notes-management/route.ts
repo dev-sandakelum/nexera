@@ -1,4 +1,5 @@
 import { createNote, deleteNote, fetchNotes, updateNote } from '@/components/firebase/notes-management';
+import { revalidateNotes } from '@/lib/revalidate';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
@@ -19,6 +20,9 @@ export async function POST(request: NextRequest) {
     if (!note) {
       return NextResponse.json({ error: 'Failed to create note' }, { status: 400 });
     }
+
+    // Clear notes cache after creation
+    await revalidateNotes();
 
     return NextResponse.json(note, { status: 201 });
   } catch (error) {
@@ -41,6 +45,9 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to update note' }, { status: 400 });
     }
 
+    // Clear notes cache after update
+    await revalidateNotes();
+
     return NextResponse.json(note);
   } catch (error) {
     console.error('Error in PUT /api/notes-management:', error);
@@ -62,6 +69,9 @@ export async function DELETE(request: NextRequest) {
     if (!success) {
       return NextResponse.json({ error: 'Failed to delete note' }, { status: 400 });
     }
+
+    // Clear notes cache after deletion
+    await revalidateNotes();
 
     return NextResponse.json({ success: true });
   } catch (error) {

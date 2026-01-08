@@ -1,1 +1,1 @@
-feat: Update NoteCard component to include link functionality and improve action handling
+feat: Implement caching for Firebase queries and enhance authentication flow with public route handling

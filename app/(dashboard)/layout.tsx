@@ -3,7 +3,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import { getUserFromClerk } from "@/lib/server/user-helpers";
 import NavbarControler from "./navbar-controler";
 
-export const dynamic = 'force-dynamic';
+// dynamic config removed (incompatible with cacheComponents)
 
 export default async function DashboardLayout({
   children,

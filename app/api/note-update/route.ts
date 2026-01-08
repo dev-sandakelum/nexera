@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { initAdmin } from "@/components/firebase/firebaseAdmin";
 import { getFirestore } from "firebase-admin/firestore";
+import { revalidateNotes } from "@/lib/revalidate";
 
 export async function PUT(request: NextRequest) {
   try {
@@ -53,6 +54,9 @@ export async function PUT(request: NextRequest) {
       about: updatedAboutDoc.data(),
       data: updatedDataDoc.data(),
     };
+
+    // Clear notes cache
+    await revalidateNotes();
 
     return NextResponse.json({ success: true, note });
   } catch (error) {

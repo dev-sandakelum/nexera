@@ -99,7 +99,7 @@ export default function NoteCard({
           )}
         </div>
       </div>
-      <Link ref={mdLinkRef} href={"/"} />
+      <Link ref={mdLinkRef} href={`/Notes/view/${note.type}/${note.slug}`} />
     </motion.div>
   );
 }

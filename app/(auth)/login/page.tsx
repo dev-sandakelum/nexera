@@ -1,6 +1,6 @@
 import Login from '@/components/auth/login'
 
-export const dynamic = 'force-dynamic';
+// dynamic config removed (incompatible with cacheComponents)
 
 export default function page() {
   return (

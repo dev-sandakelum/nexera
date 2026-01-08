@@ -1,7 +1,10 @@
-import { initAdmin } from "@/components/firebase/firebaseAdmin";
+import {
+  getCachedSubjects,
+  getCachedTopics,
+  getCachedNotes,
+  getCachedUsersMinimal,
+} from "@/lib/firebase-cache";
 import Notes_Sub from "@/components/page/notes/notes-sub";
-import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
-import { getFirestore } from "firebase-admin/firestore";
 
 type PageProps = {
   params: {
@@ -12,45 +15,15 @@ type PageProps = {
 
 export default async function page({ params, searchParams }: PageProps) {
   const { subject } = await params;
-  await initAdmin();
-  const db = getFirestore();
-  const topicSnapshot = await db.collection("nexNoteTopics").get();
-  const noteSnapshot = await db.collection("management_notes").get();
-  const usersSnapshot = await db.collection("TestUsers").get();
-  const subjectsSnapshot = await db.collection("nexSubjects").get();
-  // console.log(subject+"   lllllllllllllllllllllllll");
 
-  const topics: nexTopic[] = topicSnapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      } as nexTopic)
-  );
-  const notes: nexNoteAbout[] = noteSnapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      } as nexNoteAbout)
-  );
-  const users: { id: string; name: string }[] = usersSnapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        name: doc.data().name,
-      } as {
-        id: string;
-        name: string;
-      })
-  );
-  const subjects: nexSubject[] = subjectsSnapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      } as nexSubject)
-  );
+  // All queries are now cached - subsequent visits will hit cache (0 Firebase reads)
+  const [subjects, topics, notes, users] = await Promise.all([
+    getCachedSubjects(),
+    getCachedTopics(),
+    getCachedNotes(),
+    getCachedUsersMinimal(),
+  ]);
+
   const selectedSubject = subjects.find((sub) => sub.slug === subject);
 
   if (!selectedSubject) {
