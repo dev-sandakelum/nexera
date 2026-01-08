@@ -29,8 +29,8 @@ export default function CreatorModal({
           <motion.div 
             className="nsc-modal"
             onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.95 , y: 60 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
           >
             <div className="nsc-modal-header">

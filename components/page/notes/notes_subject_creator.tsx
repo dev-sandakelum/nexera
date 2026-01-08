@@ -44,6 +44,8 @@ import { CreateSubject } from "@/components/firebase/notes/new/update-subject";
 import { CreateTopic } from "@/components/firebase/notes/new/update-topic";
 import { CreateNote } from "@/components/firebase/notes/new/update-note";
 
+import "@/components/styles/MOBILE/notes-subject-creator/ListItem.css";
+
 // Tab icon mapping
 const tabIcons = {
   subjects: FiBookOpen,

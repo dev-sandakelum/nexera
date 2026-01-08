@@ -1,8 +1,12 @@
 @media (max-width: 480px) {
   .nsc-modal {
-    max-height: 75vh; /* ↓ was 85vh */
+    max-height: 85vh; /* ↓ was 85vh */
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 60px;
     border-radius: 18px 18px 0 0;
+    background: var(--components-background);
   }
 
   .nsc-modal-header {
@@ -30,11 +34,14 @@
   }
 
   .nsc-input {
-    padding: 10px 12px;
-    font-size: 16px; /* keep for iOS */
-    min-height: 44px; /* ↓ slightly */
+    padding: 0px 12px;
+    height: 36px;
+    font-size: 12px; /* keep for iOS */
+    /* min-height: 44px;  */
   }
-
+  textarea.nsc-input {
+    padding: 10px 12px;
+  }
   .nsc-textarea {
     min-height: 90px;
   }
@@ -42,13 +49,21 @@
   .nsc-modal-actions {
     padding: 14px;
     gap: 8px;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    background: var(--components-background);
   }
 
   .nsc-btn-primary,
   .nsc-btn-secondary {
-    padding: 12px 16px;
-    min-height: 44px;
+    padding: 6px 16px;
+    min-height: 32px;
     font-size: 14px;
+  }
+
+  .nsc-checkbox-label {
+    font-size: 12px;
   }
 }
 @media (max-width: 360px) {
