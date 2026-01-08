@@ -1,1 +1,1 @@
-feat: Remove unused search parameters and optimize notes handling in Notes_Sub component
+feat: Update cache durations and optimize Firebase query handling in firebase-cache.ts
