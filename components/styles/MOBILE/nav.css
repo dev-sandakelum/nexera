@@ -149,7 +149,7 @@
   color: var(--theme-colorB);
   padding: 4px 84px;
 
-  background: #fbfbfb;
+  background: var(--background);
   border: 1px solid #82a1e7;
   border-radius: 20px 20px 0px 0px;
   overflow: hidden;

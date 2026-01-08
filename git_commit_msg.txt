@@ -1,1 +1,1 @@
-Add new dark indicator image for navigation component
+feat: Update background colors and styles across various components for consistency

@@ -95,7 +95,7 @@
   margin-bottom: 24px;
   padding: 12px 20px;
   background: linear-gradient(135deg, var(--theme-colorA), var(--theme-colorD));
-  color: white;
+  color: var(--background2);
   border-radius: 16px 16px 0 0;
   width: fit-content;
   min-width: 300px;
