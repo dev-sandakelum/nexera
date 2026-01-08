@@ -1,1 +1,1 @@
-feat: Increase modal height for improved mobile display in CreatorModal.css
+feat: Update modal max-height for better content fitting in CreatorModal.css
