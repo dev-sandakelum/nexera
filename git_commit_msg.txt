@@ -1,1 +1,1 @@
-feat: Adjust modal height and position for better mobile display in CreatorModal.css
+feat: Increase modal height for improved mobile display in CreatorModal.css
