@@ -732,7 +732,7 @@ export default function NotesSubjectCreator({
           <label className="nsc-label">Link dataset</label>
           <input
             type="file"
-            className="nsc-input"
+            className="nsc-input file"
             accept={
               noteAbout.type === "pdf"
                 ? ".pdf"
