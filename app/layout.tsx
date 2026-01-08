@@ -80,19 +80,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${poppins.variable} ${geistMono.variable}`}
-        suppressHydrationWarning
-      >
-        <Suspense
-          fallback={
-            <LoadingAnimation />
-          }
+      <html lang="en">
+        <body
+          className={`${poppins.variable} ${geistMono.variable} `}
+          style={{
+            maxHeight: "100svh",
+            overflow: "hidden",
+          }}
+          suppressHydrationWarning
         >
-          {children}
-        </Suspense>
-      </body>
-    </html></ClerkProvider>
+          <Suspense fallback={<LoadingAnimation />}>{children}</Suspense>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
