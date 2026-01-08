@@ -1,1 +1,1 @@
-feat: Adjust mobile styles for UsableArea and returningBG to enhance responsiveness with 100svh
+feat: Update NoteCard component to include link functionality and improve action handling

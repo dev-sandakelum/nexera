@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import React from "react";
+import Link from "next/link";
+import React, { useRef } from "react";
 import { FiClock, FiDownload, FiEye, FiUser } from "react-icons/fi";
 
 export default function NoteCard({
@@ -12,15 +13,33 @@ export default function NoteCard({
   getStatusBadge: (status: string) => { bg: string; fg: string; text: string };
 }) {
   const typeColors = {
-    note: { bg: "var(--accent-soft-bg)", fg: "var(--accent-soft)" , border : "var(--accent-soft-border)"},
-    pdf: { bg: "var(--warning-soft-bg)", fg: "var(--warning-soft)" , border : "var(--warning-soft-border)"},
-    quiz: { bg: "var(--success-soft-bg)", fg: "var(--success-soft)" , border : "var(--success-soft-border)"},
+    note: {
+      bg: "var(--accent-soft-bg)",
+      fg: "var(--accent-soft)",
+      border: "var(--accent-soft-border)",
+    },
+    pdf: {
+      bg: "var(--warning-soft-bg)",
+      fg: "var(--warning-soft)",
+      border: "var(--warning-soft-border)",
+    },
+    quiz: {
+      bg: "var(--success-soft-bg)",
+      fg: "var(--success-soft)",
+      border: "var(--success-soft-border)",
+    },
   };
 
   const colors =
     typeColors[note.type as keyof typeof typeColors] || typeColors.note;
   const status = getStatusBadge(note.status);
 
+  const mdLinkRef = useRef<HTMLAnchorElement>(null);
+  const handleViewClick = () => {
+    if (mdLinkRef.current) {
+      mdLinkRef.current.click();
+    }
+  };
   return (
     <motion.div
       className="note-card"
@@ -28,7 +47,7 @@ export default function NoteCard({
       style={
         {
           "--border": typeColors[note.type as keyof typeof typeColors].border,
-          "--left-border" : typeColors[note.type as keyof typeof typeColors].fg,
+          "--left-border": typeColors[note.type as keyof typeof typeColors].fg,
         } as React.CSSProperties
       }
     >
@@ -57,7 +76,9 @@ export default function NoteCard({
 
           <div className="note-meta">
             <span className="note-meta-item">
-              <FiUser size={12} /> {users.find(user => user.id === note.publishedBy)?.name || "Unknown"}
+              <FiUser size={12} />{" "}
+              {users.find((user) => user.id === note.publishedBy)?.name ||
+                "Unknown"}
             </span>
             <span className="note-meta-item">
               <FiClock size={12} />{" "}
@@ -68,7 +89,7 @@ export default function NoteCard({
 
         {/* Actions */}
         <div className="note-actions">
-          <button className="note-action-btn">
+          <button className="note-action-btn" onClick={handleViewClick}>
             <FiEye size={16} />
           </button>
           {note.type === "pdf" && (
@@ -78,6 +99,7 @@ export default function NoteCard({
           )}
         </div>
       </div>
+      <Link ref={mdLinkRef} href={"/"} />
     </motion.div>
   );
 }

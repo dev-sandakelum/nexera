@@ -11,8 +11,9 @@
 
   .ContentArea .UsableArea {
     border-radius: 5% 5% 0 0;
-    height: 90svh;
-    position: sticky;
+    height: 100svh;
+    position: fixed;
+    top: 0;
     padding-bottom: 0px;
     margin: 0;
   }
