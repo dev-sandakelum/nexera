@@ -1,1 +1,1 @@
-feat: Update ContentArea height to use 100svh for improved mobile responsiveness
+feat: Adjust mobile styles for UsableArea and returningBG to enhance responsiveness with 100svh
