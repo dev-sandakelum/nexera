@@ -19,7 +19,6 @@ import "@/components/styles/notes/main.css";
 import "@/components/styles/notes/card0.css";
 import "@/components/styles/notes-sub/main.css";
 import "@/components/styles/notes-sub/card1.css";
-import "@/components/styles/notes/preview/md.css";
 
 import "@/components/styles/projects/main.css";
 

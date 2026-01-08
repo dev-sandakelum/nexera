@@ -4,19 +4,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
 import OptionPanel from "../models/optionPanel";
+import Link from "next/link";
 
 export default function Card0({
   dataset,
   type,
   updateUserFavorites,
   users,
-  badges,
+  badges,setClickedOnLink ,
 }: {
   dataset: nexSubject[];
   type: string;
   updateUserFavorites: (subjectId: string, method: string) => void;
   users: NexeraUser[];
   badges: nexBadge[];
+  setClickedOnLink: (clicked: boolean) => void;
 }) {
   const [showModal, setShowModal] = useState(false);
   const [selectedSubjectID, setSelectedSubjectID] = useState("");
@@ -130,13 +132,14 @@ export default function Card0({
                       </div>
 
                       {/* Content */}
-                      <a
+                      <Link
                         href={`/Notes/${subject.slug}`}
+                        onClick={() => setClickedOnLink(true)}
                         className="cardContent"
                       >
                         <h3 className="cardTitle">{subject.title}</h3>
                         <p className="cardDescription">{subject.description}</p>
-                      </a>
+                      </Link>
 
                       {/* Footer */}
                       <div className="cardFooter">

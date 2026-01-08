@@ -11,8 +11,17 @@ import { usePathname } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
 import { UpdateUser } from "@/components/firebase/update-user";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
+import LoadingAnimation from "../loading";
 
-export default function Notes({ data ,users , badges }: { data: nexSubject[]; users: NexeraUser[]; badges: nexBadge[] }) {
+export default function Notes({
+  data,
+  users,
+  badges,
+}: {
+  data: nexSubject[];
+  users: NexeraUser[];
+  badges: nexBadge[];
+}) {
   // ------------------------------------------------------
   // 1. DATA LOGIC (From your original code)
   // ------------------------------------------------------
@@ -28,6 +37,8 @@ export default function Notes({ data ,users , badges }: { data: nexSubject[]; us
   const [showFilters, setShowFilters] = useState(false);
   const [filterYear, setFilterYear] = useState("all");
   const [filterDept, setFilterDept] = useState("all");
+
+  const [clickedOnLink, setClickedOnLink] = useState(false);
 
   // Sync User
   useEffect(() => {
@@ -83,6 +94,9 @@ export default function Notes({ data ,users , badges }: { data: nexSubject[]; us
 
   if (!User?.data) {
     return <div>Loading...</div>;
+  }
+  if (clickedOnLink) {
+    return <LoadingAnimation />;
   }
 
   // ------------------------------------------------------
@@ -193,6 +207,7 @@ export default function Notes({ data ,users , badges }: { data: nexSubject[]; us
           updateUserFavorites={updateUserFavorites}
           type="favorites"
           key={"favorites-" + visibleFavorites.length}
+          setClickedOnLink={setClickedOnLink}
         />
       </div>
 
@@ -210,6 +225,7 @@ export default function Notes({ data ,users , badges }: { data: nexSubject[]; us
           updateUserFavorites={updateUserFavorites}
           type="suggestions"
           key={"suggestions-" + visibleSuggestions.length}
+          setClickedOnLink={setClickedOnLink}
         />
       </div>
     </motion.div>

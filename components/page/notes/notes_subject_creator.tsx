@@ -199,7 +199,7 @@ export default function NotesSubjectCreator({
           console.error(".Error uploading file:", error);
           throw new Error(error.message);
         }
-        
+
         // Return the URL directly instead of using state
         return fileURL || null;
       } catch (err: any) {
@@ -224,11 +224,11 @@ export default function NotesSubjectCreator({
         selectedTopic,
         user?.id || "unknown"
       );
-      
+
       // Build the context object directly with the returned URL
       const contextType = noteAbout.type || "note";
       let context: any;
-      
+
       if (contextType === "pdf") {
         context = { type: "pdf", url: fileURL, sizeInMB: 0 };
       } else if (contextType === "quiz") {
@@ -236,10 +236,10 @@ export default function NotesSubjectCreator({
       } else {
         context = { type: "note", url: fileURL };
       }
-      
+
       const newNoteData = createNoteData(noteID, { noteId: noteID, context });
       console.log("Creating note with data:", newNoteData);
-      
+
       const response = await CreateNote(
         newNoteAbout.id,
         newNoteAbout,

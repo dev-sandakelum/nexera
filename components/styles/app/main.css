@@ -2,6 +2,8 @@
   --background: #eff3fc;
   --background2: #fff;
   --foreground: #14182a;
+  --shadow: rgba(104, 104, 104, 0.08);
+  
   --color: var(--foreground);
   --components-background: #fbfbfb;
   --theme-colorA: #7b7dee;
@@ -88,16 +90,15 @@
   --poor-richard-font: "Poor Richard", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
-    /* Core */
+    
     --background: #0f1220;
     --background2: #14182a;
     --foreground: #eff3fc;
     --color: var(--foreground);
     --components-background: #181c31;
 
-    /* Theme colors (kept consistent, slightly tuned for dark) */
     --theme-colorA: #8b8df8;
     --theme-colorB: #e5e7eb;
     --theme-colorC: #f28aa3;
@@ -105,14 +106,12 @@
     --theme-colorE: #e5e7eb;
     --theme-colorE75: #e5e7eb75;
 
-    /* Navbar */
     --navbar-background: #12162a;
     --navbar-foreground: #e5e7eb;
     --navbar-border: #23274a;
     --navbar-hover-background: #8b5cf625;
     --navbar-hover-foreground: #a78bfa;
 
-    /* Badges (dark-soft style) */
     --badge-01-bg: #2a1f55;
     --badge-01-fg: #b9a7ff;
 
@@ -149,7 +148,6 @@
     --badge-12-bg: #0f172a;
     --badge-12-fg: #cbd5f5;
 
-    /* File tags */
     --file-01-bg: #7f1d1d;
     --file-01-fg: #fecaca;
 
@@ -159,7 +157,6 @@
     --file-03-bg: #78350f;
     --file-03-fg: #fde68a;
 
-    /* Soft accents */
     --accent-soft: #60a5fa;
     --accent-soft-bg: #1e293b;
     --accent-soft-border: #1e40af;
@@ -181,13 +178,11 @@
     --scrollbar-thumb-hover: #4a4f85;
     --scrollbar-thumb-active: #5b60a0;
 
-    /* Shadow – softer & deeper for dark UI */
     --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.45);
 
-    /* Font */
     --poor-richard-font: "Poor Richard", sans-serif;
   }
-}
+} */
 .root {
   font-family: var(--font-poppins), sans-serif;
   background-color: var(--background);
