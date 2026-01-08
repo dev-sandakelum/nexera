@@ -1,10 +1,10 @@
 @media (max-width: 480px) {
   .nsc-modal {
-    max-height: 85vh; /* ↓ was 85vh */
+    max-height: 95vh; /* ↓ was 85vh */
     width: 100%;
     position: absolute;
     bottom: 0;
-    margin-bottom: 60px;
+    /* margin-bottom: 60px; */
     border-radius: 18px 18px 0 0;
     background: var(--components-background);
   }
@@ -39,6 +39,19 @@
     font-size: 12px; /* keep for iOS */
     /* min-height: 44px;  */
   }
+  
+  .nsc-input[type="file"] {
+    padding: 5px 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .nsc-input[type="file"]::file-selector-button {
+    padding: 4px 10px;
+    margin-right: 8px;
+    font-size: 11px;
+    height: 26px; /* Adjusted for mobile */
+  }
   textarea.nsc-input {
     padding: 10px 12px;
   }
@@ -49,10 +62,10 @@
   .nsc-modal-actions {
     padding: 14px;
     gap: 8px;
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    background: var(--components-background);
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* width: 100vw; */
+    /* background: var(--components-background); */
   }
 
   .nsc-btn-primary,

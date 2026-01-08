@@ -1,1 +1,1 @@
-feat: Enhance mobile responsiveness of CreatorModal and ListItem components
+feat: Improve file input styling and mobile responsiveness in CreatorModal and nav components
