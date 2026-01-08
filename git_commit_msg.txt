@@ -1,1 +1,1 @@
-feat: Update loading and suspense components for improved mobile responsiveness with 100svh height
+feat: Update ContentArea height to use 100svh for improved mobile responsiveness
