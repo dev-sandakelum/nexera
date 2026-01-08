@@ -117,7 +117,7 @@
 .returningBG {
   content: "";
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   display: none;
   position: fixed;
   top: 0;

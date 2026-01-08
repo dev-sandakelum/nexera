@@ -1,5 +1,6 @@
 @media (max-width: 768px) {
   .page {
+    overflow: hidden;
     max-height: 100svh;
   }
   .ContentArea {
@@ -10,7 +11,10 @@
 
   .ContentArea .UsableArea {
     border-radius: 5% 5% 0 0;
-    padding-bottom: 8px;
+    height: 90svh;
+    position: sticky;
+    padding-bottom: 0px;
+    margin: 0;
   }
 
   .returningBG {
