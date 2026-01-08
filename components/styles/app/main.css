@@ -111,6 +111,7 @@
   padding-bottom: 8px;
   /* border: 1px solid red; */
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 .returningBG {
   content: "";
@@ -125,7 +126,7 @@
 }
 .returningBG.open {
   display: block;
-  background: linear-gradient(#323232 ,#0e0e0f,#5c5c5c );
+  background: linear-gradient(#323232, #0e0e0f, #5c5c5c);
   opacity: 0.15;
 }
 .footer-space {
@@ -136,7 +137,6 @@
   justify-content: center;
   color: var(--navbar-foreground);
 }
-
 
 @media (prefers-color-scheme: dark) {
   .logo {

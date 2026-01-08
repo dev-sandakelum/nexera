@@ -1,1 +1,1 @@
-feat: Improve file input styling and mobile responsiveness in CreatorModal and nav components
+feat: Refactor page component to use LoadingAnimation and enhance mobile styles with smooth scrolling

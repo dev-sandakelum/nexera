@@ -1,12 +1,12 @@
 @media (max-width: 768px) {
   .ContentArea {
+    max-width: 100vmin;
     padding-left: 0;
+    overflow: hidden;
   }
-  
-.ContentArea .UsableArea {
+
+  .ContentArea .UsableArea {
     border-radius: 5% 5% 0 0;
-    
     padding-bottom: 8px;
-    overflow-y: scroll;
   }
 }
