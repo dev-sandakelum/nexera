@@ -1,6 +1,6 @@
 @media (max-width: 480px) {
   .nsc-modal {
-    max-height: 85svh; /* ↓ was 85vh */
+    max-height: 90svh; /* ↓ was 85vh */
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -28,7 +28,7 @@
     padding: 14px;
     gap: 12px;
     overflow-y: auto; /* ✅ internal scroll */
-    max-height: calc(85svh - 150px); /* Adjusted for header and actions */
+    max-height: calc(90svh - 200px); /* Adjusted for header and actions */
   }
 
   .nsc-label {
