@@ -1,1 +1,1 @@
-feat: Refactor page component to use LoadingAnimation and enhance mobile styles with smooth scrolling
+feat: Update loading and suspense components for improved mobile responsiveness with 100svh height

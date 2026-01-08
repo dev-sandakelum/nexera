@@ -6,3 +6,9 @@
   top: 0;
   background-color: var(--background);
 }
+
+@media (max-width: 768px) {
+  .Suspense{
+    max-height: 100svh;
+  }
+}
