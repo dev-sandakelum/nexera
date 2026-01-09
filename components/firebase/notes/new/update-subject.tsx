@@ -39,3 +39,27 @@ export async function CreateSubject(
     };
   }
 }
+
+export const UpdateSubject = CreateSubject;
+
+export async function DeleteSubject(
+  subjectId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(`/api/subject-update?id=${subjectId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete subject " + response.statusText);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting subject:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

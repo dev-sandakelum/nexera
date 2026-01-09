@@ -41,3 +41,27 @@ export async function CreateNote(
     };
   }
 }
+
+export const UpdateNote = CreateNote;
+
+export async function DeleteNote(
+  noteId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(`/api/note-update?id=${noteId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete note " + response.statusText);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting note:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

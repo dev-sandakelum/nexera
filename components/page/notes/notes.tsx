@@ -44,7 +44,7 @@ export default function Notes({
     if (clickedOnLink) {
       setTimeout(() => {
         setClickedOnLink(false);
-      }, 1000);
+      }, 10000);
     }
   }, [clickedOnLink]);
   // Sync User

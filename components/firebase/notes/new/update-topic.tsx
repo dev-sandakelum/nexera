@@ -39,3 +39,27 @@ export async function CreateTopic(
     };
   }
 }
+
+export const UpdateTopic = CreateTopic;
+
+export async function DeleteTopic(
+  topicId: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const response = await fetch(`/api/topic-update?id=${topicId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to delete topic " + response.statusText);
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting topic:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+}

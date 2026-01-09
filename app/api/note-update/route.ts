@@ -67,3 +67,39 @@ export async function PUT(request: NextRequest) {
     );
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Note ID is required" },
+        { status: 400 }
+      );
+    }
+
+    await initAdmin();
+    const db = getFirestore();
+    
+    const noteAboutRef = db.collection("management_notes").doc(id);
+    const noteDataRef = db.collection("nexNotePart2").doc(id);
+
+    await Promise.all([
+      noteAboutRef.delete(),
+      noteDataRef.delete(),
+    ]);
+
+    // Clear notes cache
+    await revalidateNotes();
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in DELETE /api/note-update:", error);
+    return NextResponse.json(
+      { error: "Failed to delete note" },
+      { status: 500 }
+    );
+  }
+}

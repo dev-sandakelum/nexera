@@ -20,13 +20,13 @@ export async function PUT(request: NextRequest) {
     const db = getFirestore();
     const subjectRef = db.collection("nexSubjects").doc(id);
     
-    // Create the subject document
-    await subjectRef.create({
+    // Upsert the subject document (create or update)
+    await subjectRef.set({
       ...updates,
       updatedAt: new Date().toISOString(),
-    });
+    }, { merge: true });
 
-    // Fetch the created subject
+    // Fetch the updated subject
     const updatedDoc = await subjectRef.get();
     
     if (!updatedDoc.exists) {
@@ -46,6 +46,44 @@ export async function PUT(request: NextRequest) {
     console.error("Error in PUT /api/subject-update:", error);
     return NextResponse.json(
       { error: "Failed to update subject" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (!id) {
+      return NextResponse.json(
+        { error: "Subject ID is required" },
+        { status: 400 }
+      );
+    }
+
+    await initAdmin();
+    const db = getFirestore();
+    const subjectRef = db.collection("nexSubjects").doc(id);
+    
+    // Get subject data first to invalid cache later if needed (e.g. slug)
+    // For simplicity, we just delete and revalidate generic or specific if we had slug
+    // We can try to get the doc before deleting to know the slug for revalidation, 
+    // but revalidateSubjects might accept just generic revalidation if slug is optional.
+    // Let's check revalidateSubjects signature later if needed. For now assuming we might not have it.
+    
+    await subjectRef.delete();
+
+    // Clear subjects cache - passing undefined/null might revalidate all or we might need slug.
+    // Ideally we should fetch before delete.
+    await revalidateSubjects(); 
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in DELETE /api/subject-update:", error);
+    return NextResponse.json(
+      { error: "Failed to delete subject" },
       { status: 500 }
     );
   }

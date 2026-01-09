@@ -40,9 +40,21 @@ import {
 import { useUser } from "@/contexts/UserContext";
 import { BlobToFile } from "@/components/converts/blob-to-file";
 import { UploadFile } from "@/utils/supabase/storage/client";
-import { CreateSubject } from "@/components/firebase/notes/new/update-subject";
-import { CreateTopic } from "@/components/firebase/notes/new/update-topic";
-import { CreateNote } from "@/components/firebase/notes/new/update-note";
+import {
+  CreateSubject,
+  UpdateSubject,
+  DeleteSubject,
+} from "@/components/firebase/notes/new/update-subject";
+import {
+  CreateTopic,
+  UpdateTopic,
+  DeleteTopic,
+} from "@/components/firebase/notes/new/update-topic";
+import {
+  CreateNote,
+  UpdateNote,
+  DeleteNote,
+} from "@/components/firebase/notes/new/update-note";
 
 import "@/components/styles/MOBILE/notes-subject-creator/ListItem.css";
 
@@ -79,6 +91,17 @@ export default function NotesSubjectCreator({
   const [showSubjectModal, setShowSubjectModal] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(false);
   const [showNoteModal, setShowNoteModal] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState<{
+    isOpen: boolean;
+    id: string;
+    type: "subject" | "topic" | "note";
+    title: string;
+  }>({
+    isOpen: false,
+    id: "",
+    type: "subject",
+    title: "",
+  });
 
   // Form states
   const [subjectForm, setSubjectForm] = useState<Partial<nexSubject>>({});
@@ -116,29 +139,33 @@ export default function NotesSubjectCreator({
     }
   };
 
-  const handleUpdateSubject = () => {
+  const handleUpdateSubject = async () => {
     if (!editingId) return;
-    setSubjects(
-      subjects.map((s) =>
-        s.id === editingId
-          ? { ...s, ...subjectForm, updatedAt: new Date().toISOString() }
-          : s
-      )
-    );
-    setShowSubjectModal(false);
-    setSubjectForm({});
-    setEditingId(null);
+    const response = await UpdateSubject(editingId, subjectForm);
+    if (response.success) {
+      setSubjects(
+        subjects.map((s) =>
+          s.id === editingId
+            ? { ...s, ...subjectForm, updatedAt: new Date().toISOString() }
+            : s
+        )
+      );
+      setShowSubjectModal(false);
+      setSubjectForm({});
+      setEditingId(null);
+    } else {
+      alert("Error updating subject: " + response.error);
+    }
   };
 
   const handleDeleteSubject = (id: string) => {
-    setSubjects(subjects.filter((s) => s.id !== id));
-    setTopics(topics.filter((t) => t.subjectID !== id));
-    setNotes(
-      notes.filter((n) => {
-        const topic = topics.find((t) => t.id === n.topicID);
-        return topic?.subjectID !== id;
-      })
-    );
+    const subject = subjects.find((s) => s.id === id);
+    setDeleteConfirmation({
+      isOpen: true,
+      id,
+      type: "subject",
+      title: subject?.title || "this subject",
+    });
   };
 
   // Topic CRUD
@@ -162,23 +189,33 @@ export default function NotesSubjectCreator({
     }
   };
 
-  const handleUpdateTopic = () => {
+  const handleUpdateTopic = async () => {
     if (!editingId) return;
-    setTopics(
-      topics.map((t) =>
-        t.id === editingId
-          ? { ...t, ...topicForm, updatedAt: new Date().toISOString() }
-          : t
-      )
-    );
-    setShowTopicModal(false);
-    setTopicForm({});
-    setEditingId(null);
+    const response = await UpdateTopic(editingId, topicForm);
+    if (response.success) {
+      setTopics(
+        topics.map((t) =>
+          t.id === editingId
+            ? { ...t, ...topicForm, updatedAt: new Date().toISOString() }
+            : t
+        )
+      );
+      setShowTopicModal(false);
+      setTopicForm({});
+      setEditingId(null);
+    } else {
+      alert("Error updating topic: " + response.error);
+    }
   };
 
   const handleDeleteTopic = (id: string) => {
-    setTopics(topics.filter((t) => t.id !== id));
-    setNotes(notes.filter((n) => n.topicID !== id));
+    const topic = topics.find((t) => t.id === id);
+    setDeleteConfirmation({
+      isOpen: true,
+      id,
+      type: "topic",
+      title: topic?.title || "this topic",
+    });
   };
 
   // Note CRUD
@@ -258,22 +295,69 @@ export default function NotesSubjectCreator({
     }
   };
 
-  const handleUpdateNote = () => {
+  const handleUpdateNote = async () => {
     if (!editingId) return;
-    setNotes(
-      notes.map((n) =>
-        n.id === editingId
-          ? { ...n, ...noteAbout, updatedAt: new Date().toISOString() }
-          : n
-      )
-    );
-    setShowNoteModal(false);
-    setNoteAbout({});
-    setEditingId(null);
+    const response = await UpdateNote(editingId, noteAbout, noteData);
+    if (response.success) {
+      setNotes(
+        notes.map((n) =>
+          n.id === editingId
+            ? { ...n, ...noteAbout, updatedAt: new Date().toISOString() }
+            : n
+        )
+      );
+      setShowNoteModal(false);
+      setNoteAbout({});
+      setEditingId(null);
+    } else {
+      alert("Error updating note: " + response.error);
+    }
   };
 
   const handleDeleteNote = (id: string) => {
-    setNotes(notes.filter((n) => n.id !== id));
+    const note = notes.find((n) => n.id === id);
+    setDeleteConfirmation({
+      isOpen: true,
+      id,
+      type: "note",
+      title: note?.title || "this note",
+    });
+  };
+
+  const confirmDelete = async () => {
+    const { id, type } = deleteConfirmation;
+    let response;
+
+    if (type === "subject") {
+      response = await DeleteSubject(id);
+      if (response.success) {
+        setSubjects(subjects.filter((s) => s.id !== id));
+        setTopics(topics.filter((t) => t.subjectID !== id));
+        setNotes(
+            notes.filter((n) => {
+            const topic = topics.find((t) => t.id === n.topicID);
+            return topic?.subjectID !== id;
+            })
+        );
+      }
+    } else if (type === "topic") {
+      response = await DeleteTopic(id);
+      if (response.success) {
+        setTopics(topics.filter((t) => t.id !== id));
+        setNotes(notes.filter((n) => n.topicID !== id));
+      }
+    } else if (type === "note") {
+      response = await DeleteNote(id);
+      if (response.success) {
+        setNotes(notes.filter((n) => n.id !== id));
+      }
+    }
+
+    if (response?.success) {
+      setDeleteConfirmation({ ...deleteConfirmation, isOpen: false });
+    } else {
+        alert("Error deleting item: " + response?.error);
+    }
   };
 
   // Filter topics and notes based on selection
@@ -757,6 +841,33 @@ export default function NotesSubjectCreator({
             />
             <span>Published</span>
           </label>
+        </div>
+      </CreatorModal>
+
+      {/* Delete Confirmation Modal */}
+      <CreatorModal
+        isOpen={deleteConfirmation.isOpen}
+        onClose={() =>
+          setDeleteConfirmation({ ...deleteConfirmation, isOpen: false })
+        }
+        onSave={confirmDelete}
+        title={`Delete ${
+          deleteConfirmation.type.charAt(0).toUpperCase() +
+          deleteConfirmation.type.slice(1)
+        }`}
+        isEditing={true} // Reusing to show "Save" button as action, we might want to change text if possible or just accept "Save" => "Confirm" implication or we can check if CreatorModal supports custom button text.
+      >
+        <div className="nsc-form-group">
+          <p className="nsc-label" style={{ fontSize: "1rem" }}>
+            Are you sure you want to delete <strong>{deleteConfirmation.title}</strong>?
+          </p>
+          <p className="nsc-subtitle" style={{ marginTop: "0.5rem" }}>
+            This action cannot be undone.
+            {deleteConfirmation.type === "subject" &&
+              " All related topics and notes will also be removed."}
+            {deleteConfirmation.type === "topic" &&
+              " All related notes will also be removed."}
+          </p>
         </div>
       </CreatorModal>
     </div>

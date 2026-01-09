@@ -1,5 +1,6 @@
-feat: Add user profile component to mobile navigation bar
+feat: Implement DELETE functionality for notes, subjects, and topics
 
-- Introduced MobileUserProfile component for displaying user information.
-- Implemented state management for showing and hiding the user profile.
-- Updated navigation icon to trigger the user profile display.
+- Added DELETE endpoints for notes, subjects, and topics in their respective API routes.
+- Implemented corresponding DeleteNote, DeleteSubject, and DeleteTopic functions in the frontend.
+- Enhanced NotesSubjectCreator component to handle delete confirmations and state updates.
+- Updated modal for delete confirmation with appropriate messaging and actions.
