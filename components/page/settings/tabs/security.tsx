@@ -10,6 +10,7 @@ export default function Security({
   setShowPasswordModal: (show: boolean) => void;
   setShowSessionsModal: (show: boolean) => void;
 }) {
+  return "Oops! This feature isn’t available yet. Stay tuned!"
   return (
     <div className="securitySection">
       <div className="securityGrid">

@@ -160,8 +160,8 @@
 }
 
 .userManagementContainer .badge.role-badge {
-  background: var(--badge-02-bg);
-  color: var(--badge-02-fg);
+  /* background: var(--badge-02-bg); */
+  /* color: var(--badge-02-fg); */
 }
 .userManagementContainer .badge.status-active {
   background: var(--badge-05-bg);

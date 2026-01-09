@@ -6,6 +6,7 @@ export default function Danger({
 }: {
   setShowDeleteModal: (show: any) => void;
 }) {
+  return "Oops! This feature isn’t available yet. Stay tuned!"
   return (
     <div className="dangerSection">
       <div className="dangerCard">

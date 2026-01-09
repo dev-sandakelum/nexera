@@ -1,117 +1,64 @@
 import { nexBadge } from "@/components/types";
 
 export const nexBadges: nexBadge[] = [
-  // --- User Suggestions ---
   {
-    id: "nex_001",
+    id: "nexRoot",
     name: "nexRoot",
-    description: "System Owner. Full access to the neural core.",
-    icon: "⚡",
+    description: "Master of all realms, guardian of knowledge and power.",
+    lore: "Forged in the Eternal Nexus, nexRoot holds the wisdom of the ancients and the power to shape worlds. Only those who dare to seek mastery across every domain can rise to this legendary rank.",
+    icon: "shield-star",
     color: {
-      bgColor: "#0f172a", // Slate 900 (Deep Dark)
-      textColor: "#f8fafc", // Slate 50 (White)
-      borderColor: "#334155", // Slate 700
+      bgColor: "#1a1a1a", // deep cosmic black
+      textColor: "#ffd700", // bright gold
+      borderColor: "#ff4500", // fiery orange-red
     },
   },
   {
-    id: "nex_002",
-    name: "nexAdmin",
-    description: "Platform Administrator. Maintains order and protocols.",
-    icon: "🛡️",
+    id: "nexApex",
+    name: "nexApex",
+    description: "The elite thinker, architect of great ideas and strategies.",
+    lore: "nexApex resides atop the Summit of Insight, where thoughts become reality. Those who bear this badge are the visionaries, the strategists, and the leaders who guide others toward enlightenment.",
+    icon: "crown",
     color: {
-      bgColor: "#1e1b4b", // Indigo 950
-      textColor: "#818cf8", // Indigo 400
-      borderColor: "#3730a3", // Indigo 800
+      bgColor: "#2e3bff", // royal blue
+      textColor: "#ffffff", // pure white
+      borderColor: "#7fdbff", // icy light blue
     },
   },
   {
-    id: "nex_003",
+    id: "nexPrime",
     name: "nexPrime",
-    description: "Premium Member. Unlocked exclusive features and distinct status.",
-    icon: "💎",
+    description: "Trusted innovator, skilled navigator of challenges.",
+    lore: "The nexPrime spark ignites innovation and determination. Those who earn it have proven their skill, courage, and relentless curiosity, becoming the pillars of knowledge in the learning realm.",
+    icon: "star",
     color: {
-      bgColor: "#422006", // Yellow/Bronze Dark
-      textColor: "#facc15", // Yellow 400 (Gold)
-      borderColor: "#854d0e", // Yellow 800
+      bgColor: "#8e44ad", // mystical purple
+      textColor: "#ffffff", // white
+      borderColor: "#d291ff", // soft lavender
     },
   },
   {
-    id: "nex_004",
-    name: "nexNova",
-    description: "Rising Star. A bright new presence gaining rapid traction.",
-    icon: "🌟",
+    id: "nexFlow",
+    name: "nexFlow",
+    description: "Active learner, explorer of ideas and skills.",
+    lore: "Like a river carving valleys, nexFlow flows with energy and curiosity. Bearers of this badge embrace challenges, share knowledge, and keep the currents of learning alive.",
+    icon: "bolt",
     color: {
-      bgColor: "#500724", // Pink 950
-      textColor: "#f472b6", // Pink 400
-      borderColor: "#9d174d", // Pink 800
-    },
-  },
-
-  // --- Theme Extensions ---
-  {
-    id: "nex_005",
-    name: "nexCore",
-    description: "The foundation of the community. Verified standard user.",
-    icon: "💠",
-    color: {
-      bgColor: "#f0f9ff", // Sky 50
-      textColor: "#0369a1", // Sky 700
-      borderColor: "#bae6fd", // Sky 200
+      bgColor: "#00b894", // vibrant teal
+      textColor: "#ffffff", // white
+      borderColor: "#55efc4", // minty highlight
     },
   },
   {
-    id: "nex_006",
-    name: "nexDev",
-    description: "Contributor. Pushing code and building the future.",
-    icon: "💻",
+    id: "nexStart",
+    name: "nexStart",
+    description: "Beginner adventurer, ready to ignite the path of discovery.",
+    lore: "nexStart is the first spark of curiosity, a symbol of courage to step into the unknown. Every great journey begins here, where young minds awaken to the endless possibilities of learning.",
+    icon: "seedling",
     color: {
-      bgColor: "#172554", // Blue 950
-      textColor: "#60a5fa", // Blue 400
-      borderColor: "#1e3a8a", // Blue 900
-    },
-  },
-  {
-    id: "nex_007",
-    name: "nexPulse",
-    description: "Highly Active. Keeps the community heartbeat alive.",
-    icon: "💓",
-    color: {
-      bgColor: "#fee2e2", // Red 100
-      textColor: "#b91c1c", // Red 700
-      borderColor: "#fca5a5", // Red 300
-    },
-  },
-  {
-    id: "nex_008",
-    name: "nexVision",
-    description: "Content Creator. producing high-value visual or written content.",
-    icon: "👁️",
-    color: {
-      bgColor: "#f3e8ff", // Purple 100
-      textColor: "#7e22ce", // Purple 700
-      borderColor: "#d8b4fe", // Purple 300
-    },
-  },
-  {
-    id: "nex_009",
-    name: "nexGuard",
-    description: "Security Reporter. Identified vulnerabilities in the Nexus.",
-    icon: "🐞",
-    color: {
-      bgColor: "#ecfccb", // Lime 100
-      textColor: "#4d7c0f", // Lime 700
-      borderColor: "#bef264", // Lime 300
-    },
-  },
-  {
-    id: "nex_010",
-    name: "nexLink",
-    description: "Connector. Invited 10+ users to the platform.",
-    icon: "🔗",
-    color: {
-      bgColor: "#ccfbf1", // Teal 100
-      textColor: "#0f766e", // Teal 700
-      borderColor: "#5eead4", // Teal 300
+      bgColor: "#f39c12", // warm amber
+      textColor: "#1e272e", // dark slate for contrast
+      borderColor: "#f1c40f", // bright yellow-gold
     },
   },
 ];

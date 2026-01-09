@@ -176,6 +176,7 @@ export type nexBadge = {
   id: string;
   name: string;
   description: string;
+  lore: string;
   icon: string;
   color: {
     bgColor: string;

@@ -12,19 +12,9 @@ import {
 } from "react-icons/fi";
 import Image from "next/image";
 import { NexeraUser } from "@/components/types";
+import { nexBadges } from "@/public/json/badges";
 
-const ROLE_BADGES = [
-  "nex_001",
-  "nex_002",
-  "nex_003",
-  "nex_004",
-  "nex_005",
-  "nex_006",
-  "nex_007",
-  "nex_008",
-  "nex_009",
-  "nex_010",
-];
+const ROLE_BADGES = nexBadges;
 
 export default function UserManagement() {
   const [users, setUsers] = useState<NexeraUser[]>([]);
@@ -50,7 +40,7 @@ export default function UserManagement() {
   }, []);
 
   // --- DERIVED STATE ---
-  const filteredUsers = useMemo(() => {
+  const filteredUsers: NexeraUser[] = useMemo(() => {
     if (!users) return [];
     let result = [...users];
 
@@ -238,8 +228,8 @@ export default function UserManagement() {
           >
             <option value="all">All Roles</option>
             {ROLE_BADGES.map((badge) => (
-              <option key={badge} value={badge}>
-                {badge}
+              <option key={badge.id} value={badge.id}>
+                {badge.name}
               </option>
             ))}
           </select>
@@ -311,76 +301,85 @@ export default function UserManagement() {
             <tbody style={{ position: "relative" }}>
               <AnimatePresence initial={false}>
                 {filteredUsers.map((user) => (
-                  <motion.tr
-                    key={user.id}
-                    layout
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <td className="userCell" data-label="User">
-                      <div className="userInfo">
-                        <div className="avatar">
-                          {user.profilePicture ? (
-                            <Image
-                              src={user.profilePicture}
-                              alt={user.name}
-                              width={32}
-                              height={32}
-                              style={{ borderRadius: "50%" }}
-                            />
-                          ) : (
-                            <div className="avatarPlaceholder">
-                              {user.name.charAt(0)}
-                            </div>
-                          )}
+                    <motion.tr
+                      key={user.id}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <td className="userCell" data-label="User">
+                        <div className="userInfo">
+                          <div className="avatar">
+                            {user.profilePicture ? (
+                              <Image
+                                src={user.profilePicture}
+                                alt={user.name}
+                                width={32}
+                                height={32}
+                                style={{ borderRadius: "50%" }}
+                              />
+                            ) : (
+                              <div className="avatarPlaceholder">
+                                {user.name.charAt(0)}
+                              </div>
+                            )}
+                          </div>
+                          <span className="userName">{user.name}</span>
                         </div>
-                        <span className="userName">{user.name}</span>
-                      </div>
-                    </td>
-                    <td data-label="Email" className="emailCell">
-                      {user.email}
-                    </td>
-                    <td data-label="Role">
-                      <span className="badge role-badge">{getRole(user)}</span>
-                    </td>
-                    <td data-label="Status">
-                      <span
-                        className={`badge status-${user.status || "active"}`}
-                      >
-                        {user.status || "active"}
-                      </span>
-                    </td>
-                    <td data-label="Joined" className="dateCell">
-                      {new Date(user.joinedAt).toLocaleDateString()}
-                    </td>
-                    <td className="actionsCell" data-label="Actions">
-                      <button
-                        className="actionBtn view"
-                        onClick={() => {
-                          setSelectedUser(user);
-                          setShowViewModal(true);
-                        }}
-                      >
-                        <FiEye />
-                      </button>
-                      <button
-                        className="actionBtn edit"
-                        onClick={() => openEditModal(user)}
-                      >
-                        <FiEdit2 />
-                      </button>
-                      {/* <button 
+                      </td>
+                      <td data-label="Email" className="emailCell">
+                        {user.email}
+                      </td>
+                      <td data-label="Role">
+                        <span
+                          className="badge role-badge"
+                          style={{
+                            backgroundColor: (ROLE_BADGES.find((b) => b.id == getRole(user))?.color.bgColor ?? ""),
+                            borderColor: (ROLE_BADGES.find((b) => b.id == getRole(user))?.color.borderColor ?? ""),
+                            color: (ROLE_BADGES.find((b) => b.id == getRole(user))?.color.textColor ?? ""),
+                          }}
+                        >
+                          {getRole(user)}
+                        </span>
+                      </td>
+                      <td data-label="Status">
+                        <span
+                          className={`badge status-${user.status || "active"}`}
+                        >
+                          {user.status || "active"}
+                        </span>
+                      </td>
+                      <td data-label="Joined" className="dateCell">
+                        {new Date(user.joinedAt).toLocaleDateString()}
+                      </td>
+                      <td className="actionsCell" data-label="Actions">
+                        <button
+                          className="actionBtn view"
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setShowViewModal(true);
+                          }}
+                        >
+                          <FiEye />
+                        </button>
+                        <button
+                          className="actionBtn edit"
+                          onClick={() => openEditModal(user)}
+                        >
+                          <FiEdit2 />
+                        </button>
+                        {/* <button 
                         className={`actionBtn toggle ${user.status === 'disabled' ? 'activate' : 'disable'}`}
                         onClick={() => toggleStatusRow(user)}
                         title={user.status === 'active' ? "Disable User" : "Activate User"}
                       >
                          {user.status === 'disabled' ? <FiCheck /> : <FiXCircle />}
                       </button> */}
-                    </td>
-                  </motion.tr>
-                ))}
+                      </td>
+                    </motion.tr>
+                  ))}
               </AnimatePresence>
             </tbody>
           </table>
@@ -520,13 +519,13 @@ export default function UserManagement() {
                 <div className="badgeGrid">
                   {ROLE_BADGES.map((badge) => (
                     <button
-                      key={badge}
+                      key={badge.id}
                       className={`badgeOption ${
-                        pendingBadge === badge ? "selected" : ""
+                        pendingBadge === badge.id ? "selected" : ""
                       }`}
-                      onClick={() => setPendingBadge(badge)}
+                      onClick={() => setPendingBadge(badge.id)}
                     >
-                      {badge}
+                      {badge.name}
                     </button>
                   ))}
                 </div>

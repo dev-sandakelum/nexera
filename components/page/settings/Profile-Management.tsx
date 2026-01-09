@@ -10,21 +10,8 @@ import {
   FiActivity,
   FiLink,
   FiEdit2,
-  FiSave,
   FiX,
-  FiCamera,
-  FiTrash2,
-  FiMail,
-  FiBell,
-  FiRefreshCw,
-  FiEye,
-  FiEyeOff,
-  FiCheck,
   FiAlertCircle,
-  FiMonitor,
-  FiDownload,
-  FiLogOut,
-  FiGlobe,
 } from "react-icons/fi";
 import { NexeraUser } from "@/components/types";
 import Security from "./tabs/security";
@@ -70,8 +57,10 @@ export default function UserProfile() {
   const { refreshUser, updateUser: updateUserContext } = useUser();
   //profile form state
   const { user } = useUser();
-  const [formUser, setFormUser] = useState<NexeraUser>(user || {} as NexeraUser);
-  if(!user){
+  const [formUser, setFormUser] = useState<NexeraUser>(
+    user || ({} as NexeraUser)
+  );
+  if (!user) {
     return <div>Loading...</div>;
   }
   // Modals
@@ -91,7 +80,9 @@ export default function UserProfile() {
     showConfirm: false,
   });
 
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(user.profilePicture || null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(
+    user.profilePicture || null
+  );
   const [completeness] = useState(75); // Dummy completeness
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -219,7 +210,7 @@ export default function UserProfile() {
       </div>
 
       {/* Completeness Bar */}
-      <div className="completenessBar">
+      {/* <div className="completenessBar">
         <div className="completenessHeader">
           <span>Profile Completeness</span>
           <span className="completenessPercent">{completeness}%</span>
@@ -232,7 +223,7 @@ export default function UserProfile() {
             transition={{ duration: 0.5 }}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Tabs */}
       <div className="profileTabs">

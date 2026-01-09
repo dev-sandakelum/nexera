@@ -1,6 +1,7 @@
-feat: Implement DELETE functionality for notes, subjects, and topics
+feat: Enhance user management and badge system
 
-- Added DELETE endpoints for notes, subjects, and topics in their respective API routes.
-- Implemented corresponding DeleteNote, DeleteSubject, and DeleteTopic functions in the frontend.
-- Enhanced NotesSubjectCreator component to handle delete confirmations and state updates.
-- Updated modal for delete confirmation with appropriate messaging and actions.
+- Added 'lore' property to the nexBadge type for richer badge descriptions.
+- Updated UserManagement component to utilize the new nexBadges data structure for role badges.
+- Improved badge rendering in user tables and selection options.
+- Refactored badge color handling for better visual consistency.
+- Adjusted CSS styles for user management and badge display.

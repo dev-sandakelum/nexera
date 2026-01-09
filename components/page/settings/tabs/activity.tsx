@@ -2,6 +2,7 @@ import React from "react";
 import { FiEdit2, FiLogOut, FiShield } from "react-icons/fi";
 
 export default function Activity() {
+  return "Oops! This feature isn’t available yet. Stay tuned!"
   return (
     <div className="activitySection">
       <div className="activityList">

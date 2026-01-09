@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
 import OptionPanel from "../models/optionPanel";
 import Link from "next/link";
+import { nexBadges } from "@/public/json/badges";
 
 export default function Card0({
   dataset,
@@ -85,7 +86,7 @@ export default function Card0({
             ) : (
               <>
                 {dataset.map((subject) => {
-                  const badge = badges.find(
+                  const badge = nexBadges.find(
                     (b) =>
                       b.id ===
                       users.find((u) => u.id === subject.createdBy)?.badges["0"]
@@ -152,7 +153,7 @@ export default function Card0({
                             borderRadius: "30px",
                             fontSize: "8px",
                             padding: "3px 8px",
-                            color: "#878787ff",
+                            color: "var(--muted)",
                             transform: "translateY(2px)",
                             maxWidth: "200px",
                           }}
@@ -163,7 +164,7 @@ export default function Card0({
                               borderRadius: "30px",
                               fontSize: "11px",
                               marginTop: "1px",
-                              color: "#626262ff",
+                              color: "var(--muted)",
                               fontWeight: "500",
                               marginLeft: "4px",
                             }}

@@ -2,6 +2,7 @@ import React from "react";
 import { FiDownload } from "react-icons/fi";
 
 export default function Privacy() {
+  return "Oops! This feature isn’t available yet. Stay tuned!"
   return (
     <div className="privacySection">
       <div className="privacyGrid">

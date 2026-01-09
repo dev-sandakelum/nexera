@@ -122,7 +122,7 @@ export default function NavBar({
                 className={`img ${activeIcon}`}
                 style={
                   {
-                    "--navCenter": `${centerHeight.toFixed(0)}px`,
+                    "--navCenter": `${Number(centerHeight.toFixed(0)) - 2}px`,
                   } as React.CSSProperties
                 }
               >

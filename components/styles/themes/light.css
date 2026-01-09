@@ -5,6 +5,7 @@
   --shadow: rgba(104, 104, 104, 0.08);
   
   --color: var(--foreground);
+  --muted :#6b7280;
   --components-background: #fbfbfb;
   --theme-colorA: #7b7dee;
   --theme-colorB: #34343e;

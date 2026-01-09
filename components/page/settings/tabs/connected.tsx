@@ -2,6 +2,7 @@ import React from "react";
 import { BsFacebook, BsGithub, BsGoogle } from "react-icons/bs";
 
 export default function Connected() {
+  return "Oops! This feature isn’t available yet. Stay tuned!"
   return (
     <div className="connectedSection">
       <div className="connectedGrid">

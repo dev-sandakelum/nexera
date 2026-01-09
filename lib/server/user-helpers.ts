@@ -3,12 +3,13 @@
 
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
-import { unstable_noStore } from 'next/cache';
+import { unstable_noStore } from "next/cache";
 import { initAdmin } from "@/components/firebase/firebaseAdmin";
 import { getCachedUserByEmail } from "@/lib/firebase-cache";
 import { revalidateUsers } from "@/lib/revalidate";
 import { NexeraUser } from "@/components/types";
 import { getFirestore } from "firebase-admin/firestore";
+import { nexBadges } from "@/public/json/badges";
 
 /**
  * Fetches an image from a URL and uploads it to Supabase
@@ -31,14 +32,14 @@ async function uploadProfilePictureFromUrl(
 
     // Upload to Supabase using server-side approach
     const { createClient } = await import("@supabase/supabase-js");
-    
+
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY! // Use service role key for server
     );
 
     const fileName = `profile_pic3/${userId}/avatar.png`;
-    
+
     const { data, error } = await supabase.storage
       .from("users")
       .upload(fileName, buffer, {
@@ -74,7 +75,7 @@ export async function createNewUser(
 ): Promise<NexeraUser> {
   // Access headers to make this dynamic (required for crypto.randomUUID in Next.js 15+)
   await headers();
-  
+
   const userId = crypto.randomUUID();
   let profilePicture = "";
 
@@ -85,7 +86,7 @@ export async function createNewUser(
       clerkProfilePicture,
       userId
     );
-    
+
     if (profilePicture) {
       console.log(`Successfully uploaded profile picture: ${profilePicture}`);
     } else {
@@ -102,7 +103,12 @@ export async function createNewUser(
       password: "",
       joinedAt: new Date().toISOString(),
       bio: "",
-      badges: [{id : 'nex_004'}],
+      badges: [
+        {
+          id:
+            "nexStart",
+        },
+      ],
       academic: {
         institution: "",
         degree: "",
