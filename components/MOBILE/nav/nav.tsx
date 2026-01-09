@@ -175,7 +175,14 @@ export default function MobileNavBar({
               alt="Nexera Logo"
               width={98}
               height={34}
-              className="logoImage"
+              className="logoImage light"
+            />
+            <Image
+              src="/logo/nexera-logo-dark.png"
+              alt="Nexera Logo"
+              width={98}
+              height={34}
+              className="logoImage dark"
             />
           </div>
         </div>

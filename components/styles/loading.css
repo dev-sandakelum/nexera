@@ -1,0 +1,37 @@
+.loadingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadingLogo {
+  width: 200px;
+  height: 100px;
+  background-size: 110%;
+  background-position: center;
+  filter: url("#grayscale");
+}
+[data-theme="light"] .loadingContainer {
+  background-color: #f0f4fc;
+}
+[data-theme="light"] .loadingLogo {
+  background-image: var(--logo-light);
+}
+[data-theme="dark"] .loadingContainer {
+  background-color: #000;
+}
+[data-theme="dark"] .loadingLogo {
+  background-image: var(--logo-dark);
+}
+
+[data-theme="contrast"] .loadingContainer {
+  background-color: #0d1729;
+}
+[data-theme="contrast"] .loadingLogo {
+  background-image: var(--logo-contrast);
+}

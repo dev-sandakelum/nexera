@@ -1,29 +1,17 @@
+import "@/components/styles/loading.css";
+import React from "react";
 export default function LoadingAnimation() {
   return (
-    <div
-      className=""
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100svh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#eff3fc",
-      }}
-    >
+    <div className="loadingContainer">
       <div
-        className=""
-        style={{
-          width: 200,
-          height: 100,
-          backgroundImage: "url('/logo/logo.gif')",
-          backgroundSize: "110%",
-          backgroundPosition: "center",
-          filter: "map-url('#grayscale')",
-        }}
+        className="loadingLogo"
+        style={
+          {
+            "--logo-light": "url(/logo/logo.gif)",
+            "--logo-dark": "url(/logo/logo-dark.gif)",
+            "--logo-contrast": "url(/logo/logo-contrast.gif)",
+          } as React.CSSProperties
+        }
       ></div>
     </div>
   );

@@ -34,6 +34,20 @@
   transform: translateY(-24px);
 }
 
+.mobile-nav .logoImage{
+  display: none;
+}
+
+[data-theme="light"] .mobile-nav .logoImage.light {
+  display: block;
+}
+[data-theme="dark"] .mobile-nav .logoImage.dark {
+  display: block;
+}
+[data-theme="contrast"] .mobile-nav .logoImage.dark {
+  display: block;
+}
+
 .mobile-nav .nav-sideIcons {
   height: 64px;
   width: 64px;

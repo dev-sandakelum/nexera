@@ -92,7 +92,14 @@ export default function NavBar({
             alt="Nexera Logo"
             width={120}
             height={40}
-            className="logoImage"
+            className="logoImage light"
+          /> 
+          <Image
+            src="/logo/nexera-logo-dark.png"
+            alt="Nexera Logo"
+            width={120}
+            height={40}
+            className="logoImage dark"
           />
         </div>
         <div className="iconContainer">

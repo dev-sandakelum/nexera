@@ -93,7 +93,19 @@
 .navbar > .navigations .logoContainer .logoImage {
   object-fit: contain;
   transform: translateX(-10px);
+  display: none;
 }
+
+[data-theme="light"] .navbar > .navigations .logoContainer .logoImage.light {
+  display: block;
+}
+[data-theme="dark"] .navbar > .navigations .logoContainer .logoImage.dark {
+  display: block;
+}
+[data-theme="contrast"] .navbar > .navigations .logoContainer .logoImage.dark {
+  display: block;
+}
+
 .navbar .iconContainer {
   height: 100%;
   display: flex;
