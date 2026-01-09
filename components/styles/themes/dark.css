@@ -1,0 +1,90 @@
+:root {
+  --background: #0f1220;
+  --background2: #14182a;
+  --foreground: #eff3fc;
+  --color: var(--foreground);
+  --components-background: #181c31;
+
+  --theme-colorA: #8b8df8;
+  --theme-colorB: #e5e7eb;
+  --theme-colorC: #f28aa3;
+  --theme-colorD: #2a2d55;
+  --theme-colorE: #e5e7eb;
+  --theme-colorE75: #e5e7eb75;
+
+  --navbar-background: #12162a;
+  --navbar-foreground: #e5e7eb;
+  --navbar-border: #23274a;
+  --navbar-hover-background: #8b5cf625;
+  --navbar-hover-foreground: #a78bfa;
+
+  --badge-01-bg: #2a1f55;
+  --badge-01-fg: #b9a7ff;
+
+  --badge-02-bg: #1e293b;
+  --badge-02-fg: #93c5fd;
+
+  --badge-03-bg: #042f2e;
+  --badge-03-fg: #67e8f9;
+
+  --badge-04-bg: #022c22;
+  --badge-04-fg: #5eead4;
+
+  --badge-05-bg: #052e16;
+  --badge-05-fg: #86efac;
+
+  --badge-06-bg: #1a2e05;
+  --badge-06-fg: #bef264;
+
+  --badge-07-bg: #2e2a05;
+  --badge-07-fg: #fde047;
+
+  --badge-08-bg: #2c1a05;
+  --badge-08-fg: #fdba74;
+
+  --badge-09-bg: #2c0b0b;
+  --badge-09-fg: #fca5a5;
+
+  --badge-10-bg: #2b0f1d;
+  --badge-10-fg: #f9a8d4;
+
+  --badge-11-bg: #1c1c1c;
+  --badge-11-fg: #d6d3d1;
+
+  --badge-12-bg: #0f172a;
+  --badge-12-fg: #cbd5f5;
+
+  --file-01-bg: #7f1d1d;
+  --file-01-fg: #fecaca;
+
+  --file-02-bg: #134e4a;
+  --file-02-fg: #99f6e4;
+
+  --file-03-bg: #78350f;
+  --file-03-fg: #fde68a;
+
+  --accent-soft: #60a5fa;
+  --accent-soft-bg: #1e293b;
+  --accent-soft-border: #1e40af;
+
+  --success-soft: #4ade80;
+  --success-soft-bg: #052e16;
+  --success-soft-border: #14532d;
+
+  --warning-soft: #fb923c;
+  --warning-soft-bg: #2c1a05;
+  --warning-soft-border: #78350f;
+
+  --danger-soft: #f87171;
+  --danger-soft-bg: #2c0b0b;
+  --danger-soft-border: #7f1d1d;
+
+  --scrollbar-track: #1b1f36;
+  --scrollbar-thumb: #3a3f6b;
+  --scrollbar-thumb-hover: #4a4f85;
+  --scrollbar-thumb-active: #5b60a0;
+
+  --shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+  --poor-richard-font: "Poor Richard", sans-serif;
+}

@@ -21,7 +21,7 @@
 
 :root {
   /* ===== VS CODE DARK+ THEME (Default) ===== */
-  
+
   /* Editor Colors */
   --vscode-editor-bg: #1e1e1e;
   --vscode-editor-fg: #d4d4d4;
@@ -29,11 +29,11 @@
   --vscode-line-number-active: #c6c6c6;
   --vscode-selection-bg: #264f78;
   --vscode-line-highlight-bg: #2a2a2a;
-  
+
   /* Wrap Indicator */
   --vscode-wrap-indicator: rgba(133, 133, 133, 0.4);
-  --vscode-wrap-indicator-char: '↩';
-  
+  --vscode-wrap-indicator-char: "↩";
+
   /* Syntax Token Colors */
   --vscode-comment: #6a9955;
   --vscode-keyword: #569cd6;
@@ -54,62 +54,63 @@
   --vscode-important: #569cd6;
   --vscode-bold: #569cd6;
   --vscode-italic: #569cd6;
-  
+
   /* Special Highlighting */
   --vscode-highlight-line-bg: rgba(255, 255, 255, 0.1);
   --vscode-highlight-line-border: #3794ff;
   --vscode-inserted-bg: rgba(155, 185, 85, 0.2);
   --vscode-deleted-bg: rgba(255, 0, 0, 0.2);
-  
+
   /* Scrollbar */
   --vscode-scrollbar-track: #1e1e1e;
   --vscode-scrollbar-thumb: #424242;
   --vscode-scrollbar-thumb-hover: #4e4e4e;
-  
+
   /* Wrapping */
   --vscode-wrap-indent: 2ch;
 }
 
 /* ===== VS CODE LIGHT+ THEME ===== */
-[data-theme="light"],
-.light-theme {
-  --vscode-editor-bg: #ffffff;
-  --vscode-editor-fg: #000000;
-  --vscode-line-number: #237893;
-  --vscode-line-number-active: #0b216f;
-  --vscode-selection-bg: #add6ff;
-  --vscode-line-highlight-bg: #f0f0f0;
-  
-  --vscode-wrap-indicator: rgba(35, 120, 147, 0.4);
-  
-  --vscode-comment: #008000;
-  --vscode-keyword: #0000ff;
-  --vscode-string: #a31515;
-  --vscode-number: #098658;
-  --vscode-function: #795e26;
-  --vscode-variable: #001080;
-  --vscode-constant: #0070c1;
-  --vscode-type: #267f99;
-  --vscode-class: #267f99;
-  --vscode-property: #001080;
-  --vscode-operator: #000000;
-  --vscode-punctuation: #000000;
-  --vscode-tag: #800000;
-  --vscode-attr-name: #ff0000;
-  --vscode-attr-value: #0000ff;
-  --vscode-regex: #811f3f;
-  --vscode-important: #0000ff;
-  --vscode-bold: #0000ff;
-  --vscode-italic: #0000ff;
-  
-  --vscode-highlight-line-bg: rgba(0, 0, 0, 0.05);
-  --vscode-highlight-line-border: #0070c1;
-  --vscode-inserted-bg: rgba(155, 185, 85, 0.3);
-  --vscode-deleted-bg: rgba(255, 0, 0, 0.3);
-  
-  --vscode-scrollbar-track: #ffffff;
-  --vscode-scrollbar-thumb: #c4c4c4;
-  --vscode-scrollbar-thumb-hover: #a6a6a6;
+@media (prefers-color-scheme: dark) {
+  .root {
+    --vscode-editor-bg: #ffffff;
+    --vscode-editor-fg: #000000;
+    --vscode-line-number: #237893;
+    --vscode-line-number-active: #0b216f;
+    --vscode-selection-bg: #add6ff;
+    --vscode-line-highlight-bg: #f0f0f0;
+
+    --vscode-wrap-indicator: rgba(35, 120, 147, 0.4);
+
+    --vscode-comment: #008000;
+    --vscode-keyword: #0000ff;
+    --vscode-string: #a31515;
+    --vscode-number: #098658;
+    --vscode-function: #795e26;
+    --vscode-variable: #001080;
+    --vscode-constant: #0070c1;
+    --vscode-type: #267f99;
+    --vscode-class: #267f99;
+    --vscode-property: #001080;
+    --vscode-operator: #000000;
+    --vscode-punctuation: #000000;
+    --vscode-tag: #800000;
+    --vscode-attr-name: #ff0000;
+    --vscode-attr-value: #0000ff;
+    --vscode-regex: #811f3f;
+    --vscode-important: #0000ff;
+    --vscode-bold: #0000ff;
+    --vscode-italic: #0000ff;
+
+    --vscode-highlight-line-bg: rgba(0, 0, 0, 0.05);
+    --vscode-highlight-line-border: #0070c1;
+    --vscode-inserted-bg: rgba(155, 185, 85, 0.3);
+    --vscode-deleted-bg: rgba(255, 0, 0, 0.3);
+
+    --vscode-scrollbar-track: #ffffff;
+    --vscode-scrollbar-thumb: #c4c4c4;
+    --vscode-scrollbar-thumb-hover: #a6a6a6;
+  }
 }
 
 /* ============================================
@@ -120,7 +121,7 @@
 pre[class*="language-"] {
   background: var(--vscode-editor-bg);
   color: var(--vscode-editor-fg);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: "Consolas", "Courier New", monospace;
   font-size: 14px;
   line-height: 1.5;
   padding: 1em;
@@ -138,7 +139,7 @@ pre[class*="language-"] {
 code[class*="language-"] {
   background: transparent;
   color: var(--vscode-editor-fg);
-  font-family: 'Consolas', 'Courier New', monospace;
+  font-family: "Consolas", "Courier New", monospace;
   font-size: 14px;
   line-height: 1.5;
   text-align: left;
@@ -223,7 +224,7 @@ pre[class*="language-"].wrap-enabled.wrap-indent-deep {
 /* Enable wrap indicators - Add .wrap-indicator class */
 .wrap-indicator.code-wrap pre[class*="language-"]::after,
 pre[class*="language-"].wrap-enabled.wrap-indicator::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -257,8 +258,12 @@ pre[class*="language-"].wrap-enabled.wrap-indicator::before {
 }
 
 @keyframes fadeInWrapIndicator {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Show indicator when content wraps */
@@ -621,34 +626,84 @@ pre[class*="language-"]::before {
 }
 
 /* Language-specific labels */
-pre.language-javascript::before { content: 'JavaScript'; }
-pre.language-typescript::before { content: 'TypeScript'; }
-pre.language-jsx::before { content: 'JSX'; }
-pre.language-tsx::before { content: 'TSX'; }
-pre.language-python::before { content: 'Python'; }
-pre.language-java::before { content: 'Java'; }
-pre.language-css::before { content: 'CSS'; }
-pre.language-scss::before { content: 'SCSS'; }
-pre.language-html::before { content: 'HTML'; }
-pre.language-json::before { content: 'JSON'; }
+pre.language-javascript::before {
+  content: "JavaScript";
+}
+pre.language-typescript::before {
+  content: "TypeScript";
+}
+pre.language-jsx::before {
+  content: "JSX";
+}
+pre.language-tsx::before {
+  content: "TSX";
+}
+pre.language-python::before {
+  content: "Python";
+}
+pre.language-java::before {
+  content: "Java";
+}
+pre.language-css::before {
+  content: "CSS";
+}
+pre.language-scss::before {
+  content: "SCSS";
+}
+pre.language-html::before {
+  content: "HTML";
+}
+pre.language-json::before {
+  content: "JSON";
+}
 pre.language-markdown::before,
-pre.language-md::before { content: 'Markdown'; }
+pre.language-md::before {
+  content: "Markdown";
+}
 pre.language-bash::before,
-pre.language-sh::before { content: 'Bash'; }
-pre.language-sql::before { content: 'SQL'; }
+pre.language-sh::before {
+  content: "Bash";
+}
+pre.language-sql::before {
+  content: "SQL";
+}
 pre.language-yaml::before,
-pre.language-yml::before { content: 'YAML'; }
-pre.language-xml::before { content: 'XML'; }
-pre.language-php::before { content: 'PHP'; }
-pre.language-go::before { content: 'Go'; }
-pre.language-rust::before { content: 'Rust'; }
-pre.language-c::before { content: 'C'; }
-pre.language-cpp::before { content: 'C++'; }
-pre.language-csharp::before { content: 'C#'; }
-pre.language-swift::before { content: 'Swift'; }
-pre.language-kotlin::before { content: 'Kotlin'; }
-pre.language-ruby::before { content: 'Ruby'; }
-pre.language-diff::before { content: 'Diff'; }
+pre.language-yml::before {
+  content: "YAML";
+}
+pre.language-xml::before {
+  content: "XML";
+}
+pre.language-php::before {
+  content: "PHP";
+}
+pre.language-go::before {
+  content: "Go";
+}
+pre.language-rust::before {
+  content: "Rust";
+}
+pre.language-c::before {
+  content: "C";
+}
+pre.language-cpp::before {
+  content: "C++";
+}
+pre.language-csharp::before {
+  content: "C#";
+}
+pre.language-swift::before {
+  content: "Swift";
+}
+pre.language-kotlin::before {
+  content: "Kotlin";
+}
+pre.language-ruby::before {
+  content: "Ruby";
+}
+pre.language-diff::before {
+  content: "Diff";
+}
 
 /* ============================================
    MOBILE & RESPONSIVE
@@ -663,27 +718,27 @@ pre.language-diff::before { content: 'Diff'; }
     border-radius: 0;
     border-left: 0;
     border-right: 0;
-    
+
     /* Enable wrap by default on mobile */
     overflow-x: auto;
     overflow-wrap: break-word;
   }
-  
+
   /* Auto-wrap on very small screens */
   pre[class*="language-"].mobile-wrap {
     overflow-x: hidden;
   }
-  
+
   pre[class*="language-"].mobile-wrap code[class*="language-"] {
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-  
+
   .code-line.line-number::before {
     width: 1.5em;
     margin-right: 1em;
   }
-  
+
   pre[class*="language-"]::before {
     font-size: 0.7em;
     padding: 0.2em 0.5em;
@@ -695,22 +750,22 @@ pre.language-diff::before { content: 'Diff'; }
     font-size: 12px;
     padding: 0.75em;
   }
-  
+
   .code-line {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
-  
+
   .code-line.line-number::before {
     width: 1.25em;
     margin-right: 0.75em;
   }
-  
+
   /* Force wrap on very small screens */
   pre[class*="language-"] {
     overflow-x: hidden;
   }
-  
+
   pre[class*="language-"] code[class*="language-"] {
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -762,26 +817,26 @@ pre.language-diff::before { content: 'Diff'; }
     border: 1px solid #cccccc !important;
     box-shadow: none !important;
     page-break-inside: avoid;
-    
+
     /* Enable wrap for printing */
     overflow-x: visible !important;
     white-space: pre-wrap !important;
   }
-  
+
   pre[class*="language-"] code[class*="language-"] {
     white-space: pre-wrap !important;
   }
-  
+
   .code-line.highlight-line {
     background-color: #f0f0f0 !important;
     border-left-color: #cccccc !important;
   }
-  
+
   pre[class*="language-"]::before,
   .code-wrap-toggle {
     display: none;
   }
-  
+
   .token {
     text-shadow: none !important;
   }
@@ -809,7 +864,7 @@ pre[class*="language-"]:focus-visible {
   pre[class*="language-"] {
     border: 2px solid currentColor;
   }
-  
+
   .code-line.highlight-line {
     border-left-width: 6px;
   }
