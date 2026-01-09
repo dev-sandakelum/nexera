@@ -1,7 +1,5 @@
-feat: Enhance user management and badge system
+fix: Improve user badge handling and update user fetching logic
 
-- Added 'lore' property to the nexBadge type for richer badge descriptions.
-- Updated UserManagement component to utilize the new nexBadges data structure for role badges.
-- Improved badge rendering in user tables and selection options.
-- Refactored badge color handling for better visual consistency.
-- Adjusted CSS styles for user management and badge display.
+- Added a check to ensure user badges are an array before mapping in MobileUserProfile component.
+- Renamed fetched user variable for clarity in UserContext and updated state management accordingly.
+- Enhanced badge color definitions in the nexBadges data structure for better visual representation.
