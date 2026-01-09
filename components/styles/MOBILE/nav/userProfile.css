@@ -1,0 +1,190 @@
+/* ========================================
+   MOBILE USER PROFILE
+   Prefix: mup- (mobile-user-profile)
+   ======================================== */
+
+.mup-overlay {
+  position: fixed;
+  inset: 0;
+  /* background: rgba(0, 0, 0, 0.5); */
+  z-index: 1001;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.mup-container {
+  width: 100%;
+  max-height: 85vh;
+  background: var(--components-background);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 1002;
+  border-top: 1px solid var(--navbar-border);
+}
+
+.mup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--navbar-border);
+}
+
+.mup-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color);
+  margin: 0;
+}
+
+.mup-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--color);
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 20px;
+  transition: all 0.2s;
+}
+
+.mup-close-btn:hover {
+  background: var(--background);
+}
+
+.mup-content {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 40px; /* Safe area */
+}
+
+/* User Info Section */
+.mup-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.mup-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid var(--accent-soft-border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mup-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mup-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color);
+}
+
+.mup-headline {
+  font-size: 12px;
+  color: var(--theme-colorB);
+  font-weight: 500;
+}
+
+/* Bio Section */
+.mup-bio {
+  font-size: 13px;
+  color: var(--color);
+  line-height: 1.5;
+  background: var(--background);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--navbar-border);
+}
+
+/* Badges Section */
+.mup-section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.mup-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mup-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.mup-badge-icon {
+  font-size: 14px;
+}
+
+/* Scroll handling */
+.mup-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mup-content::-webkit-scrollbar-thumb {
+  background: var(--navbar-border);
+  border-radius: 4px;
+}
+
+/* Details Section */
+.mup-details-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--background);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--navbar-border);
+}
+
+.mup-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mup-detail-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--theme-colorB);
+  text-transform: uppercase;
+}
+
+.mup-detail-value {
+  font-size: 14px;
+  color: var(--color);
+  font-weight: 500;
+  word-break: break-all;
+}

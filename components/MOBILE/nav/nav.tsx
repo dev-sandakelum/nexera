@@ -16,6 +16,8 @@ import {
 import { TbHexagons } from "react-icons/tb";
 import LoadingAnimation from "@/components/page/loading";
 
+import MobileUserProfile from "./userProfile";
+
 export default function MobileNavBar({
   user,
   activeIcon,
@@ -28,6 +30,7 @@ export default function MobileNavBar({
   const pathname = usePathname();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
   const [whileRouting, setWhileRouting] = useState<boolean>(false);
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   console.log("path =>" + pathname);
 
@@ -188,7 +191,7 @@ export default function MobileNavBar({
         </div>
 
         <div className="nav-sideIcons">
-          <div className="nav-sideIcon">
+          <div className="nav-sideIcon" onClick={() => setShowProfile(true)}>
             <div
               className="user-profile-icon"
               style={
@@ -216,6 +219,11 @@ export default function MobileNavBar({
           </p>
         </div>
       </div>
+      <MobileUserProfile 
+        user={user} 
+        isOpen={showProfile} 
+        onClose={() => setShowProfile(false)} 
+      />
     </>
   );
 }

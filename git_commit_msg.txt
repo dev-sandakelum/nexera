@@ -1,1 +1,5 @@
-refactor: remove unused imports in Preferences component
+feat: Add user profile component to mobile navigation bar
+
+- Introduced MobileUserProfile component for displaying user information.
+- Implemented state management for showing and hiding the user profile.
+- Updated navigation icon to trigger the user profile display.
