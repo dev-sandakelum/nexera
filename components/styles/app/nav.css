@@ -169,20 +169,21 @@
   z-index: 9;
 }
 
-.indicatorImage.light {
-  display: block;
-}
-.indicatorImage.dark {
+.indicatorImage {
   display: none;
 }
-@media (prefers-color-scheme: dark) {
-  .indicatorImage.light {
-    display: block;
-  }
-  .indicatorImage.dark {
-    display: none;
-  }
+
+[data-theme="light"] .indicatorImage.light {
+  display: block;
 }
+
+[data-theme="dark"] .indicatorImage.dark {
+  display: block;
+}
+[data-theme="contrast"] .indicatorImage.contrast {
+  display: block;
+}
+
 .navbar .mask {
   position: absolute;
   width: 72px;

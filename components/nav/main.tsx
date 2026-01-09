@@ -63,7 +63,7 @@ export default function NavBar({
     };
     const IconComponent = NAV_ICONS[icons[idx]];
     const isActive = activeIcon === icons[idx];
-    
+
     return (
       <Link href={`/${icons[idx]}`} type="button" className="navLink">
         <IconComponent
@@ -84,9 +84,9 @@ export default function NavBar({
       ></div>
       <div className="navigations">
         <div className="logoContainer">
-            <div className="logo">
+          <div className="logo">
             <FaBookBookmark size={24} className="icon" />
-            </div>
+          </div>
           <Image
             src="/logo/nexera-logo2.png"
             alt="Nexera Logo"
@@ -132,6 +132,13 @@ export default function NavBar({
                   width={66}
                   height={180}
                   className="indicatorImage dark"
+                />
+                <Image
+                  src="/components/nav/iContrast2.png"
+                  alt="Indicator"
+                  width={66}
+                  height={180}
+                  className="indicatorImage contrast"
                 />
               </div>
             </div>

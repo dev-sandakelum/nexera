@@ -48,9 +48,16 @@ import "@/components/styles/MOBILE/admin/notes-m.css";
 import "@/components/styles/MOBILE/admin/user-m.css";
 
 import "@/components/styles/MOBILE/admin/settings/main.css";
+
+// Themes
+import "@/components/styles/themes/dark.css";
+import "@/components/styles/themes/light.css";
+import "@/components/styles/themes/contrast.css";
+
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import LoadingAnimation from "@/components/page/loading";
+import { ThemeProvider } from "./theme-controller";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en" suppressHydrationWarning data-theme="dark">
       <body
         className={`${poppins.variable} ${geistMono.variable} `}
         style={{
@@ -88,7 +95,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Suspense fallback={<LoadingAnimation />}>
-          <ClerkProvider>{children}</ClerkProvider>
+          <ThemeProvider>
+            <ClerkProvider>{children}</ClerkProvider>
+          </ThemeProvider>
         </Suspense>
       </body>
     </html>

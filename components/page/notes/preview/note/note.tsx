@@ -5,11 +5,13 @@ import { MarkdownRenderer } from "./MarkdownRenderer";
 export default async function Page({
   notesAbout,
   notesData,
+  pathname,
 }: {
   notesAbout: nexNoteAbout[];
   notesData: nexNoteData[];
+  pathname: string;
 }) {
-  const noteSlug = "css-variables";
+  const noteSlug = pathname.split('/').pop() || "";
   const note = notesAbout.find((n) => n.slug === noteSlug);
   const noteData = notesData.find((n) => n.noteId === note?.id);
 

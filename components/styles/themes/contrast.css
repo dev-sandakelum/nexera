@@ -1,0 +1,100 @@
+[data-theme="contrast"] {
+  /* Base */
+  --background: #000000;
+  --background2: #0a0a0a;
+  --foreground: #ffffff;
+  --color: var(--foreground);
+  --components-background: #0f0f0f;
+
+  /* Core theme colors (very distinct) */
+  --theme-colorA: #00e5ff;
+  --theme-colorB: #ffffff;
+  --theme-colorC: #ff4d4f;
+  --theme-colorD: #1f2937;
+  --theme-colorE: #f9fafb;
+  --theme-colorE75: #f9fafb75;
+
+  /* Navbar */
+  --navbar-background: #000000;
+  --navbar-foreground: #ffffff;
+  --navbar-border: #2e2e2e;
+  --navbar-hover-background: #ffffff15;
+  --navbar-hover-foreground: #00e5ff;
+
+  /* Badges (high saturation + dark base) */
+  --badge-01-bg: #1e1b4b;
+  --badge-01-fg: #c7d2fe;
+
+  --badge-02-bg: #0c4a6e;
+  --badge-02-fg: #bae6fd;
+
+  --badge-03-bg: #042f2e;
+  --badge-03-fg: #67e8f9;
+
+  --badge-04-bg: #022c22;
+  --badge-04-fg: #5eead4;
+
+  --badge-05-bg: #052e16;
+  --badge-05-fg: #86efac;
+
+  --badge-06-bg: #1a2e05;
+  --badge-06-fg: #bef264;
+
+  --badge-07-bg: #2e2a05;
+  --badge-07-fg: #fde047;
+
+  --badge-08-bg: #2c1a05;
+  --badge-08-fg: #fdba74;
+
+  --badge-09-bg: #2c0b0b;
+  --badge-09-fg: #fecaca;
+
+  --badge-10-bg: #2b0f1d;
+  --badge-10-fg: #fbcfe8;
+
+  --badge-11-bg: #111827;
+  --badge-11-fg: #f9fafb;
+
+  --badge-12-bg: #020617;
+  --badge-12-fg: #e0e7ff;
+
+  /* File tags */
+  --file-01-bg: #7f1d1d;
+  --file-01-fg: #fee2e2;
+
+  --file-02-bg: #134e4a;
+  --file-02-fg: #ccfbf1;
+
+  --file-03-bg: #78350f;
+  --file-03-fg: #fef3c7;
+
+  /* Status / accents */
+  --accent-soft: #00e5ff;
+  --accent-soft-bg: #082f49;
+  --accent-soft-border: #0ea5e9;
+
+  --success-soft: #22c55e;
+  --success-soft-bg: #052e16;
+  --success-soft-border: #16a34a;
+
+  --warning-soft: #facc15;
+  --warning-soft-bg: #2e2a05;
+  --warning-soft-border: #ca8a04;
+
+  --danger-soft: #ef4444;
+  --danger-soft-bg: #2c0b0b;
+  --danger-soft-border: #b91c1c;
+
+  /* Scrollbar */
+  --scrollbar-track: #000000;
+  --scrollbar-thumb: #4b5563;
+  --scrollbar-thumb-hover: #9ca3af;
+  --scrollbar-thumb-active: #ffffff;
+
+  /* Shadows (hard, visible) */
+  --shadow-soft: 0 0 0 1px rgba(255, 255, 255, 0.15),
+                 0 20px 50px rgba(0, 0, 0, 0.9);
+
+  /* Font */
+  --poor-richard-font: "Poor Richard", sans-serif;
+}

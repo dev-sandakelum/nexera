@@ -1,16 +1,23 @@
+import { useTheme } from "@/app/theme-controller";
+import SetSystemThemeCache from "@/lib/system/cache";
 import React from "react";
 import { FiBell, FiGlobe, FiMail } from "react-icons/fi";
 
 export default function Preferences() {
+  const { theme, setTheme } = useTheme();
   return (
     <div className="preferencesSection">
       <div className="prefGrid">
         <div className="prefCard">
           <label>Theme</label>
-          <select className="formSelect">
-            <option>System Default</option>
-            <option>Light</option>
-            <option>Dark</option>
+          <select
+            className="formSelect"
+            onChange={(e) => setTheme(e.target.value as any)}
+            defaultValue={theme}
+          >
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="contrast">Contrast</option>
           </select>
         </div>
 
