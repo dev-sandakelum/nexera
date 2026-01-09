@@ -6,7 +6,7 @@ import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
 import { UpdateUser } from "@/components/firebase/update-user";
@@ -40,6 +40,13 @@ export default function Notes({
 
   const [clickedOnLink, setClickedOnLink] = useState(false);
 
+  useEffect(() => {
+    if (clickedOnLink) {
+      setTimeout(() => {
+        setClickedOnLink(false);
+      }, 1000);
+    }
+  }, [clickedOnLink]);
   // Sync User
   useEffect(() => {
     if (user) {

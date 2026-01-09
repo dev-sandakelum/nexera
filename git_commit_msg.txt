@@ -1,6 +1,1 @@
-Refactor theme management: remove old theme files, implement new theme context and styles
-
-- Deleted obsolete theme CSS files (white.css, cache.tsx).
-- Introduced new theme context in theme-controller.tsx to manage light, dark, and contrast themes.
-- Added new contrast.css and light.css files with updated styles.
-- Updated navigation assets with new images for contrast themes.
+Refactor code structure for improved readability and maintainability
