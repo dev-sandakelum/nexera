@@ -22,7 +22,8 @@ export function UserProvider({ children, initialUser }: { children: ReactNode; i
   // Fetch user from API
   const fetchUser = useCallback(async () => {
     try {
-      const user = await getUserFromClerk();
+      const fetchedUser = await getUserFromClerk();
+      setUser(fetchedUser);
     } catch (error) {
       console.error('Error fetching user:', error);
       setUser(guestUser);

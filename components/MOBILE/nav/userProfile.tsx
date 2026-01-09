@@ -19,7 +19,7 @@ export default function MobileUserProfile({
 }: MobileUserProfileProps) {
   
   // Find user badges
-  const userBadgesList = user.badges.map(b => 
+  const userBadgesList = (Array.isArray(user.badges) ? user.badges : []).map(b => 
     nexBadges.find(nb => nb.id === b.id)
   ).filter(Boolean);
 
