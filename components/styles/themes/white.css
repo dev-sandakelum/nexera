@@ -1,0 +1,91 @@
+:root {
+  --background: #eff3fc;
+  --background2: #fff;
+  --foreground: #14182a;
+  --shadow: rgba(104, 104, 104, 0.08);
+  
+  --color: var(--foreground);
+  --components-background: #fbfbfb;
+  --theme-colorA: #7b7dee;
+  --theme-colorB: #34343e;
+  --theme-colorC: #ef839d;
+  --theme-colorD: #cac7fe;
+  --theme-colorE: #34343e;
+  --theme-colorE75: #34343e75;
+
+  --navbar-background: #fbfbfb;
+  --navbar-foreground: #212121;
+  --navbar-border: #caced5;
+  --navbar-hover-background: #8400ff25;
+  --navbar-hover-foreground: #8a38f5;
+
+  --badge-01-bg: #e0d7ff;
+  --badge-01-fg: #5b31d8;
+
+  --badge-02-bg: #dbeafe;
+  --badge-02-fg: #1e40af;
+
+  --badge-03-bg: #cffafe;
+  --badge-03-fg: #0e7490;
+
+  --badge-04-bg: #ccfbf1;
+  --badge-04-fg: #0f766e;
+
+  --badge-05-bg: #dcfce7;
+  --badge-05-fg: #15803d;
+
+  --badge-06-bg: #ecfccb;
+  --badge-06-fg: #4d7c0f;
+
+  --badge-07-bg: #fef9c3;
+  --badge-07-fg: #a16207;
+
+  --badge-08-bg: #ffedd5;
+  --badge-08-fg: #c2410c;
+
+  --badge-09-bg: #fee2e2;
+  --badge-09-fg: #b91c1c;
+
+  --badge-10-bg: #fce7f3;
+  --badge-10-fg: #be185d;
+
+  --badge-11-bg: #f5f5f4;
+  --badge-11-fg: #57534e;
+
+  --badge-12-bg: #f1f5f9;
+  --badge-12-fg: #475569;
+
+  --file-01-bg: #ef4444;
+  --file-01-fg: #fef2f2;
+
+  --file-02-bg: #0d9488;
+  --file-02-fg: #ccfbf1;
+
+  --file-03-bg: #f59e0b;
+  --file-03-fg: #fffbeb;
+
+  --accent-soft: #2563eb;
+  --accent-soft-bg: #d0e4ff;
+  --accent-soft-border: #d0e4ff;
+
+  --success-soft: #16a34a;
+  --success-soft-bg: #d1ffe1;
+  --success-soft-border: #b8ffef;
+
+  --warning-soft: #ea580c;
+  --warning-soft-bg: #fff7ed;
+  --warning-soft-border: #ffe3c0;
+
+  --danger-soft: #ef4444;
+  --danger-soft-bg: #ef44441a;
+  --danger-soft-border: #d0e4ff;
+
+  --scrollbar-track: #f1f1f5;
+  --scrollbar-thumb: #c4c4d8;
+  --scrollbar-thumb-hover: #a8a8c0;
+  --scrollbar-thumb-active: #8e8ea8;
+
+  /* Shadow (very important for this UI style) */
+  --shadow-soft: 0 10px 30px rgba(79, 124, 255, 0.08);
+  --poor-richard-font: "Poor Richard", sans-serif;
+}

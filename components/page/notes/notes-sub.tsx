@@ -1,13 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Card1 from "./items/card1";
 import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
 import { usePathname, useSearchParams } from "next/navigation";
-import NotePreviewPage from "./preview/note/note";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { GetUserNameList } from "@/components/firebase/get-list";
-import { nexIctSubjects } from "@/public/json/subjects";
 import { FiChevronDown, FiChevronUp, FiFilter, FiShield } from "react-icons/fi";
 import NoteTypeSection from "@/components/page/notes/items/note_sub/TypeSection";
 
