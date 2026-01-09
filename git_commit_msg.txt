@@ -1,1 +1,1 @@
-Refactor code structure for improved readability and maintainability
+refactor: remove unused imports in Preferences component

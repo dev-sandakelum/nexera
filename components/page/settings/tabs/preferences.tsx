@@ -1,6 +1,4 @@
 import { useTheme } from "@/app/theme-controller";
-import SetSystemThemeCache from "@/lib/system/cache";
-import React from "react";
 import { FiBell, FiGlobe, FiMail } from "react-icons/fi";
 
 export default function Preferences() {
