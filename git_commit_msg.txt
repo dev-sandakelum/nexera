@@ -1,3 +1,4 @@
-style: Change layout theme from dark to light
+style: Update home page background colors and theme variables
 
-- Updated the data-theme attribute in layout.tsx to 'light' for a brighter interface.
+- Replaced hardcoded background colors with CSS variables for better theme management in home.tsx.
+- Added new background color variables in contrast.css, dark.css, and light.css for consistent theming across different modes.

@@ -21,7 +21,12 @@
   --navbar-border: #2e2e2e;
   --navbar-hover-background: #ffffff15;
   --navbar-hover-foreground: #00e5ff;
-
+  
+  --home-bg-component-01: #0047ab; /* Cobalt Blue (Strongest interactive) */
+  --home-bg-component-02: #002e75; /* Deep Navy (Secondary/Hover) */
+  --home-bg-component-03: #ffffff; /* Pure White (Card borders/Text) */
+  --home-bg-component-04: #f0f0f0; /* Light Gray (Section separation) */
+  --home-bg-component-05: #ffffff; /* Pure White (Main Background) */
   /* Badges (high saturation + dark base) */
   --badge-01-bg: #1e1b4b;
   --badge-01-fg: #c7d2fe;
