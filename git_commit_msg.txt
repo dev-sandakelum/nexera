@@ -1,5 +1,5 @@
-feat: Implement error handling and user redirection in dashboard and home components
+feat: Implement error handling for data fetching in Notes pages
 
-- Added error handling for data fetching in the DashboardLayout to manage potential failures gracefully.
-- Updated the Home component to redirect users to the "/Home" path upon loading.
-- Modified UserProvider to accept null as a valid initialUser value for better state management.
+- Added try-catch blocks to handle potential errors during data fetching in the Notes page, subject page, and note preview page.
+- Ensured that empty arrays are returned in case of data retrieval failures, allowing components to manage empty states gracefully.
+- Improved user feedback by displaying error messages when data loading fails.
