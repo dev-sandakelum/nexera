@@ -1,4 +1,5 @@
-feat: Enhance error logging in Notes page data fetching
+feat: Refactor Notes data fetching to be user-specific
 
-- Updated error handling in the Notes subject page to include detailed logging of errors to a debug file.
-- Improved the catch block to log error messages and stack traces for better debugging insights.
+- Updated data fetching methods in the Notes pages to retrieve subjects, topics, and notes based on the current user's ID.
+- Introduced new caching functions for fetching user-specific data from Firebase.
+- Enhanced error handling to ensure graceful degradation in case of data retrieval failures.

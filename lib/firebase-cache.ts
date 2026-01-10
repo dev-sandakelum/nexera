@@ -87,6 +87,39 @@ export async function getCachedSubjectBySlug(
   }
 }
 
+/**
+ * Get subjects by Creator ID (cached for 1 hour)
+ */
+export async function getCachedSubjectsByUserId(
+  userId: string
+): Promise<nexSubject[]> {
+  "use cache";
+  cacheTag("subjects", `subjects-user-${userId}`);
+  cacheLife({ stale: 3600, revalidate: 7200, expire: 14400 });
+
+  try {
+    console.log(`📖 Firebase Read: Fetching subjects for user: ${userId}`);
+
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("nexSubjects")
+      .where("createdBy", "==", userId)
+      .get();
+
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as nexSubject)
+    );
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedSubjectsByUserId):", error);
+    return [];
+  }
+}
+
 // =========================================
 //  TOPICS
 // =========================================
@@ -148,6 +181,39 @@ export async function getCachedTopicsBySubject(
     );
   } catch (error) {
     console.error("❌ Firebase Error (getCachedTopicsBySubject):", error);
+    return [];
+  }
+}
+
+/**
+ * Get topics by Creator ID (cached for 1 hour)
+ */
+export async function getCachedTopicsByUserId(
+  userId: string
+): Promise<nexTopic[]> {
+  "use cache";
+  cacheTag("topics", `topics-user-${userId}`);
+  cacheLife({ stale: 3600, revalidate: 7200, expire: 14400 });
+
+  try {
+    console.log(`📖 Firebase Read: Fetching topics for user: ${userId}`);
+
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("nexNoteTopics")
+      .where("createdBy", "==", userId)
+      .get();
+
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as nexTopic)
+    );
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedTopicsByUserId):", error);
     return [];
   }
 }
@@ -231,6 +297,72 @@ export async function getCachedNotesByTopicIds(
   } catch (error) {
     console.error("❌ Firebase Error (getCachedNotesByTopicIds):", error);
     return [];
+  }
+}
+
+/**
+ * Get notes by Published User ID (cached for 30 minutes)
+ */
+export async function getCachedNotesByUserId(
+  userId: string
+): Promise<nexNoteAbout[]> {
+  "use cache";
+  cacheTag("notes", `notes-user-${userId}`);
+  cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 });
+
+  try {
+    console.log(`📖 Firebase Read: Fetching notes for user: ${userId}`);
+
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("management_notes")
+      .where("publishedBy", "==", userId)
+      .get();
+
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as nexNoteAbout)
+    );
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedNotesByUserId):", error);
+    return [];
+  }
+}
+
+/**
+ * Get a single note by slug (cached for 30 minutes)
+ */
+export async function getCachedNoteBySlug(
+  slug: string
+): Promise<nexNoteAbout | null> {
+  "use cache";
+  cacheTag("notes", `note-slug-${slug}`);
+  cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 });
+
+  try {
+    console.log(`📖 Firebase Read: Fetching note by slug: ${slug}`);
+
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("management_notes")
+      .where("slug", "==", slug)
+      .get();
+
+    if (snapshot.empty) return null;
+
+    const doc = snapshot.docs[0];
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as nexNoteAbout;
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedNoteBySlug):", error);
+    return null;
   }
 }
 
