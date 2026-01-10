@@ -1,8 +1,3 @@
-feat: Enhance dashboard layout and navbar with notes integration
+feat: Enable client-side rendering for note component
 
-- Integrated cached notes into the DashboardLayout for improved data handling.
-- Updated NavbarControler to accept notes as a prop, enhancing navigation context.
-- Modified HeadingNavBar to display note titles in breadcrumbs for better user experience.
-- Improved note creation functions to include unique slugs using UUID for better identification.
-- Added a not-found component for better handling of missing notes in the note preview page.
-- Updated CSS styles for not-found messages to improve visibility and user feedback.
+- Added "use client" directive to note.tsx to support client-side rendering, enhancing interactivity and performance.
