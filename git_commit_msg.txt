@@ -1,5 +1,5 @@
-feat: Refactor Notes data fetching to be user-specific
+feat: Add Cache Settings tab to Profile Management
 
-- Updated data fetching methods in the Notes pages to retrieve subjects, topics, and notes based on the current user's ID.
-- Introduced new caching functions for fetching user-specific data from Firebase.
-- Enhanced error handling to ensure graceful degradation in case of data retrieval failures.
+- Introduced a new "Cache" tab in the Profile Management component.
+- Integrated FiDatabase icon for the new tab.
+- Updated the tab type definitions and the tabs array to include the new Cache Settings functionality.
