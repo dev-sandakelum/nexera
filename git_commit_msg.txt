@@ -1,5 +1,1 @@
-feat: Add Cache Settings tab to Profile Management
-
-- Introduced a new "Cache" tab in the Profile Management component.
-- Integrated FiDatabase icon for the new tab.
-- Updated the tab type definitions and the tabs array to include the new Cache Settings functionality.
+feat: Add edit to Cache Settings tab to Profile Management

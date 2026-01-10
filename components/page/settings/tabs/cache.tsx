@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FiRefreshCw, FiDatabase, FiTrash2, FiClock } from "react-icons/fi";
+import {
+  FiRefreshCw,
+  FiDatabase,
+  FiTrash2,
+  FiClock,
+  FiRotateCcw,
+} from "react-icons/fi";
 import {
   revalidateSubjects,
   revalidateTopics,
@@ -35,9 +41,6 @@ export default function CacheSettings() {
         let lastRefreshed = localStorage.getItem(storageKey);
 
         if (!lastRefreshed) {
-          // If no record, assume it refreshed just now for demo, or random offset
-          // For stability, let's say it refreshed 'duration' ago minus some random time
-          // actually, let's just default to "Fresh" (full duration left)
           lastRefreshed = now.toString();
           localStorage.setItem(storageKey, lastRefreshed);
         }
@@ -84,6 +87,24 @@ export default function CacheSettings() {
     return `${h}h ${m}m ${s}s`;
   };
 
+  const handleResetTimer = (key: string) => {
+    if (key === "all") {
+      const now = Date.now();
+      Object.keys(CACHE_DURATIONS).forEach((k) =>
+        localStorage.setItem(`nexera_cache_last_${k}`, now.toString())
+      );
+      const resetTimes: any = {};
+      Object.entries(CACHE_DURATIONS).forEach(([k, d]) => (resetTimes[k] = d));
+      setTimeLeft(resetTimes);
+    } else {
+      localStorage.setItem(`nexera_cache_last_${key}`, Date.now().toString());
+      setTimeLeft((prev) => ({
+        ...prev,
+        [key]: CACHE_DURATIONS[key as keyof typeof CACHE_DURATIONS],
+      }));
+    }
+  };
+
   const handleRefresh = async (
     key: string,
     action: () => Promise<void>,
@@ -93,24 +114,7 @@ export default function CacheSettings() {
     try {
       await action();
       // Reset timer
-      localStorage.setItem(
-        `nexera_cache_last_${key === "all" ? "all" : key}`,
-        Date.now().toString()
-      );
-      if (key === "all") {
-        const now = Date.now();
-        Object.keys(CACHE_DURATIONS).forEach((k) =>
-          localStorage.setItem(`nexera_cache_last_${k}`, now.toString())
-        );
-        const resetTimes: any = {};
-        Object.entries(CACHE_DURATIONS).forEach(([k, d]) => (resetTimes[k] = d));
-        setTimeLeft(resetTimes);
-      } else {
-        setTimeLeft((prev) => ({
-          ...prev,
-          [key]: CACHE_DURATIONS[key as keyof typeof CACHE_DURATIONS],
-        }));
-      }
+      handleResetTimer(key === "all" ? "all" : key);
 
       alert(`${label} cache fresh & timer reset.`);
     } catch (error) {
@@ -140,9 +144,18 @@ export default function CacheSettings() {
         <div className="prefCard">
           <div className="flex-between">
             <label>Subjects</label>
-            <span className="timerBadge">
-              <FiClock /> {formatTime(timeLeft["subjects"] || 0)}
-            </span>
+            <div className="timer-container">
+              <span className="timerBadge">
+                <FiClock /> {formatTime(timeLeft["subjects"] || 0)}
+              </span>
+              <button
+                className="iconBtn"
+                onClick={() => handleResetTimer("subjects")}
+                title="Reset Timer Only"
+              >
+                <FiRotateCcw />
+              </button>
+            </div>
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Auto-refreshes every 2 hours.
@@ -162,9 +175,18 @@ export default function CacheSettings() {
         <div className="prefCard">
           <div className="flex-between">
             <label>Topics</label>
-            <span className="timerBadge">
-              <FiClock /> {formatTime(timeLeft["topics"] || 0)}
-            </span>
+            <div className="timer-container">
+              <span className="timerBadge">
+                <FiClock /> {formatTime(timeLeft["topics"] || 0)}
+              </span>
+              <button
+                className="iconBtn"
+                onClick={() => handleResetTimer("topics")}
+                title="Reset Timer Only"
+              >
+                <FiRotateCcw />
+              </button>
+            </div>
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Auto-refreshes every 2 hours.
@@ -183,10 +205,19 @@ export default function CacheSettings() {
         {/* Notes */}
         <div className="prefCard">
           <div className="flex-between">
-             <label>Notes</label>
-             <span className="timerBadge">
-              <FiClock /> {formatTime(timeLeft["notes"] || 0)}
-            </span>
+            <label>Notes</label>
+            <div className="timer-container">
+              <span className="timerBadge">
+                <FiClock /> {formatTime(timeLeft["notes"] || 0)}
+              </span>
+              <button
+                className="iconBtn"
+                onClick={() => handleResetTimer("notes")}
+                title="Reset Timer Only"
+              >
+                <FiRotateCcw />
+              </button>
+            </div>
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Auto-refreshes every 1 hour.
@@ -206,9 +237,18 @@ export default function CacheSettings() {
         <div className="prefCard">
           <div className="flex-between">
             <label>Users</label>
-            <span className="timerBadge">
-              <FiClock /> {formatTime(timeLeft["users"] || 0)}
-            </span>
+            <div className="timer-container">
+              <span className="timerBadge">
+                <FiClock /> {formatTime(timeLeft["users"] || 0)}
+              </span>
+              <button
+                className="iconBtn"
+                onClick={() => handleResetTimer("users")}
+                title="Reset Timer Only"
+              >
+                <FiRotateCcw />
+              </button>
+            </div>
           </div>
           <p className="text-sm text-gray-500 mb-4">
             Auto-refreshes every 1 hour.
@@ -227,12 +267,23 @@ export default function CacheSettings() {
         {/* Badges */}
         <div className="prefCard">
           <div className="flex-between">
-             <label>Badges</label>
-             <span className="timerBadge">
-              <FiClock /> {formatTime(timeLeft["badges"] || 0)}
-            </span>
+            <label>Badges</label>
+            <div className="timer-container">
+              <span className="timerBadge">
+                <FiClock /> {formatTime(timeLeft["badges"] || 0)}
+              </span>
+              <button
+                className="iconBtn"
+                onClick={() => handleResetTimer("badges")}
+                title="Reset Timer Only"
+              >
+                <FiRotateCcw />
+              </button>
+            </div>
           </div>
-          <p className="text-sm text-gray-500 mb-4">Auto-refreshes every 8 hours.</p>
+          <p className="text-sm text-gray-500 mb-4">
+            Auto-refreshes every 8 hours.
+          </p>
           <button
             className="saveBtn"
             onClick={() =>
@@ -244,22 +295,31 @@ export default function CacheSettings() {
           </button>
         </div>
 
-        {/* ALL */}
-        <div className="prefCard danger">
-          <label className="text-danger">Clear All Caches</label>
-          <p className="text-sm text-gray-500 mb-4">
-            Nuclear option. Resets all timers.
+        {/* Actions Row */}
+        <div className="prefCard fullWidth" style={{ marginTop: "1rem" }}>
+          <label>Global Actions</label>
+           <p className="text-sm text-gray-500 mb-4">
+            Bulk actions for all caches.
           </p>
-          <button
-            className="deleteBtn"
-            onClick={() =>
-              handleRefresh("all", () => revalidateAll(), "All Caches")
-            }
-            disabled={loading !== null}
-          >
-            <FiTrash2 />{" "}
-            {loading === "all" ? "Clearing..." : "Clear All & Reset Timers"}
-          </button>
+          <div className="action-row">
+             <button
+              className="secondaryBtn"
+              onClick={() => handleResetTimer("all")}
+              title="Reset All Timers (No Fetch)"
+            >
+              <FiRotateCcw /> Reset All Timers
+            </button>
+            <button
+              className="deleteBtn"
+              onClick={() =>
+                handleRefresh("all", () => revalidateAll(), "All Caches")
+              }
+              disabled={loading !== null}
+            >
+              <FiTrash2 />{" "}
+              {loading === "all" ? "Clearing..." : "Clear All & Reset"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -295,6 +355,11 @@ export default function CacheSettings() {
             align-items: center;
             margin-bottom: 0.5rem;
         }
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
         .timerBadge {
             display: flex;
             align-items: center;
@@ -305,6 +370,26 @@ export default function CacheSettings() {
             border-radius: 4px;
             font-size: 0.8rem;
             color: var(--text-secondary);
+        }
+        .iconBtn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .iconBtn:hover {
+            color: var(--accent);
+            background: var(--bg-secondary);
+        }
+        .action-row {
+            display: flex;
+            gap: 1rem;
         }
         .deleteBtn {
             background: var(--danger-soft);
@@ -324,6 +409,24 @@ export default function CacheSettings() {
         .deleteBtn:hover:not(:disabled) {
             background: var(--danger);
             color: white;
+        }
+         .secondaryBtn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            width: 100%;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .secondaryBtn:hover {
+            background: var(--border);
         }
         .saveBtn {
              background: var(--accent);

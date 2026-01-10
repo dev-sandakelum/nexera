@@ -385,7 +385,7 @@ export async function getCachedNoteDataById(
 
     await initAdmin();
     const db = getFirestore();
-    const doc = await db.collection("nexNoteData").doc(noteId).get();
+    const doc = await db.collection("nexNotePart2").doc(noteId).get();
 
     if (!doc.exists) return null;
 
