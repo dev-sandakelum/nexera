@@ -57,7 +57,8 @@
   margin: 0 0 16px 0;
 }
 
-.notFoundContainer .joke {
+.notFoundContainer .joke,
+.notFoundContainer .msg {
   font-size: 15px;
   line-height: 1.6;
   color: var(--theme-colorB);

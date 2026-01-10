@@ -3,12 +3,12 @@
 import MobileNavBar from "@/components/MOBILE/nav/nav";
 import HeadingNavBar from "@/components/nav/heading-navbar";
 import NavBar from "@/components/nav/main";
-import { NexeraUser } from "@/components/types";
+import { NexeraUser, nexNoteAbout } from "@/components/types";
 import { useUser } from "@/contexts/UserContext";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-export default function NavbarControler() {
+export default function NavbarControler({ notes }: { notes: nexNoteAbout[] }) {
   const pathname = usePathname();
   const activeRoute = pathname.split("/")[1];
   const { user, loading } = useUser();
@@ -67,7 +67,7 @@ export default function NavbarControler() {
     return (
       <>
         <NavBar activeIcon={activeIcon} setActiveIcon={setActiveIcon} />
-        <HeadingNavBar User={user || ({} as NexeraUser)} />
+        <HeadingNavBar User={user || ({} as NexeraUser)} notes={notes} />
       </>
     );
   }

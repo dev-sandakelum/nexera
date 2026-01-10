@@ -4,7 +4,7 @@ import {
   nexNoteAbout,
   nexNoteData,
 } from "@/components/types";
-
+import { v4 as uuidv4 } from "uuid";
 // Mock current user (replace with actual auth in production)
 export const currentUser = {
   id: "nexStart",
@@ -14,7 +14,6 @@ export const currentUser = {
 // Mock departments (replace with actual data source)
 export const departments = [
   { id: "ICT", name: "Information and Communications Technology", code: "ICT" },
-  
 ];
 
 /**
@@ -56,7 +55,7 @@ export const createSubject = (
     id: `sub_${Date.now()}`,
     title: form.title || "",
     description: form.description || "",
-    slug: generateSlug(form.title || ""),
+    slug: generateSlug(form.title || "") + "-" + uuidv4().split("-")[0],
     departmentID: form.departmentID || "CS",
     academicYear: form.academicYear || 1,
     semester: form.semester,
@@ -80,7 +79,7 @@ export const createTopic = (
     subjectID,
     title: form.title || "",
     description: form.description || "",
-    slug: generateSlug(form.title || ""),
+    slug: generateSlug(form.title || "") + "-" + uuidv4().split("-")[0],
     createdBy: userId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
@@ -91,10 +90,10 @@ export const createTopic = (
  * Create a new note object
  */
 export const createNoteAbout = (
-  id : string,
+  id: string,
   form: Partial<nexNoteAbout>,
   topicID: string,
-  publishedBy: string
+  publishedBy: string,
 ): nexNoteAbout => {
   return {
     id,
@@ -102,7 +101,7 @@ export const createNoteAbout = (
     title: form.title || "",
     description: form.description || "",
     type: form.type || "note",
-    slug: generateSlug(form.title || ""),
+    slug: generateSlug(form.title || "") + "-" + uuidv4().split("-")[0],
     createdAt: new Date().toISOString(),
     published: form.published || false,
     publishedBy,
@@ -114,11 +113,11 @@ export const createNoteAbout = (
 
 export const createNoteData = (
   noteId: string,
-  form: Partial<nexNoteData>,
+  form: Partial<nexNoteData>
 ): nexNoteData => {
   return {
     noteId,
-    context : form.context || { type: "note", url: "" },
+    context: form.context || { type: "note", url: "" },
   };
 };
 

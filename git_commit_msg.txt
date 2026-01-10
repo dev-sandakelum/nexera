@@ -1,8 +1,8 @@
-fix: Improve NotesSubjectCreator and Card0 components for better functionality and layout
+feat: Enhance dashboard layout and navbar with notes integration
 
-- Added console log for subjectForm in handleUpdateSubject for debugging purposes.
-- Adjusted filtering logic in NotesSubjectCreator to enhance clarity.
-- Updated department selection to include a default "none" option and changed value to department code.
-- Enhanced delete confirmation message formatting for better readability.
-- Made minor layout adjustments in Card0 component for improved spacing.
-- Updated CSS styles for card layout to ensure proper overflow handling and footer positioning.
+- Integrated cached notes into the DashboardLayout for improved data handling.
+- Updated NavbarControler to accept notes as a prop, enhancing navigation context.
+- Modified HeadingNavBar to display note titles in breadcrumbs for better user experience.
+- Improved note creation functions to include unique slugs using UUID for better identification.
+- Added a not-found component for better handling of missing notes in the note preview page.
+- Updated CSS styles for not-found messages to improve visibility and user feedback.
