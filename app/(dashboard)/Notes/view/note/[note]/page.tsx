@@ -1,4 +1,3 @@
-"use server"
 import NotePreviewPage from "@/components/page/notes/preview/note/note";
 import { getCachedNoteData, getCachedNotes } from "@/lib/firebase-cache";
 import { headers } from "next/headers";
