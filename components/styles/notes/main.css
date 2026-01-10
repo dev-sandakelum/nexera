@@ -28,6 +28,7 @@
   font-weight: 600;
   color: var(--theme-colorB);
   transition: background 0.2s;
+  padding: 12px 20px;
   padding-right:12px;
 }
 .filterToggle .saparater{
@@ -35,11 +36,11 @@
   align-items: center;
   justify-content: start;
   width: 60%;
+  max-width: 50vw;
   font-size: 15px;
   font-weight: 600;
   color: var(--theme-colorB);
   cursor: pointer;
-  padding: 16px 20px;
   background: transparent;
   border: none;
   transition: background 0.2s;
