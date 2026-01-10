@@ -141,6 +141,7 @@ export default function NotesSubjectCreator({
 
   const handleUpdateSubject = async () => {
     if (!editingId) return;
+    console.log(subjectForm);
     const response = await UpdateSubject(editingId, subjectForm);
     if (response.success) {
       setSubjects(
@@ -334,10 +335,10 @@ export default function NotesSubjectCreator({
         setSubjects(subjects.filter((s) => s.id !== id));
         setTopics(topics.filter((t) => t.subjectID !== id));
         setNotes(
-            notes.filter((n) => {
+          notes.filter((n) => {
             const topic = topics.find((t) => t.id === n.topicID);
             return topic?.subjectID !== id;
-            })
+          })
         );
       }
     } else if (type === "topic") {
@@ -356,7 +357,7 @@ export default function NotesSubjectCreator({
     if (response?.success) {
       setDeleteConfirmation({ ...deleteConfirmation, isOpen: false });
     } else {
-        alert("Error deleting item: " + response?.error);
+      alert("Error deleting item: " + response?.error);
     }
   };
 
@@ -596,16 +597,18 @@ export default function NotesSubjectCreator({
             <label className="nsc-label">Department</label>
             <select
               className="nsc-input"
-              value={subjectForm.departmentID || "CS"}
+              value={subjectForm.departmentID || "none"}
               onChange={(e) =>
                 setSubjectForm({ ...subjectForm, departmentID: e.target.value })
               }
             >
+              <option value="none">none</option>
               {departments.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.name}
+                <option key={d.id} value={d.code}>
+                  {d.code}
                 </option>
               ))}
+              
             </select>
           </div>
           <div className="nsc-form-group">
@@ -859,7 +862,8 @@ export default function NotesSubjectCreator({
       >
         <div className="nsc-form-group">
           <p className="nsc-label" style={{ fontSize: "1rem" }}>
-            Are you sure you want to delete <strong>{deleteConfirmation.title}</strong>?
+            Are you sure you want to delete{" "}
+            <strong>{deleteConfirmation.title}</strong>?
           </p>
           <p className="nsc-subtitle" style={{ marginTop: "0.5rem" }}>
             This action cannot be undone.
