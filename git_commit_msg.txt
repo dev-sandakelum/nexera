@@ -1,7 +1,4 @@
-feat: Enhance notes page with new filter and add item functionality
+style: Update CSS for notes page to enhance layout and padding
 
-- Removed unused font imports from layout.tsx for cleaner code.
-- Updated notes.tsx to include a new "Add new" button for creating notes, improving user experience.
-- Refactored filter section in notes.tsx for better layout and usability.
-- Modified mock user and departments in functions.ts to reflect updated roles and department names.
-- Enhanced CSS styles for filter toggle and add item button for improved aesthetics and functionality.
+- Added padding to the filter toggle button for improved spacing.
+- Adjusted max-width for better responsiveness on the notes page.
