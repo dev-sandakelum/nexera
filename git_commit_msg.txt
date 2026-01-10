@@ -1,5 +1,1 @@
-refactor: Update note components for client-side rendering
-
-- Removed "use server" directive from page.tsx to enable client-side rendering.
-- Added "use client" directive to not-found.tsx for proper client-side functionality.
-- Cleaned up "use client" directive in note.tsx for consistency across components. 
+reset
