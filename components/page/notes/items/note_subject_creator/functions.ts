@@ -7,15 +7,14 @@ import {
 
 // Mock current user (replace with actual auth in production)
 export const currentUser = {
-  id: "u_001",
-  role: "nexPrime" as const,
+  id: "nexStart",
+  role: "nexStart" as const,
 };
 
 // Mock departments (replace with actual data source)
 export const departments = [
-  { id: "CS", name: "Computer Science", code: "CS" },
-  { id: "IT", name: "Information Technology", code: "IT" },
-  { id: "SE", name: "Software Engineering", code: "SE" },
+  { id: "ICT", name: "Information and Communications Technology", code: "ICT" },
+  
 ];
 
 /**

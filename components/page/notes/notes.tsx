@@ -12,6 +12,8 @@ import { useUser } from "@/contexts/UserContext";
 import { UpdateUser } from "@/components/firebase/update-user";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
 import LoadingAnimation from "../loading";
+import { PiPlusBold } from "react-icons/pi";
+import Link from "next/link";
 
 export default function Notes({
   data,
@@ -143,20 +145,25 @@ export default function Notes({
     >
       {/* FILTER SECTION */}
       <div className="filterSection">
-        <button
-          className="filterToggle"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <FiFilter /> Filter Subjects
-          </span>
-          <FiChevronDown
-            style={{
-              transform: showFilters ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s",
-            }}
-          />
-        </button>
+        <div className="filterToggle">
+          <button
+            className="saparater"
+            onClick={() => setShowFilters(!showFilters)}
+          >
+            <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <FiFilter /> Filter Subjects
+            </span>
+            <FiChevronDown
+              style={{
+                transform: showFilters ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.3s",
+              }}
+            />
+          </button>
+          <Link href={"/Notes/new"} className="add-new-item">
+            <PiPlusBold /> <span>Add new</span>
+          </Link>
+        </div>
 
         <AnimatePresence>
           {showFilters && (

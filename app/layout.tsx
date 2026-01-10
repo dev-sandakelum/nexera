@@ -59,19 +59,12 @@ import { ClerkProvider } from "@clerk/nextjs";
 import LoadingAnimation from "@/components/page/loading";
 import { ThemeProvider } from "./theme-controller";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+
 
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-});
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -87,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning data-theme="dark">
       <body
-        className={`${poppins.variable} ${geistMono.variable} `}
+        className={`${poppins.variable} `}
         style={{
           maxHeight: "100svh",
           overflow: "hidden",
