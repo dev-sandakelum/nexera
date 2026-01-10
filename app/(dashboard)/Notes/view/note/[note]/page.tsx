@@ -2,6 +2,7 @@
 import NotePreviewPage from "@/components/page/notes/preview/note/note";
 import { getCachedNoteData, getCachedNotes } from "@/lib/firebase-cache";
 import { headers } from "next/headers";
+import { nexNoteAbout, nexNoteData } from "@/components/types";
 
 interface PageProps {
   params: {
@@ -16,11 +17,18 @@ export default async function page({ params }: PageProps) {
 
   console.log("Pathname is :", pathname.split('/').pop());
 
-  const [notesAbout, notesData] = await Promise.all([
-    getCachedNotes(),
-    getCachedNoteData()
-  ]);
+  let notesAbout: nexNoteAbout[] = [];
+  let notesData: nexNoteData[] = [];
 
-  // if(!notesAbout || !notesData || !resolvedUrl || resolvedUrl !== undefined) {}
+  try {
+    [notesAbout, notesData] = await Promise.all([
+      getCachedNotes(),
+      getCachedNoteData()
+    ]);
+  } catch (error) {
+    console.error("Error fetching note preview data:", error);
+    return <div>Failed to load note. Please try again later.</div>;
+  }
+
   return <NotePreviewPage notesAbout={notesAbout} notesData={notesData} pathname={pathname} />;
 }
