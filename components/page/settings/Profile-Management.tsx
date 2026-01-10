@@ -12,6 +12,7 @@ import {
   FiEdit2,
   FiX,
   FiAlertCircle,
+  FiDatabase,
 } from "react-icons/fi";
 import { NexeraUser } from "@/components/types";
 import Security from "./tabs/security";
@@ -21,6 +22,7 @@ import Activity from "./tabs/activity";
 import Connected from "./tabs/connected";
 import Danger from "./tabs/danger";
 import Profile from "./tabs/profile";
+import CacheSettings from "./tabs/cache";
 import ShowPasswordModal from "./models/PasswordModal";
 import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
@@ -37,6 +39,7 @@ type TabType =
   | "privacy"
   | "activity"
   | "connected"
+  | "database"
   | "danger";
 
 const tabs = [
@@ -46,6 +49,7 @@ const tabs = [
   { id: "privacy" as TabType, label: "Privacy", icon: FiLock },
   { id: "activity" as TabType, label: "Activity", icon: FiActivity },
   { id: "connected" as TabType, label: "Connected", icon: FiLink },
+  { id: "database" as TabType, label: "Cache", icon: FiDatabase },
   { id: "danger" as TabType, label: "Danger Zone", icon: FiAlertCircle },
 ];
 
@@ -284,6 +288,9 @@ export default function UserProfile() {
 
         {/* CONNECTED TAB */}
         {activeTab === "connected" && <Connected />}
+
+        {/* CACHE SETTINGS TAB */}
+        {activeTab === "database" && <CacheSettings />}
 
         {/* DANGER ZONE TAB */}
         {activeTab === "danger" && (

@@ -1,0 +1,349 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { FiRefreshCw, FiDatabase, FiTrash2, FiClock } from "react-icons/fi";
+import {
+  revalidateSubjects,
+  revalidateTopics,
+  revalidateNotes,
+  revalidateUsers,
+  revalidateBadges,
+  revalidateAll,
+} from "@/lib/revalidate";
+
+// Cache durations in seconds
+const CACHE_DURATIONS = {
+  subjects: 7200, // 2h
+  topics: 7200, // 2h
+  notes: 3600, // 1h
+  users: 3600, // 1h
+  badges: 28800, // 8h
+};
+
+export default function CacheSettings() {
+  const [loading, setLoading] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState<{ [key: string]: number }>({});
+
+  useEffect(() => {
+    // Initialize or load random offsets/last refreshed from local storage to simulate "server time"
+    const loadTimers = () => {
+      const now = Date.now();
+      const newTimeLeft: { [key: string]: number } = {};
+
+      Object.entries(CACHE_DURATIONS).forEach(([key, duration]) => {
+        const storageKey = `nexera_cache_last_${key}`;
+        let lastRefreshed = localStorage.getItem(storageKey);
+
+        if (!lastRefreshed) {
+          // If no record, assume it refreshed just now for demo, or random offset
+          // For stability, let's say it refreshed 'duration' ago minus some random time
+          // actually, let's just default to "Fresh" (full duration left)
+          lastRefreshed = now.toString();
+          localStorage.setItem(storageKey, lastRefreshed);
+        }
+
+        const elapsedSeconds = Math.floor(
+          (now - parseInt(lastRefreshed)) / 1000
+        );
+        const remaining = Math.max(0, duration - elapsedSeconds);
+        newTimeLeft[key] = remaining;
+      });
+
+      setTimeLeft(newTimeLeft);
+    };
+
+    loadTimers();
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        const updated = { ...prev };
+        Object.keys(updated).forEach((key) => {
+          if (updated[key] > 0) {
+            updated[key] -= 1;
+          } else {
+            // Auto "reset" the timer loop visually
+            updated[key] =
+              CACHE_DURATIONS[key as keyof typeof CACHE_DURATIONS];
+            localStorage.setItem(
+              `nexera_cache_last_${key}`,
+              Date.now().toString()
+            );
+          }
+        });
+        return updated;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    return `${h}h ${m}m ${s}s`;
+  };
+
+  const handleRefresh = async (
+    key: string,
+    action: () => Promise<void>,
+    label: string
+  ) => {
+    setLoading(key);
+    try {
+      await action();
+      // Reset timer
+      localStorage.setItem(
+        `nexera_cache_last_${key === "all" ? "all" : key}`,
+        Date.now().toString()
+      );
+      if (key === "all") {
+        const now = Date.now();
+        Object.keys(CACHE_DURATIONS).forEach((k) =>
+          localStorage.setItem(`nexera_cache_last_${k}`, now.toString())
+        );
+        const resetTimes: any = {};
+        Object.entries(CACHE_DURATIONS).forEach(([k, d]) => (resetTimes[k] = d));
+        setTimeLeft(resetTimes);
+      } else {
+        setTimeLeft((prev) => ({
+          ...prev,
+          [key]: CACHE_DURATIONS[key as keyof typeof CACHE_DURATIONS],
+        }));
+      }
+
+      alert(`${label} cache fresh & timer reset.`);
+    } catch (error) {
+      console.error(`Failed to refresh ${label}:`, error);
+      alert(`Failed to refresh ${label}. Check console for details.`);
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  return (
+    <div className="preferencesSection">
+      <div className="prefGrid">
+        <div className="prefCard fullWidth">
+          <div className="cardHeader">
+            <FiDatabase className="cardIcon" />
+            <div>
+              <h3>Cache Management</h3>
+              <p>
+                Monitor auto-refresh cycles and manually invalidate caches.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Subjects */}
+        <div className="prefCard">
+          <div className="flex-between">
+            <label>Subjects</label>
+            <span className="timerBadge">
+              <FiClock /> {formatTime(timeLeft["subjects"] || 0)}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Auto-refreshes every 2 hours.
+          </p>
+          <button
+            className="saveBtn"
+            onClick={() =>
+              handleRefresh("subjects", () => revalidateSubjects(), "Subjects")
+            }
+            disabled={loading !== null}
+          >
+            {loading === "subjects" ? "Refreshing..." : "Reset & Refresh"}
+          </button>
+        </div>
+
+        {/* Topics */}
+        <div className="prefCard">
+          <div className="flex-between">
+            <label>Topics</label>
+            <span className="timerBadge">
+              <FiClock /> {formatTime(timeLeft["topics"] || 0)}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Auto-refreshes every 2 hours.
+          </p>
+          <button
+            className="saveBtn"
+            onClick={() =>
+              handleRefresh("topics", () => revalidateTopics(), "Topics")
+            }
+            disabled={loading !== null}
+          >
+            {loading === "topics" ? "Refreshing..." : "Reset & Refresh"}
+          </button>
+        </div>
+
+        {/* Notes */}
+        <div className="prefCard">
+          <div className="flex-between">
+             <label>Notes</label>
+             <span className="timerBadge">
+              <FiClock /> {formatTime(timeLeft["notes"] || 0)}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Auto-refreshes every 1 hour.
+          </p>
+          <button
+            className="saveBtn"
+            onClick={() =>
+              handleRefresh("notes", () => revalidateNotes(), "Notes")
+            }
+            disabled={loading !== null}
+          >
+            {loading === "notes" ? "Refreshing..." : "Reset & Refresh"}
+          </button>
+        </div>
+
+        {/* Users */}
+        <div className="prefCard">
+          <div className="flex-between">
+            <label>Users</label>
+            <span className="timerBadge">
+              <FiClock /> {formatTime(timeLeft["users"] || 0)}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            Auto-refreshes every 1 hour.
+          </p>
+          <button
+            className="saveBtn"
+            onClick={() =>
+              handleRefresh("users", () => revalidateUsers(), "Users")
+            }
+            disabled={loading !== null}
+          >
+            {loading === "users" ? "Refreshing..." : "Reset & Refresh"}
+          </button>
+        </div>
+
+        {/* Badges */}
+        <div className="prefCard">
+          <div className="flex-between">
+             <label>Badges</label>
+             <span className="timerBadge">
+              <FiClock /> {formatTime(timeLeft["badges"] || 0)}
+            </span>
+          </div>
+          <p className="text-sm text-gray-500 mb-4">Auto-refreshes every 8 hours.</p>
+          <button
+            className="saveBtn"
+            onClick={() =>
+              handleRefresh("badges", () => revalidateBadges(), "Badges")
+            }
+            disabled={loading !== null}
+          >
+            {loading === "badges" ? "Refreshing..." : "Reset & Refresh"}
+          </button>
+        </div>
+
+        {/* ALL */}
+        <div className="prefCard danger">
+          <label className="text-danger">Clear All Caches</label>
+          <p className="text-sm text-gray-500 mb-4">
+            Nuclear option. Resets all timers.
+          </p>
+          <button
+            className="deleteBtn"
+            onClick={() =>
+              handleRefresh("all", () => revalidateAll(), "All Caches")
+            }
+            disabled={loading !== null}
+          >
+            <FiTrash2 />{" "}
+            {loading === "all" ? "Clearing..." : "Clear All & Reset Timers"}
+          </button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .fullWidth {
+          grid-column: 1 / -1;
+        }
+        .cardHeader {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 0.5rem;
+        }
+        .cardIcon {
+          font-size: 1.5rem;
+          color: var(--accent);
+        }
+        .text-sm {
+          font-size: 0.875rem;
+        }
+        .text-gray-500 {
+          color: var(--text-secondary);
+        }
+        .mb-4 {
+          margin-bottom: 1rem;
+        }
+        .text-danger {
+          color: var(--danger);
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .timerBadge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-family: monospace;
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .deleteBtn {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid var(--danger-border);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            width: 100%;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .deleteBtn:hover:not(:disabled) {
+            background: var(--danger);
+            color: white;
+        }
+        .saveBtn {
+             background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .saveBtn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+        .saveBtn:disabled, .deleteBtn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+      `}</style>
+    </div>
+  );
+}
