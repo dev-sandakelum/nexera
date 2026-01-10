@@ -1,11 +1,17 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import { nexBadge, NexeraUser } from "../types";
+import { nexBadge, NexeraUser, nexNoteAbout } from "../types";
 import { nexBadges } from "@/public/json/badges";
 import { useClerk } from "@clerk/nextjs";
 
-export default function HeadingNavBar({ User }: { User: NexeraUser }) {
+export default function HeadingNavBar({
+  User,
+  notes,
+}: {
+  User: NexeraUser;
+  notes: nexNoteAbout[];
+}) {
   const [isExiting, setIsExiting] = useState(false);
   const [isEntering, setIsEntering] = useState(false);
 
@@ -13,8 +19,14 @@ export default function HeadingNavBar({ User }: { User: NexeraUser }) {
   const paths = pathname.split("/");
 
   function getBreadcrumb() {
-    const paths = pathname.split("/").filter(Boolean);
+    let paths = pathname.split("/").filter(Boolean);
     if (paths.length === 0) return ["Home"];
+    if (paths[0] === "Notes" && paths[1] === "view" && paths.length > 3) {
+      paths = [
+        paths[1],
+        notes.find((n) => n.slug === paths[3])?.title || "note",
+      ];
+    }
     return paths.map((path) => path.charAt(0).toUpperCase() + path.slice(1));
   }
 
