@@ -1,1 +1,3 @@
-reset
+feat: Enable server-side functionality for note page
+
+- Added "use server" directive to page.tsx to support server-side rendering, enhancing data fetching capabilities.
