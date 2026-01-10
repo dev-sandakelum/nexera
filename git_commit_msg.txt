@@ -1,4 +1,3 @@
-style: Update CSS for notes page to enhance layout and padding
+style: Change layout theme from dark to light
 
-- Added padding to the filter toggle button for improved spacing.
-- Adjusted max-width for better responsiveness on the notes page.
+- Updated the data-theme attribute in layout.tsx to 'light' for a brighter interface.
