@@ -1,4 +1,4 @@
-"use client";
+
 import { nexNoteAbout, nexNoteData } from "@/components/types";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import Note_NotFound from "./not-found";
