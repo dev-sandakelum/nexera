@@ -1,3 +1,4 @@
-feat: Enable server-side functionality for note page
+feat: Add error handling for data fetching in note page
 
-- Added "use server" directive to page.tsx to support server-side rendering, enhancing data fetching capabilities.
+- Implemented try-catch block to handle potential connection errors during data fetching.
+- Ensured that empty arrays are returned if data retrieval fails, allowing the component to manage empty states gracefully.
