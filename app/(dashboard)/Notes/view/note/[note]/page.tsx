@@ -17,7 +17,7 @@ export default async function page({ params }: PageProps) {
   // Extract slug from path or use param directly if it's the slug
   const noteSlug = Array.isArray(note) ? note[note.length - 1] : note;
 
-  console.log("Fetching note for slug:", noteSlug);
+  // console.log("form home Fetching note for slug:", noteSlug);
 
   let notesAbout: nexNoteAbout[] = [];
   let notesData: nexNoteData[] = [];
