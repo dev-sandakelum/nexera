@@ -1,4 +1,5 @@
-style: Update home page background colors and theme variables
+feat: Enhance MobileUserProfile with badge handling and sign-out functionality
 
-- Replaced hardcoded background colors with CSS variables for better theme management in home.tsx.
-- Added new background color variables in contrast.css, dark.css, and light.css for consistent theming across different modes.
+- Improved badge handling to support both array and object structures for user badges.
+- Added a sign-out button with appropriate icons for guest and logged-in users.
+- Updated CSS styles for badge icons and sign-out button for better alignment and aesthetics.
