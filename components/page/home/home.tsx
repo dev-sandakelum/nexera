@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
-
 const containerVariants = {
   hidden: {},
   show: {
@@ -42,32 +41,36 @@ export default function HomePage() {
         initial="hidden"
         animate="show"
       >
-        {["#42a5f5", "#64b5f6", "#90caf9", "#bbdefb", "#e3f2fd"].map(
-          (bg, idx) => (
-            <motion.div
-              key={idx + "bg"}
-              className="bgC"
-              custom={idx}
-              variants={itemVariants(idx)}
-              style={
-                {
-                  "--idx": idx,
-                  "--bg": bg,
-                } as React.CSSProperties
-              }
-              initial={{
-                x: `calc(70vw - 20vw * ${idx})`,
-                y: `calc(70vh - (10vh * ${idx}) + 600px)`,
-                rotateZ: 35,
-              }}
-              animate={{
-                x: `calc(70vw - 20vw * ${idx})`,
-                y: `calc(70vh - (10vh * ${idx})+ 200px)`,
-                rotateZ: 35,
-              }}
-            />
-          )
-        )}
+        {[
+          "var(--home-bg-component-01)",
+          "var(--home-bg-component-02)",
+          "var(--home-bg-component-03)",
+          "var(--home-bg-component-04)",
+          "var(--home-bg-component-05)",
+        ].map((bg, idx) => (
+          <motion.div
+            key={idx + "bg"}
+            className="bgC"
+            custom={idx}
+            variants={itemVariants(idx)}
+            style={
+              {
+                "--idx": idx,
+                "--bg": bg,
+              } as React.CSSProperties
+            }
+            initial={{
+              x: `calc(70vw - 20vw * ${idx})`,
+              y: `calc(70vh - (10vh * ${idx}) + 600px)`,
+              rotateZ: 35,
+            }}
+            animate={{
+              x: `calc(70vw - 20vw * ${idx})`,
+              y: `calc(70vh - (10vh * ${idx})+ 200px)`,
+              rotateZ: 35,
+            }}
+          />
+        ))}
       </motion.div>
     </div>
   );

@@ -19,6 +19,12 @@
   --navbar-hover-background: #8b5cf625;
   --navbar-hover-foreground: #a78bfa;
 
+  --home-bg-component-01: #60a5fa; /* Bright Accent (Text/Icon highlight) */
+  --home-bg-component-02: #3b82f6; /* Primary Action Blue */
+  --home-bg-component-03: #1e293b; /* Surface/Card Background (Lighter) */
+  --home-bg-component-04: #0f172a; /* Main Page Background (Darker) */
+  --home-bg-component-05: #020617; /* Deepest Void (Borders/Shadows) */
+  
   --badge-01-bg: #2a1f55;
   --badge-01-fg: #b9a7ff;
 
