@@ -31,8 +31,15 @@ export default async function page({ params, searchParams }: PageProps) {
       getCachedNotes(),
       getCachedUsersMinimal(),
     ]);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching data for subject page:", error);
+    // Log to file for debugging
+    const fs = await import("fs");
+    const path = await import("path");
+    const logPath = path.resolve(process.cwd(), "debug-error.log");
+    const logMessage = `${new Date().toISOString()} - Error: ${error?.message || error}\nStack: ${error?.stack || ''}\n\n`;
+    fs.appendFileSync(logPath, logMessage);
+    
     return <div>Failed to load data. Please try again later.</div>;
   }
 
