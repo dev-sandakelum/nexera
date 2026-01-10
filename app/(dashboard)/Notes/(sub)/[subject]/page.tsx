@@ -1,7 +1,7 @@
 import {
-  getCachedSubjects,
-  getCachedTopics,
-  getCachedNotes,
+  getCachedSubjectBySlug,
+  getCachedTopicsBySubject,
+  getCachedNotesByTopicIds,
   getCachedUsersMinimal,
 } from "@/lib/firebase-cache";
 import Notes_Sub from "@/components/page/notes/notes-sub";
@@ -17,33 +17,33 @@ type PageProps = {
 export default async function page({ params, searchParams }: PageProps) {
   const { subject } = await params;
 
-  // Initialize with empty defaults
-  let subjects: nexSubject[] = [];
+  let selectedSubject: nexSubject | null = null;
   let topics: nexTopic[] = [];
   let notes: nexNoteAbout[] = [];
   let users: { id: string; name: string }[] = [];
 
   try {
-    // All queries are now cached - subsequent visits will hit cache (0 Firebase reads)
-    [subjects, topics, notes, users] = await Promise.all([
-      getCachedSubjects(),
-      getCachedTopics(),
-      getCachedNotes(),
-      getCachedUsersMinimal(),
-    ]);
-  } catch (error: any) {
-    console.error("Error fetching data for subject page:", error);
-    // Log to file for debugging
-    const fs = await import("fs");
-    const path = await import("path");
-    const logPath = path.resolve(process.cwd(), "debug-error.log");
-    const logMessage = `${new Date().toISOString()} - Error: ${error?.message || error}\nStack: ${error?.stack || ''}\n\n`;
-    fs.appendFileSync(logPath, logMessage);
+    // 1. Fetch Subject First
+    selectedSubject = await getCachedSubjectBySlug(subject);
     
+    if (selectedSubject) {
+      // 2. Fetch related data only if subject exists
+      // Fetch topics for this subject
+      topics = await getCachedTopicsBySubject(selectedSubject.id);
+      
+      // Fetch notes for these topics (if any)
+      if (topics.length > 0) {
+        const topicIds = topics.map(t => t.id);
+        notes = await getCachedNotesByTopicIds(topicIds);
+      }
+      
+      // Fetch users for display (optimized minimal fetch)
+      users = await getCachedUsersMinimal();
+    }
+  } catch (error) {
+    console.error("Error fetching data for subject page:", error);
     return <div>Failed to load data. Please try again later.</div>;
   }
-
-  const selectedSubject = subjects.find((sub) => sub.slug === subject);
 
   if (!selectedSubject) {
     return <div>Subject not found</div>;
