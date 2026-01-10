@@ -15,7 +15,7 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export function UserProvider({ children, initialUser }: { children: ReactNode; initialUser?: NexeraUser }) {
+export function UserProvider({ children, initialUser }: { children: ReactNode; initialUser?: NexeraUser | null }) {
   const [user, setUser] = useState<NexeraUser | null>(initialUser || null);
   const [loading, setLoading] = useState(!initialUser);
 

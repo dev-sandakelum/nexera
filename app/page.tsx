@@ -30,5 +30,5 @@ export const guestUser: NexeraUser = {
 };
 
 export default function Home() {
-  
+  redirect("/Home");
 }

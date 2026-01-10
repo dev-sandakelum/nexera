@@ -64,22 +64,27 @@ export async function getCachedSubjectBySlug(
   cacheTag("subjects", `subject-${slug}`);
   cacheLife({ stale: 3600, revalidate: 7200, expire: 14400 }); // 1hr stale, 2hr revalidate, 4hr expire
 
-  console.log(`📖 Firebase Read: Fetching subject by slug: ${slug}`);
+  try {
+    console.log(`📖 Firebase Read: Fetching subject by slug: ${slug}`);
 
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db
-    .collection("nexSubjects")
-    .where("slug", "==", slug)
-    .get();
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("nexSubjects")
+      .where("slug", "==", slug)
+      .get();
 
-  if (snapshot.empty) return null;
+    if (snapshot.empty) return null;
 
-  const doc = snapshot.docs[0];
-  return {
-    id: doc.id,
-    ...doc.data(),
-  } as nexSubject;
+    const doc = snapshot.docs[0];
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as nexSubject;
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedSubjectBySlug):", error);
+    return null;
+  }
 }
 
 // =========================================
@@ -124,22 +129,27 @@ export async function getCachedTopicsBySubject(
   cacheTag("topics", `topics-subject-${subjectId}`);
   cacheLife({ stale: 3600, revalidate: 7200, expire: 14400 }); // 1hr stale, 2hr revalidate, 4hr expire
 
-  console.log(`📖 Firebase Read: Fetching topics for subject: ${subjectId}`);
+  try {
+    console.log(`📖 Firebase Read: Fetching topics for subject: ${subjectId}`);
 
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db
-    .collection("nexNoteTopics")
-    .where("subjectID", "==", subjectId)
-    .get();
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("nexNoteTopics")
+      .where("subjectID", "==", subjectId)
+      .get();
 
-  return snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      } as nexTopic)
-  );
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as nexTopic)
+    );
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedTopicsBySubject):", error);
+    return [];
+  }
 }
 
 // =========================================
@@ -188,35 +198,40 @@ export async function getCachedNotesByTopicIds(
 
   if (topicIds.length === 0) return [];
 
-  console.log(`📖 Firebase Read: Fetching notes for ${topicIds.length} topics`);
+  try {
+    console.log(`📖 Firebase Read: Fetching notes for ${topicIds.length} topics`);
 
-  await initAdmin();
-  const db = getFirestore();
+    await initAdmin();
+    const db = getFirestore();
 
-  // Firestore 'in' query supports max 10 items, so we batch if needed
-  const batches: Promise<nexNoteAbout[]>[] = [];
+    // Firestore 'in' query supports max 10 items, so we batch if needed
+    const batches: Promise<nexNoteAbout[]>[] = [];
 
-  for (let i = 0; i < topicIds.length; i += 10) {
-    const batch = topicIds.slice(i, i + 10);
-    batches.push(
-      db
-        .collection("management_notes")
-        .where("topicID", "in", batch)
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map(
-            (doc) =>
-              ({
-                id: doc.id,
-                ...doc.data(),
-              } as nexNoteAbout)
+    for (let i = 0; i < topicIds.length; i += 10) {
+      const batch = topicIds.slice(i, i + 10);
+      batches.push(
+        db
+          .collection("management_notes")
+          .where("topicID", "in", batch)
+          .get()
+          .then((snapshot) =>
+            snapshot.docs.map(
+              (doc) =>
+                ({
+                  id: doc.id,
+                  ...doc.data(),
+                } as nexNoteAbout)
+            )
           )
-        )
-    );
-  }
+      );
+    }
 
-  const results = await Promise.all(batches);
-  return results.flat();
+    const results = await Promise.all(batches);
+    return results.flat();
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedNotesByTopicIds):", error);
+    return [];
+  }
 }
 
 // =========================================
@@ -233,18 +248,23 @@ export async function getCachedNoteDataById(
   cacheTag("note-data", `note-data-${noteId}`);
   cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
 
-  console.log(`📖 Firebase Read: Fetching note data for ID: ${noteId}`);
+  try {
+    console.log(`📖 Firebase Read: Fetching note data for ID: ${noteId}`);
 
-  await initAdmin();
-  const db = getFirestore();
-  const doc = await db.collection("nexNoteData").doc(noteId).get();
+    await initAdmin();
+    const db = getFirestore();
+    const doc = await db.collection("nexNoteData").doc(noteId).get();
 
-  if (!doc.exists) return null;
+    if (!doc.exists) return null;
 
-  return {
-    noteId: doc.id,
-    ...doc.data(),
-  } as nexNoteData;
+    return {
+      noteId: doc.id,
+      ...doc.data(),
+    } as nexNoteData;
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedNoteDataById):", error);
+    return null;
+  }
 }
 
 /**
@@ -317,16 +337,21 @@ export async function getCachedUsersMinimal(): Promise<
   cacheTag("users", "users-minimal");
   cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 });
 
-  console.log("📖 Firebase Read: Fetching all users (minimal)");
+  try {
+    console.log("📖 Firebase Read: Fetching all users (minimal)");
 
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db.collection("TestUsers").get();
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db.collection("TestUsers").get();
 
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    name: doc.data().name as string,
-  }));
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      name: doc.data().name as string,
+    }));
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedUsersMinimal):", error);
+    return [];
+  }
 }
 
 /**
@@ -337,20 +362,25 @@ export async function getCachedUserById(
 ): Promise<NexeraUser | null> {
   "use cache";
   cacheTag("users", `user-${id}`);
-    cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
+  cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
 
-  console.log(`📖 Firebase Read: Fetching user by ID: ${id}`);
+  try {
+    console.log(`📖 Firebase Read: Fetching user by ID: ${id}`);
 
-  await initAdmin();
-  const db = getFirestore();
-  const doc = await db.collection("TestUsers").doc(id).get();
+    await initAdmin();
+    const db = getFirestore();
+    const doc = await db.collection("TestUsers").doc(id).get();
 
-  if (!doc.exists) return null;
+    if (!doc.exists) return null;
 
-  return {
-    id: doc.id,
-    ...doc.data(),
-  } as NexeraUser;
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as NexeraUser;
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedUserById):", error);
+    return null;
+  }
 }
 
 /**
@@ -362,25 +392,29 @@ export async function getCachedUserByEmail(
 ): Promise<NexeraUser | null> {
   "use cache";
   cacheTag("users", `user-email-${email}`);
-    cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
+  cacheLife({ stale: 1800, revalidate: 3600, expire: 7200 }); // 30min stale, 1hr revalidate, 2hr expire
 
+  try {
+    console.log(`📖 Firebase Read: Fetching user by email: ${email}`);
 
-  console.log(`📖 Firebase Read: Fetching user by email: ${email}`);
+    await initAdmin();
+    const db = getFirestore();
+    const snapshot = await db
+      .collection("TestUsers")
+      .where("email", "==", email)
+      .get();
 
-  await initAdmin();
-  const db = getFirestore();
-  const snapshot = await db
-    .collection("TestUsers")
-    .where("email", "==", email)
-    .get();
+    if (snapshot.empty) return null;
 
-  if (snapshot.empty) return null;
-
-  const doc = snapshot.docs[0];
-  return {
-    id: doc.id,
-    ...doc.data(),
-  } as NexeraUser;
+    const doc = snapshot.docs[0];
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as NexeraUser;
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedUserByEmail):", error);
+    return null;
+  }
 }
 
 // =========================================
@@ -428,33 +462,38 @@ export async function getCachedBadgesByIds(
 
   if (badgeIds.length === 0) return [];
 
-  console.log(`📖 Firebase Read: Fetching ${badgeIds.length} badges`);
+  try {
+    console.log(`📖 Firebase Read: Fetching ${badgeIds.length} badges`);
 
-  await initAdmin();
-  const db = getFirestore();
+    await initAdmin();
+    const db = getFirestore();
 
-  // Firestore 'in' query supports max 10 items
-  const batches: Promise<nexBadge[]>[] = [];
+    // Firestore 'in' query supports max 10 items
+    const batches: Promise<nexBadge[]>[] = [];
 
-  for (let i = 0; i < badgeIds.length; i += 10) {
-    const batch = badgeIds.slice(i, i + 10);
-    batches.push(
-      db
-        .collection("nexBadges")
-        .where("__name__", "in", batch)
-        .get()
-        .then((snapshot) =>
-          snapshot.docs.map(
-            (doc) =>
-              ({
-                id: doc.id,
-                ...doc.data(),
-              } as nexBadge)
+    for (let i = 0; i < badgeIds.length; i += 10) {
+      const batch = badgeIds.slice(i, i + 10);
+      batches.push(
+        db
+          .collection("nexBadges")
+          .where("__name__", "in", batch)
+          .get()
+          .then((snapshot) =>
+            snapshot.docs.map(
+              (doc) =>
+                ({
+                  id: doc.id,
+                  ...doc.data(),
+                } as nexBadge)
+            )
           )
-        )
-    );
-  }
+      );
+    }
 
-  const results = await Promise.all(batches);
-  return results.flat();
+    const results = await Promise.all(batches);
+    return results.flat();
+  } catch (error) {
+    console.error("❌ Firebase Error (getCachedBadgesByIds):", error);
+    return [];
+  }
 }

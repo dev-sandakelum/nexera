@@ -4,7 +4,7 @@ import { getUserFromClerk } from "@/lib/server/user-helpers";
 import NavbarControler from "./navbar-controler";
 import { unstable_noStore } from "next/cache";
 import { getCachedNotes } from "@/lib/firebase-cache";
-import { nexNoteAbout } from "@/components/types";
+import { nexNoteAbout, NexeraUser } from "@/components/types";
 
 export default async function DashboardLayout({
   children,
@@ -12,12 +12,21 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   unstable_noStore(); // Opt out of caching for auth-dependent layouts
-  const user = await getUserFromClerk();
-  const notes = await getCachedNotes();
+  
+  let user: NexeraUser | null = null;
+  let notes: nexNoteAbout[] = [];
+  
+  try {
+    user = await getUserFromClerk();
+    notes = await getCachedNotes();
+  } catch (error) {
+    console.error("Dashboard layout data fetch error:", error);
+  }
+  
   return (
-    <UserProvider initialUser={user!}>
+    <UserProvider initialUser={user || undefined}>
       <div className="page root">
-        <NavbarControler notes={(notes && notes) || ({} as nexNoteAbout[])} />
+        <NavbarControler notes={notes} />
         <div className="ContentArea">
           <div className="UsableArea">{children}</div>
         </div>
