@@ -1,1 +1,1 @@
-Refactor code structure for improved readability and maintainability
+feat: Refactor Card0 component to separate favorites and suggestions sections with improved animations
