@@ -1,7 +1,7 @@
 "use client";
 
 import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
@@ -126,23 +126,11 @@ export default function Notes({
   const visibleFavorites = applyFilters(favorites);
   const visibleSuggestions = applyFilters(suggestions);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  };
-
   // ------------------------------------------------------
   // 4. RENDER
   // ------------------------------------------------------
   return (
-    <motion.div
-      key={pathname}
-      className="notesRedesignContainer"
-      initial="hidden"
-      animate="show"
-      variants={containerVariants}
-    >
+    <div className="notesRedesignContainer" key={pathname}>
       {/* FILTER SECTION */}
       <div className="filterSection">
         <div className="filterToggle">
@@ -165,83 +153,53 @@ export default function Notes({
           </Link>
         </div>
 
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              style={{ overflow: "hidden" }}
-            >
-              <div className="filterControls">
-                <div className="filterGroup">
-                  <label>Academic Year</label>
-                  <select
-                    value={filterYear}
-                    onChange={(e) => setFilterYear(e.target.value)}
-                  >
-                    <option value="all">All Years</option>
-                    <option value="1">Year 1</option>
-                    <option value="2">Year 2</option>
-                    <option value="3">Year 3</option>
-                    <option value="4">Year 4</option>
-                  </select>
-                </div>
-
-                <div className="filterGroup">
-                  <label>Department</label>
-                  <select
-                    value={filterDept}
-                    onChange={(e) => setFilterDept(e.target.value)}
-                  >
-                    <option value="all">All Departments</option>
-                    <option value="CS">Computer Science</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="SE">Software Engineering</option>
-                  </select>
-                </div>
+        {showFilters && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            style={{ overflow: "hidden" }}
+          >
+            <div className="filterControls">
+              <div className="filterGroup">
+                <label>Academic Year</label>
+                <select
+                  value={filterYear}
+                  onChange={(e) => setFilterYear(e.target.value)}
+                >
+                  <option value="all">All Years</option>
+                  <option value="1">Year 1</option>
+                  <option value="2">Year 2</option>
+                  <option value="3">Year 3</option>
+                  <option value="4">Year 4</option>
+                </select>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+              <div className="filterGroup">
+                <label>Department</label>
+                <select
+                  value={filterDept}
+                  onChange={(e) => setFilterDept(e.target.value)}
+                >
+                  <option value="all">All Departments</option>
+                  <option value="CS">Computer Science</option>
+                  <option value="IT">Information Technology</option>
+                  <option value="SE">Software Engineering</option>
+                </select>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </div>
 
-      {/* FAVORITES SECTION */}
-      <div className="notesSection">
-        <div className="sectionHeader">
-          <GrFavorite size={20} />
-          <span>Favorites</span>
-          <span className="count">{visibleFavorites.length}</span>
-        </div>
-
-        <Card0
-          users={users}
-          badges={badges}
-          dataset={visibleFavorites}
-          updateUserFavorites={updateUserFavorites}
-          type="favorites"
-          key={"favorites-" + visibleFavorites.length}
-          setClickedOnLink={setClickedOnLink}
-        />
-      </div>
-
-      {/* SUGGESTIONS SECTION */}
-      <div className="notesSection">
-        <div className="sectionHeader">
-          <GiWorld size={20} />
-          <span>Suggestions</span>
-          <span className="count">{visibleSuggestions.length}</span>
-        </div>
-        <Card0
-          users={users}
-          badges={badges}
-          dataset={visibleSuggestions}
-          updateUserFavorites={updateUserFavorites}
-          type="suggestions"
-          key={"suggestions-" + visibleSuggestions.length}
-          setClickedOnLink={setClickedOnLink}
-        />
-      </div>
-    </motion.div>
+      {/* UNIFIED CARDS SECTION */}
+      <Card0
+        users={users}
+        badges={badges}
+        favorites={visibleFavorites}
+        suggestions={visibleSuggestions}
+        updateUserFavorites={updateUserFavorites}
+        setClickedOnLink={setClickedOnLink}
+      />
+    </div>
   );
 }
