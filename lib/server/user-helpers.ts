@@ -12,6 +12,27 @@ import { getFirestore } from "firebase-admin/firestore";
 import { nexBadges } from "@/public/json/badges";
 
 /**
+ * In-memory map to deduplicate concurrent user creation requests.
+ * Key: email, Value: Promise resolving to the created/existing user.
+ * This prevents race conditions within the same server instance.
+ */
+const pendingUserCreations = new Map<string, Promise<NexeraUser>>();
+
+/**
+ * Generates a deterministic user ID from email.
+ * This ensures the same email always produces the same document ID,
+ * preventing duplicate documents at the database level.
+ */
+function generateDeterministicUserId(email: string): string {
+  // Use a simple hash for deterministic ID generation
+  // Format: "user_" + base64 encoded email (URL-safe)
+  const normalizedEmail = email.toLowerCase().trim();
+  const base64 = Buffer.from(normalizedEmail).toString("base64url");
+  // Firestore doc IDs can't have certain chars, base64url is safe
+  return `user_${base64}`;
+}
+
+/**
  * Fetches an image from a URL and uploads it to Supabase
  * SERVER-ONLY function
  */
@@ -65,37 +86,58 @@ async function uploadProfilePictureFromUrl(
 }
 
 /**
- * Creates a new user in Firebase
+ * Gets or creates a user atomically using Firestore transactions.
+ * Uses deterministic document ID based on email to guarantee uniqueness.
  * SERVER-ONLY function
  */
-export async function createNewUser(
+async function getOrCreateUserAtomic(
   email: string,
   name: string,
   clerkProfilePicture: string
 ): Promise<NexeraUser> {
-  // Access headers to make this dynamic (required for crypto.randomUUID in Next.js 15+)
+  // Access headers to make this dynamic (required for Next.js 15+)
   await headers();
 
-  const userId = crypto.randomUUID();
-  let profilePicture = "";
+  await initAdmin();
+  const db = getFirestore();
+  
+  // Generate deterministic ID from email - same email = same document ID
+  const userId = generateDeterministicUserId(email);
+  const userRef = db.collection("TestUsers").doc(userId);
 
-  // Try to upload Clerk profile picture to Supabase if it exists
-  if (clerkProfilePicture && clerkProfilePicture.startsWith("http")) {
-    console.log(`Uploading profile picture for user ${userId}...`);
-    profilePicture = await uploadProfilePictureFromUrl(
-      clerkProfilePicture,
-      userId
-    );
+  // Use Firestore transaction for atomic check-and-create
+  return await db.runTransaction(async (transaction) => {
+    const doc = await transaction.get(userRef);
 
-    if (profilePicture) {
-      console.log(`Successfully uploaded profile picture: ${profilePicture}`);
-    } else {
-      console.log(`Failed to upload, using Clerk URL as fallback`);
-      profilePicture = clerkProfilePicture; // Fallback to Clerk URL
+    // If user already exists, return them (no duplicate created)
+    if (doc.exists) {
+      console.log(`User already exists: ${userId}`);
+      return {
+        id: doc.id,
+        ...doc.data(),
+      } as NexeraUser;
     }
-  }
 
-  try {
+    // User doesn't exist - create new user
+    console.log(`Creating new user with deterministic ID: ${userId}`);
+
+    // Upload profile picture
+    let profilePicture = "";
+    if (clerkProfilePicture && clerkProfilePicture.startsWith("http")) {
+      console.log(`Uploading profile picture for user ${userId}...`);
+      profilePicture = await uploadProfilePictureFromUrl(
+        clerkProfilePicture,
+        userId
+      );
+
+      if (profilePicture) {
+        console.log(`Successfully uploaded profile picture: ${profilePicture}`);
+      } else {
+        console.log(`Failed to upload, using Clerk URL as fallback`);
+        profilePicture = clerkProfilePicture;
+      }
+    }
+
     const newUser: NexeraUser = {
       email,
       name: name || "No Name",
@@ -105,8 +147,7 @@ export async function createNewUser(
       bio: "",
       badges: [
         {
-          id:
-            "nexStart",
+          id: "nexStart",
         },
       ],
       academic: {
@@ -128,24 +169,29 @@ export async function createNewUser(
       lastLogin: new Date().toISOString(),
     };
 
-    await initAdmin();
-    const db = getFirestore();
-    const userRef = db.collection("TestUsers").doc(newUser.id);
-    await userRef.set(newUser);
-
-    // Note: Cache revalidation removed to prevent "unsupported during render" error
-    // The new user is returned directly, so no cache revalidation needed in this flow
-
+    transaction.set(userRef, newUser);
     console.log(`User ${userId} created successfully`);
     return newUser;
-  } catch (error) {
-    console.error("Error creating new user:", error);
-    throw error;
-  }
+  });
 }
 
 /**
- * Gets user data from Firebase, creates new user if doesn't exist
+ * Creates a new user in Firebase (legacy function for backwards compatibility)
+ * @deprecated Use getOrCreateUserAtomic instead for duplicate-safe creation
+ * SERVER-ONLY function
+ */
+export async function createNewUser(
+  email: string,
+  name: string,
+  clerkProfilePicture: string
+): Promise<NexeraUser> {
+  // Delegate to the atomic version
+  return getOrCreateUserAtomic(email, name, clerkProfilePicture);
+}
+
+/**
+ * Gets user data from Firebase, creates new user if doesn't exist.
+ * Uses atomic operations and request deduplication to prevent duplicates.
  * SERVER-ONLY function
  */
 export async function getUserFromClerk(): Promise<NexeraUser | null> {
@@ -171,20 +217,40 @@ export async function getUserFromClerk(): Promise<NexeraUser | null> {
     // Try to get existing user (cached query)
     let user = await getCachedUserByEmail(email);
 
-    // If user doesn't exist, create new user
-    if (!user) {
-      console.log(`Creating new user for email: ${email}`);
-      user = await createNewUser(
-        email,
-        clerkUser.fullName || "No Name",
-        clerkUser.imageUrl || ""
-      );
-    } else {
-      console.log(`User found: ${user.id}`);
+    if (user) {
+      console.log(`User found in cache: ${user.id}`);
+      return user;
     }
-    console.log(user);
-    return user;
+
+    // User not in cache - need to get or create atomically
+    // Check if there's already a pending creation for this email (deduplication)
+    const existingPromise = pendingUserCreations.get(email);
+    if (existingPromise) {
+      console.log(`Waiting for existing creation promise for: ${email}`);
+      return await existingPromise;
+    }
+
+    // No pending creation - start atomic get-or-create
+    console.log(`Starting atomic get-or-create for: ${email}`);
+    const creationPromise = getOrCreateUserAtomic(
+      email,
+      clerkUser.fullName || "No Name",
+      clerkUser.imageUrl || ""
+    );
+
+    // Add to pending map to deduplicate concurrent requests
+    pendingUserCreations.set(email, creationPromise);
+
+    try {
+      user = await creationPromise;
+      console.log(`User ready: ${user.id}`);
+      return user;
+    } finally {
+      // Clean up pending map
+      pendingUserCreations.delete(email);
+    }
   } catch (error) {
+    console.error("Error in getUserFromClerk:", error);
     // Silently return null during prerendering
     return null;
   }

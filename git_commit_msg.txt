@@ -1,6 +1,6 @@
-feat: Enhance Cache Settings with new CacheCard component and data fetching
+feat: Implement atomic user creation with deduplication in Firestore
 
-- Introduced a new CacheCard component for better visualization of cache data.
-- Updated CacheSettings to fetch and display document counts for subjects, topics, notes, users, and badges.
-- Improved timer logic for cache refresh and added auto-reset functionality.
-- Enhanced UI with responsive design and improved styling for better user experience.
+- Introduced a new function `getOrCreateUserAtomic` to handle user creation atomically, preventing duplicates by using a deterministic user ID based on email.
+- Added an in-memory map to deduplicate concurrent user creation requests.
+- Deprecated the legacy `createNewUser` function in favor of the new atomic approach.
+- Enhanced error handling and logging for user creation processes.
