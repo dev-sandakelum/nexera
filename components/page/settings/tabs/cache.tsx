@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, memo, useRef } from "react";
 import {
   FiRefreshCw,
-  FiDatabase,
-  FiTrash2,
   FiClock,
-  FiRotateCcw,
   FiLayers,
 } from "react-icons/fi";
 import {
@@ -18,6 +15,7 @@ import {
   revalidateAll,
 } from "@/lib/revalidate";
 import { getCacheCounts } from "@/lib/actions/cache";
+import "./cache.css";
 
 // Cache durations in seconds
 const CACHE_DURATIONS = {
@@ -38,184 +36,126 @@ interface CacheCardProps {
   count: number;
   onRefresh: (key: CacheKey, action: () => Promise<void>, label: string) => Promise<void>;
   loading: string | null;
-  timeLeft: number;
   action: () => Promise<void>;
+  lastRefreshKey: number; // Trigger to reset timer
 }
 
+// Helper to format time (hours and minutes only for better performance)
+const formatTime = (seconds: number) => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  return `${h}h ${m}m`;
+};
+
+// Helper to get initial time left (in minutes for less frequent updates)
+const getInitialTimeLeft = (cacheKey: string, duration: number): number => {
+  if (typeof window === 'undefined') return Math.floor(duration / 60);
+  const storageKey = `nexera_cache_last_${cacheKey}`;
+  const lastRefreshed = localStorage.getItem(storageKey);
+  if (!lastRefreshed) {
+    localStorage.setItem(storageKey, Date.now().toString());
+    return Math.floor(duration / 60);
+  }
+  const elapsedMinutes = Math.floor((Date.now() - parseInt(lastRefreshed)) / 60000);
+  return Math.max(0, Math.floor(duration / 60) - elapsedMinutes);
+};
+
 /**
- * Individual Cache Card Component
+ * Individual Cache Card Component - Memoized and manages its own timer
+ * Updates once per minute instead of every second for better performance
  */
-function CacheCard({
+const CacheCard = memo(function CacheCard({
   cacheKey,
   label,
   duration,
   count,
   onRefresh,
   loading,
-  timeLeft,
   action,
+  lastRefreshKey,
 }: CacheCardProps) {
-  const formatTime = (seconds: number) => {
-    const h = Math.floor(seconds / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-    return `${h}h ${m}m ${s}s`;
-  };
+  // Timer stored in MINUTES for less frequent updates (60x fewer re-renders)
+  const [timeLeftMinutes, setTimeLeftMinutes] = useState(() => getInitialTimeLeft(cacheKey, duration));
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const durationMinutes = Math.floor(duration / 60);
 
-  const getProgressWidth = () => {
-    const percentage = (timeLeft / duration) * 100;
-    return `${percentage}%`;
-  };
+  // Setup timer that updates once per MINUTE (not every second)
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setTimeLeftMinutes(prev => {
+        if (prev <= 1) {
+          // Reset timer when it hits 0
+          localStorage.setItem(`nexera_cache_last_${cacheKey}`, Date.now().toString());
+          return durationMinutes;
+        }
+        return prev - 1;
+      });
+    }, 60000); // Update every 60 seconds instead of every 1 second
 
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [cacheKey, duration, durationMinutes]);
+
+  // Reset timer when lastRefreshKey changes (after manual refresh)
+  useEffect(() => {
+    if (lastRefreshKey > 0) {
+      setTimeLeftMinutes(durationMinutes);
+    }
+  }, [lastRefreshKey, durationMinutes]);
+
+  // Convert minutes back to seconds for display and progress
+  const timeLeftSeconds = timeLeftMinutes * 60;
+  const progressWidth = `${(timeLeftMinutes / durationMinutes) * 100}%`;
+  
   // Determine freshness color
-  const getStatusColor = () => {
-    const percentage = timeLeft / duration;
-    if (percentage > 0.66) return "var(--success-soft)"; // Fresh
-    if (percentage > 0.33) return "var(--badge-05-bg)"; // Medium
-    return "var(--danger-soft)"; // Stale
-  };
+  const percentage = timeLeftMinutes / durationMinutes;
+  let statusColor = "var(--danger-soft)";
+  if (percentage > 0.66) statusColor = "var(--success-soft)";
+  else if (percentage > 0.33) statusColor = "var(--badge-05-bg)";
+
+  const isLoading = loading === cacheKey;
 
   return (
-    <div className="prefCard cache-card">
-      <div className="card-top">
-        <label className="card-label">{label}</label>
-        <span className="badge-count" title={`${count} items cached`}>
+    <div className="cacheCard">
+      <div className="cardTop">
+        <label className="cardLabel">{label}</label>
+        <span className="badgeCount" title={`${count} items cached`}>
           <FiLayers /> {count} items
         </span>
       </div>
 
-      <div className="timer-display">
-        <div className="timer-text">
-          <FiClock /> {formatTime(timeLeft)}
+      <div className="timerDisplay">
+        <div className="timerText">
+          <FiClock /> {formatTime(timeLeftSeconds)}
         </div>
-        <div className="progress-bg">
+        <div className="progressBg">
           <div 
-            className="progress-bar" 
-            style={{ 
-              width: getProgressWidth(),
-              background: getStatusColor()
-            }} 
+            className="progressBar" 
+            style={{ width: progressWidth, background: statusColor }} 
           />
         </div>
       </div>
 
-      <p className="text-sm text-gray-500 mb-4">
+      <p className="cacheInfo">
         Auto-refreshes every {duration / 3600}h.
       </p>
 
       <button
-        className="refreshBtn"
+        className={`refreshBtn ${isLoading ? 'loading' : ''}`}
         onClick={() => onRefresh(cacheKey, action, label)}
         disabled={loading !== null}
         title={`Refresh ${label} cache`}
       >
-        <FiRefreshCw className={loading === cacheKey ? "spin" : ""} />
-        {loading === cacheKey ? "Refreshing..." : "Refresh"}
+        <FiRefreshCw className={isLoading ? "spin" : ""} />
+        {isLoading ? "Refreshing..." : "Refresh"}
       </button>
-
-      <style jsx>{`
-        .cache-card {
-            background: var(--background);
-            border: 1px solid var(--theme-colorE75);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-        .cache-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-color: var(--accent);
-        }
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .card-label {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--theme-colorB);
-        }
-        .badge-count {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.75rem;
-            background: var(--bg-secondary);
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-        .timer-display {
-            margin-bottom: 1rem;
-        }
-        .timer-text {
-            font-family: monospace;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--theme-colorB);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        .progress-bg {
-            width: 100%;
-            height: 4px;
-            background: var(--theme-colorE75);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            transition: width 1s linear, background 0.3s;
-        }
-        .refreshBtn {
-            background: var(--bg-secondary);
-            color: var(--theme-colorB);
-            border: 1px solid var(--border);
-            padding: 0.6rem;
-            border-radius: 8px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-        .refreshBtn:hover:not(:disabled) {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-        }
-        .refreshBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .spin {
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .text-sm { font-size: 0.8rem; }
-        .text-gray-500 { color: var(--text-secondary); opacity: 0.8; }
-        .mb-4 { margin-bottom: 0.5rem; }
-      `}</style>
     </div>
   );
-}
+});
 
 export default function CacheSettings() {
   const [loading, setLoading] = useState<string | null>(null);
-  const [timeLeft, setTimeLeft] = useState<{ [key: string]: number }>({});
   const [counts, setCounts] = useState<{ [key: string]: number }>({
     subjects: 0,
     topics: 0,
@@ -223,76 +163,60 @@ export default function CacheSettings() {
     users: 0,
     badges: 0,
   });
+  // Track refresh events to notify cards
+  const [refreshKeys, setRefreshKeys] = useState<{ [key: string]: number }>({
+    subjects: 0,
+    topics: 0,
+    notes: 0,
+    users: 0,
+    badges: 0,
+  });
 
-  // Calculate time remaining based on stored "last refreshed" timestamp
-  const calculateTimeLeft = useCallback(() => {
-    const now = Date.now();
-    const newTimeLeft: { [key: string]: number } = {};
-
-    Object.entries(CACHE_DURATIONS).forEach(([key, duration]) => {
-      const storageKey = `nexera_cache_last_${key}`;
-      let lastRefreshed = localStorage.getItem(storageKey);
-
-      if (!lastRefreshed) {
-        lastRefreshed = now.toString();
-        localStorage.setItem(storageKey, lastRefreshed);
+  // Fetch document counts - only once on mount
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const data = await getCacheCounts();
+        setCounts(data);
+      } catch (err) {
+        console.error("Failed to fetch cache counts:", err);
       }
-
-      const elapsedSeconds = Math.floor((now - parseInt(lastRefreshed)) / 1000);
-      const remaining = Math.max(0, duration - elapsedSeconds);
-      
-      // Auto-reset check
-      if (remaining === 0) {
-         localStorage.setItem(storageKey, now.toString());
-         newTimeLeft[key] = duration;
-      } else {
-         newTimeLeft[key] = remaining;
-      }
-    });
-    return newTimeLeft;
+    };
+    fetchCounts();
   }, []);
 
-  // Fetch document counts
-  const fetchCounts = async () => {
-      try {
-          const data = await getCacheCounts();
-          setCounts(data);
-      } catch (err) {
-          console.error("Failed to fetch cache counts:", err);
-      }
-  };
 
-  useEffect(() => {
-    // Initial load
-    setTimeLeft(calculateTimeLeft());
-    fetchCounts();
+  // Fetch counts (for refresh)
+  const fetchCounts = useCallback(async () => {
+    try {
+      const data = await getCacheCounts();
+      setCounts(data);
+    } catch (err) {
+      console.error("Failed to fetch cache counts:", err);
+    }
+  }, []);
 
-    // Timer interval
-    const interval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+  // Reset timer and notify cards
+  const resetTimer = useCallback((key: string) => {
+    const now = Date.now();
+    if (key === "all") {
+      Object.keys(CACHE_DURATIONS).forEach((k) =>
+        localStorage.setItem(`nexera_cache_last_${k}`, now.toString())
+      );
+      setRefreshKeys(prev => {
+        const updated = { ...prev };
+        Object.keys(CACHE_DURATIONS).forEach(k => {
+          updated[k] = prev[k] + 1;
+        });
+        return updated;
+      });
+    } else {
+      localStorage.setItem(`nexera_cache_last_${key}`, now.toString());
+      setRefreshKeys(prev => ({ ...prev, [key]: prev[key] + 1 }));
+    }
+  }, []);
 
-    return () => clearInterval(interval);
-  }, [calculateTimeLeft]);
-
-
-  const handleResetTimer = (key: string) => {
-      if (key === "all") {
-        const now = Date.now();
-        Object.keys(CACHE_DURATIONS).forEach((k) =>
-          localStorage.setItem(`nexera_cache_last_${k}`, now.toString())
-        );
-        setTimeLeft(calculateTimeLeft());
-      } else {
-        localStorage.setItem(`nexera_cache_last_${key}`, Date.now().toString());
-        setTimeLeft(prev => ({
-            ...prev,
-            [key]: CACHE_DURATIONS[key as keyof typeof CACHE_DURATIONS]
-        }));
-      }
-  };
-
-  const handleRefresh = async (
+  const handleRefresh = useCallback(async (
     key: string,
     action: () => Promise<void>,
     label: string
@@ -300,26 +224,21 @@ export default function CacheSettings() {
     setLoading(key);
     try {
       await action();
-      // Reset timer
-      handleResetTimer(key === "all" ? "all" : key);
-      
-      // Refresh counts too (might have changed)
+      resetTimer(key);
       await fetchCounts();
-
     } catch (error) {
       console.error(`Failed to refresh ${label}:`, error);
       alert(`Failed to refresh ${label}. Check console for details.`);
     } finally {
       setLoading(null);
     }
-  };
+  }, [resetTimer, fetchCounts]);
 
   return (
     <div className="preferencesSection">
       <div className="prefGrid">
-        <div className="prefCard fullWidth info-banner">
+        <div className="prefCard fullWidth infoBanner">
           <div className="cardHeader">
-            {/* <FiDatabase className="cardIcon" /> */}
             <div>
               <h3>Cache Management</h3>
               <p>
@@ -329,14 +248,14 @@ export default function CacheSettings() {
           </div>
         </div>
 
-        <div className="cards-grid fullWidth">
+        <div className="cardsGrid fullWidth">
             <CacheCard 
                 cacheKey="subjects"
                 label="Subjects"
                 duration={CACHE_DURATIONS.subjects}
                 count={counts.subjects}
                 loading={loading}
-                timeLeft={timeLeft.subjects || 0}
+                lastRefreshKey={refreshKeys.subjects}
                 onRefresh={handleRefresh}
                 action={revalidateSubjects}
             />
@@ -346,7 +265,7 @@ export default function CacheSettings() {
                 duration={CACHE_DURATIONS.topics}
                 count={counts.topics}
                 loading={loading}
-                timeLeft={timeLeft.topics || 0}
+                lastRefreshKey={refreshKeys.topics}
                 onRefresh={handleRefresh}
                 action={revalidateTopics}
             />
@@ -356,7 +275,7 @@ export default function CacheSettings() {
                 duration={CACHE_DURATIONS.notes}
                 count={counts.notes}
                 loading={loading}
-                timeLeft={timeLeft.notes || 0}
+                lastRefreshKey={refreshKeys.notes}
                 onRefresh={handleRefresh}
                 action={revalidateNotes}
             />
@@ -366,7 +285,7 @@ export default function CacheSettings() {
                 duration={CACHE_DURATIONS.users}
                 count={counts.users}
                 loading={loading}
-                timeLeft={timeLeft.users || 0}
+                lastRefreshKey={refreshKeys.users}
                 onRefresh={handleRefresh}
                 action={revalidateUsers}
             />
@@ -376,130 +295,33 @@ export default function CacheSettings() {
                 duration={CACHE_DURATIONS.badges}
                 count={counts.badges}
                 loading={loading}
-                timeLeft={timeLeft.badges || 0}
+                lastRefreshKey={refreshKeys.badges}
                 onRefresh={handleRefresh}
                 action={revalidateBadges}
             />
         </div>
 
         {/* Global Actions */}
-        <div className="prefCard fullWidth" style={{ marginTop: "1rem" }}>
-          <div className="flex-between">
-              <div>
-                <label>Global Actions</label>
-                <p className="text-sm text-gray-500">
-                    Bulk operations for all cached data.
-                </p>
-              </div>
+        <div className="prefCard fullWidth">
+          <div>
+              <label>Global Actions</label>
+              <p className="textMuted textSm">
+                  Refresh all cached data at once.
+              </p>
           </div>
           
-          <div className="action-row">
-             <button
-              className="secondaryBtn"
-              onClick={() => handleResetTimer("all")}
-              title="Reset All Timers Locally"
-            >
-              <FiRotateCcw /> Reset Timers
-            </button>
-            <button
-              className="deleteBtn"
-              onClick={() =>
-                handleRefresh("all", () => revalidateAll(), "All Caches")
-              }
-              disabled={loading !== null}
-            >
-              <FiTrash2 />{" "}
-              {loading === "all" ? "Clearing..." : "Clear All & Refresh"}
-            </button>
-          </div>
+          <button
+            className="primaryBtn"
+            onClick={() =>
+              handleRefresh("all", () => revalidateAll(), "All Caches")
+            }
+            disabled={loading !== null}
+          >
+            <FiRefreshCw className={loading === "all" ? "spin" : ""} />
+            {loading === "all" ? "Refreshing..." : "Refresh All Caches"}
+          </button>
         </div>
       </div>
-
-      <style jsx>{`
-        .fullWidth {
-          grid-column: 1 / -1;
-        }
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-        .info-banner {
-            background: var(--bg-secondary);
-            border: none;
-        }
-        .cardHeader {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-        .cardIcon {
-          font-size: 1.5rem;
-          color: var(--accent);
-        }
-        .text-sm {
-          font-size: 0.875rem;
-        }
-        .text-gray-500 {
-          color: var(--text-secondary);
-          opacity: 0.8;
-        }
-        .action-row {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        .deleteBtn {
-            background: var(--danger-soft);
-            color: var(--danger);
-            border: 1px solid var(--danger-border);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            width: 100%;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        .deleteBtn:hover:not(:disabled) {
-            background: var(--danger);
-            color: white;
-        }
-         .secondaryBtn {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-            width: 100%;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-        .secondaryBtn:hover {
-            background: var(--bg-secondary);
-            border-color: var(--text-secondary);
-        }
-        .secondaryBtn:disabled, .deleteBtn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        @media (max-width: 768px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            .action-row {
-                flex-direction: column;
-            }
-        }
-      `}</style>
     </div>
   );
 }
