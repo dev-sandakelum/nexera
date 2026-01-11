@@ -1,4 +1,4 @@
-import { createNote, deleteNote, fetchNotes, updateNote } from '@/components/firebase/notes-management';
+import { createNote, deleteNote, fetchNotes, updateNote } from '@/lib/actions/notes';
 import { revalidateNotes } from '@/lib/revalidate';
 import { NextRequest, NextResponse } from 'next/server';
 

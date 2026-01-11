@@ -4,11 +4,11 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { unstable_noStore } from "next/cache";
-import { initAdmin } from "@/components/firebase/firebaseAdmin";
-import { getCachedUserByEmail } from "@/lib/firebase-cache";
+import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/models/User";
+import { getCachedUserByEmail } from "@/lib/mongodb-cache";
 import { revalidateUsers } from "@/lib/revalidate";
 import { NexeraUser } from "@/components/types";
-import { getFirestore } from "firebase-admin/firestore";
 import { nexBadges } from "@/public/json/badges";
 
 /**
@@ -65,7 +65,7 @@ async function uploadProfilePictureFromUrl(
 }
 
 /**
- * Creates a new user in Firebase
+ * Creates a new user in MongoDB
  * SERVER-ONLY function
  */
 export async function createNewUser(
@@ -73,7 +73,7 @@ export async function createNewUser(
   name: string,
   clerkProfilePicture: string
 ): Promise<NexeraUser> {
-  // Access headers to make this dynamic (required for crypto.randomUUID in Next.js 15+)
+  // Access headers to make this dynamic
   await headers();
 
   const userId = crypto.randomUUID();
@@ -105,8 +105,7 @@ export async function createNewUser(
       bio: "",
       badges: [
         {
-          id:
-            "nexStart",
+          id: "nexStart",
         },
       ],
       academic: {
@@ -128,24 +127,43 @@ export async function createNewUser(
       lastLogin: new Date().toISOString(),
     };
 
-    await initAdmin();
-    const db = getFirestore();
-    const userRef = db.collection("TestUsers").doc(newUser.id);
-    await userRef.set(newUser);
+    // Save to MongoDB
+    await connectDB();
+    const createdUser = new User(newUser);
+    await createdUser.save();
 
-    // Note: Cache revalidation removed to prevent "unsupported during render" error
-    // The new user is returned directly, so no cache revalidation needed in this flow
-
-    console.log(`User ${userId} created successfully`);
+    console.log(`User ${userId} created successfully in MongoDB`);
     return newUser;
-  } catch (error) {
+  } catch (error: any) {
+    // Handle duplicate key error (E11000) - race condition
+    if (error.code === 11000) {
+      console.log(`Duplicate key error for ${email}. User already exists. Fetching existing user...`);
+      await connectDB();
+      const existingUser = await User.findOne({ email }).lean();
+      
+      if (existingUser) {
+        // Serialize the user object for Next.js (Client Components)
+        // Convert _id to string if needed, ensure id exists, and remove _id (ObjectId)
+        const serializedUser = {
+          ...existingUser,
+          id: existingUser.id || (existingUser._id ? existingUser._id.toString() : ""),
+          _id: undefined, // Remove _id to avoid "Only plain objects" error
+        };
+        
+        // Remove _id key completely
+        delete (serializedUser as any)._id;
+
+        return serializedUser as unknown as NexeraUser;
+      }
+    }
+
     console.error("Error creating new user:", error);
     throw error;
   }
 }
 
 /**
- * Gets user data from Firebase, creates new user if doesn't exist
+ * Gets user data from MongoDB, creates new user if doesn't exist
  * SERVER-ONLY function
  */
 export async function getUserFromClerk(): Promise<NexeraUser | null> {
@@ -165,20 +183,48 @@ export async function getUserFromClerk(): Promise<NexeraUser | null> {
 
     const email = clerkUser.primaryEmailAddress.emailAddress;
 
-    // Initialize Firebase Admin
-    await initAdmin();
-
-    // Try to get existing user (cached query)
+    // Try to get existing user (cached query from MongoDB)
     let user = await getCachedUserByEmail(email);
 
-    // If user doesn't exist, create new user
+    // If user doesn't exist in cache, try one more time directly from DB before creating
+    if (!user) {
+        await connectDB();
+        user = await User.findOne({ email }).lean<NexeraUser>();
+
+        if(user){
+             return {
+                ...user,
+                id: (user as any)._id?.toString() || user.id,
+                _id: undefined,
+            } as NexeraUser;
+        }
+    }
+
+    // If still no user, create new user
     if (!user) {
       console.log(`Creating new user for email: ${email}`);
-      user = await createNewUser(
-        email,
-        clerkUser.fullName || "No Name",
-        clerkUser.imageUrl || ""
-      );
+      try {
+        user = await createNewUser(
+          email,
+          clerkUser.fullName || "No Name",
+          clerkUser.imageUrl || ""
+        );
+      } catch (error: any) {
+        // Handle race condition/duplicate key error
+        if (error.code === 11000 || error.message?.includes("E11000")) {
+          console.log("User already exists (race condition), fetching from DB...");
+          await connectDB();
+          const existingUser = await User.findOne({ email }).lean<NexeraUser>();
+          if (existingUser) {
+            return {
+              ...existingUser,
+              id: (existingUser as any)._id?.toString() || existingUser.id,
+              _id: undefined,
+            } as NexeraUser;
+          }
+        }
+        throw error;
+      }
     } else {
       console.log(`User found: ${user.id}`);
     }

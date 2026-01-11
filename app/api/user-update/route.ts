@@ -1,7 +1,7 @@
 // app/api/user-update/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { initAdmin } from "@/components/firebase/firebaseAdmin";
-import { getFirestore } from "firebase-admin/firestore";
+import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/models/User";
 import { revalidateUsers } from "@/lib/revalidate";
 
 export async function PUT(request: NextRequest) {
@@ -16,27 +16,30 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    await initAdmin();
-    const db = getFirestore();
-    const userRef = db.collection("TestUsers").doc(id);
-    
-    // Update the user document
-    await userRef.update({
-      ...updates,
-      updatedAt: new Date().toISOString(),
-    });
+    await connectDB();
 
-    // Fetch the updated user
-    const updatedDoc = await userRef.get();
-    
-    if (!updatedDoc.exists) {
+    // Update the user document
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      },
+      { new: true }
+    ).lean();
+
+    if (!updatedUser) {
       return NextResponse.json(
         { error: "User not found after update" },
         { status: 404 }
       );
     }
 
-    const user = { id: updatedDoc.id, ...updatedDoc.data() };
+    const user = {
+      id: (updatedUser as any)._id?.toString(),
+      ...(updatedUser as any),
+      _id: undefined,
+    };
 
     // Clear user cache
     await revalidateUsers(id);

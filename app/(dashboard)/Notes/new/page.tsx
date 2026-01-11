@@ -2,7 +2,7 @@ import {
   getCachedSubjectsByUserId,
   getCachedTopicsByUserId,
   getCachedNotesByUserId,
-} from "@/lib/firebase-cache";
+} from "@/lib/mongodb-cache";
 import NotesSubjectCreator from "@/components/page/notes/notes_subject_creator";
 import React from "react";
 import { getUserFromClerk } from "@/lib/server/user-helpers";

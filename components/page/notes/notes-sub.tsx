@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useEffect, useState, useRef } from "react";
-import { GetUserNameList } from "@/components/firebase/get-list";
+import { GetUserNameList } from "@/lib/actions/lists";
 import { FiChevronDown, FiChevronUp, FiFilter, FiShield } from "react-icons/fi";
 import NoteTypeSection from "@/components/page/notes/items/note_sub/TypeSection";
 

@@ -8,7 +8,7 @@ import { MdVerified, MdLock, MdShare, MdEdit } from "react-icons/md";
 import { HiGlobe, HiTerminal, HiExternalLink } from "react-icons/hi";
 import { BiShieldQuarter } from "react-icons/bi";
 import { FiLayout, FiDatabase } from "react-icons/fi";
-import { GetProfilePicList } from "@/components/firebase/get-list";
+import { GetProfilePicList } from "@/lib/actions/lists";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 

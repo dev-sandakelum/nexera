@@ -1,53 +1,30 @@
-import { writeBatch, collection, doc } from "firebase/firestore";
+"use server";
 
+import { connectDB } from "@/lib/mongodb";
+import Topic from "@/lib/models/Topic";
+import User from "@/lib/models/User";
 import { nexeraUsersR } from "@/public/json/users";
-import { db } from "@/app/api/firebase";
-import { BlobToFile } from "../converts/blob-to-file";
-import { UploadFile } from "@/utils/supabase/storage/client";
-import { UpdateUser } from "../firebase/update-user";
-import { nexIctSubjects } from "@/public/json/subjects";
-import { noteContexts } from "@/public/json/notesData";
+// import { UploadFile } from "@/utils/supabase/storage/client"; // Likely client-side, suppressing for now
 import { ictTopics } from "@/public/json/topics";
 
 export async function UploadUsersFast() {
-  const batch = writeBatch(db);
-  const usersCollection = collection(db, "nexNoteTopics");
+  try {
+    await connectDB();
+    console.log("Starting fast upload/migration...");
 
-  ictTopics.forEach((user) => {
-    const userRef = doc(usersCollection, user.id);
-    batch.set(userRef, user);
-  });
-
-  // for (const user of nexeraUsersR) {
-  //   try {
-  //     const avatarUrl = "/img/profile_pic/26.jpg";
-  //     const imgBlob = await BlobToFile(avatarUrl, "avatar.png");
-
-  //     const { imageURL, error } = await UploadFile({
-  //       userId: user.id,
-  //       file: imgBlob,
-  //       bucket: "users",
-  //       path: `profile_pic2/${user.id}`,
-  //     });
-
-  //     if (error) {
-  //       console.error("Error uploading user avatar:", error);
-  //       continue;
-  //     }
-
-  //     if (imageURL) {
-  //       await UpdateUser(user.id,  user);
-  //     }
-  //   } catch (err: any) {
-  //     console.error("Error uploading user avatar:", err.message);
-  //   }
-  // }
-
-  // const data = await LoadUserAvatar({
-  //   userId: "u_005",
-  // });
-  // console.log("Downloaded avatar data:", data);
-
-  await batch.commit(); // commits all at once
-  console.log("All users uploaded quickly!");
+    // Upload Topics
+    if (ictTopics && ictTopics.length > 0) {
+        for (const topic of ictTopics) {
+            await Topic.findOneAndUpdate(
+                { id: topic.id }, 
+                { ...topic, updatedAt: new Date().toISOString() }, 
+                { upsert: true, new: true }
+            );
+        }
+    }
+    
+    console.log("All topics uploaded/updated!");
+  } catch (error) {
+    console.error("Error in UploadUsersFast:", error);
+  }
 }

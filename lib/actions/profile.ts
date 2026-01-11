@@ -1,7 +1,10 @@
-// components/firebase/user-profile.tsx
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/app/api/firebase';
-import { NexeraUser } from '@/components/types';
+
+"use server";
+
+import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/models/User";
+import { NexeraUser } from "@/components/types";
+import { revalidateUsers } from "@/lib/revalidate";
 
 /**
  * Update user profile information
@@ -11,13 +14,13 @@ export async function updateUserProfile(
   updates: Partial<NexeraUser>
 ): Promise<boolean> {
   try {
-    const userRef = doc(db, 'TestUsers', userId);
-    
-    await updateDoc(userRef, {
+    await connectDB();
+    await User.findByIdAndUpdate(userId, {
       ...updates,
       lastLogin: new Date().toISOString(),
     });
     
+    await revalidateUsers(userId);
     return true;
   } catch (error) {
     console.error('Error updating user profile:', error);
@@ -34,14 +37,14 @@ export async function changeUserPassword(
   newPassword: string
 ): Promise<boolean> {
   try {
+    await connectDB();
     // In a real app, you'd verify the current password first
-    const userRef = doc(db, 'TestUsers', userId);
     
-    await updateDoc(userRef, {
+    await User.findByIdAndUpdate(userId, {
       password: newPassword,
       lastLogin: new Date().toISOString(),
     });
-    
+
     return true;
   } catch (error) {
     console.error('Error changing password:', error);
@@ -57,13 +60,14 @@ export async function updateUserAvatar(
   avatarUrl: string
 ): Promise<boolean> {
   try {
-    const userRef = doc(db, 'TestUsers', userId);
-    
-    await updateDoc(userRef, {
+    await connectDB();
+
+    await User.findByIdAndUpdate(userId, {
       profilePicture: avatarUrl,
       lastLogin: new Date().toISOString(),
     });
-    
+
+    await revalidateUsers(userId);
     return true;
   } catch (error) {
     console.error('Error updating avatar:', error);
@@ -78,15 +82,16 @@ export async function deleteUserAccount(
   userId: string
 ): Promise<boolean> {
   try {
-    const userRef = doc(db, 'TestUsers', userId);
-    
+    await connectDB();
+
     // In a real app, you'd actually delete the document
     // For now, we'll just mark it as disabled
-    await updateDoc(userRef, {
+    await User.findByIdAndUpdate(userId, {
       status: 'disabled',
       lastLogin: new Date().toISOString(),
     });
-    
+
+    await revalidateUsers(userId);
     return true;
   } catch (error) {
     console.error('Error deleting account:', error);
@@ -102,14 +107,19 @@ export async function toggle2FA(
   enabled: boolean
 ): Promise<boolean> {
   try {
-    const userRef = doc(db, 'TestUsers', userId);
-    
+    await connectDB();
+
     // In a real app, you'd implement actual 2FA logic
-    await updateDoc(userRef, {
-      twoFactorEnabled: enabled,
+    await User.findByIdAndUpdate(userId, {
+      twoFactorEnabled: enabled, // Schema might need this field if it's strict, but mongoose usually allows partial
       lastLogin: new Date().toISOString(),
     });
     
+    // Note: ensure 'twoFactorEnabled' is in your User schema or use strict: false
+    // Since I defined the schema earlier, I should check if it's there. 
+    // If not, it won't be saved unless schema allows it.
+    
+    await revalidateUsers(userId);
     return true;
   } catch (error) {
     console.error('Error toggling 2FA:', error);

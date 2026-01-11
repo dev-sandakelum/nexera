@@ -1,7 +1,8 @@
 // app/api/note-update/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { initAdmin } from "@/components/firebase/firebaseAdmin";
-import { getFirestore } from "firebase-admin/firestore";
+import { connectDB } from "@/lib/mongodb";
+import Note from "@/lib/models/Note";
+import NoteData from "@/lib/models/NoteData";
 import { revalidateNotes } from "@/lib/revalidate";
 
 export async function PUT(request: NextRequest) {
@@ -16,13 +17,9 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    await initAdmin();
-    const db = getFirestore();
+    await connectDB();
 
-    const noteAboutRef = db.collection("management_notes").doc(id);
-    const noteDataRef = db.collection("nexNotePart2").doc(id);
-
-    // ✅ Build update payloads (server-side safe)
+    // Build update payloads (server-side safe)
     const aboutPayload = {
       ...updatesAbout,
       updatedAt: new Date().toISOString(),
@@ -32,17 +29,17 @@ export async function PUT(request: NextRequest) {
       ...updatesData,
     };
 
-    // ✅ Merge updates instead of create
-    await Promise.all([
-      noteAboutRef.set(aboutPayload, { merge: true }),
-      noteDataRef.set(dataPayload, { merge: true }),
+    // Merge updates instead of create
+    const [updatedNote, updatedNoteData] = await Promise.all([
+      Note.findOneAndUpdate({ id: id }, { id, ...aboutPayload }, { new: true, upsert: true }).lean(),
+      NoteData.findOneAndUpdate(
+        { noteId: id },
+        dataPayload,
+        { new: true, upsert: true }
+      ).lean(),
     ]);
 
-    // Fetch updated documents
-    const updatedAboutDoc = await noteAboutRef.get();
-    const updatedDataDoc = await noteDataRef.get();
-
-    if (!updatedAboutDoc.exists || !updatedDataDoc.exists) {
+    if (!updatedNote || !updatedNoteData) {
       return NextResponse.json(
         { error: "Note not found after update" },
         { status: 404 }
@@ -50,9 +47,9 @@ export async function PUT(request: NextRequest) {
     }
 
     const note = {
-      id: updatedAboutDoc.id,
-      about: updatedAboutDoc.data(),
-      data: updatedDataDoc.data(),
+      id: (updatedNote as any)._id?.toString(),
+      about: updatedNote,
+      data: updatedNoteData,
     };
 
     // Clear notes cache
@@ -80,15 +77,11 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await initAdmin();
-    const db = getFirestore();
-    
-    const noteAboutRef = db.collection("management_notes").doc(id);
-    const noteDataRef = db.collection("nexNotePart2").doc(id);
+    await connectDB();
 
     await Promise.all([
-      noteAboutRef.delete(),
-      noteDataRef.delete(),
+      Note.findOneAndDelete({ id: id }),
+      NoteData.findOneAndDelete({ noteId: id }),
     ]);
 
     // Clear notes cache
