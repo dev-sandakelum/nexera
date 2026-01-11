@@ -1,1 +1,6 @@
-feat: Add edit to Cache Settings tab to Profile Management
+feat: Enhance Cache Settings with new CacheCard component and data fetching
+
+- Introduced a new CacheCard component for better visualization of cache data.
+- Updated CacheSettings to fetch and display document counts for subjects, topics, notes, users, and badges.
+- Improved timer logic for cache refresh and added auto-reset functionality.
+- Enhanced UI with responsive design and improved styling for better user experience.
