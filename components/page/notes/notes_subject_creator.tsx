@@ -44,17 +44,17 @@ import {
   CreateSubject,
   UpdateSubject,
   DeleteSubject,
-} from "@/components/firebase/notes/new/update-subject";
+} from "@/lib/client/subject";
 import {
   CreateTopic,
   UpdateTopic,
   DeleteTopic,
-} from "@/components/firebase/notes/new/update-topic";
+} from "@/lib/client/topic";
 import {
   CreateNote,
   UpdateNote,
   DeleteNote,
-} from "@/components/firebase/notes/new/update-note";
+} from "@/lib/client/note";
 
 import "@/components/styles/MOBILE/notes-subject-creator/ListItem.css";
 

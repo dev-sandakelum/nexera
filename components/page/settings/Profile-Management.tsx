@@ -27,7 +27,7 @@ import ShowPasswordModal from "./models/PasswordModal";
 import ShowAvatarModal from "./models/AvatarModal";
 import ShowDeleteModal from "./models/DeleteModal";
 import ShowSessionsModal from "./models/SessionsModal";
-import { UpdateUser } from "@/components/firebase/update-user";
+import { UpdateUser } from "@/lib/client/user";
 import { useUser } from "@/contexts/UserContext";
 import { BlobToFile } from "@/components/converts/blob-to-file";
 import { UploadFile } from "@/utils/supabase/storage/client";

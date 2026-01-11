@@ -5,7 +5,7 @@ import {
   updateUserRole,
   toggleUserStatus,
   updateUserBadge,
-} from "@/components/firebase/user-management";
+} from "@/lib/actions/users";
 import { revalidateUsers } from "@/lib/revalidate";
 
 export async function GET(request: NextRequest) {

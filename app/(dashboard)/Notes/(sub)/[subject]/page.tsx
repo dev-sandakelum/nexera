@@ -3,7 +3,7 @@ import {
   getCachedTopicsBySubject,
   getCachedNotesByTopicIds,
   getCachedUsersMinimal,
-} from "@/lib/firebase-cache";
+} from "@/lib/mongodb-cache";
 import Notes_Sub from "@/components/page/notes/notes-sub";
 import { nexSubject, nexTopic, nexNoteAbout } from "@/components/types";
 

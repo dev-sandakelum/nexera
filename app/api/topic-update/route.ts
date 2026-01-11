@@ -1,7 +1,7 @@
 // app/api/topic-update/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { initAdmin } from "@/components/firebase/firebaseAdmin";
-import { getFirestore } from "firebase-admin/firestore";
+import { connectDB } from "@/lib/mongodb";
+import Topic from "@/lib/models/Topic";
 import { revalidateTopics } from "@/lib/revalidate";
 
 export async function PUT(request: NextRequest) {
@@ -16,33 +16,36 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    await initAdmin();
-    const db = getFirestore();
-    const topicRef = db.collection("nexNoteTopics").doc(id);
-    
-    // Upsert the topic document
-    await topicRef.set({
-      id,
-      ...updates,
-      updatedAt: new Date().toISOString(),
-    }, { merge: true });
+    await connectDB();
 
-    // Fetch the updated topic
-    const updatedDoc = await topicRef.get();
-    
-    if (!updatedDoc.exists) {
+    // Upsert the topic document
+    const topic = await Topic.findOneAndUpdate(
+      { id: id },
+      {
+        id,
+        ...updates,
+        updatedAt: new Date().toISOString(),
+      },
+      { new: true, upsert: true }
+    ).lean();
+
+    if (!topic) {
       return NextResponse.json(
         { error: "Topic not found after update" },
         { status: 404 }
       );
     }
 
-    const topic = { id: updatedDoc.id, ...updatedDoc.data() };
+    const topicData = {
+      id: (topic as any)._id?.toString(),
+      ...(topic as any),
+      _id: undefined,
+    };
 
     // Clear topics cache
     await revalidateTopics(updates.subjectID);
 
-    return NextResponse.json({ success: true, topic });
+    return NextResponse.json({ success: true, topic: topicData });
   } catch (error) {
     console.error("Error in PUT /api/topic-update:", error);
     return NextResponse.json(
@@ -64,14 +67,10 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    await initAdmin();
-    const db = getFirestore();
-    const topicRef = db.collection("nexNoteTopics").doc(id);
-    
-    await topicRef.delete();
+    await connectDB();
+    await Topic.findOneAndDelete({ id: id });
 
-    // Clear topics cache - we might not know subjectID without fetching first, 
-    // but usually revalidation functions handle broad revalidation or optional params.
+    // Clear topics cache
     await revalidateTopics();
 
     return NextResponse.json({ success: true });

@@ -2,7 +2,7 @@ import {
   getCachedSubjects, 
   getCachedUsers, 
   getCachedBadges 
-} from "@/lib/firebase-cache";
+} from "@/lib/mongodb-cache";
 import Notes from "@/components/page/notes/notes";
 import { Suspense } from "react";
 import { nexSubject, NexeraUser, nexBadge } from "@/components/types";

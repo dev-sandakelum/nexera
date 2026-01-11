@@ -1,6 +1,6 @@
 "use server"
 import NotePreviewPage from "@/components/page/notes/preview/note/note";
-import { getCachedNoteBySlug, getCachedNoteDataById } from "@/lib/firebase-cache";
+import { getCachedNoteBySlug, getCachedNoteDataById } from "@/lib/mongodb-cache";
 import { headers } from "next/headers";
 import { nexNoteAbout, nexNoteData } from "@/components/types";
 

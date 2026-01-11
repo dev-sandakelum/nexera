@@ -3,7 +3,7 @@ import { UserProvider } from "@/contexts/UserContext";
 import { getUserFromClerk } from "@/lib/server/user-helpers";
 import NavbarControler from "./navbar-controler";
 import { unstable_noStore } from "next/cache";
-import { getCachedNotes } from "@/lib/firebase-cache";
+import { getCachedNotes } from "@/lib/mongodb-cache";
 import { nexNoteAbout, NexeraUser } from "@/components/types";
 
 export default async function DashboardLayout({

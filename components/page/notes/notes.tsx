@@ -9,7 +9,7 @@ import { GiWorld } from "react-icons/gi";
 import { use, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
-import { UpdateUser } from "@/components/firebase/update-user";
+import { UpdateUser } from "@/lib/client/user";
 import { FiChevronDown, FiFilter } from "react-icons/fi";
 import LoadingAnimation from "../loading";
 import { PiPlusBold } from "react-icons/pi";

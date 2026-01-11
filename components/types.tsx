@@ -133,6 +133,8 @@ export type NexeraUser = {
   location: string;
   joinedAt: string;
   lastLogin?: string;
+  role?: "user" | "moderator" | "admin";
+  twoFactorEnabled?: boolean;
   status: "active" | "disabled";
   academic: {
     institution: string;
