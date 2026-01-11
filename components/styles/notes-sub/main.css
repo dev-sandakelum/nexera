@@ -98,7 +98,7 @@
 
 .notes-btn {
   padding: 8px 16px;
-  background: var(--background);
+  background: var(--background2);
   color: #34343e;
   border: 1px solid var(--navbar-border);
   border-radius: 8px;
@@ -110,7 +110,7 @@
 /* ---------- Filters ---------- */
 
 .notes-filter-box {
-  background: var(--background);
+  background: var(--background2);
   border-radius: 12px;
   border: 1px solid var(--navbar-border);
   overflow: hidden;
@@ -180,7 +180,7 @@
   gap: 16px;
 }
 .topic-card {
-  background: var(--background);
+  background: var(--background2);
   border: 1px solid var(--navbar-border);
   border-radius: 12px;
   overflow: hidden;
@@ -197,7 +197,7 @@
 }
 
 .topic-header.expanded {
-  background: var(--background2);
+  background: var(--background);
 }
 
 .topic-header-left {
@@ -216,7 +216,7 @@
   color: var(--color);
   margin: 0 0 6px 0;
 }
-.topic-subinfo {
+.topic-subinfo-r {
   font-size: 13px;
   color: var(--color);
   opacity: 0.6;
@@ -225,7 +225,10 @@
   margin-top: 6px;
   flex-wrap: wrap;
 }
-
+.topic-subinfo-r-total {
+  display: flex;
+  gap: 8px;
+}
 .topic-toggle-icon {
   font-size: 20px;
   color: var(--theme-colorA);

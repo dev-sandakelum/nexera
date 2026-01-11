@@ -1,7 +1,6 @@
-feat: Optimize CacheCard component with memoization and improved timer logic
+feat: Refactor Notes_Sub component and styles for improved layout and animation
 
-- Refactored CacheCard to use memoization for performance enhancement.
-- Updated timer logic to refresh every minute instead of every second, reducing re-renders.
-- Introduced local storage management for tracking last refresh times.
-- Enhanced UI elements and styling for better user experience and responsiveness.
-- Simplified state management for refresh events across cache cards.
+- Updated animation properties in Notes_Sub for smoother transitions.
+- Renamed and restructured CSS classes for topic subinfo to enhance layout with flexbox.
+- Changed background colors in various components to improve visual consistency.
+- Adjusted styling for better responsiveness and alignment of topic information.

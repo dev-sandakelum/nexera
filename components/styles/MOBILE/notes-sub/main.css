@@ -39,7 +39,9 @@
     font-size: 16px;
   }
 
-  .topic-subinfo {
+  .topic-subinfo-r {
+    display: flex;
+    flex-direction: row;
     font-size: 12px;
     gap: 12px;
   }
@@ -164,10 +166,11 @@
     margin-bottom: 4px;
   }
 
-  .topic-subinfo {
+  .topic-subinfo-r {
     font-size: 11px;
     gap: 8px;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     align-items: flex-start;
   }
 

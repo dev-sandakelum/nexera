@@ -237,9 +237,9 @@ export default function Notes_Sub({
             <motion.div
               key={topic.id}
               layout
-              initial={{ opacity: 0, y: 2 }}
+              initial={{ opacity: 0, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
+              exit={{ opacity: 0, y: 0 }}
               transition={{ duration: 0.15 }} // shorter, smoother
               className="topic-card"
             >
@@ -251,12 +251,12 @@ export default function Notes_Sub({
                 <div className="topic-header-left">
                   <h3 className="topic-title">{topic.title}</h3>
                   <p className="topic-description">{topic.description}</p>
-                  <div className="topic-subinfo">
+                  <div className="topic-subinfo-r">
                     <span>📝 {groupedNotes.note.length} Notes</span>
                     <span>📄 {groupedNotes.pdf.length} PDFs</span>
                     <span>🧠 {groupedNotes.quiz.length} Quizzes</span>
-                    <span>•</span>
-                    <span>{totalNotes} total</span>
+                    <span className="topic-subinfo-r-total">•<span>{totalNotes} total</span></span>
+                    
                   </div>
                 </div>
                 <div
