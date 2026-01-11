@@ -37,7 +37,7 @@ export default function Preferences() {
           </select>
         </div>
 
-        <div className="notifSection">
+        {/* <div className="notifSection">
           <h3>Notifications</h3>
           <div className="notifList">
             <div className="notifItem">
@@ -82,7 +82,7 @@ export default function Preferences() {
               </label>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

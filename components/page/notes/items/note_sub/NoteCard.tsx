@@ -1,3 +1,4 @@
+import { nexNoteAbout, nexNoteData } from "@/components/types";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React, { useRef } from "react";
@@ -5,13 +6,16 @@ import { FiClock, FiDownload, FiEye, FiUser } from "react-icons/fi";
 
 export default function NoteCard({
   note,
+  noteData,
   users,
   getStatusBadge,
 }: {
-  note: any;
+  note: nexNoteAbout;
+  noteData?: nexNoteData;
   users: { id: string; name: string }[];
   getStatusBadge: (status: string) => { bg: string; fg: string; text: string };
 }) {
+  console.log(`Note Card ${note.type}:`, note);
   const typeColors = {
     note: {
       bg: "var(--accent-soft-bg)",
@@ -92,10 +96,16 @@ export default function NoteCard({
           <button className="note-action-btn" onClick={handleViewClick}>
             <FiEye size={16} />
           </button>
-          {note.type === "pdf" && (
-            <button className="note-action-btn">
-              <FiDownload size={16} />
-            </button>
+          {note.type === "pdf" && noteData &&(
+            <a
+              href={(noteData.context as { url: string }).url || ""}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="note-action-btn">
+                <FiDownload size={16} />
+              </button>
+            </a>
           )}
         </div>
       </div>

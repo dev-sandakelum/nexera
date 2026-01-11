@@ -223,7 +223,14 @@ export default function NotesSubjectCreator({
   const handleCreateNote_FileUpload = async () => {
     if (noteFile) {
       try {
-        const fileBlob = await BlobToFile(noteFile, "md");
+        const fileBlob = await BlobToFile(
+          noteFile,
+          noteAbout.type == "note"
+            ? "md"
+            : noteAbout.type == "pdf"
+            ? "pdf"
+            : "json"
+        );
 
         const { fileURL, error } = await UploadFile({
           userId: user?.id || "",
@@ -608,7 +615,6 @@ export default function NotesSubjectCreator({
                   {d.code}
                 </option>
               ))}
-              
             </select>
           </div>
           <div className="nsc-form-group">

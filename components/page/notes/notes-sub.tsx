@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { nexNoteAbout, nexSubject, nexTopic } from "@/components/types";
+import { nexNoteAbout, nexNoteData, nexSubject, nexTopic } from "@/components/types";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { GetUserNameList } from "@/components/firebase/get-list";
@@ -17,11 +17,13 @@ export default function Notes_Sub({
   selectedSubject,
   topics,
   noteAbouts,
+  notesData,
   users,
 }: {
   selectedSubject: nexSubject;
   topics: nexTopic[];
   noteAbouts: nexNoteAbout[];
+  notesData: nexNoteData[];
   users: { id: string; name: string }[];
 }) {
   const pathname = usePathname();
@@ -282,6 +284,7 @@ export default function Notes_Sub({
                         <NoteTypeSection
                           title="📝 Markdown Notes"
                           notes={groupedNotes.note}
+                          notesData={notesData}
                           getStatusBadge={getStatusBadge}
                           users={users}
                         />
@@ -290,6 +293,7 @@ export default function Notes_Sub({
                         <NoteTypeSection
                           title="📄 PDF Documents"
                           notes={groupedNotes.pdf}
+                          notesData={notesData}
                           getStatusBadge={getStatusBadge}
                           users={users}
                         />
@@ -298,6 +302,7 @@ export default function Notes_Sub({
                         <NoteTypeSection
                           title="🧠 Quizzes"
                           notes={groupedNotes.quiz}
+                          notesData={notesData}
                           getStatusBadge={getStatusBadge}
                           users={users}
                         />

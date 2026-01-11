@@ -5,7 +5,10 @@ import { NextResponse } from 'next/server';
 const isPublicRoute = createRouteMatcher([
   '/sign-in(.*)',
   '/sign-up(.*)',
-  '/api/webhooks(.*)'
+  '/api/webhooks(.*)',
+  '/Notes/view/pdf(.*)',
+  '/api/note-update(.*)',
+  '/api/notes-management(.*)'
 ])
 
 export default clerkMiddleware(async (auth, req) => {
