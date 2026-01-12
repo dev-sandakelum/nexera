@@ -11,6 +11,7 @@ import { useMemo, useEffect, useState, useRef } from "react";
 import { GetUserNameList } from "@/components/firebase/get-list";
 import { FiChevronDown, FiChevronUp, FiFilter, FiShield } from "react-icons/fi";
 import NoteTypeSection from "@/components/page/notes/items/note_sub/TypeSection";
+import { motion } from "framer-motion";
 
 import "@/components/styles/notes-sub/NoteCard.css";
 import "@/components/styles/notes-sub/NoteTypeSection.css";
@@ -44,25 +45,12 @@ export default function Notes_Sub({
     [topics, subject_id]
   );
 
-  const [expandedTopics, setExpandedTopics] = useState<Record<string, boolean>>(
-    {}
-  );
   const [filterType, setFilterType] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
-  const expandAll = () => {
-    const allExpanded: Record<string, boolean> = {};
-    topics.forEach((topic) => {
-      allExpanded[topic.id] = true;
-    });
-    setExpandedTopics(allExpanded);
-  };
-
-  const collapseAll = () => setExpandedTopics({});
-
-  const toggleTopic = (topicId: string) => {
-    setExpandedTopics((prev) => ({ ...prev, [topicId]: !prev[topicId] }));
-  };
+  useEffect(() => {
+    GetUserNameList().then(setUserNames);
+  }, []);
 
   useEffect(() => {
     GetUserNameList().then(setUserNames);
@@ -103,6 +91,21 @@ export default function Notes_Sub({
     year: { bg: "var(--badge-03-bg)", fg: "var(--badge-03-fg)" },
     semester: { bg: "var(--badge-04-bg)", fg: "var(--badge-04-fg)" },
   };
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
     <div className="notesSubPage">
       {/* Header */}
@@ -154,15 +157,6 @@ export default function Notes_Sub({
               )}
             </div>
           </div>
-
-          <div className="notesSubPage-actions">
-            <button onClick={expandAll} className="notes-btn">
-              Expand All
-            </button>
-            <button onClick={collapseAll} className="notes-btn">
-              Collapse All
-            </button>
-          </div>
         </div>
       </div>
 
@@ -208,14 +202,24 @@ export default function Notes_Sub({
       </div>
 
       {/* Notes List */}
-      <div className="notsSub-list">
+      <motion.div
+        className="notsSub-list"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
         {subject_topics.map((topic) => {
           const topicNotes = getNotesForTopic(topic.id);
           const groupedNotes = groupNotesByType(topicNotes);
           const totalNotes = topicNotes.length;
 
           return (
-            <div key={topic.id} className="topic-card">
+            <motion.div
+              key={topic.id}
+              className="topic-card"
+              variants={item}
+              
+            >
               {/* Topic Header */}
               <div className="topic-header">
                 <div className="topic-header-left">
@@ -269,10 +273,10 @@ export default function Notes_Sub({
                   )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   );
 }

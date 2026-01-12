@@ -156,6 +156,7 @@
   }
 
   .notsSub-list {
+    column-count: 1;
     gap: 12px;
   }
 
@@ -178,11 +179,6 @@
     gap: 8px;
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .topic-toggle-icon {
-    font-size: 18px;
-    flex-shrink: 0;
   }
 
   .topic-content {

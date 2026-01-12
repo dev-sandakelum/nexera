@@ -192,28 +192,26 @@
   border-color: var(--theme-colorA);
 }
 .notsSub-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  column-count: 2;
+  column-gap: 16px;
+  width: 100%;
 }
 .topic-card {
   background: var(--background2);
   border: 1px solid var(--navbar-border);
   border-radius: 12px;
   overflow: hidden;
+  height: fit-content;
+  break-inside: avoid;
+  margin-bottom: 16px;
 }
 
 .topic-header {
   padding: 20px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: transparent;
-}
-
-.topic-header.expanded {
-  background: var(--background);
 }
 
 .topic-header-left {
@@ -244,14 +242,6 @@
 .topic-subinfo-r-total {
   display: flex;
   gap: 8px;
-}
-.topic-toggle-icon {
-  font-size: 20px;
-  color: var(--theme-colorA);
-}
-
-.topic-toggle-icon.rotated {
-  transform: rotate(180deg);
 }
 
 .topic-content {
