@@ -1,22 +1,258 @@
-
 /* ========================================
    MOBILE RESPONSIVE STYLES
    ======================================== */
 
 /* Tablet (768px and below) */
 @media (max-width: 768px) {
-  .note-card {
-    padding: 14px;
+  .NotesPage {
+    padding-top: 64px;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
-  .note-card-inner {
-    gap: 10px;
+  .notesSubPage {
+    padding: 80px 20px 20px;
+  }
+
+  .notesSubPage-title {
+    font-size: 24px;
+  }
+
+  .notesSubPage-title-box {
+    min-width: 200px;
+  }
+
+  .notes-filter-item {
+    min-width: 150px;
+  }
+
+  .topic-header {
+    padding: 16px;
+  }
+
+  .topic-content {
+    padding: 0 16px 16px;
+  }
+
+  .topic-title {
+    font-size: 16px;
+  }
+
+  .topic-subinfo {
+    font-size: 12px;
+    gap: 12px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .NotesPage {
+    padding-top: 48px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .note-type-icon {
+    display: none;
+  }
+  .NotesPage .catogory {
+    font-size: 13px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .NotesPage .topic {
+    gap: 12px;
+  }
+
+  .notesSubPage {
+    padding: 64px 16px 16px;
+  }
+
+  .notesSubPage-header {
+    margin-bottom: 24px;
+  }
+
+  .notesSubPage-header-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .notesSubPage-title-box {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .notesSubPage-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .notesSubPage-badges {
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .badge {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  .notesSubPage-actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .notes-btn {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 12px;
+    text-align: center;
+    min-height: 44px; /* Touch-friendly height */
+  }
+
+  .notes-filter-box {
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+
+  .notes-filter-toggle {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .notes-filter-grid {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 12px 12px;
+  }
+
+  .notes-filter-item {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .notes-filter-label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .notes-filter-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    width: 100%;
+  }
+
+  .notes-filter-btn {
+    padding: 10px 4px; /* Reduced side padding to prevent overflow */
+    font-size: 12px;
+    min-height: 40px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .notsSub-list {
+    gap: 12px;
+  }
+
+  .topic-card {
+    border-radius: 8px;
+  }
+
+  .topic-header {
+    padding: 14px 12px;
+    gap: 8px;
+  }
+
+  .topic-title {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .topic-subinfo {
+    font-size: 11px;
+    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topic-toggle-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .topic-content {
+    padding: 0 12px 12px;
+  }
+
+  .topic-empty {
+    padding: 24px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Extra small mobile (360px and below) */
+@media (max-width: 360px) {
+  .NotesPage {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .notesSubPage {
+    padding: 56px 12px 12px;
+  }
+
+  .notesSubPage-title {
+    font-size: 20px;
+  }
+
+  .notes-btn {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+
+  .topic-title {
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   NOTE CARD MOBILE RESPONSIVE
+   ======================================== */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+  .note-card {
+    height: 100px;
+    margin: 4px 0;
+  }
+
+  .note-card-bg {
+    height: 100px;
+  }
+
+  .animater {
+    width: 1200px;
+    height: 90px;
+  }
+
+  .icon-type-container {
+    height: 70px;
   }
 
   .note-type-icon {
     width: 36px;
     height: 36px;
     font-size: 16px;
+    border-radius: 7px;
+  }
+
+  .note-card-inner {
+    gap: 10px;
   }
 
   .note-title {
@@ -25,24 +261,62 @@
 
   .note-description {
     font-size: 12px;
+    margin: 0 0 7px 0;
   }
 
   .note-meta {
     gap: 10px;
     font-size: 11px;
   }
+
+  .note-actions {
+    gap: 7px;
+    padding-right: 18px;
+  }
+
+  .note-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+  }
 }
 
 /* Mobile (480px and below) */
 @media (max-width: 480px) {
   .note-card {
-    padding: 12px;
+    height: auto;
+    min-height: 95px;
+    margin: 4px 0;
+    padding: 0.5px;
     border-radius: 6px;
   }
 
+  .note-card-bg {
+    height: 100%;
+    border-radius: 6px;
+  }
+
+  .animater {
+    width: 1100px;
+    height: 80px;
+  }
+
+  .note-card-outer {
+    padding: 10px;
+  }
+
   .note-card-inner {
-    gap: 10px;
-    flex-wrap: wrap;
+    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .icon-type-container {
+    height: auto;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .note-type-icon {
@@ -73,6 +347,7 @@
   .note-status-badge {
     padding: 2px 6px;
     font-size: 9px;
+    border-radius: 3px;
   }
 
   .note-description {
@@ -93,14 +368,19 @@
 
   .note-actions {
     gap: 6px;
-    margin-top: 8px;
-    width: 100%;
-    justify-content: flex-end;
+    padding-right: 0;
+    width: auto;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .note-actions-btn {
+    gap: 6px;
   }
 
   .note-action-btn {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border-radius: 6px;
     flex-shrink: 0;
   }
@@ -109,17 +389,28 @@
 /* Extra small mobile (360px and below) */
 @media (max-width: 360px) {
   .note-card {
-    padding: 10px;
+    min-height: 90px;
+    margin: 3px 0;
+  }
+
+  .animater {
+    width: 1000px;
+    height: 70px;
+  }
+
+  .note-card-outer {
+    padding: 8px;
   }
 
   .note-card-inner {
-    gap: 8px;
+    gap: 6px;
   }
 
   .note-type-icon {
     width: 28px;
     height: 28px;
     font-size: 13px;
+    border-radius: 5px;
   }
 
   .note-title {
@@ -128,6 +419,7 @@
 
   .note-description {
     font-size: 11px;
+    margin-bottom: 5px;
   }
 
   .note-meta {
@@ -135,8 +427,13 @@
     gap: 6px;
   }
 
+  .note-actions {
+    gap: 5px;
+  }
+
   .note-action-btn {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
   }
 }

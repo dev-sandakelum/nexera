@@ -1,7 +1,11 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { nexNoteAbout, nexNoteData, nexSubject, nexTopic } from "@/components/types";
+import {
+  nexNoteAbout,
+  nexNoteData,
+  nexSubject,
+  nexTopic,
+} from "@/components/types";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useEffect, useState, useRef } from "react";
 import { GetUserNameList } from "@/components/firebase/get-list";
@@ -44,7 +48,6 @@ export default function Notes_Sub({
     {}
   );
   const [filterType, setFilterType] = useState("all");
-  const [filterStatus, setFilterStatus] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
   const expandAll = () => {
@@ -69,8 +72,6 @@ export default function Notes_Sub({
     let notes = noteAbouts.filter((n) => n.topicID === topicId);
     if (filterType !== "all")
       notes = notes.filter((n) => n.type === filterType);
-    if (filterStatus !== "all")
-      notes = notes.filter((n) => n.status === filterStatus);
     return notes;
   };
 
@@ -177,45 +178,33 @@ export default function Notes_Sub({
           {showFilters ? <FiChevronUp /> : <FiChevronDown />}
         </button>
 
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="notes-filter-content"
-            >
-              <div className="notes-filter-grid">
-                <div className="notes-filter-item">
-                  <label className="notes-filter-label">Note Type</label>
-                  <select
-                    value={filterType}
-                    onChange={(e) => setFilterType(e.target.value)}
-                    className="notes-filter-select"
-                  >
-                    <option value="all">All Types</option>
-                    <option value="note">Notes Only</option>
-                    <option value="pdf">PDFs Only</option>
-                    <option value="quiz">Quizzes Only</option>
-                  </select>
-                </div>
-                <div className="notes-filter-item">
-                  <label className="notes-filter-label">Status</label>
-                  <select
-                    value={filterStatus}
-                    onChange={(e) => setFilterStatus(e.target.value)}
-                    className="notes-filter-select"
-                  >
-                    <option value="all">All Status</option>
-                    <option value="approved">Approved</option>
-                    <option value="pending">Pending</option>
-                    <option value="rejected">Rejected</option>
-                  </select>
+        {showFilters && (
+          <div className="notes-filter-content">
+            <div className="notes-filter-grid">
+              <div className="notes-filter-item">
+                <label className="notes-filter-label">Note Type</label>
+                <div className="notes-filter-options">
+                  {[
+                    { value: "all", label: "All Types" },
+                    { value: "note", label: "Notes" },
+                    { value: "pdf", label: "PDFs" },
+                    { value: "quiz", label: "Quizzes" },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      className={`notes-filter-btn ${
+                        filterType === opt.value ? "active" : ""
+                      }`}
+                      onClick={() => setFilterType(opt.value)}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Notes List */}
@@ -223,33 +212,12 @@ export default function Notes_Sub({
         {subject_topics.map((topic) => {
           const topicNotes = getNotesForTopic(topic.id);
           const groupedNotes = groupNotesByType(topicNotes);
-          const isExpanded = expandedTopics[topic.id];
           const totalNotes = topicNotes.length;
 
-          const contentRef = useRef<HTMLDivElement>(null);
-          const [contentHeight, setContentHeight] = useState(0);
-
-          useEffect(() => {
-            if (contentRef.current) {
-              setContentHeight(contentRef.current.scrollHeight + 30);
-            }
-          }, [isExpanded, groupedNotes]);
-
           return (
-            <motion.div
-              key={topic.id}
-              layout
-              initial={{ opacity: 0, y: 0 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 0 }}
-              transition={{ duration: 0.15 }} // shorter, smoother
-              className="topic-card"
-            >
+            <div key={topic.id} className="topic-card">
               {/* Topic Header */}
-              <div
-                className={`topic-header ${isExpanded ? "expanded" : ""}`}
-                onClick={() => toggleTopic(topic.id)}
-              >
+              <div className="topic-header">
                 <div className="topic-header-left">
                   <h3 className="topic-title">{topic.title}</h3>
                   <p className="topic-description">{topic.description}</p>
@@ -257,66 +225,51 @@ export default function Notes_Sub({
                     <span>📝 {groupedNotes.note.length} Notes</span>
                     <span>📄 {groupedNotes.pdf.length} PDFs</span>
                     <span>🧠 {groupedNotes.quiz.length} Quizzes</span>
-                    <span className="topic-subinfo-r-total">•<span>{totalNotes} total</span></span>
-                    
+                    <span className="topic-subinfo-r-total">
+                      •<span>{totalNotes} total</span>
+                    </span>
                   </div>
-                </div>
-                <div
-                  className={`topic-toggle-icon ${isExpanded ? "rotated" : ""}`}
-                >
-                  <FiChevronDown />
                 </div>
               </div>
 
               {/* Topic Content */}
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: contentHeight, opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    style={{ overflow: "hidden" }}
-                    className="topic-content"
-                  >
-                    <div ref={contentRef}>
-                      {groupedNotes.note.length > 0 && (
-                        <NoteTypeSection
-                          title="📝 Markdown Notes"
-                          notes={groupedNotes.note}
-                          notesData={notesData}
-                          getStatusBadge={getStatusBadge}
-                          users={users}
-                        />
-                      )}
-                      {groupedNotes.pdf.length > 0 && (
-                        <NoteTypeSection
-                          title="📄 PDF Documents"
-                          notes={groupedNotes.pdf}
-                          notesData={notesData}
-                          getStatusBadge={getStatusBadge}
-                          users={users}
-                        />
-                      )}
-                      {groupedNotes.quiz.length > 0 && (
-                        <NoteTypeSection
-                          title="🧠 Quizzes"
-                          notes={groupedNotes.quiz}
-                          notesData={notesData}
-                          getStatusBadge={getStatusBadge}
-                          users={users}
-                        />
-                      )}
-                      {totalNotes === 0 && (
-                        <div className="topic-empty">
-                          No notes found for this topic
-                        </div>
-                      )}
+              <div className="topic-content">
+                <div>
+                  {groupedNotes.note.length > 0 && (
+                    <NoteTypeSection
+                      title="📝 Markdown Notes"
+                      notes={groupedNotes.note}
+                      notesData={notesData}
+                      getStatusBadge={getStatusBadge}
+                      users={users}
+                    />
+                  )}
+                  {groupedNotes.pdf.length > 0 && (
+                    <NoteTypeSection
+                      title="📄 PDF Documents"
+                      notes={groupedNotes.pdf}
+                      notesData={notesData}
+                      getStatusBadge={getStatusBadge}
+                      users={users}
+                    />
+                  )}
+                  {groupedNotes.quiz.length > 0 && (
+                    <NoteTypeSection
+                      title="🧠 Quizzes"
+                      notes={groupedNotes.quiz}
+                      notesData={notesData}
+                      getStatusBadge={getStatusBadge}
+                      users={users}
+                    />
+                  )}
+                  {totalNotes === 0 && (
+                    <div className="topic-empty">
+                      No notes found for this topic
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                  )}
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>

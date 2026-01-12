@@ -27,7 +27,6 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--theme-colorB);
-  transition: background 0.2s;
   padding: 12px 20px;
   padding-right:12px;
 }
@@ -43,7 +42,6 @@
   cursor: pointer;
   background: transparent;
   border: none;
-  transition: background 0.2s;
 }
 .add-new-item{
   background-color: var(--theme-colorA);
@@ -96,7 +94,6 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .filterGroup select:focus {

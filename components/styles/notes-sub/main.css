@@ -87,7 +87,6 @@
   font-weight: 600;
 }
 
-
 /* ---------- Header Buttons ---------- */
 
 .notesSubPage-actions {
@@ -164,15 +163,33 @@
   margin-bottom: 6px;
 }
 
-.notes-filter-select {
-  width: 100%;
-  padding: 8px 12px;
-  background: var(--background2);
+.notes-filter-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.notes-filter-btn {
+  padding: 8px 16px;
+  background: transparent;
   border: 1px solid var(--navbar-border);
-  border-radius: 6px;
-  font-size: 13px;
   color: var(--color);
+  border-radius: 8px;
+  font-size: 13px;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.notes-filter-btn:hover {
+  background: var(--background);
+  border-color: var(--theme-colorA);
+}
+
+.notes-filter-btn.active {
+  background: var(--theme-colorA);
+  color: #fff;
+  border-color: var(--theme-colorA);
 }
 .notsSub-list {
   display: flex;
@@ -193,7 +210,6 @@
   align-items: center;
   justify-content: space-between;
   background: transparent;
-  transition: background 0.2s;
 }
 
 .topic-header.expanded {
@@ -232,7 +248,6 @@
 .topic-toggle-icon {
   font-size: 20px;
   color: var(--theme-colorA);
-  transition: transform 0.3s;
 }
 
 .topic-toggle-icon.rotated {

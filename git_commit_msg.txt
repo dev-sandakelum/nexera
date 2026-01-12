@@ -1,1 +1,7 @@
-feat: Refactor Card0 component to separate favorites and suggestions sections with improved animations
+Refactor: Remove framer-motion animations from various components for improved performance and maintainability
+
+- Removed motion components and animations from Card0, NoteCard, Notes_Sub, Notes, NotesSubjectCreator, and Note_NotFound.
+- Updated styles to ensure consistent appearance without animations.
+- Enhanced mobile responsiveness in NoteCard.css and main.css.
+- Simplified filter UI in Notes_Sub by replacing select elements with button groups.
+- Adjusted layout and padding in various components for better user experience.

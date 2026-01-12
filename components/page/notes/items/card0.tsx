@@ -1,6 +1,5 @@
 "use client";
 import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { FiHeart, FiMoreVertical, FiShield } from "react-icons/fi";
 import { GrFavorite } from "react-icons/gr";
@@ -45,43 +44,11 @@ export default function Card0({
     updateUserFavorites(subjectId, method);
     setShowModal(false);
   };
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Time between each card appearing
-      },
-    },
-  };
-
-  // This controls individual cards
-  const cardVariants = {
-    hidden: {
-      opacity: 0,
-      y: 50, // Start 50px below final position
-    },
-    visible: {
-      opacity: 1,
-      y: -20,
-      transition: {
-        type: "spring" as const,
-        stiffness: 100,
-        damping: 12,
-      } as const,
-    },
-  };
 
   return (
     <>
       <div className="objects">
-        <motion.div 
-          className="subjectsGrid"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.01 }}
-        >
+        <div className="subjectsGrid">
           {/* FAVORITES SECTION */}
           {favorites.length > 0 && (
             <>
@@ -101,17 +68,8 @@ export default function Card0({
                       .id
                 );
                 return (
-                  <motion.div
+                  <div
                     key={subject.id}
-                    variants={cardVariants}
-                    whileHover={{
-                      y: -24,
-                      transition: {
-                        type: "spring" as const,
-                        stiffness: 300,
-                        damping: 20,
-                      },
-                    }}
                     className="subjectCard"
                   >
                     {/* Header with badges */}
@@ -194,7 +152,7 @@ export default function Card0({
                         Saved
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </>
@@ -219,17 +177,8 @@ export default function Card0({
                       .id
                 );
                 return (
-                  <motion.div
+                  <div
                     key={subject.id}
-                    variants={cardVariants}
-                    whileHover={{
-                      y: -24,
-                      transition: {
-                        type: "spring" as const,
-                        stiffness: 300,
-                        damping: 20,
-                      },
-                    }}
                     className="subjectCard"
                   >
                     {/* Header with badges */}
@@ -312,7 +261,7 @@ export default function Card0({
                         Save
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </>
@@ -325,7 +274,7 @@ export default function Card0({
               <p>No subjects found matching filters</p>
             </div>
           )}
-        </motion.div>
+        </div>
         <div style={{minHeight:"30px"}}></div>
       </div>
       <OptionPanel
