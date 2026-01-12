@@ -1,17 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FiHome, FiSearch } from "react-icons/fi";
 
 export default function Note_NotFound() {
   return (
     <div className="notFoundContainer">
-      <motion.div
+      <div
         className="contentWrapper"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <div className="iconContainer">
           <FiSearch className="searchIcon" />
@@ -36,7 +32,7 @@ export default function Note_NotFound() {
           <FiHome />
           Back to Notes
         </Link>
-      </motion.div>
+      </div>
     </div>
   );
 }

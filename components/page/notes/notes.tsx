@@ -1,7 +1,6 @@
 "use client";
 
 import { nexBadge, NexeraUser, nexSubject } from "@/components/types";
-import { motion } from "framer-motion";
 import Card0 from "./items/card0";
 import { GrFavorite } from "react-icons/gr";
 import { GiWorld } from "react-icons/gi";
@@ -130,7 +129,7 @@ export default function Notes({
   // 4. RENDER
   // ------------------------------------------------------
   return (
-    <div className="notesRedesignContainer" key={pathname}>
+    <div className="notesRedesignContainer">
       {/* FILTER SECTION */}
       <div className="filterSection">
         <div className="filterToggle">
@@ -144,7 +143,6 @@ export default function Notes({
             <FiChevronDown
               style={{
                 transform: showFilters ? "rotate(180deg)" : "rotate(0deg)",
-                transition: "transform 0.3s",
               }}
             />
           </button>
@@ -154,11 +152,7 @@ export default function Notes({
         </div>
 
         {showFilters && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            style={{ overflow: "hidden" }}
-          >
+          <div style={{ overflow: "hidden" }}>
             <div className="filterControls">
               <div className="filterGroup">
                 <label>Academic Year</label>
@@ -187,7 +181,7 @@ export default function Notes({
                 </select>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
 
@@ -199,6 +193,7 @@ export default function Notes({
         suggestions={visibleSuggestions}
         updateUserFavorites={updateUserFavorites}
         setClickedOnLink={setClickedOnLink}
+        // key={pathname}
       />
     </div>
   );

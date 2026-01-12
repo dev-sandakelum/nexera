@@ -1,231 +1,75 @@
 
 /* ========================================
-   MOBILE RESPONSIVE STYLES
-   ======================================== */
-
-/* Tablet (768px and below) */
-@media (max-width: 768px) {
-  .NotesPage {
-    padding-top: 64px;
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
-  .notesSubPage {
-    padding: 80px 20px 20px;
-  }
-
-  .notesSubPage-title {
-    font-size: 24px;
-  }
-
-  .notesSubPage-title-box {
-    min-width: 200px;
-  }
-
-  .notes-filter-item {
-    min-width: 150px;
-  }
-
-  .topic-header {
-    padding: 16px;
-  }
-
-  .topic-content {
-    padding: 0 16px 16px;
-  }
-
-  .topic-title {
-    font-size: 16px;
-  }
-
-  .topic-subinfo {
-    font-size: 12px;
-    gap: 12px;
-  }
-}
-
-/* Mobile (480px and below) */
-@media (max-width: 480px) {
-  .NotesPage {
-    padding-top: 48px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .NotesPage .catogory {
-    font-size: 13px;
-    margin-top: 16px;
-    margin-bottom: 12px;
-  }
-
-  .NotesPage .topic {
-    gap: 12px;
-  }
-
-  .notesSubPage {
-    padding: 64px 16px 16px;
-  }
-
-  .notesSubPage-header {
-    margin-bottom: 24px;
-  }
-
-  .notesSubPage-header-content {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .notesSubPage-title-box {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .notesSubPage-title {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-
-  .notesSubPage-badges {
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .badge {
-    padding: 3px 8px;
-    font-size: 11px;
-  }
-
-  .notesSubPage-actions {
-    width: 100%;
-    gap: 8px;
-  }
-
-  .notes-btn {
-    flex: 1;
-    padding: 10px 12px;
-    font-size: 12px;
-    text-align: center;
-    min-height: 44px; /* Touch-friendly height */
-  }
-
-  .notes-filter-box {
-    border-radius: 8px;
-    margin-bottom: 16px;
-  }
-
-  .notes-filter-toggle {
-    padding: 12px;
-    font-size: 13px;
-  }
-
-  .notes-filter-grid {
-    flex-direction: column;
-    gap: 12px;
-    padding: 0 12px 12px;
-  }
-
-  .notes-filter-item {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .notes-filter-label {
-    font-size: 10px;
-    margin-bottom: 4px;
-  }
-
-  .notes-filter-select {
-    padding: 10px;
-    font-size: 12px;
-    min-height: 44px; /* Touch-friendly height */
-  }
-
-  .notsSub-list {
-    gap: 12px;
-  }
-
-  .topic-card {
-    border-radius: 8px;
-  }
-
-  .topic-header {
-    padding: 14px 12px;
-    gap: 8px;
-  }
-
-  .topic-title {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .topic-subinfo {
-    font-size: 11px;
-    gap: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .topic-toggle-icon {
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .topic-content {
-    padding: 0 12px 12px;
-  }
-
-  .topic-empty {
-    padding: 24px 16px;
-    font-size: 13px;
-  }
-}
-
-/* Extra small mobile (360px and below) */
-@media (max-width: 360px) {
-  .NotesPage {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  .notesSubPage {
-    padding: 56px 12px 12px;
-  }
-
-  .notesSubPage-title {
-    font-size: 20px;
-  }
-
-  .notes-btn {
-    padding: 10px 8px;
-    font-size: 11px;
-  }
-
-  .topic-title {
-    font-size: 14px;
-  }
-}
-
-/* ========================================
    NOTE CARD STYLES
    ======================================== */
 
 .note-card {
-  padding: 16px;
+  /* padding: 16px; */
   background: var(--background2);
   border: 1px solid var(--border);
   border-left: 4px solid var(--left-border);
+  overflow: hidden;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  height: 110px;
+  margin: 5px 0;
+  display: flex;
+  padding: 1px;
+  align-items: center;
 }
-
+.note-card-bg {
+  content: "";
+  min-width: 100%;
+  border-radius: 8px;
+  height: 110px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform: translateX(-100%);
+  z-index: 5;
+}
+.note-card:hover .note-card-bg {
+  display: flex;
+}
+.animater {
+  width: 1300px;
+  height: 200px;
+  background: linear-gradient(var(--border),var(--left-border), var(--border));
+  animation: animater-animation 5s linear infinite;
+}
+@keyframes animater-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.note-card-outer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  min-width: 100%;
+  z-index: 6;
+  background: var(--background2);
+}
 .note-card-inner {
   display: flex;
-  align-items: start;
+  align-items: center;
   gap: 12px;
+  min-width: 100%;
 }
+.icon-type-container {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
 
+  height: 80px;
+  /* border: 1px solid red; */
+}
 .note-type-icon {
   width: 40px;
   height: 40px;
@@ -234,6 +78,8 @@
   align-items: center;
   justify-content: center;
   font-size: 18px;
+  margin-left: 8px;
+  /* border: 1px solid red; */
   flex-shrink: 0;
 }
 
@@ -288,10 +134,18 @@
   align-items: center;
   gap: 4px;
 }
-
-.note-actions {
+.note-actions{
   display: flex;
+  justify-content: end;
+  flex-direction: column;
   gap: 8px;
+  padding-right: 20px;
+}
+.note-actions-btn {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+  /* border: 1px solid red; */
   flex-shrink: 0;
 }
 
@@ -306,147 +160,5 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
-/* ========================================
-   NOTE CARD MOBILE RESPONSIVE
-   ======================================== */
-
-/* Tablet (768px and below) */
-@media (max-width: 768px) {
-  .note-card {
-    padding: 14px;
-  }
-
-  .note-card-inner {
-    gap: 10px;
-  }
-
-  .note-type-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  .note-title {
-    font-size: 14px;
-  }
-
-  .note-description {
-    font-size: 12px;
-  }
-
-  .note-meta {
-    gap: 10px;
-    font-size: 11px;
-  }
-}
-
-/* Mobile (480px and below) */
-@media (max-width: 480px) {
-  .note-card {
-    padding: 12px;
-    border-radius: 6px;
-  }
-
-  .note-card-inner {
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .note-type-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-    border-radius: 6px;
-  }
-
-  .note-content {
-    flex: 1;
-    width: 100%;
-  }
-
-  .note-header {
-    gap: 8px;
-    margin-bottom: 4px;
-    flex-wrap: wrap;
-  }
-
-  .note-title {
-    font-size: 14px;
-    flex: 1;
-    min-width: 0;
-    word-break: break-word;
-  }
-
-  .note-status-badge {
-    padding: 2px 6px;
-    font-size: 9px;
-  }
-
-  .note-description {
-    font-size: 12px;
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-
-  .note-meta {
-    gap: 8px;
-    font-size: 11px;
-    flex-wrap: wrap;
-  }
-
-  .note-meta-item {
-    gap: 3px;
-  }
-
-  .note-actions {
-    gap: 6px;
-    margin-top: 8px;
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .note-action-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    flex-shrink: 0;
-  }
-}
-
-/* Extra small mobile (360px and below) */
-@media (max-width: 360px) {
-  .note-card {
-    padding: 10px;
-  }
-
-  .note-card-inner {
-    gap: 8px;
-  }
-
-  .note-type-icon {
-    width: 28px;
-    height: 28px;
-    font-size: 13px;
-  }
-
-  .note-title {
-    font-size: 13px;
-  }
-
-  .note-description {
-    font-size: 11px;
-  }
-
-  .note-meta {
-    font-size: 10px;
-    gap: 6px;
-  }
-
-  .note-action-btn {
-    width: 32px;
-    height: 32px;
-  }
-}

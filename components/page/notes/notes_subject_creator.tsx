@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { FiPlus, FiBookOpen, FiLayers, FiFileText } from "react-icons/fi";
 
 // Types from shared types file
@@ -475,17 +474,13 @@ export default function NotesSubjectCreator({
       )}
 
       {/* Content Area */}
-      <motion.div
+      <div
         key={activeTab}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
         className="nsc-content"
       >
         {/* Subjects Grid */}
         {activeTab === "subjects" && (
           <div className="nsc-grid">
-            <AnimatePresence mode="popLayout">
               {subjects.map((subject) => (
                 <SubjectCard
                   key={subject.id}
@@ -501,14 +496,12 @@ export default function NotesSubjectCreator({
                   onDelete={() => handleDeleteSubject(subject.id)}
                 />
               ))}
-            </AnimatePresence>
           </div>
         )}
 
         {/* Topics List */}
         {activeTab === "topics" && (
           <div className="nsc-list">
-            <AnimatePresence mode="popLayout">
               {filteredTopics.map((topic) => {
                 const subject = subjects.find((s) => s.id === topic.subjectID);
                 return (
@@ -528,14 +521,12 @@ export default function NotesSubjectCreator({
                   />
                 );
               })}
-            </AnimatePresence>
           </div>
         )}
 
         {/* Notes List */}
         {activeTab === "notes" && (
           <div className="nsc-list">
-            <AnimatePresence mode="popLayout">
               {filteredNotes.map((note) => {
                 const topic = topics.find((t) => t.id === note.topicID);
                 return (
@@ -564,10 +555,9 @@ export default function NotesSubjectCreator({
                   />
                 );
               })}
-            </AnimatePresence>
           </div>
         )}
-      </motion.div>
+      </div>
 
       {/* Subject Modal */}
       <CreatorModal
