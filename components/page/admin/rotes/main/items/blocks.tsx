@@ -5,7 +5,10 @@ import { FiSettings } from "react-icons/fi";
 import { GoHistory } from "react-icons/go";
 import { LuCopyPlus } from "react-icons/lu";
 
-export function NoteBlock() {
+export function NoteBlock({
+  notesCount,
+}: { notesCount: number;
+}) {
   return (
     <div
       className="CountStatus"
@@ -23,7 +26,7 @@ export function NoteBlock() {
         <div className="badge">Notes Module</div>
       </div>
       <div className="middle">
-        <h1 className="number">1786</h1>
+        <h1 className="number">{notesCount}</h1>
         <p className="description">Total notes created</p>
       </div>
       <div className="bottom">
@@ -41,7 +44,10 @@ export function NoteBlock() {
   );
 }
 
-export function AuthBlock() {
+export function AuthBlock({
+  usersCount,
+}: { usersCount: number;
+}) {
   return (
     <div
       className="CountStatus"
@@ -59,7 +65,7 @@ export function AuthBlock() {
         <div className="badge">Auth</div>
       </div>
       <div className="middle">
-        <h1 className="number">326</h1>
+        <h1 className="number">{usersCount}</h1>
         <p className="description">Total registed users</p>
       </div>
       <div className="bottom">

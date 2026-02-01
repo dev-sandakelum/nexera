@@ -44,7 +44,13 @@ const itemVariants = {
   } as const,
 };
 
-export default function MainAdminPage() {
+export default function MainAdminPage({
+  usersCount,
+  notesCount,
+}: {
+  usersCount: number;
+  notesCount: number;
+}) {
   const pathname = usePathname();
   
 
@@ -59,7 +65,7 @@ export default function MainAdminPage() {
       animate="show"
     >
       <motion.div variants={itemVariants} className="item">
-        <AuthBlock />
+        <AuthBlock usersCount={usersCount} />
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         <PendingBlock />
@@ -91,7 +97,7 @@ export default function MainAdminPage() {
         </div>
       </motion.div>
       <motion.div variants={itemVariants} className="item">
-        <NoteBlock />
+        <NoteBlock notesCount={notesCount} />
       </motion.div>
       <motion.div variants={itemVariants} className="item">
         10
