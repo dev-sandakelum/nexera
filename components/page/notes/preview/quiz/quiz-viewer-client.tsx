@@ -40,6 +40,7 @@ export default function QuizViewerClient({
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showAnswerFeedback, setShowAnswerFeedback] = useState(false);
 
   useEffect(() => {
     const loadQuizData = async () => {
@@ -76,6 +77,11 @@ export default function QuizViewerClient({
     loadQuizData();
   }, [quizUrl]);
 
+  // Reset feedback when changing questions
+  useEffect(() => {
+    setShowAnswerFeedback(false);
+  }, [currentQuestion]);
+
   if (loading) {
     return (
       <div className="quiz-container">
@@ -96,6 +102,7 @@ export default function QuizViewerClient({
       const newAnswers = [...userAnswers];
       newAnswers[currentQuestion] = optionIndex;
       setUserAnswers(newAnswers);
+      setShowAnswerFeedback(true);
     }
   };
 
@@ -119,6 +126,7 @@ export default function QuizViewerClient({
     setCurrentQuestion(0);
     setUserAnswers(new Array(questions.length).fill(null));
     setShowResults(false);
+    setShowAnswerFeedback(false);
   };
 
   const calculateScore = () => {
@@ -134,13 +142,15 @@ export default function QuizViewerClient({
   const currentQ = questions[currentQuestion];
   const totalScore = calculateScore();
   const percentage = ((totalScore / questions.length) * 100).toFixed(1);
+  const userAnswer = userAnswers[currentQuestion];
+  const isCorrectAnswer = userAnswer === currentQ.correctIndex;
 
   if (showResults) {
     return (
       <div className="quiz-container">
         <div className="quiz-header">
           <h1 className="quiz-title">{quiz?.title || 'Quiz'}</h1>
-          <p className="quiz-description">{quiz?.description || ''}</p>
+          {quiz?.description && <p className="quiz-description">{quiz.description}</p>}
         </div>
 
         <div className="quiz-results">
@@ -173,8 +183,9 @@ export default function QuizViewerClient({
               <div className="review-list">
                 {questions.map((q, idx) => {
                   const isCorrect = userAnswers[idx] === q.correctIndex;
+                  const userAns = userAnswers[idx];
                   return (
-                    <div key={idx} className="review-item">
+                    <div key={idx} className={`review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`}>
                       <div className="review-header">
                         <span className="review-number">Q{idx + 1}</span>
                         <span className={`review-status ${isCorrect ? 'correct' : 'incorrect'}`}>
@@ -183,9 +194,9 @@ export default function QuizViewerClient({
                       </div>
                       <p className="review-question">{q.question}</p>
                       <div className="review-answers">
-                        <div className="your-answer">
+                        <div className={`your-answer ${!isCorrect ? 'wrong-answer' : ''}`}>
                           <strong>Your Answer:</strong>
-                          <p>{userAnswers[idx] !== null ? q.options[userAnswers[idx]] : 'Not answered'}</p>
+                          <p>{userAns !== null ? q.options[userAns] : 'Not answered'}</p>
                         </div>
                         {!isCorrect && (
                           <div className="correct-answer">
@@ -193,10 +204,12 @@ export default function QuizViewerClient({
                             <p>{q.options[q.correctIndex]}</p>
                           </div>
                         )}
-                        <div className="explanation">
-                          <strong>Explanation:</strong>
-                          <p>{q.explanation}</p>
-                        </div>
+                        {q.explanation && (
+                          <div className="explanation">
+                            <strong>Explanation:</strong>
+                            <p>{q.explanation}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
@@ -221,7 +234,7 @@ export default function QuizViewerClient({
     <div className="quiz-container">
       <div className="quiz-header">
         <h1 className="quiz-title">{quiz?.title || 'Quiz'}</h1>
-        <p className="quiz-description">{quiz?.description || ''}</p>
+        {quiz?.description && <p className="quiz-description">{quiz.description}</p>}
       </div>
 
       <div className="quiz-progress">
@@ -246,25 +259,108 @@ export default function QuizViewerClient({
           <h2 className="question-text">{currentQ.question}</h2>
 
           <div className="options-list">
-            {currentQ.options.map((option, index) => (
-              <button
-                key={index}
-                className={`option-btn ${
-                  userAnswers[currentQuestion] === index ? 'selected' : ''
-                }`}
-                onClick={() => handleSelectOption(index)}
-                disabled={showResults}
-              >
-                <div className="option-indicator">
-                  <span className="option-letter">
-                    {String.fromCharCode(65 + index)}
-                  </span>
+            {currentQ.options.map((option, index) => {
+              const isSelected = userAnswers[currentQuestion] === index;
+              const isCorrectOption = index === currentQ.correctIndex;
+              const showFeedback = showAnswerFeedback && isAnswered;
+              
+              let optionClass = 'option-btn';
+              if (isSelected) {
+                optionClass += ' selected';
+                if (showFeedback) {
+                  optionClass += isCorrectAnswer ? ' correct' : ' incorrect';
+                }
+              }
+              if (showFeedback && isCorrectOption && !isSelected) {
+                optionClass += ' correct-answer-highlight';
+              }
+
+              return (
+                <button
+                  key={index}
+                  className={optionClass}
+                  onClick={() => handleSelectOption(index)}
+                  disabled={showResults}
+                >
+                  <div className="option-indicator">
+                    {showFeedback && isSelected && (
+                      <span className="feedback-icon">
+                        {isCorrectAnswer ? '✓' : '✗'}
+                      </span>
+                    )}
+                    {(!showFeedback || !isSelected) && (
+                      <span className="option-letter">
+                        {String.fromCharCode(65 + index)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="option-content">
+                    <p className="option-text">{option}</p>
+                  </div>
+                  {showFeedback && isCorrectOption && !isSelected && (
+                    <div className="correct-indicator">
+                      <span>✓</span>
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Real-time Feedback Panel */}
+          {showAnswerFeedback && isAnswered && (
+            <div className={`answer-feedback ${isCorrectAnswer ? 'feedback-correct' : 'feedback-incorrect'}`}>
+              <div className="feedback-header">
+                <span className="feedback-icon-large">
+                  {isCorrectAnswer ? '✓' : '✗'}
+                </span>
+                <span className="feedback-title">
+                  {isCorrectAnswer ? 'Correct!' : 'Incorrect'}
+                </span>
+              </div>
+              {currentQ.explanation && (
+                <div className="feedback-explanation">
+                  <strong>Explanation:</strong>
+                  <p>{currentQ.explanation}</p>
                 </div>
-                <div className="option-content">
-                  <p className="option-text">{option}</p>
-                </div>
-              </button>
-            ))}
+              )}
+            </div>
+          )}
+
+          <div className="quiz-controls">
+            <button
+              className="btn btn-secondary"
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+            >
+              ← Previous
+            </button>
+
+            <div className="controls-center">
+              {!isLastQuestion ? (
+                <button
+                  className="btn btn-primary"
+                  onClick={handleNext}
+                  disabled={!isAnswered}
+                >
+                  Next →
+                </button>
+              ) : (
+                <button
+                  className="btn btn-success"
+                  onClick={handleSubmit}
+                  disabled={answeredCount === 0}
+                >
+                  Submit Quiz
+                </button>
+              )}
+            </div>
+
+            <div className="controls-info">
+              <span className={isAnswered ? 'answered' : 'not-answered'}>
+                {isAnswered ? '✓ Answered' : 'Not answered'}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -286,55 +382,39 @@ export default function QuizViewerClient({
           <div className="sidebar-card">
             <h3>Questions</h3>
             <div className="questions-grid">
-              {questions.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`question-nav ${
-                    currentQuestion === idx ? 'active' : ''
-                  } ${userAnswers[idx] !== null ? 'answered' : ''}`}
-                  onClick={() => setCurrentQuestion(idx)}
-                >
-                  {idx + 1}
-                </button>
-              ))}
+              {questions.map((q, idx) => {
+                const answered = userAnswers[idx] !== null;
+                const correct = userAnswers[idx] === q.correctIndex;
+                
+                return (
+                  <button
+                    key={idx}
+                    className={`question-nav ${
+                      currentQuestion === idx ? 'active' : ''
+                    } ${answered ? (correct ? 'correct' : 'incorrect') : ''}`}
+                    onClick={() => setCurrentQuestion(idx)}
+                    title={answered ? (correct ? 'Correct' : 'Incorrect') : 'Not answered'}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="quiz-controls">
-        <button
-          className="btn btn-secondary"
-          onClick={handlePrevious}
-          disabled={currentQuestion === 0}
-        >
-          ← Previous
-        </button>
-
-        <div className="controls-center">
-          {!isLastQuestion && (
-            <button
-              className="btn btn-primary"
-              onClick={handleNext}
-            >
-              Next →
-            </button>
-          )}
-          {isLastQuestion && (
-            <button
-              className="btn btn-success"
-              onClick={handleSubmit}
-              disabled={answeredCount === 0}
-            >
-              Submit Quiz
-            </button>
-          )}
-        </div>
-
-        <div className="controls-info">
-          <span className={isAnswered ? 'answered' : 'not-answered'}>
-            {isAnswered ? '✓ Answered' : 'Not answered'}
-          </span>
+          {/* Live Score Card */}
+          <div className="sidebar-card score-card">
+            <h3>Current Score</h3>
+            <div className="live-score">
+              <div className="live-score-circle">
+                <span className="live-score-value">{totalScore}</span>
+                <span className="live-score-total">/ {questions.length}</span>
+              </div>
+              <div className="live-score-percentage">
+                {answeredCount > 0 ? percentage : '0.0'}%
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
