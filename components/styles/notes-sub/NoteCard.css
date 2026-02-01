@@ -123,6 +123,8 @@
   opacity: 0.7;
   margin: 0 0 8px 0;
   line-height: 1.4;
+  max-height: 36px;
+  overflow: hidden;
 }
 
 .note-meta {
