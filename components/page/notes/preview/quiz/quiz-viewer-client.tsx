@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { nexNoteAbout, nexNoteData, quizNote } from "@/components/types";
-import '@/components/styles/quiz/main.css';
-import QuizNotFound from './quiz-not-found';
+import "@/components/styles/quiz/main.css";
+import QuizNotFound from "./quiz-not-found";
 
 interface QuizQuestion {
   question: string;
@@ -25,12 +25,12 @@ export default function QuizViewerClient({
   notesData: nexNoteData[];
   pathname: string;
 }) {
-  const quizSlug = pathname.split('/').pop() || '';
+  const quizSlug = pathname.split("/").pop() || "";
   const quiz = notesAbout.find((n) => n.slug === quizSlug);
   const quizData = notesData.find((n) => n.noteId === quiz?.id);
 
   const quizUrl =
-    quizData?.context && 'quizUrl' in quizData.context
+    quizData?.context && "quizUrl" in quizData.context
       ? (quizData.context as quizNote).quizUrl
       : undefined;
 
@@ -46,20 +46,20 @@ export default function QuizViewerClient({
     const loadQuizData = async () => {
       try {
         if (!quizUrl) {
-          setError('Quiz URL not found');
+          setError("Quiz URL not found");
           setLoading(false);
           return;
         }
 
         const response = await fetch(quizUrl);
-        if (!response.ok) throw new Error('Failed to load quiz');
+        if (!response.ok) throw new Error("Failed to load quiz");
 
         const data: QuizData = await response.json();
-        
+
         // Get first quiz set from the data
         const firstQuizKey = Object.keys(data)[0];
         if (!firstQuizKey || !Array.isArray(data[firstQuizKey])) {
-          setError('Invalid quiz data format');
+          setError("Invalid quiz data format");
           setLoading(false);
           return;
         }
@@ -69,7 +69,7 @@ export default function QuizViewerClient({
         setUserAnswers(new Array(quizQuestions.length).fill(null));
         setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load quiz');
+        setError(err instanceof Error ? err.message : "Failed to load quiz");
         setLoading(false);
       }
     };
@@ -149,14 +149,16 @@ export default function QuizViewerClient({
     return (
       <div className="quiz-container">
         <div className="quiz-header">
-          <h1 className="quiz-title">{quiz?.title || 'Quiz'}</h1>
-          {quiz?.description && <p className="quiz-description">{quiz.description}</p>}
+          <h1 className="quiz-title">{quiz?.title || "Quiz"}</h1>
+          {quiz?.description && (
+            <p className="quiz-description">{quiz.description}</p>
+          )}
         </div>
 
         <div className="quiz-results">
           <div className="results-card">
             <h2>Quiz Complete!</h2>
-            
+
             <div className="score-display">
               <div className="score-circle">
                 <div className="score-percentage">{percentage}%</div>
@@ -165,11 +167,15 @@ export default function QuizViewerClient({
               <div className="score-details">
                 <div className="score-line">
                   <span className="score-label">Correct Answers:</span>
-                  <span className="score-value correct">{totalScore}/{questions.length}</span>
+                  <span className="score-value correct">
+                    {totalScore}/{questions.length}
+                  </span>
                 </div>
                 <div className="score-line">
                   <span className="score-label">Wrong Answers:</span>
-                  <span className="score-value wrong">{questions.length - totalScore}/{questions.length}</span>
+                  <span className="score-value wrong">
+                    {questions.length - totalScore}/{questions.length}
+                  </span>
                 </div>
                 <div className="score-line">
                   <span className="score-label">Accuracy:</span>
@@ -185,18 +191,29 @@ export default function QuizViewerClient({
                   const isCorrect = userAnswers[idx] === q.correctIndex;
                   const userAns = userAnswers[idx];
                   return (
-                    <div key={idx} className={`review-item ${isCorrect ? 'correct-item' : 'incorrect-item'}`}>
+                    <div
+                      key={idx}
+                      className={`review-item ${isCorrect ? "correct-item" : "incorrect-item"}`}
+                    >
                       <div className="review-header">
                         <span className="review-number">Q{idx + 1}</span>
-                        <span className={`review-status ${isCorrect ? 'correct' : 'incorrect'}`}>
-                          {isCorrect ? '✓ Correct' : '✗ Incorrect'}
+                        <span
+                          className={`review-status ${isCorrect ? "correct" : "incorrect"}`}
+                        >
+                          {isCorrect ? "✓ Correct" : "✗ Incorrect"}
                         </span>
                       </div>
                       <p className="review-question">{q.question}</p>
                       <div className="review-answers">
-                        <div className={`your-answer ${!isCorrect ? 'wrong-answer' : ''}`}>
+                        <div
+                          className={`your-answer ${!isCorrect ? "wrong-answer" : ""}`}
+                        >
                           <strong>Your Answer:</strong>
-                          <p>{userAns !== null ? q.options[userAns] : 'Not answered'}</p>
+                          <p>
+                            {userAns !== null
+                              ? q.options[userAns]
+                              : "Not answered"}
+                          </p>
                         </div>
                         {!isCorrect && (
                           <div className="correct-answer">
@@ -228,34 +245,37 @@ export default function QuizViewerClient({
 
   const isAnswered = userAnswers[currentQuestion] !== null;
   const isLastQuestion = currentQuestion === questions.length - 1;
-  const answeredCount = userAnswers.filter(a => a !== null).length;
+  const answeredCount = userAnswers.filter((a) => a !== null).length;
 
   return (
     <div className="quiz-container">
       <div className="quiz-header">
-        <h1 className="quiz-title">{quiz?.title || 'Quiz'}</h1>
-        {quiz?.description && <p className="quiz-description">{quiz.description}</p>}
-      </div>
-
-      <div className="quiz-progress">
-        <div className="progress-bar-bg">
-          <div 
-            className="progress-bar-fill" 
-            style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-          ></div>
-        </div>
-        <div className="progress-text">
-          Question {currentQuestion + 1} of {questions.length}
-        </div>
+        <h1 className="quiz-title">{quiz?.title || "Quiz"}</h1>
+        {quiz?.description && (
+          <p className="quiz-description">{quiz.description}</p>
+        )}
       </div>
 
       <div className="quiz-content">
         <div className="question-section">
+          <div className="quiz-progress">
+            <div className="progress-bar-bg">
+              <div
+                className="progress-bar-fill"
+                style={{
+                  width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+                }}
+              ></div>
+            </div>
+            <div className="progress-text">
+              Question {currentQuestion + 1} of {questions.length}
+            </div>
+          </div>
           <div className="question-counter">
             <span className="counter-badge">{currentQuestion + 1}</span>
             <span className="counter-total">of {questions.length}</span>
           </div>
-          
+
           <h2 className="question-text">{currentQ.question}</h2>
 
           <div className="options-list">
@@ -263,16 +283,16 @@ export default function QuizViewerClient({
               const isSelected = userAnswers[currentQuestion] === index;
               const isCorrectOption = index === currentQ.correctIndex;
               const showFeedback = showAnswerFeedback && isAnswered;
-              
-              let optionClass = 'option-btn';
+
+              let optionClass = "option-btn";
               if (isSelected) {
-                optionClass += ' selected';
+                optionClass += " selected";
                 if (showFeedback) {
-                  optionClass += isCorrectAnswer ? ' correct' : ' incorrect';
+                  optionClass += isCorrectAnswer ? " correct" : " incorrect";
                 }
               }
               if (showFeedback && isCorrectOption && !isSelected) {
-                optionClass += ' correct-answer-highlight';
+                optionClass += " correct-answer-highlight";
               }
 
               return (
@@ -285,7 +305,7 @@ export default function QuizViewerClient({
                   <div className="option-indicator">
                     {showFeedback && isSelected && (
                       <span className="feedback-icon">
-                        {isCorrectAnswer ? '✓' : '✗'}
+                        {isCorrectAnswer ? "✓" : "✗"}
                       </span>
                     )}
                     {(!showFeedback || !isSelected) && (
@@ -309,13 +329,15 @@ export default function QuizViewerClient({
 
           {/* Real-time Feedback Panel */}
           {showAnswerFeedback && isAnswered && (
-            <div className={`answer-feedback ${isCorrectAnswer ? 'feedback-correct' : 'feedback-incorrect'}`}>
+            <div
+              className={`answer-feedback ${isCorrectAnswer ? "feedback-correct" : "feedback-incorrect"}`}
+            >
               <div className="feedback-header">
                 <span className="feedback-icon-large">
-                  {isCorrectAnswer ? '✓' : '✗'}
+                  {isCorrectAnswer ? "✓" : "✗"}
                 </span>
                 <span className="feedback-title">
-                  {isCorrectAnswer ? 'Correct!' : 'Incorrect'}
+                  {isCorrectAnswer ? "Correct!" : "Incorrect"}
                 </span>
               </div>
               {currentQ.explanation && (
@@ -357,8 +379,8 @@ export default function QuizViewerClient({
             </div>
 
             <div className="controls-info">
-              <span className={isAnswered ? 'answered' : 'not-answered'}>
-                {isAnswered ? '✓ Answered' : 'Not answered'}
+              <span className={isAnswered ? "answered" : "not-answered"}>
+                {isAnswered ? "✓ Answered" : "Not answered"}
               </span>
             </div>
           </div>
@@ -370,11 +392,15 @@ export default function QuizViewerClient({
             <div className="progress-info">
               <div className="progress-stat">
                 <span className="stat-label">Answered</span>
-                <span className="stat-value">{answeredCount}/{questions.length}</span>
+                <span className="stat-value">
+                  {answeredCount}/{questions.length}
+                </span>
               </div>
               <div className="progress-stat">
                 <span className="stat-label">Remaining</span>
-                <span className="stat-value">{questions.length - answeredCount}/{questions.length}</span>
+                <span className="stat-value">
+                  {questions.length - answeredCount}/{questions.length}
+                </span>
               </div>
             </div>
           </div>
@@ -385,15 +411,21 @@ export default function QuizViewerClient({
               {questions.map((q, idx) => {
                 const answered = userAnswers[idx] !== null;
                 const correct = userAnswers[idx] === q.correctIndex;
-                
+
                 return (
                   <button
                     key={idx}
                     className={`question-nav ${
-                      currentQuestion === idx ? 'active' : ''
-                    } ${answered ? (correct ? 'correct' : 'incorrect') : ''}`}
+                      currentQuestion === idx ? "active" : ""
+                    } ${answered ? (correct ? "correct" : "incorrect") : ""}`}
                     onClick={() => setCurrentQuestion(idx)}
-                    title={answered ? (correct ? 'Correct' : 'Incorrect') : 'Not answered'}
+                    title={
+                      answered
+                        ? correct
+                          ? "Correct"
+                          : "Incorrect"
+                        : "Not answered"
+                    }
                   >
                     {idx + 1}
                   </button>
@@ -411,7 +443,7 @@ export default function QuizViewerClient({
                 <span className="live-score-total">/ {questions.length}</span>
               </div>
               <div className="live-score-percentage">
-                {answeredCount > 0 ? percentage : '0.0'}%
+                {answeredCount > 0 ? percentage : "0.0"}%
               </div>
             </div>
           </div>
