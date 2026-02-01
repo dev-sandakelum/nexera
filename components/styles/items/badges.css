@@ -1,0 +1,10 @@
+.badges{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    border: 2px solid;
+    padding: 2px 8px;
+    width: 100px;
+    
+}
