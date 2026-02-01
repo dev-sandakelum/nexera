@@ -257,6 +257,10 @@
 
   .note-description {
     font-size: 12px;
+    
+    height: auto;
+    max-height: none;
+    overflow: visible;
     margin: 0 0 7px 0;
   }
 
