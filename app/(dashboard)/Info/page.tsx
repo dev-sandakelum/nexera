@@ -1,7 +1,9 @@
-import LoadingAnimation from "@/components/page/loading";
-import React from "react";
-
+import "@/components/styles/info/info.css"
 export default function page() {
-       
-  return <LoadingAnimation />;
+  return (
+    <div className="infoPage">
+      <div className="container"><h1>Information Page</h1></div>
+      
+    </div>
+  );
 }

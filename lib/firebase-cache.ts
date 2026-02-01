@@ -265,7 +265,9 @@ export async function getCachedNotesByTopicIds(
   if (topicIds.length === 0) return [];
 
   try {
-    console.log(`📖 Firebase Read: Fetching notes for ${topicIds.length} topics`);
+    console.log(
+      `📖 Firebase Read: Fetching notes for ${topicIds.length} topics`
+    );
 
     await initAdmin();
     const db = getFirestore();
