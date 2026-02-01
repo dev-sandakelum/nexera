@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FiPlus, FiBookOpen, FiLayers, FiFileText } from "react-icons/fi";
 
 // Types from shared types file
@@ -111,19 +111,41 @@ export default function NotesSubjectCreator({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string>("");
   const [selectedTopic, setSelectedTopic] = useState<string>("");
-
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   // Initialize with sample data
   useEffect(() => {
-    setSubjects(nexSubjects.filter((s) => s.createdBy === user?.id));
-  }, [nexSubjects, user]);
+    // Check if user has nexRoot or nexApex badges
+    // Convert badges object to array and check
+    const badgesArray = user?.badges ? Object.values(user.badges) : [];
+    const hasAdminBadge = badgesArray.some(
+      (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex",
+    );
+    setIsAdmin(hasAdminBadge);
+  }, [user]);
 
   useEffect(() => {
-    setTopics(nexTopics.filter((t) => t.createdBy === user?.id));
-  }, [nexTopics, user]);
+    // Filter subjects based on user permissions
+    const filteredSubjects = nexSubjects.filter((s) => {
+      // If user has admin badge, show ALL subjects
+      if (isAdmin) return true;
+
+      // Otherwise, only show subjects created by this user
+      return s.createdBy === user?.id;
+    });
+
+    setSubjects(filteredSubjects);
+  }, [nexSubjects, user, isAdmin]);
 
   useEffect(() => {
-    setNotes(nexNotes.filter((n) => n.publishedBy === user?.id));
-  }, [nexNotes, user]);
+    const filteredTopics = nexTopics.filter((t) => {
+      return isAdmin || t.createdBy === user?.id;
+    });
+    setTopics(filteredTopics);
+  }, [nexTopics, user, isAdmin]);
+
+  useEffect(() => {
+    setNotes(nexNotes.filter((n) => isAdmin || n.publishedBy === user?.id));
+  }, [nexNotes, user, isAdmin]);
 
   // Subject CRUD
   const handleCreateSubject = async () => {
@@ -147,8 +169,8 @@ export default function NotesSubjectCreator({
         subjects.map((s) =>
           s.id === editingId
             ? { ...s, ...subjectForm, updatedAt: new Date().toISOString() }
-            : s
-        )
+            : s,
+        ),
       );
       setShowSubjectModal(false);
       setSubjectForm({});
@@ -177,7 +199,7 @@ export default function NotesSubjectCreator({
     const newTopic = createTopic(
       topicForm,
       selectedSubject,
-      user ? user.id : "unknown"
+      user ? user.id : "unknown",
     );
     const response = await CreateTopic(newTopic.id, newTopic);
     if (response.success) {
@@ -197,8 +219,8 @@ export default function NotesSubjectCreator({
         topics.map((t) =>
           t.id === editingId
             ? { ...t, ...topicForm, updatedAt: new Date().toISOString() }
-            : t
-        )
+            : t,
+        ),
       );
       setShowTopicModal(false);
       setTopicForm({});
@@ -227,8 +249,8 @@ export default function NotesSubjectCreator({
           noteAbout.type == "note"
             ? "md"
             : noteAbout.type == "pdf"
-            ? "pdf"
-            : "json"
+              ? "pdf"
+              : "json",
         );
 
         const { fileURL, error } = await UploadFile({
@@ -266,7 +288,7 @@ export default function NotesSubjectCreator({
         noteID,
         noteAbout,
         selectedTopic,
-        user?.id || "unknown"
+        user?.id || "unknown",
       );
 
       // Build the context object directly with the returned URL
@@ -287,7 +309,7 @@ export default function NotesSubjectCreator({
       const response = await CreateNote(
         newNoteAbout.id,
         newNoteAbout,
-        newNoteData
+        newNoteData,
       );
       if (response.success) {
         setNotes([...notes, newNoteAbout]);
@@ -310,8 +332,8 @@ export default function NotesSubjectCreator({
         notes.map((n) =>
           n.id === editingId
             ? { ...n, ...noteAbout, updatedAt: new Date().toISOString() }
-            : n
-        )
+            : n,
+        ),
       );
       setShowNoteModal(false);
       setNoteAbout({});
@@ -344,7 +366,7 @@ export default function NotesSubjectCreator({
           notes.filter((n) => {
             const topic = topics.find((t) => t.id === n.topicID);
             return topic?.subjectID !== id;
-          })
+          }),
         );
       }
     } else if (type === "topic") {
@@ -405,9 +427,15 @@ export default function NotesSubjectCreator({
         <button
           className="nsc-create-btn"
           onClick={() => {
-            if (activeTab === "subjects") setShowSubjectModal(true);
-            if (activeTab === "topics") setShowTopicModal(true);
-            if (activeTab === "notes") setShowNoteModal(true);
+            if (isAdmin) {
+              if (activeTab === "subjects") setShowSubjectModal(true);
+              if (activeTab === "topics") setShowTopicModal(true);
+              if (activeTab === "notes") setShowNoteModal(true);
+            } else {
+              alert(
+                "Only admins can create new content. you need nexApex or nexRoot badge.",
+              );
+            }
           }}
         >
           <FiPlus /> Create New
@@ -474,87 +502,84 @@ export default function NotesSubjectCreator({
       )}
 
       {/* Content Area */}
-      <div
-        key={activeTab}
-        className="nsc-content"
-      >
+      <div key={activeTab} className="nsc-content">
         {/* Subjects Grid */}
         {activeTab === "subjects" && (
           <div className="nsc-grid">
-              {subjects.map((subject) => (
-                <SubjectCard
-                  key={subject.id}
-                  subject={subject}
-                  topicCount={
-                    topics.filter((t) => t.subjectID === subject.id).length
-                  }
-                  onEdit={() => {
-                    setSubjectForm(subject);
-                    setEditingId(subject.id);
-                    setShowSubjectModal(true);
-                  }}
-                  onDelete={() => handleDeleteSubject(subject.id)}
-                />
-              ))}
+            {subjects.map((subject) => (
+              <SubjectCard
+                key={subject.id}
+                subject={subject}
+                topicCount={
+                  topics.filter((t) => t.subjectID === subject.id).length
+                }
+                onEdit={() => {
+                  setSubjectForm(subject);
+                  setEditingId(subject.id);
+                  setShowSubjectModal(true);
+                }}
+                onDelete={() => handleDeleteSubject(subject.id)}
+              />
+            ))}
           </div>
         )}
 
         {/* Topics List */}
         {activeTab === "topics" && (
           <div className="nsc-list">
-              {filteredTopics.map((topic) => {
-                const subject = subjects.find((s) => s.id === topic.subjectID);
-                return (
-                  <ListItem
-                    key={topic.id}
-                    id={topic.id}
-                    title={topic.title}
-                    description={topic.description}
-                    meta={`Subject: ${subject?.title || "Unknown"}`}
-                    onEdit={() => {
-                      setTopicForm(topic);
-                      setEditingId(topic.id);
-                      setSelectedSubject(topic.subjectID);
-                      setShowTopicModal(true);
-                    }}
-                    onDelete={() => handleDeleteTopic(topic.id)}
-                  />
-                );
-              })}
+            {filteredTopics.map((topic) => {
+              const subject = subjects.find((s) => s.id === topic.subjectID);
+              return (
+                <ListItem
+                  key={topic.id}
+                  id={topic.id}
+                  title={topic.title}
+                  description={topic.description}
+                  meta={`Subject: ${subject?.title || "Unknown"}`}
+                  onEdit={() => {
+                    setTopicForm(topic);
+                    setEditingId(topic.id);
+                    setSelectedSubject(topic.subjectID);
+                    setShowTopicModal(true);
+                  }}
+                  onDelete={() => handleDeleteTopic(topic.id)}
+                />
+              );
+            })}
           </div>
         )}
 
         {/* Notes List */}
         {activeTab === "notes" && (
           <div className="nsc-list">
-              {filteredNotes.map((note) => {
-                const topic = topics.find((t) => t.id === note.topicID);
-                return (
-                  <ListItem
-                    key={note.id}
-                    id={note.id}
-                    title={note.title}
-                    description={note.description}
-                    meta={`Topic: ${topic?.title || "Unknown"}`}
-                    type={note.type}
-                    status={note.status}
-                    published={note.published}
-                    onEdit={() => {
-                      setNoteAbout(note);
-                      setEditingId(note.id);
-                      const foundTopic = topics.find(
-                        (t) => t.id === note.topicID
-                      );
-                      if (foundTopic) {
-                        setSelectedSubject(foundTopic.subjectID);
-                        setSelectedTopic(foundTopic.id);
-                      }
-                      setShowNoteModal(true);
-                    }}
-                    onDelete={() => handleDeleteNote(note.id)}
-                  />
-                );
-              })}
+            {filteredNotes.map((note) => {
+              const topic = topics.find((t) => t.id === note.topicID);
+              return (
+                <ListItem
+                  key={note.id}
+                  id={note.id}
+                  title={note.title}
+                  description={note.description}
+                  meta={`Topic: ${topic?.title || "Unknown"}`}
+                  type={note.type}
+                  status={note.status}
+                  published={note.published}
+                  onEdit={() => {
+                    setNoteAbout(note);
+                    setEditingId(note.id);
+                    const foundTopic = topics.find(
+                      (t) => t.id === note.topicID,
+                    );
+                    if (foundTopic) {
+                      setSelectedSubject(foundTopic.subjectID);
+                      setSelectedTopic(foundTopic.id);
+                    }
+                    setShowNoteModal(true);
+                  }}
+                  onDelete={() => handleDeleteNote(note.id)}
+                />
+              );
+            })}
           </div>
         )}
       </div>
@@ -817,14 +842,14 @@ export default function NotesSubjectCreator({
               noteAbout.type === "pdf"
                 ? ".pdf"
                 : noteAbout.type === "quiz"
-                ? ".json"
-                : ".md"
+                  ? ".json"
+                  : ".md"
             }
             onChange={(e) => {
               setNoteFile(
                 e.target.files?.[0]
                   ? URL.createObjectURL(e.target.files[0])
-                  : undefined
+                  : undefined,
               );
             }}
           />
