@@ -40,7 +40,6 @@ export default function QuizViewerClient({
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showAnswerFeedback, setShowAnswerFeedback] = useState(false);
 
   useEffect(() => {
     const loadQuizData = async () => {
@@ -77,11 +76,6 @@ export default function QuizViewerClient({
     loadQuizData();
   }, [quizUrl]);
 
-  // Reset feedback when changing questions
-  useEffect(() => {
-    setShowAnswerFeedback(false);
-  }, [currentQuestion]);
-
   if (loading) {
     return (
       <div className="quiz-container">
@@ -98,11 +92,11 @@ export default function QuizViewerClient({
   }
 
   const handleSelectOption = (optionIndex: number) => {
-    if (!showResults) {
+    // Only allow selection if question hasn't been answered yet
+    if (!showResults && userAnswers[currentQuestion] === null) {
       const newAnswers = [...userAnswers];
       newAnswers[currentQuestion] = optionIndex;
       setUserAnswers(newAnswers);
-      setShowAnswerFeedback(true);
     }
   };
 
@@ -126,7 +120,6 @@ export default function QuizViewerClient({
     setCurrentQuestion(0);
     setUserAnswers(new Array(questions.length).fill(null));
     setShowResults(false);
-    setShowAnswerFeedback(false);
   };
 
   const calculateScore = () => {
@@ -144,6 +137,11 @@ export default function QuizViewerClient({
   const percentage = ((totalScore / questions.length) * 100).toFixed(1);
   const userAnswer = userAnswers[currentQuestion];
   const isCorrectAnswer = userAnswer === currentQ.correctIndex;
+  
+  // Check if current question has been answered
+  const isAnswered = userAnswers[currentQuestion] !== null;
+  // Show feedback for any answered question
+  const showAnswerFeedback = isAnswered;
 
   if (showResults) {
     return (
@@ -243,7 +241,6 @@ export default function QuizViewerClient({
     );
   }
 
-  const isAnswered = userAnswers[currentQuestion] !== null;
   const isLastQuestion = currentQuestion === questions.length - 1;
   const answeredCount = userAnswers.filter((a) => a !== null).length;
 
@@ -300,7 +297,7 @@ export default function QuizViewerClient({
                   key={index}
                   className={optionClass}
                   onClick={() => handleSelectOption(index)}
-                  disabled={showResults}
+                  disabled={isAnswered} // Disable all options once answered
                 >
                   <div className="option-indicator">
                     {showFeedback && isSelected && (
@@ -327,7 +324,7 @@ export default function QuizViewerClient({
             })}
           </div>
 
-          {/* Real-time Feedback Panel */}
+          {/* Real-time Feedback Panel - Shows for any answered question */}
           {showAnswerFeedback && isAnswered && (
             <div
               className={`answer-feedback ${isCorrectAnswer ? "feedback-correct" : "feedback-incorrect"}`}
@@ -363,7 +360,6 @@ export default function QuizViewerClient({
                 <button
                   className="btn btn-primary"
                   onClick={handleNext}
-                  disabled={!isAnswered}
                 >
                   Next →
                 </button>

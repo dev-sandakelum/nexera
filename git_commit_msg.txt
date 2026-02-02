@@ -1,1 +1,1 @@
-feat: Enhance Notes_Sub component with framer-motion animations and improved layout for better user experience
+feat: Enhance quiz viewer functionality and update styles for improved user experience
