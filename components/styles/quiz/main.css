@@ -55,6 +55,7 @@
   margin: 50px auto;
   padding: var(--quiz-space-lg) var(--quiz-space-md);
   min-height: 100vh;
+  margin-bottom: 50px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
     Helvetica, Arial, sans-serif;
 }
@@ -1038,6 +1039,7 @@
   .quiz-container {
     margin-top: 80px;
     padding: var(--quiz-space-sm);
+    margin-bottom: 80px;
   }
 
   .quiz-header {
