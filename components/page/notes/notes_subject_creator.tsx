@@ -115,10 +115,11 @@ export default function NotesSubjectCreator({
   // Initialize with sample data
   useEffect(() => {
     // Check if user has nexRoot or nexApex badges
+    // Users with these badges can see ALL content regardless of who created it
     // Convert badges object to array and check
     const badgesArray = user?.badges ? Object.values(user.badges) : [];
     const hasAdminBadge = badgesArray.some(
-      (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex",
+      (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
     );
     setIsAdmin(hasAdminBadge);
   }, [user]);
@@ -169,8 +170,8 @@ export default function NotesSubjectCreator({
         subjects.map((s) =>
           s.id === editingId
             ? { ...s, ...subjectForm, updatedAt: new Date().toISOString() }
-            : s,
-        ),
+            : s
+        )
       );
       setShowSubjectModal(false);
       setSubjectForm({});
@@ -199,7 +200,7 @@ export default function NotesSubjectCreator({
     const newTopic = createTopic(
       topicForm,
       selectedSubject,
-      user ? user.id : "unknown",
+      user ? user.id : "unknown"
     );
     const response = await CreateTopic(newTopic.id, newTopic);
     if (response.success) {
@@ -219,8 +220,8 @@ export default function NotesSubjectCreator({
         topics.map((t) =>
           t.id === editingId
             ? { ...t, ...topicForm, updatedAt: new Date().toISOString() }
-            : t,
-        ),
+            : t
+        )
       );
       setShowTopicModal(false);
       setTopicForm({});
@@ -249,8 +250,8 @@ export default function NotesSubjectCreator({
           noteAbout.type == "note"
             ? "md"
             : noteAbout.type == "pdf"
-              ? "pdf"
-              : "json",
+            ? "pdf"
+            : "json"
         );
 
         const { fileURL, error } = await UploadFile({
@@ -288,7 +289,7 @@ export default function NotesSubjectCreator({
         noteID,
         noteAbout,
         selectedTopic,
-        user?.id || "unknown",
+        user?.id || "unknown"
       );
 
       // Build the context object directly with the returned URL
@@ -309,7 +310,7 @@ export default function NotesSubjectCreator({
       const response = await CreateNote(
         newNoteAbout.id,
         newNoteAbout,
-        newNoteData,
+        newNoteData
       );
       if (response.success) {
         setNotes([...notes, newNoteAbout]);
@@ -332,8 +333,8 @@ export default function NotesSubjectCreator({
         notes.map((n) =>
           n.id === editingId
             ? { ...n, ...noteAbout, updatedAt: new Date().toISOString() }
-            : n,
-        ),
+            : n
+        )
       );
       setShowNoteModal(false);
       setNoteAbout({});
@@ -366,7 +367,7 @@ export default function NotesSubjectCreator({
           notes.filter((n) => {
             const topic = topics.find((t) => t.id === n.topicID);
             return topic?.subjectID !== id;
-          }),
+          })
         );
       }
     } else if (type === "topic") {
@@ -433,7 +434,7 @@ export default function NotesSubjectCreator({
               if (activeTab === "notes") setShowNoteModal(true);
             } else {
               alert(
-                "Only admins can create new content. you need nexApex or nexRoot badge.",
+                "Only admins can create new content. you need nexApex or nexRoot badge."
               );
             }
           }}
@@ -568,7 +569,7 @@ export default function NotesSubjectCreator({
                     setNoteAbout(note);
                     setEditingId(note.id);
                     const foundTopic = topics.find(
-                      (t) => t.id === note.topicID,
+                      (t) => t.id === note.topicID
                     );
                     if (foundTopic) {
                       setSelectedSubject(foundTopic.subjectID);
@@ -842,14 +843,14 @@ export default function NotesSubjectCreator({
               noteAbout.type === "pdf"
                 ? ".pdf"
                 : noteAbout.type === "quiz"
-                  ? ".json"
-                  : ".md"
+                ? ".json"
+                : ".md"
             }
             onChange={(e) => {
               setNoteFile(
                 e.target.files?.[0]
                   ? URL.createObjectURL(e.target.files[0])
-                  : undefined,
+                  : undefined
               );
             }}
           />
