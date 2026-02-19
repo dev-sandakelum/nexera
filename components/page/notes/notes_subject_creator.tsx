@@ -121,7 +121,8 @@ export default function NotesSubjectCreator({
     const hasAdminBadge = badgesArray.some(
       (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
     );
-    setIsAdmin(true);
+    console.log("User badges:", badgesArray, "Is Admin:", hasAdminBadge);
+    setIsAdmin(hasAdminBadge);
   }, [user]);
 
   useEffect(() => {
