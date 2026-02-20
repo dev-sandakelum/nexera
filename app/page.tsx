@@ -25,6 +25,9 @@ export const guestUser: NexeraUser = {
     projects: { favorites: [], contributions: [] },
     applications: { favorites: [], uploads: [] },
   },
+  Activity: {
+    quizzesTaken: [],
+  },
   status:"active",
   lastLogin: new Date().toISOString(),
 };

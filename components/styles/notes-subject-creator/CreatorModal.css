@@ -196,3 +196,38 @@
 .nsc-btn-primary:hover {
   background: var(--theme-colorA);
 }
+/* ---------- Copy Button ---------- */
+
+.nsc-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--theme-colorA);
+  color: var(--background2);
+  border: 1px solid var(--theme-colorA);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+
+.nsc-copy-btn:hover {
+  background: var(--theme-colorB);
+  border-color: var(--theme-colorB);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nsc-copy-btn:active {
+  transform: translateY(0);
+}
+
+.nsc-copy-btn svg {
+  width: 16px;
+  height: 16px;
+}

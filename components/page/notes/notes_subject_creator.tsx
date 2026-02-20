@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { FiPlus, FiBookOpen, FiLayers, FiFileText } from "react-icons/fi";
+import { FiPlus, FiBookOpen, FiLayers, FiFileText, FiCopy } from "react-icons/fi";
 
 // Types from shared types file
 import {
@@ -113,6 +113,7 @@ export default function NotesSubjectCreator({
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [selectedNoteType, setSelectedNoteType] = useState<string>("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [copiedQuizType, setCopiedQuizType] = useState(false);
   // Initialize with sample data
   useEffect(() => {
     // Check if user has nexRoot or nexApex badges
@@ -402,6 +403,26 @@ export default function NotesSubjectCreator({
     const matchesType = !selectedNoteType || n.type === selectedNoteType;
     return matchesTopic && matchesType;
   });
+
+  // Copy quiz type definition to clipboard
+  const copyQuizTypeDefinition = async () => {
+    const quizTypeDefinition = `type NamedQuiz = {
+  [quizName: string]: {
+    question: string;
+    options: string[];
+    correctIndex: number;
+    explanation: string;
+  }[];
+};`;
+    
+    try {
+      await navigator.clipboard.writeText(quizTypeDefinition);
+      setCopiedQuizType(true);
+      setTimeout(() => setCopiedQuizType(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   // Close modal helper
   const closeSubjectModal = () => {
@@ -837,6 +858,17 @@ export default function NotesSubjectCreator({
               <option value="pdf">PDF</option>
               <option value="quiz">Quiz</option>
             </select>
+            {noteAbout.type === "quiz" && (
+              <button
+                type="button"
+                onClick={copyQuizTypeDefinition}
+                className="nsc-copy-btn"
+                title="Copy quiz type definition"
+              >
+                <FiCopy />
+                {copiedQuizType ? "Copied!" : "Copy Type"}
+              </button>
+            )}
           </div>
           <div className="nsc-form-group">
             <label className="nsc-label">Status</label>
