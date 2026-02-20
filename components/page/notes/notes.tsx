@@ -13,6 +13,7 @@ import { FiChevronDown, FiFilter } from "react-icons/fi";
 import LoadingAnimation from "../loading";
 import { PiPlusBold } from "react-icons/pi";
 import Link from "next/link";
+import { departments } from "./items/note_subject_creator/functions";
 
 export default function Notes({
   data,
@@ -175,9 +176,11 @@ export default function Notes({
                   onChange={(e) => setFilterDept(e.target.value)}
                 >
                   <option value="all">All Departments</option>
-                  <option value="CS">Computer Science</option>
-                  <option value="IT">Information Technology</option>
-                  <option value="SE">Software Engineering</option>
+                  {departments.map((d) => (
+                    <option key={d.id} value={d.code}>
+                      {d.code}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>

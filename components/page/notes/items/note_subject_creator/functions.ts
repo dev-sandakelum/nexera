@@ -14,6 +14,8 @@ export const currentUser = {
 // Mock departments (replace with actual data source)
 export const departments = [
   { id: "ICT", name: "Information and Communications Technology", code: "ICT" },
+  { id: "BST", name: "Bio Systems Technology", code: "BST" },
+  { id: "ET", name: "Engineering Technology", code: "ET" },
 ];
 
 /**
