@@ -36,6 +36,8 @@ import "@/components/styles/auth/main.css";
 import "@/components/styles/MOBILE/main.css";
 import "@/components/styles/MOBILE/nav.css";
 
+import "@/components/styles/MOBILE/home/main.css";
+
 import "@/components/styles/MOBILE/notes/main.css";
 import "@/components/styles/MOBILE/notes/card0.css";
 import "@/components/styles/MOBILE/notes-sub/main.css";
@@ -58,8 +60,6 @@ import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import LoadingAnimation from "@/components/page/loading";
 import { ThemeProvider } from "./theme-controller";
-
-
 
 const poppins = Poppins({
   variable: "--font-poppins",

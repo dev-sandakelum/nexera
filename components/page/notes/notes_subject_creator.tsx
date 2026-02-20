@@ -111,6 +111,7 @@ export default function NotesSubjectCreator({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string>("");
   const [selectedTopic, setSelectedTopic] = useState<string>("");
+  const [selectedNoteType, setSelectedNoteType] = useState<string>("");
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   // Initialize with sample data
   useEffect(() => {
@@ -121,7 +122,7 @@ export default function NotesSubjectCreator({
     const hasAdminBadge = badgesArray.some(
       (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
     );
-    console.log("User badges:", badgesArray, "Is Admin:", hasAdminBadge);
+    // console.log("User badges:", badgesArray, "Is Admin:", hasAdminBadge);
     setIsAdmin(hasAdminBadge);
   }, [user]);
 
@@ -396,9 +397,11 @@ export default function NotesSubjectCreator({
     ? topics.filter((t) => t.subjectID === selectedSubject)
     : topics;
 
-  const filteredNotes = selectedTopic
-    ? notes.filter((n) => n.topicID === selectedTopic)
-    : notes;
+  const filteredNotes = notes.filter((n) => {
+    const matchesTopic = !selectedTopic || n.topicID === selectedTopic;
+    const matchesType = !selectedNoteType || n.type === selectedNoteType;
+    return matchesTopic && matchesType;
+  });
 
   // Close modal helper
   const closeSubjectModal = () => {
@@ -483,22 +486,37 @@ export default function NotesSubjectCreator({
             </select>
           </div>
           {activeTab === "notes" && (
-            <div className="nsc-filter-group">
-              <label className="nsc-filter-label">Topic</label>
-              <select
-                className="nsc-filter-select"
-                value={selectedTopic}
-                onChange={(e) => setSelectedTopic(e.target.value)}
-                disabled={!selectedSubject}
-              >
-                <option value="">All Topics</option>
-                {filteredTopics.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.title}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <>
+              <div className="nsc-filter-group">
+                <label className="nsc-filter-label">Topic</label>
+                <select
+                  className="nsc-filter-select"
+                  value={selectedTopic}
+                  onChange={(e) => setSelectedTopic(e.target.value)}
+                  disabled={!selectedSubject}
+                >
+                  <option value="">All Topics</option>
+                  {filteredTopics.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="nsc-filter-group">
+                <label className="nsc-filter-label">Type</label>
+                <select
+                  className="nsc-filter-select"
+                  value={selectedNoteType}
+                  onChange={(e) => setSelectedNoteType(e.target.value)}
+                >
+                  <option value="">All Types</option>
+                  <option value="note">Note</option>
+                  <option value="pdf">PDF</option>
+                  <option value="quiz">Quiz</option>
+                </select>
+              </div>
+            </>
           )}
         </div>
       )}

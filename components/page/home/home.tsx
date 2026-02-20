@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { BiSearch } from "react-icons/bi";
 
 const containerVariants = {
   hidden: {},
@@ -72,6 +73,37 @@ export default function HomePage() {
           />
         ))}
       </motion.div>
+      <div className="content">
+        <div className="left-side">
+          <div className="notification">
+            <p>
+              <span>• New Courses Added Weekly</span>
+            </p>
+          </div>
+          <h1 className="title">
+            Unlock Your <span>Potential</span> with NexEra
+          </h1>
+          <p className="description">
+            Access thousands of expert-led courses and take the next step in
+            your professional journey. Join a global community of lifelong
+            learners.
+          </p>
+          <div className="search-bar">
+            <BiSearch size={24} />
+            <input type="text" placeholder="Search for courses..." />
+            <button>Search</button>
+          </div>
+          <div className="popular">
+            <p>Popular Searches:</p>
+            <ul>
+              <li>Web Development</li>
+              <li>Data Science</li>
+              <li>Graphic Design</li>
+              <li>Digital Marketing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
