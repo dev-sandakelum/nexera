@@ -27,3 +27,108 @@
 
   will-change: transform, opacity;
 }
+.homeContainer .content {
+  position: absolute;
+  top: 90px;
+  left: 100px;
+  /* border: 1px solid red; */
+  width: calc(100% - 100px);
+  height: calc(100% - 90px);
+  z-index: 10;
+}
+.homeContainer .content .left-side {
+  width: 50%;
+  height: 100%;
+  float: left;
+  padding-right: 40px;
+}
+.homeContainer .content .right-side {
+  width: 50%;
+  height: 100%;
+  float: right;
+}
+.homeContainer .content .left-side .notification {
+  padding: 4px 30px;
+  width: 100%;
+  list-style: disc;
+  font-size: 16px;
+  color: var(--text);
+  color: var(--home-bg-component-01);
+  font-weight: 600;
+  background-color: var(--home-bg-component-04);
+  border-radius: 100px;
+}
+.homeContainer .content .left-side .title {
+  font-size: 64px;
+  font-weight: bold;
+  color: var(--text);
+}
+.homeContainer .content .left-side .title span {
+  color: var(--home-bg-component-01);
+}
+.homeContainer .content .left-side .description {
+  font-size: 20px;
+  line-height: 1.8;
+  padding-right: 80px;
+}
+.homeContainer .content .left-side .search-bar {
+  margin-top: 40px;
+  width: 100%;
+  height: 60px;
+  border-radius: 100px;
+  color: var(--foreground);
+  background-color: var(--background2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 6px 0 24px;
+}
+.homeContainer .content .left-side .search-bar input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+}
+.homeContainer .content .left-side .search-bar input:active,
+.homeContainer .content .left-side .search-bar input:focus {
+  outline: none;
+}
+.homeContainer .content .left-side .search-bar button {
+  width: 160px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: var(--home-bg-component-01);
+  border: none;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--background2);
+  justify-content: center;
+  transition: 0.2s ease-in-out;
+}
+.homeContainer .content .left-side .search-bar button:hover {
+  background-color: var(--home-bg-component-02);
+  cursor: pointer;
+}
+.homeContainer .content .left-side .popular {
+  margin-top: 24px;
+}
+.homeContainer .content .left-side .popular p {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.homeContainer .content .left-side .popular ul {
+  display: flex;
+  gap: 16px;
+}
+.homeContainer .content .left-side .popular ul li {
+  font-size: 14px;
+  color: var(--home-bg-component-01);
+  background-color: var(--home-bg-component-05);
+  padding: 4px 16px;
+  border-radius: 100px;
+  list-style: none;
+}

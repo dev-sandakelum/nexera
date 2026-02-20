@@ -1,0 +1,116 @@
+/* =========================
+   MOBILE HOME PAGE
+   max-width: 768px
+========================= */
+@media (max-width: 768px) {
+  .homeContainer {
+    width: 100vw;
+    height: 100svh;
+  }
+
+  /* --- Background blobs: shift to bottom-right on mobile --- */
+  .homeContainer .bg .bgC {
+    width: 320px;
+    height: 640px;
+    border-radius: 48px;
+  }
+
+  /* --- Content: remove large left offset, go full width --- */
+  .homeContainer .content {
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 100px);
+    padding: 0 20px;
+  }
+
+  /* --- Left side: full width, no float --- */
+  .homeContainer .content .left-side {
+    width: 100%;
+    height: auto;
+    float: none;
+    padding-right: 0;
+  }
+
+  /* --- Notification pill --- */
+  .homeContainer .content .left-side .notification {
+    font-size: 13px;
+    padding: 4px 20px;
+  }
+
+  /* --- Title --- */
+  .homeContainer .content .left-side .title {
+    font-size: 40px;
+    line-height: 1.15;
+    margin-top: 12px;
+  }
+
+  /* --- Description --- */
+  .homeContainer .content .left-side .description {
+    font-size: 15px;
+    line-height: 1.6;
+    padding-right: 0;
+  }
+
+  /* --- Search bar --- */
+  .homeContainer .content .left-side .search-bar {
+    margin-top: 28px;
+    height: 52px;
+    gap: 10px;
+    padding: 0 6px 0 20px;
+  }
+
+  .homeContainer .content .left-side .search-bar input {
+    font-size: 14px;
+  }
+
+  .homeContainer .content .left-side .search-bar button {
+    width: 120px;
+    height: 42px;
+    font-size: 14px;
+  }
+
+  /* --- Popular searches: wrap on small screens --- */
+  .homeContainer .content .left-side .popular {
+    margin-top: 18px;
+  }
+
+  .homeContainer .content .left-side .popular ul {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* =========================
+   EXTRA SMALL DEVICES
+========================= */
+@media (max-width: 480px) {
+  .homeContainer .content {
+    top: 80px;
+    height: calc(100% - 80px);
+    padding: 0 16px;
+  }
+
+  .homeContainer .content .left-side .title {
+    font-size: 32px;
+  }
+
+  .homeContainer .content .left-side .description {
+    font-size: 14px;
+  }
+
+  .homeContainer .content .left-side .search-bar {
+    height: 48px;
+  }
+
+  .homeContainer .content .left-side .search-bar button {
+    width: 100px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .homeContainer .content .left-side .popular ul li {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+}
