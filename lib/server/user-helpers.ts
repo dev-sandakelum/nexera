@@ -162,6 +162,9 @@ async function getOrCreateUserAtomic(
         projects: { favorites: [], contributions: [] },
         applications: { favorites: [], uploads: [] },
       },
+      Activity: {
+        quizzesTaken: [],
+      },
       headline: "",
       id: userId,
       location: "",
