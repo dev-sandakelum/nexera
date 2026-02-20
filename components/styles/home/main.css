@@ -5,6 +5,8 @@
   bottom: 0;
   position: absolute;
   overflow: hidden;
+  /* background: url(/components/Desktop13.png);
+  background-size: cover; */
 }
 
 .homeContainer .bg {
@@ -12,6 +14,7 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  /* display: none; */
 }
 
 .homeContainer .bg .bgC {
@@ -30,7 +33,7 @@
 .homeContainer .content {
   position: absolute;
   top: 90px;
-  left: 100px;
+  left: 110px;
   /* border: 1px solid red; */
   width: calc(100% - 100px);
   height: calc(100% - 90px);
@@ -41,11 +44,6 @@
   height: 100%;
   float: left;
   padding-right: 40px;
-}
-.homeContainer .content .right-side {
-  width: 50%;
-  height: 100%;
-  float: right;
 }
 .homeContainer .content .left-side .notification {
   padding: 4px 30px;
@@ -131,4 +129,32 @@
   padding: 4px 16px;
   border-radius: 100px;
   list-style: none;
+}
+.homeContainer .content .right-side {
+  width: 50%;
+  height: 100%;
+  float: right;
+  /* border: 1px solid red; */
+  /* background-image: url(/components/undraw_recruiter.svg); */
+  /* background-size: 70%; */
+  /* background-repeat: no-repeat; */
+}
+.homeContainer .content .right-side .pop-ups {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  /* border: 1px solid blue; */
+}
+.homeContainer .content .right-side .pop-ups .item {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background-color: var(--home-bg-component-04);
+  border-radius: 32px;
+  box-shadow: 2px 2px 5px var(--shadow-soft);
+  border: 2px solid var(--home-bg-component-01);
+  transform: translateY(-700px);
 }

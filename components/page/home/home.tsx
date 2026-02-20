@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { BiSearch } from "react-icons/bi";
+import { transform } from "next/dist/build/swc/generated-native";
 
 const containerVariants = {
   hidden: {},
@@ -33,6 +34,75 @@ const itemVariants = (idx: number) => ({
 
 export default function HomePage() {
   const pathname = usePathname();
+  const [showPopUp, setShowPopUp] = useState(false);
+  function popUp() {
+    setShowPopUp(true);
+    setTimeout(() => {
+      setShowPopUp(false);
+    }, 2000);
+  }
+  useEffect(() => {
+    if (showPopUp) {
+      const popUpVariants = {
+        transform: "translate(0, 0) rotateZ(0deg)",
+        transition: {
+          type: "spring" as const,
+
+          stiffness: 80,
+          damping: 18,
+        },
+      };
+      const items = document.querySelectorAll(
+        ".homeContainer .content .right-side .pop-ups .item",
+      );
+      items.forEach((item, idx) => {
+        item.animate(
+          [
+            {
+              transform: `translate(0, 800px) rotateZ(0deg)`,
+            },
+          ],
+          {
+            delay: idx * 100,
+            duration: 1000,
+            easing: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
+            fill: "forwards",
+          },
+        );
+      });
+    } else {
+      const items = document.querySelectorAll(
+        ".homeContainer .content .right-side .pop-ups .item",
+      );
+      const popUpVariants = [
+        {
+          transform: "translate(-140px, -130px) rotateZ(75deg)",
+        },
+        {
+          transform: "translate(40px, -40px) rotateZ(-70deg)",
+        },
+        {
+          transform: "translate(-90px, 120px) rotateZ(70deg)",
+        },
+      ];
+      items.forEach((item, idx) => {
+        item.animate(
+          [
+            {
+              transform: popUpVariants[idx].transform,
+            },
+          ],
+          {
+            delay: idx * 100,
+            duration: 1000,
+            easing: "cubic-bezier(0.68, -0.55, 0.27, 1.55)",
+            fill: "forwards",
+          },
+        );
+      });
+    }
+  }, [showPopUp]);
+
   return (
     <div className="homeContainer">
       <motion.div
@@ -91,7 +161,7 @@ export default function HomePage() {
           <div className="search-bar">
             <BiSearch size={24} />
             <input type="text" placeholder="Search for courses..." />
-            <button>Search</button>
+            <button onClick={popUp}>Search</button>
           </div>
           <div className="popular">
             <p>Popular Searches:</p>
@@ -101,6 +171,13 @@ export default function HomePage() {
               <li>Graphic Design</li>
               <li>Digital Marketing</li>
             </ul>
+          </div>
+        </div>
+        <div className="right-side" onLoad={popUp}>
+          <div className="pop-ups">
+            <div className="item" key={`item-${Date.now()}-1`}></div>
+            <div className="item" key={`item-${Date.now()}-2`}></div>
+            <div className="item" key={`item-${Date.now()}-3`}></div>
           </div>
         </div>
       </div>
