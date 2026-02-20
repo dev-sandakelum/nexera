@@ -43,6 +43,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_002",
@@ -79,6 +82,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_99" }] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -121,6 +127,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_004",
@@ -157,6 +166,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [{ id: "p_502" }], contributions: [] },
       applications: { favorites: [{ id: "a_100" }], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -195,6 +207,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [{ id: "p_503" }] },
       applications: { favorites: [], uploads: [{ id: "a_101" }] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -236,6 +251,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_007",
@@ -271,6 +289,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -315,6 +336,9 @@ export const nexeraUsersR: NexeraUser[] = [
         uploads: [{ id: "a_103" }],
       },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_009",
@@ -354,6 +378,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_010",
@@ -392,6 +419,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [{ id: "p_506" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_104" }] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_011",
@@ -429,6 +459,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [{ id: "p_507" }] },
       applications: { favorites: [], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -471,6 +504,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_013",
@@ -508,6 +544,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [{ id: "p_509" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_105" }] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_014",
@@ -543,6 +582,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [{ id: "p_510" }] },
       applications: { favorites: [{ id: "a_106" }], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -587,6 +629,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_016",
@@ -628,6 +673,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [{ id: "a_107" }] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_017",
@@ -664,6 +712,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_108" }], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_018",
@@ -699,6 +750,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [{ id: "p_513" }], contributions: [] },
       applications: { favorites: [], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -741,6 +795,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [{ id: "a_109" }] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_020",
@@ -781,6 +838,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_110" }], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_021",
@@ -816,6 +876,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [{ id: "p_515" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_111" }] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -855,6 +918,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [{ id: "p_516" }] },
       applications: { favorites: [{ id: "a_112" }], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -899,6 +965,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       applications: { favorites: [], uploads: [{ id: "a_113" }] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_024",
@@ -937,6 +1006,9 @@ export const nexeraUsersR: NexeraUser[] = [
       projects: { favorites: [{ id: "p_518" }], contributions: [] },
       applications: { favorites: [{ id: "a_114" }], uploads: [] },
     },
+    Activity: {
+      quizzesTaken: [],
+    },
   },
   {
     id: "u_025",
@@ -973,6 +1045,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [], contributions: [] },
       applications: { favorites: [{ id: "a_115" }], uploads: [] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
   {
@@ -1011,6 +1086,9 @@ export const nexeraUsersR: NexeraUser[] = [
       },
       projects: { favorites: [{ id: "p_519" }], contributions: [] },
       applications: { favorites: [], uploads: [{ id: "a_116" }] },
+    },
+    Activity: {
+      quizzesTaken: [],
     },
   },
 ];
