@@ -1,7 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { nexNoteAbout, nexNoteData, quizNote } from "@/components/types";
+import { useState, useEffect, useCallback, useRef, CSSProperties } from "react";
+import {
+  nexNoteAbout,
+  nexNoteData,
+  quizNote,
+  QuizActivityData,
+} from "@/components/types";
 import "@/components/styles/quiz/main.css";
 import QuizNotFound from "./quiz-not-found";
 
@@ -16,14 +21,20 @@ interface QuizData {
   [key: string]: QuizQuestion[];
 }
 
+type SaveStatus = "idle" | "saving" | "saved" | "error";
+
 export default function QuizViewerClient({
   notesAbout,
   notesData,
   pathname,
+  userId,
+  savedActivity,
 }: {
   notesAbout: nexNoteAbout[];
   notesData: nexNoteData[];
   pathname: string;
+  userId?: string;
+  savedActivity?: QuizActivityData;
 }) {
   const quizSlug = pathname.split("/").pop() || "";
   const quiz = notesAbout.find((n) => n.slug === quizSlug);
@@ -40,6 +51,14 @@ export default function QuizViewerClient({
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>("idle");
+  const [reviewingPrevious, setReviewingPrevious] = useState(false);
+
+  // Auto-save ref to track latest answers for the interval
+  const latestAnswersRef = useRef<(number | null)[]>([]);
+  const hasUnsavedChangesRef = useRef(false);
+
+  // ─── Initialization Logic ───────────────────────────────────────────────
 
   useEffect(() => {
     const loadQuizData = async () => {
@@ -54,9 +73,8 @@ export default function QuizViewerClient({
         if (!response.ok) throw new Error("Failed to load quiz");
 
         const data: QuizData = await response.json();
-
-        // Get first quiz set from the data
         const firstQuizKey = Object.keys(data)[0];
+
         if (!firstQuizKey || !Array.isArray(data[firstQuizKey])) {
           setError("Invalid quiz data format");
           setLoading(false);
@@ -65,7 +83,74 @@ export default function QuizViewerClient({
 
         const quizQuestions = data[firstQuizKey];
         setQuestions(quizQuestions);
-        setUserAnswers(new Array(quizQuestions.length).fill(null));
+
+        // ─── Conflict Resolution: DB vs LocalStorage ───
+        let initialAnswers = new Array(quizQuestions.length).fill(null);
+        let shouldShowResults = false;
+        let isReviewMode = false;
+
+        // 1. Check LocalStorage
+        let localData: QuizActivityData | null = null;
+        if (userId && quiz?.id) {
+          try {
+            const localRaw = localStorage.getItem(
+              `nexera_quiz_${userId}_${quiz.id}`,
+            );
+            if (localRaw) {
+              localData = JSON.parse(localRaw);
+            }
+          } catch (e) {
+            console.error("Failed to parse local storage", e);
+          }
+        }
+
+        // 2. Decide Source
+        // Priority:
+        // A. DB says "completed" -> Review Mode (ignore local "in-progress" unless newer completed?)
+        //    Actually, if DB is completed, user finished it. Show results.
+        // B. DB says "in-progress" vs Local "in-progress" -> Use newer.
+        // C. No DB, but Local exists -> Use Local.
+
+        const dbIsCompleted = savedActivity?.status === "completed";
+        const localIsNewer =
+          localData?.lastUpdated && savedActivity?.lastUpdated
+            ? new Date(localData.lastUpdated) >
+              new Date(savedActivity.lastUpdated)
+            : !!localData;
+
+        if (dbIsCompleted) {
+          // Case A: User finished this quiz previously.
+          if (savedActivity?.userAnswers?.length === quizQuestions.length) {
+            initialAnswers = savedActivity.userAnswers;
+            shouldShowResults = true;
+            isReviewMode = true;
+          }
+          // We ignore local data if DB is completed (assumes DB determines "done")
+          // Unless we want to support "Retaking locally" but not submitted yet?
+          // For simplicity: DB Completed wins -> showing results.
+        } else if (localData && (localIsNewer || !savedActivity)) {
+          // Case B/C: Local is newer or only source. Resume from local.
+          if (localData.userAnswers?.length === quizQuestions.length) {
+            initialAnswers = localData.userAnswers;
+            // If local says completed (but not synced?), show results
+            if (localData.status === "completed") {
+              shouldShowResults = true;
+              isReviewMode = true;
+            }
+          }
+        } else if (savedActivity) {
+          // Case D: Syncing in-progress from DB (e.g. other device)
+          initialAnswers = savedActivity.userAnswers || initialAnswers;
+        }
+
+        setUserAnswers(initialAnswers);
+        latestAnswersRef.current = initialAnswers;
+
+        if (shouldShowResults) {
+          setReviewingPrevious(true);
+          setShowResults(true);
+        }
+
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load quiz");
@@ -74,25 +159,96 @@ export default function QuizViewerClient({
     };
 
     loadQuizData();
-  }, [quizUrl]);
+  }, [quizUrl, savedActivity, userId, quiz?.id]);
 
-  if (loading) {
-    return (
-      <div className="quiz-container">
-        <div className="quiz-loading">
-          <div className="spinner"></div>
-          <p>Loading quiz...</p>
-        </div>
-      </div>
+  // ─── Save Logic ──────────────────────────────────────────────────────────
+
+  const saveToApi = useCallback(
+    async (answers: (number | null)[], status: "in-progress" | "completed") => {
+      if (!userId || !quiz?.id) return;
+
+      // Calculate ephemeral score for the save
+      const currentScore = answers.reduce<number>((acc, ans, idx) => {
+        return ans === questions[idx]?.correctIndex ? acc + 1 : acc;
+      }, 0);
+      const total = questions.length;
+      const percentage =
+        total > 0 ? ((currentScore / total) * 100).toFixed(1) : "0.0";
+
+      setSaveStatus("saving");
+      try {
+        const res = await fetch("/api/quiz-activity", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            quizId: quiz.id,
+            score: currentScore,
+            total,
+            percentage,
+            userAnswers: answers,
+            status,
+            lastUpdated: new Date().toISOString(),
+          }),
+        });
+
+        if (!res.ok) throw new Error("Save failed");
+        setSaveStatus("saved");
+        hasUnsavedChangesRef.current = false;
+      } catch {
+        // Only show error for manual saves or final submit
+        if (status === "completed") setSaveStatus("error");
+        else setSaveStatus("idle"); // Passive fail for auto-save
+      }
+    },
+    [userId, quiz?.id, questions],
+  );
+
+  // 1. Save to LocalStorage on every change
+  useEffect(() => {
+    if (!userId || !quiz?.id || loading || showResults) return;
+
+    // Don't save empty states if we haven't started
+    const hasAnswers = userAnswers.some((a) => a !== null);
+    if (!hasAnswers) return;
+
+    const data: QuizActivityData = {
+      score: 0, // Not relevant for in-progress local
+      total: questions.length,
+      percentage: "0",
+      userAnswers,
+      takenAt: new Date().toISOString(),
+      status: "in-progress",
+      lastUpdated: new Date().toISOString(),
+    };
+
+    localStorage.setItem(
+      `nexera_quiz_${userId}_${quiz.id}`,
+      JSON.stringify(data),
     );
-  }
+    latestAnswersRef.current = userAnswers;
+    hasUnsavedChangesRef.current = true;
+  }, [userAnswers, userId, quiz?.id, loading, showResults, questions.length]);
 
-  if (error || questions.length === 0) {
-    return <QuizNotFound />;
-  }
+  // 2. Periodic Auto-Save to DB (Every 5 minutes)
+  useEffect(() => {
+    if (!userId || showResults) return;
+
+    const intervalId = setInterval(
+      () => {
+        if (hasUnsavedChangesRef.current) {
+          console.log("Vari: Auto-saving quiz progress...");
+          saveToApi(latestAnswersRef.current, "in-progress");
+        }
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
+
+    return () => clearInterval(intervalId);
+  }, [userId, saveToApi, showResults]);
+
+  // ─── Handlers ───────────────────────────────────────────────────────────
 
   const handleSelectOption = (optionIndex: number) => {
-    // Only allow selection if question hasn't been answered yet
     if (!showResults && userAnswers[currentQuestion] === null) {
       const newAnswers = [...userAnswers];
       newAnswers[currentQuestion] = optionIndex;
@@ -112,38 +268,92 @@ export default function QuizViewerClient({
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setShowResults(true);
+    setReviewingPrevious(false);
+
+    // Save as completed
+    await saveToApi(userAnswers, "completed");
+
+    // Build local storage cleanup
+    if (userId && quiz?.id) {
+      localStorage.removeItem(`nexera_quiz_${userId}_${quiz.id}`);
+    }
+  };
+
+  const handleRetakeNew = () => {
+    // Start a fresh attempt
+    setCurrentQuestion(0);
+    const blankAnswers = new Array(questions.length).fill(null);
+    setUserAnswers(blankAnswers);
+    latestAnswersRef.current = blankAnswers;
+    setShowResults(false);
+    setReviewingPrevious(false);
+    setSaveStatus("idle");
+
+    // Clear local storage for fresh start
+    if (userId && quiz?.id) {
+      localStorage.removeItem(`nexera_quiz_${userId}_${quiz.id}`);
+    }
+  };
+
+  const handleReviewPrevious = () => {
+    setReviewingPrevious(true);
     setShowResults(true);
   };
 
-  const handleReset = () => {
-    setCurrentQuestion(0);
-    setUserAnswers(new Array(questions.length).fill(null));
-    setShowResults(false);
+  const calculateScore = () => {
+    return userAnswers.reduce<number>((acc, answer, index) => {
+      return answer === questions[index]?.correctIndex ? acc + 1 : acc;
+    }, 0);
   };
 
-  const calculateScore = () => {
-    let correct = 0;
-    userAnswers.forEach((answer, index) => {
-      if (answer === questions[index].correctIndex) {
-        correct++;
-      }
-    });
-    return correct;
-  };
+  // ─── Render ─────────────────────────────────────────────────────────────
+
+  if (loading) {
+    return (
+      <div className="quiz-container">
+        <div className="quiz-loading">
+          <div className="spinner"></div>
+          <p>Loading quiz...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || questions.length === 0) {
+    return <QuizNotFound error={error || "No questions available"} />;
+  }
 
   const currentQ = questions[currentQuestion];
   const totalScore = calculateScore();
   const percentage = ((totalScore / questions.length) * 100).toFixed(1);
   const userAnswer = userAnswers[currentQuestion];
   const isCorrectAnswer = userAnswer === currentQ.correctIndex;
-  
-  // Check if current question has been answered
   const isAnswered = userAnswers[currentQuestion] !== null;
-  // Show feedback for any answered question
   const showAnswerFeedback = isAnswered;
+  const isLastQuestion = currentQuestion === questions.length - 1;
+  const answeredCount = userAnswers.filter((a) => a !== null).length;
 
+  const formatDate = (iso: string) => {
+    try {
+      return new Date(iso).toLocaleString();
+    } catch {
+      return iso;
+    }
+  };
+
+  // ─── Results Screen ─────────────────────────────────────────────────────
   if (showResults) {
+    // If reviewing previous from DB, show that score.
+    // If just submitted (reviewingPrevious=false), show calculated score.
+    const useSaved = reviewingPrevious && savedActivity;
+
+    const displayScore = useSaved ? savedActivity.score : totalScore;
+    const displayTotal = useSaved ? savedActivity.total : questions.length;
+    const displayPct = useSaved ? savedActivity.percentage : percentage;
+    const displayAnswers = useSaved ? savedActivity.userAnswers : userAnswers;
+
     return (
       <div className="quiz-container">
         <div className="quiz-header">
@@ -153,50 +363,84 @@ export default function QuizViewerClient({
           )}
         </div>
 
+        {useSaved && (
+          <div className="previous-attempt-banner">
+            <span className="previous-attempt-icon">📖</span>
+            <div className="previous-attempt-text">
+              <strong>Viewing previous attempt</strong>
+              <span>Taken on {formatDate(savedActivity.takenAt)}</span>
+            </div>
+            <button
+              className="btn btn-primary btn-sm retake-btn"
+              onClick={handleRetakeNew}
+            >
+              Retake Quiz
+            </button>
+          </div>
+        )}
+
+        {!reviewingPrevious && saveStatus !== "idle" && (
+          <div className={`save-status save-status--${saveStatus}`}>
+            {saveStatus === "saving" && (
+              <>
+                <span className="save-spinner"></span> Saving your results…
+              </>
+            )}
+            {saveStatus === "saved" && (
+              <>
+                <span>✓</span> Results saved successfully!
+              </>
+            )}
+            {saveStatus === "error" && (
+              <>
+                <span>⚠</span> Could not save results. Progress may be lost.
+              </>
+            )}
+          </div>
+        )}
+
         <div className="quiz-results">
           <div className="results-card">
-            <h2>Quiz Complete!</h2>
-
+            <h2>{reviewingPrevious ? "Previous Result" : "Quiz Complete!"}</h2>
             <div className="score-display">
               <div className="score-circle">
-                <div className="score-percentage">{percentage}%</div>
+                <div className="score-percentage">{displayPct}%</div>
                 <div className="score-subtitle">Score</div>
               </div>
               <div className="score-details">
                 <div className="score-line">
                   <span className="score-label">Correct Answers:</span>
                   <span className="score-value correct">
-                    {totalScore}/{questions.length}
+                    {displayScore}/{displayTotal}
                   </span>
                 </div>
                 <div className="score-line">
                   <span className="score-label">Wrong Answers:</span>
                   <span className="score-value wrong">
-                    {questions.length - totalScore}/{questions.length}
+                    {displayTotal - displayScore}/{displayTotal}
                   </span>
-                </div>
-                <div className="score-line">
-                  <span className="score-label">Accuracy:</span>
-                  <span className="score-value">{percentage}%</span>
                 </div>
               </div>
             </div>
-
             <div className="results-breakdown">
               <h3>Review Answers</h3>
               <div className="review-list">
                 {questions.map((q, idx) => {
-                  const isCorrect = userAnswers[idx] === q.correctIndex;
-                  const userAns = userAnswers[idx];
+                  const ans = displayAnswers[idx];
+                  const isCorrect = ans === q.correctIndex;
                   return (
                     <div
                       key={idx}
-                      className={`review-item ${isCorrect ? "correct-item" : "incorrect-item"}`}
+                      className={`review-item ${
+                        isCorrect ? "correct-item" : "incorrect-item"
+                      }`}
                     >
                       <div className="review-header">
                         <span className="review-number">Q{idx + 1}</span>
                         <span
-                          className={`review-status ${isCorrect ? "correct" : "incorrect"}`}
+                          className={`review-status ${
+                            isCorrect ? "correct" : "incorrect"
+                          }`}
                         >
                           {isCorrect ? "✓ Correct" : "✗ Incorrect"}
                         </span>
@@ -204,13 +448,13 @@ export default function QuizViewerClient({
                       <p className="review-question">{q.question}</p>
                       <div className="review-answers">
                         <div
-                          className={`your-answer ${!isCorrect ? "wrong-answer" : ""}`}
+                          className={`your-answer ${
+                            !isCorrect ? "wrong-answer" : ""
+                          }`}
                         >
                           <strong>Your Answer:</strong>
                           <p>
-                            {userAns !== null
-                              ? q.options[userAns]
-                              : "Not answered"}
+                            {ans !== null ? q.options[ans] : "Not answered"}
                           </p>
                         </div>
                         {!isCorrect && (
@@ -231,8 +475,7 @@ export default function QuizViewerClient({
                 })}
               </div>
             </div>
-
-            <button className="btn btn-primary" onClick={handleReset}>
+            <button className="btn btn-primary" onClick={handleRetakeNew}>
               Retake Quiz
             </button>
           </div>
@@ -241,15 +484,45 @@ export default function QuizViewerClient({
     );
   }
 
-  const isLastQuestion = currentQuestion === questions.length - 1;
-  const answeredCount = userAnswers.filter((a) => a !== null).length;
+  // ─── In-Progress Resume Prompt ──────────────────────────────────────────
+  // If we loaded an incomplete state (some answers filled, but not all/submitted)
+  // We might want to notify them, but currently we just auto-fill and let them continue.
+
+  // ─── Previous Attempt Prompt ────────────────────────────────────────────
+  // Shown if they have a COMPLETED saved activity but are seeing the questions screen (Retake mode or not started)
+  // Logic: savedActivity exists AND status=completed AND we aren't reviewing it.
+  const showCompletedPrompt =
+    savedActivity?.status === "completed" && !reviewingPrevious;
 
   return (
     <div className="quiz-container">
-      <div className="quiz-header">
-        <h1 className="quiz-title">{quiz?.title || "Quiz"}</h1>
-        {quiz?.description && (
-          <p className="quiz-description">{quiz.description}</p>
+      <div className="sub-section">
+        <div className="quiz-header">
+          <h1 className="quiz-title">{quiz?.title || "Quiz"}</h1>
+          {quiz?.description && (
+            <p className="quiz-description">{quiz.description}</p>
+          )}
+        </div>
+        {showCompletedPrompt && (
+          <div className="previous-attempt-card">
+            <div className="previous-attempt-card__icon">📊</div>
+            <div className="previous-attempt-card__content">
+              <h3>You&apos;ve taken this quiz before</h3>
+              <p>
+                Last attempt: <strong>{savedActivity.percentage}%</strong> (
+                {savedActivity.score}/{savedActivity.total} correct) &mdash;{" "}
+                {formatDate(savedActivity.takenAt)}
+              </p>
+            </div>
+            <div className="previous-attempt-card__actions">
+              <button
+                className="btn btn-secondary btn-sm"
+                onClick={handleReviewPrevious}
+              >
+                Review
+              </button>
+            </div>
+          </div>
         )}
       </div>
 
@@ -268,6 +541,7 @@ export default function QuizViewerClient({
               Question {currentQuestion + 1} of {questions.length}
             </div>
           </div>
+
           <div className="question-counter">
             <span className="counter-badge">{currentQuestion + 1}</span>
             <span className="counter-total">of {questions.length}</span>
@@ -297,7 +571,7 @@ export default function QuizViewerClient({
                   key={index}
                   className={optionClass}
                   onClick={() => handleSelectOption(index)}
-                  disabled={isAnswered} // Disable all options once answered
+                  disabled={isAnswered}
                 >
                   <div className="option-indicator">
                     {showFeedback && isSelected && (
@@ -324,10 +598,12 @@ export default function QuizViewerClient({
             })}
           </div>
 
-          {/* Real-time Feedback Panel - Shows for any answered question */}
+          {/* Real-time Feedback Panel */}
           {showAnswerFeedback && isAnswered && (
             <div
-              className={`answer-feedback ${isCorrectAnswer ? "feedback-correct" : "feedback-incorrect"}`}
+              className={`answer-feedback ${
+                isCorrectAnswer ? "feedback-correct" : "feedback-incorrect"
+              }`}
             >
               <div className="feedback-header">
                 <span className="feedback-icon-large">
@@ -357,10 +633,7 @@ export default function QuizViewerClient({
 
             <div className="controls-center">
               {!isLastQuestion ? (
-                <button
-                  className="btn btn-primary"
-                  onClick={handleNext}
-                >
+                <button className="btn btn-primary" onClick={handleNext}>
                   Next →
                 </button>
               ) : (
@@ -382,7 +655,7 @@ export default function QuizViewerClient({
           </div>
         </div>
 
-        <div className="quiz-sidebar">
+        <div className="quiz-sidebar" style={showCompletedPrompt ? {marginTop: "-200px"} : {marginTop: "-120px"}}>
           <div className="sidebar-card">
             <h3>Progress</h3>
             <div className="progress-info">
@@ -430,7 +703,6 @@ export default function QuizViewerClient({
             </div>
           </div>
 
-          {/* Live Score Card */}
           <div className="sidebar-card score-card">
             <h3>Current Score</h3>
             <div className="live-score">

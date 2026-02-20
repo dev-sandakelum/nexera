@@ -20,13 +20,13 @@ export type nexSubject = {
   description: string;
   slug: string;
 
-  departmentID: string;   // 🔑
-  academicYear: number;   // 🔑 (1, 2, 3, 4)
-  semester?: number;      // optional 1,2
+  departmentID: string; // 🔑
+  academicYear: number; // 🔑 (1, 2, 3, 4)
+  semester?: number; // optional 1,2
 
-  createdBy: string;      // userID
+  createdBy: string; // userID
 
-  isOfficial: boolean;    // 🔑 admin-approved
+  isOfficial: boolean; // 🔑 admin-approved
 
   createdAt: string;
   updatedAt: string;
@@ -34,8 +34,8 @@ export type nexSubject = {
 
 export type uniDepartment = {
   id: string;
-  name: string;   // Computer Science
-  code: string;   // CS
+  name: string; // Computer Science
+  code: string; // CS
 };
 
 export type nexTopic = {
@@ -44,7 +44,7 @@ export type nexTopic = {
   title: string;
   description: string;
   slug: string;
-  createdBy: string;      // userID
+  createdBy: string; // userID
   createdAt: string;
   updatedAt: string;
 };
@@ -122,6 +122,16 @@ export type nexProjectData = {
   }[];
 };
 
+export type QuizActivityData = {
+  score: number;
+  total: number;
+  percentage: string; // e.g. "78.5"
+  userAnswers: (number | null)[];
+  takenAt: string; // ISO date string
+  status?: "in-progress" | "completed";
+  lastUpdated?: string; // ISO date string for sync conflict resolution
+};
+
 export type NexeraUser = {
   id: string;
   name: string;
@@ -170,6 +180,12 @@ export type NexeraUser = {
       }[];
     };
   };
+  Activity: {
+    quizzesTaken: {
+      quizID: string;
+      data: QuizActivityData;
+    }[];
+  };
 };
 
 export type nexBadge = {
@@ -184,7 +200,6 @@ export type nexBadge = {
     borderColor: string;
   };
 };
-
 
 export interface QuizQuestion {
   question: string;

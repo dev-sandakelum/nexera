@@ -3,41 +3,47 @@
    ============================================ */
 
 :root {
-  /* Primary Colors - Using contrast theme variables */
-  --quiz-primary: var(--theme-colorA, #00e5ff);
-  --quiz-primary-hover: #00b8cc;
-  --quiz-success: var(--success-soft, #22c55e);
-  --quiz-success-hover: var(--success-soft-border, #16a34a);
-  --quiz-success-light: var(--success-soft-bg, rgba(5, 46, 22, 0.5));
-  --quiz-danger: var(--danger-soft, #ef4444);
-  --quiz-danger-hover: var(--danger-soft-border, #b91c1c);
-  --quiz-danger-light: var(--danger-soft-bg, rgba(44, 11, 11, 0.5));
-  --quiz-warning: var(--warning-soft, #facc15);
-  
-  /* Background Colors - Using contrast theme */
-  --quiz-bg-primary: var(--background2, #000000);
-  --quiz-bg-secondary: var(--background2, #0a0a0a);
-  --quiz-bg-tertiary: var(--components-background, #0f0f0f);
-  
-  /* Text Colors - Using contrast theme */
-  --quiz-text-primary: var(--foreground, #ffffff);
-  --quiz-text-secondary: var(--foreground, #b3b3b3);
-  --quiz-text-muted: var(--foreground, #787878);
-  
-  /* Border Colors - Using contrast theme */
-  --quiz-border-default: var(--navbar-border, #2e2e2e);
-  --quiz-border-muted: var(--home-bg-component-04, #515151);
-  
+  /* Primary Colors - Using theme variables */
+  --quiz-primary: var(--theme-colorA);
+  --quiz-primary-hover: var(--theme-colorB);
+  --quiz-success: var(--success-soft);
+  --quiz-success-hover: var(--success-soft-border);
+  --quiz-success-light: var(--success-soft-bg);
+  --quiz-danger: var(--danger-soft);
+  --quiz-danger-hover: var(--danger-soft-border);
+  --quiz-danger-light: var(--danger-soft-bg);
+  --quiz-warning: var(--warning-soft);
+
+  /* Background Colors - Using theme variables */
+  --quiz-bg-primary: var(--background2);
+  --quiz-bg-secondary: var(--background2);
+  --quiz-bg-tertiary: var(--components-background);
+
+  /* Text Colors - Using theme variables */
+  --quiz-text-primary: var(--foreground);
+  --quiz-text-secondary: var(--muted);
+  --quiz-text-muted: var(--muted);
+
+  /* Border Colors - Using theme variables */
+  --quiz-border-default: var(--navbar-border);
+  --quiz-border-muted: var(--home-bg-component-04);
+  --quiz-bg-extra: var(--theme-colorD);
+
   /* Shadows */
   --quiz-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --quiz-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
   --quiz-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
-  
+
+  /* Semi-transparent variants */
+  --quiz-primary-soft: rgba(0, 229, 255, 0.06);
+  --quiz-indicator-light: rgba(255, 255, 255, 0.2);
+  --quiz-indicator-dark: rgba(255, 255, 255, 0.3);
+
   /* Border Radius */
   --quiz-radius-sm: 4px;
   --quiz-radius-md: 6px;
   --quiz-radius-lg: 8px;
-  
+
   /* Compact Spacing for Desktop */
   --quiz-space-xs: 0.25rem;
   --quiz-space-sm: 0.375rem;
@@ -94,19 +100,21 @@
 }
 
 .progress-bar-bg {
-  
   width: 100%;
   height: 6px;
   background-color: var(--quiz-bg-tertiary);
   border-radius: 100px;
   overflow: hidden;
   margin-bottom: var(--quiz-space-xs);
-  
 }
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--quiz-primary), var(--quiz-primary-hover));
+  background: linear-gradient(
+    90deg,
+    var(--quiz-primary),
+    var(--quiz-primary-hover)
+  );
   border-radius: 100px;
   transition: width 0.3s ease;
 }
@@ -283,13 +291,13 @@
 }
 
 .option-btn.selected:not(.correct):not(.incorrect) .option-indicator {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--quiz-indicator-light);
   color: white;
 }
 
 .option-btn.selected.correct .option-indicator,
 .option-btn.selected.incorrect .option-indicator {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--quiz-indicator-dark);
   color: white;
 }
 
@@ -307,7 +315,7 @@
 }
 
 .option-text {
-  color: #fff;
+  color: var(--color)!important;
   margin: 0;
   line-height: 1.5;
   color: inherit;
@@ -411,7 +419,8 @@
    ============================================ */
 
 @keyframes correctPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -420,7 +429,8 @@
 }
 
 @keyframes incorrectShake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   25% {
@@ -513,7 +523,10 @@
   background: var(--quiz-primary);
   color: white;
 }
+.retake-btn{
+  max-width: 100px;
 
+}
 .btn-primary:hover:not(:disabled) {
   background: var(--quiz-primary-hover);
   transform: translateY(-1px);
@@ -550,10 +563,14 @@
   display: flex;
   flex-direction: column;
   gap: var(--quiz-space-md);
-  position: sticky;
+  position: absolute;
+  top: 0;
+  margin-top: -200px;
+  right: 0;
+  width: 280px;
   top: var(--quiz-space-lg);
   max-height: calc(100vh - 2rem);
-  transform: translateY(-80px);
+  /* transform: translateY(-120px); */
   overflow-y: auto;
 }
 
@@ -604,7 +621,11 @@
    ============================================ */
 
 .score-card {
-  background: linear-gradient(135deg, var(--quiz-bg-primary), var(--quiz-bg-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--quiz-bg-primary),
+    var(--quiz-bg-secondary)
+  );
 }
 
 .live-score {
@@ -920,7 +941,7 @@
 
 .explanation {
   border-color: var(--quiz-primary);
-  background: rgba(9, 105, 218, 0.05);
+  background: var(--quiz-primary-soft);
 }
 
 /* ============================================
@@ -1008,11 +1029,14 @@
   }
 
   .quiz-sidebar {
-    position: static;
+    position: relative;
     max-height: none;
     display: grid;
+    width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--quiz-space-md);
+    margin-top: 0!important;
+    /* transform: translateY(100px); */
   }
 
   .score-display {
@@ -1026,6 +1050,12 @@
    RESPONSIVE - MOBILE (FULL SIZE, REDUCED SPACING)
    ============================================ */
 
+@media (min-width: 1024px) {
+  .sub-section {
+    width: 100%;
+    padding-right: 300px;
+  }
+}
 @media (max-width: 768px) {
   :root {
     /* Mobile spacing - even more compact */
@@ -1141,7 +1171,8 @@
   .quiz-sidebar {
     grid-template-columns: 1fr;
     gap: var(--quiz-space-sm);
-    transform: translateY(0); 
+    margin-top: 0!important;
+    /* transform: translateY(40px); */
   }
 
   .sidebar-card {
@@ -1247,6 +1278,7 @@
   .review-answers p {
     font-size: 0.8125rem;
   }
+ 
 }
 
 /* ============================================
@@ -1288,10 +1320,161 @@
   }
 
   .option-btn {
-    border: 2px solid #000;
+    border: 2px solid var(--background2);
   }
 
   .option-btn.selected {
-    background: #eee;
+    background: var(--quiz-bg-secondary);
   }
+}
+
+/* ============================================
+   PREVIOUS ATTEMPT CARD (shown above quiz)
+   ============================================ */
+.sub-section {
+  width: 100%;
+  height: fit-content;
+  margin-top: 1.25rem;
+  /* border: 1px solid red; */
+}
+.previous-attempt-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  background: var(--quiz-bg-primary);
+  border: 1px solid var(--quiz-primary);
+  border-radius: var(--quiz-radius-md);
+  padding: 0.875rem 1.25rem ;
+  animation: feedbackSlideIn 0.3s ease;
+}
+
+.previous-attempt-card__icon {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.previous-attempt-card__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.previous-attempt-card__content h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--quiz-text-primary);
+}
+
+.previous-attempt-card__content p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--quiz-text-secondary);
+  line-height: 1.4;
+}
+
+.previous-attempt-card__actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ============================================
+   PREVIOUS ATTEMPT BANNER (shown in results)
+   ============================================ */
+
+.previous-attempt-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  background: var(--quiz-primary-soft);
+  border: 1px solid var(--quiz-primary);
+  border-radius: var(--quiz-radius-md);
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  animation: feedbackSlideIn 0.3s ease;
+}
+
+.previous-attempt-icon {
+  font-size: 1.375rem;
+  flex-shrink: 0;
+}
+
+.previous-attempt-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.previous-attempt-text strong {
+  font-size: 0.875rem;
+  color: var(--quiz-text-primary);
+}
+
+.previous-attempt-text span {
+  font-size: 0.75rem;
+  color: var(--quiz-text-secondary);
+}
+
+/* ============================================
+   SAVE STATUS INDICATOR
+   ============================================ */
+
+.save-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: var(--quiz-radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  animation: feedbackSlideIn 0.25s ease;
+}
+
+.save-status--saving {
+  background: var(--quiz-bg-secondary);
+  border: 1px solid var(--quiz-border-default);
+  color: var(--quiz-text-secondary);
+}
+
+.save-status--saved {
+  background: var(--quiz-success-light);
+  border: 1px solid var(--quiz-success);
+  color: var(--quiz-success);
+}
+
+.save-status--error {
+  background: var(--quiz-danger-light);
+  border: 1px solid var(--quiz-danger);
+  color: var(--quiz-danger);
+}
+
+/* Mini spinner inside save status */
+.save-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================
+   SMALL BUTTON VARIANT
+   ============================================ */
+
+.btn-sm {
+  padding: 0.3125rem 0.75rem;
+  font-size: 0.75rem;
 }
