@@ -4,7 +4,7 @@
   --background2: #0a0a0a;
   --foreground: #ffffff;
   --color: var(--foreground);
-  --muted:"#f3f4f6";
+  --muted:#f3f4f6;
   --components-background: #0f0f0f;
 
   /* Core theme colors (very distinct) */
