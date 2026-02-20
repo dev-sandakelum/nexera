@@ -93,14 +93,18 @@
 
   .homeContainer .content .left-side .title {
     font-size: 32px;
+    margin: 20px 0;
   }
 
   .homeContainer .content .left-side .description {
     font-size: 14px;
+    line-height: 2;
   }
+  
 
   .homeContainer .content .left-side .search-bar {
     height: 48px;
+    
   }
 
   .homeContainer .content .left-side .search-bar button {
