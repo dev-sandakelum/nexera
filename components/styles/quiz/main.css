@@ -1036,6 +1036,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--quiz-space-md);
     margin-top: 0!important;
+    margin-bottom: 40px!important;
     /* transform: translateY(100px); */
   }
 
