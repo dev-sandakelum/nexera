@@ -209,3 +209,33 @@
   z-index: 10;
   background: rgb(0, 221, 255); 
 }
+
+.fixed-back-btn {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--theme-colorA);
+  color: var(--components-background);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.fixed-back-btn:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fixed-back-btn:active {
+  transform: translateX(-50%) scale(0.95);
+}
