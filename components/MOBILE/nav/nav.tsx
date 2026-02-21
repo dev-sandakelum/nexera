@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { UserInfo } from "@/components/nav/heading-navbar";
 import { NexeraUser } from "@/components/types";
 import {
+  LuArrowLeft,
   LuCircleHelp,
   LuCpu,
   LuFileText,
@@ -28,6 +29,7 @@ export default function MobileNavBar({
   setActiveIcon: (icon: string) => void;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [openPanel, setOpenPanel] = useState<boolean>(false);
   const [whileRouting, setWhileRouting] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -50,6 +52,36 @@ export default function MobileNavBar({
   }, [pathname]);
 
   function iconAdder(idx: number) {
+    // Back button
+    if (idx === -1) {
+      return openPanel ? (
+        <li
+          key="back"
+          className="nav-sideIcon"
+          style={{
+            zIndex: 33,
+            position: "absolute",
+            top: 0,
+            transform: openPanel ? `translateY(${0}px)` : "translateY(-5px)",
+            transition: "transform 0.3s ease",
+          }}
+          onClick={() => {
+            router.back();
+            setOpenPanel(false);
+          }}
+        >
+          <div className="navigation-btn">
+            <LuArrowLeft size={24} className="icon deactivated" />
+          </div>
+          <div className={`navigation-icon-name ${openPanel && "active"}`}>
+            Back
+          </div>
+        </li>
+      ) : (
+        <></>
+      );
+    }
+
     const icons = [
       "Home",
       "Notes",
@@ -162,6 +194,7 @@ export default function MobileNavBar({
           }}
         ></div>
         <ul className={`nav-sideIcons ${openPanel ? "open" : ""}`}>
+          {iconAdder(-1)}
           {iconAdder(0)}
           {iconAdder(1)}
           {iconAdder(2)}
@@ -208,23 +241,27 @@ export default function MobileNavBar({
         <div className="mobile-route">
           <div className="path">
             <p
-              style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
             >
-            {previousRoutes.map((item, index) => (
-              <span key={`${item}-${index}`} className="route-item">
-                {item}
-                <span className="separator"> &gt; </span>
-              </span>
-            ))}
-            <span className="active route-item">{activeRoute}</span>
-          </p>
+              {previousRoutes.map((item, index) => (
+                <span key={`${item}-${index}`} className="route-item">
+                  {item}
+                  <span className="separator"> &gt; </span>
+                </span>
+              ))}
+              <span className="active route-item">{activeRoute}</span>
+            </p>
+          </div>
         </div>
-      </div>
       )}
-      <MobileUserProfile 
-        user={user} 
-        isOpen={showProfile} 
-        onClose={() => setShowProfile(false)} 
+      <MobileUserProfile
+        user={user}
+        isOpen={showProfile}
+        onClose={() => setShowProfile(false)}
       />
     </>
   );
