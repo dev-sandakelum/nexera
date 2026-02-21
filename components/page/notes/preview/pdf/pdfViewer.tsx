@@ -26,7 +26,10 @@ export default function PDFViewer({
   const [scale, setScale] = useState<number>(1.0);
   const [rotation, setRotation] = useState<number>(0);
   const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  // Mirrors `scale` state so applyZoom callbacks always read the live value
+  const scaleRef = useRef<number>(1.0);
 
   // Track container width responsively
   useEffect(() => {
@@ -40,6 +43,14 @@ export default function PDFViewer({
     return () => observer.disconnect();
   }, []);
 
+  // Track mobile breakpoint
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const note = notesData.find(
     (nd) =>
       nd.noteId ==
@@ -51,13 +62,61 @@ export default function PDFViewer({
     url = (note?.context as { url: string }).url;
   }
 
+  /**
+   * Apply a new zoom level while keeping the visible center of the scroll
+   * container stable — the same behaviour as Chrome / Adobe PDF Viewer.
+   */
+  const applyZoom = (newScale: number) => {
+    const el = containerRef.current;
+    const oldScale = scaleRef.current;
+    scaleRef.current = newScale;
+    setScale(newScale);
+
+    if (!el) return;
+    // Capture the fractional center of the visible area *before* the repaint
+    const centerRatioX =
+      (el.scrollLeft + el.clientWidth / 2) / (el.scrollWidth || 1);
+    const centerRatioY =
+      (el.scrollTop + el.clientHeight / 2) / (el.scrollHeight || 1);
+    const ratio = newScale / oldScale;
+
+    requestAnimationFrame(() => {
+      // Scroll so the same content point stays centred after the scale change
+      el.scrollLeft = el.scrollWidth * centerRatioX - el.clientWidth / 2;
+      el.scrollTop = el.scrollHeight * centerRatioY - el.clientHeight / 2;
+      // Fallback: if content didn't grow (e.g. first render) keep simple ratio
+      if (el.scrollLeft === 0 && el.scrollTop === 0) {
+        el.scrollLeft =
+          (el.scrollLeft + el.clientWidth / 2) * ratio - el.clientWidth / 2;
+        el.scrollTop =
+          (el.scrollTop + el.clientHeight / 2) * ratio - el.clientHeight / 2;
+      }
+    });
+  };
+
   const zoomIn = () =>
-    setScale((s) => Math.min(+(s + SCALE_STEP).toFixed(1), MAX_SCALE));
+    applyZoom(Math.min(+(scaleRef.current + SCALE_STEP).toFixed(1), MAX_SCALE));
   const zoomOut = () =>
-    setScale((s) => Math.max(+(s - SCALE_STEP).toFixed(1), MIN_SCALE));
-  const resetZoom = () => setScale(1.0);
+    applyZoom(Math.max(+(scaleRef.current - SCALE_STEP).toFixed(1), MIN_SCALE));
+  const resetZoom = () => applyZoom(1.0);
   const rotateLeft = () => setRotation((r) => (r - 90 + 360) % 360);
   const rotateRight = () => setRotation((r) => (r + 90) % 360);
+
+  // Auto-reload once when the PDF.js worker crashes (null transport error)
+  const handleLoadError = (error: Error) => {
+    console.error("PDF load error:", error);
+    const key = "pdf-worker-reloaded";
+    if (!sessionStorage.getItem(key)) {
+      sessionStorage.setItem(key, "1");
+      window.location.reload();
+    }
+  };
+
+  const handleLoadSuccess = ({ numPages }: { numPages: number }) => {
+    // Clear the reload guard so future navigation can still auto-recover
+    sessionStorage.removeItem("pdf-worker-reloaded");
+    setNumPages(numPages);
+  };
 
   return (
     <div
@@ -66,26 +125,49 @@ export default function PDFViewer({
         flexDirection: "column",
         alignItems: "center",
         marginTop: "80px",
-        marginBottom: "80px",
+        marginBottom: isMobile ? "100px" : "80px",
+        padding: 0,
+        width: "100%",
       }}
     >
       {/* Toolbar */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "8px 16px",
-          marginBottom: "16px",
-          background: "rgba(30, 30, 40, 0.85)",
-          backdropFilter: "blur(12px)",
-          borderRadius: "12px",
-          border: "1px solid rgba(255,255,255,0.1)",
-          boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-          position: "sticky",
-          top: "16px",
-          zIndex: 50,
-        }}
+        style={
+          isMobile
+            ? {
+                // Mobile: fixed dark bar pinned to the bottom of the screen
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "12px",
+                padding: "10px 20px",
+                background: "rgba(18, 18, 28, 0.95)",
+                backdropFilter: "blur(16px)",
+                borderTop: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "0 -4px 24px rgba(0,0,0,0.4)",
+                position: "fixed",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 100,
+              }
+            : {
+                // Desktop: sticky bar near the top
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "8px 16px",
+                marginBottom: "16px",
+                background: "rgba(30, 30, 40, 0.85)",
+                backdropFilter: "blur(12px)",
+                borderRadius: "12px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+                position: "sticky",
+                top: "16px",
+                zIndex: 50,
+              }
+        }
       >
         {/* Zoom Out */}
         <button
@@ -209,33 +291,65 @@ export default function PDFViewer({
         </button>
       </div>
 
-      {/* PDF Document — responsive container: 80% on desktop, 100% on mobile */}
+      {/* PDF Document — full width, scrolls horizontally when zoomed in */}
       <div
         ref={containerRef}
         style={{
-          width: "min(80vw, 100%)",
-          maxWidth: "100%",
+          width: "100%",
+          overflowX: "scroll",
         }}
       >
-        <Document
-          file={url}
-          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-          loading="Loading PDF..."
-          error="Failed to load PDF"
+        {/* Inner centering wrapper — grows with the page so overflow is symmetric */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            minWidth: "min-content",
+          }}
         >
-          {Array.from(new Array(numPages), (_, index) => (
+          <Document
+            file={url}
+            onLoadSuccess={handleLoadSuccess}
+            onLoadError={handleLoadError}
+            loading="Loading PDF..."
+            error="Failed to load PDF"
+          >
+            {Array.from(new Array(numPages), (_, index) => (
+              <div
+                key={`page_${index}_w${containerWidth}_s${scale}_r${rotation}`}
+                style={{ marginBottom: "12px" }}
+              >
+                <Page
+                  pageNumber={index + 1}
+                  width={
+                    containerWidth > 0 ? containerWidth * scale : undefined
+                  }
+                  rotate={rotation}
+                />
+              </div>
+            ))}
+          </Document>
+
+          {/* Single copyright footer below all pages */}
+          {numPages && (
             <div
-              key={`page_${index}_w${containerWidth}_s${scale}_r${rotation}`}
-              style={{ marginBottom: "12px" }}
+              style={{
+                marginTop: "20px",
+                paddingBottom: "8px",
+                textAlign: "center",
+                fontSize: "12px",
+                fontWeight: 500,
+                letterSpacing: "0.05em",
+                color: "rgba(200, 200, 220, 0.55)",
+                userSelect: "none",
+              }}
             >
-              <Page
-                pageNumber={index + 1}
-                width={containerWidth > 0 ? containerWidth * scale : undefined}
-                rotate={rotation}
-              />
+              © {new Date().getFullYear()} Nexera — All rights reserved
             </div>
-          ))}
-        </Document>
+          )}
+        </div>
+        {/* end inner centering wrapper */}
       </div>
     </div>
   );
