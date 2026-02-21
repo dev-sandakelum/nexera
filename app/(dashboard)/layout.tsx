@@ -28,6 +28,7 @@ export default async function DashboardLayout({
       <div className="page root">
         <NavbarControler notes={notes} />
         <div className="ContentArea">
+          <div className="topBlur"></div>
           <div className="UsableArea">{children}</div>
         </div>
       </div>
