@@ -127,6 +127,39 @@
   margin-bottom: 8px;
 }
 
+.mup-badges-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.mup-edit-info-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--background);
+  border: 1px solid var(--navbar-border);
+  border-radius: 8px;
+  color: var(--color);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mup-edit-info-btn:hover {
+  background: var(--navbar-border);
+  transform: translateY(-1px);
+}
+
+.mup-edit-info-btn:active {
+  transform: translateY(0);
+}
+
 .mup-badges-grid {
   display: flex;
   flex-wrap: wrap;

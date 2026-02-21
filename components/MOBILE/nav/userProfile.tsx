@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiX, FiStar, FiZap, FiMapPin, FiMail, FiLogOut, FiLogIn } from 'react-icons/fi';
+import { FiX, FiStar, FiZap, FiMapPin, FiMail, FiLogOut, FiLogIn, FiEdit } from 'react-icons/fi';
 import { FaCrown, FaSeedling, FaShieldAlt } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 import { NexeraUser } from '@/components/types';
 import { nexBadges } from '@/public/json/badges';
 import { useClerk } from "@clerk/nextjs";
@@ -26,6 +27,7 @@ export default function MobileUserProfile({
   isOpen,
   onClose
 }: MobileUserProfileProps) {
+  const router = useRouter();
   const { signOut } = useClerk();
   
   // Find user badges - handle both array and object structures (robust like desktop)
@@ -44,6 +46,11 @@ export default function MobileUserProfile({
 
   const handleLogOut = async () => {
     await signOut();
+    onClose();
+  };
+
+  const handleEditInfo = () => {
+    router.push('/Settings');
     onClose();
   };
 
@@ -90,7 +97,17 @@ export default function MobileUserProfile({
               {/* Badges */}
               {userBadgesList.length > 0 && (
                 <div className="mup-section">
-                   <div className="mup-section-title">Badges</div>
+                   <div className="mup-badges-header">
+                      <div className="mup-section-title">Badges</div>
+                      <button 
+                        className="mup-edit-info-btn"
+                        onClick={handleEditInfo}
+                        aria-label="Edit profile info"
+                      >
+                        <FiEdit />
+                        Edit Info
+                      </button>
+                   </div>
                    <div className="mup-badges-grid">
                      {userBadgesList.map((badge) => (
                        <div 

@@ -221,27 +221,28 @@ export default function MobileNavBar({
         </div>
       </div>
 
-      {pathname.split("/")[3] !== "pdf" && (
-        <div className="mobile-route">
-          <div className="path">
-            <p
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              {previousRoutes.map((item, index) => (
-                <span key={`${item}-${index}`} className="route-item">
-                  {item}
-                  <span className="separator"> &gt; </span>
-                </span>
-              ))}
-              <span className="active route-item">{activeRoute}</span>
-            </p>
+      {pathname.split("/")[3] !== "pdf" &&
+        pathname.split("/")[3] !== "quiz" && (
+          <div className="mobile-route">
+            <div className="path">
+              <p
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                }}
+              >
+                {previousRoutes.map((item, index) => (
+                  <span key={`${item}-${index}`} className="route-item">
+                    {item}
+                    <span className="separator"> &gt; </span>
+                  </span>
+                ))}
+                <span className="active route-item">{activeRoute}</span>
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       <MobileUserProfile
         user={user}
         isOpen={showProfile}
