@@ -58,6 +58,7 @@ import "@/components/styles/themes/contrast.css";
 
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next";
 import LoadingAnimation from "@/components/page/loading";
 import { ThemeProvider } from "./theme-controller";
 
@@ -92,6 +93,7 @@ export default function RootLayout({
             <ClerkProvider>{children}</ClerkProvider>
           </ThemeProvider>
         </Suspense>
+        <Analytics />
       </body>
     </html>
   );
