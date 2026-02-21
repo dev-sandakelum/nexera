@@ -75,7 +75,7 @@ const tabs: { id: TabId; label: string }[] = [
   { id: "topics", label: "Topics" },
   { id: "notes", label: "Notes" },
 ];
-
+ 
 export default function NotesSubjectCreator({
   nexSubjects,
   nexTopics,
