@@ -85,7 +85,7 @@ export default function NotesSubjectCreator({
   nexTopics: nexTopic[];
   nexNotes: nexNoteAbout[];
 }) {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const [activeTab, setActiveTab] = useState<TabId>("subjects");
   const [subjects, setSubjects] = useState<nexSubject[]>([]);
   const [topics, setTopics] = useState<nexTopic[]>([]);
@@ -118,49 +118,24 @@ export default function NotesSubjectCreator({
   const [selectedSubject, setSelectedSubject] = useState<string>("");
   const [selectedTopic, setSelectedTopic] = useState<string>("");
   const [selectedNoteType, setSelectedNoteType] = useState<string>("");
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [copiedQuizType, setCopiedQuizType] = useState(false);
-  // Initialize with sample data
+
+  // Derive isAdmin directly from user — no separate state, no extra render cycle.
+  // This is always in sync with the current user object.
+  const isAdmin = user?.badges
+    ? Object.values(user.badges).some(
+        (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
+      )
+    : false;
+
+  // Single effect that syncs all filtered lists whenever user or source data changes
   useEffect(() => {
-    // Check if user has nexRoot or nexApex badges
-    // Users with these badges can see ALL content regardless of who created it
-    // Convert badges object to array and check
-    const badgesArray = user?.badges ? Object.values(user.badges) : [];
-    badgesArray.map((badge: any) => {
-      console.log(badge);
-      
-      if (badge.id === "nexRoot" || badge.id === "nexApex") {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-      }
-    });
-    // console.log("User badges:", badgesArray, "Is Admin:", hasAdminBadge);
-  }, [user]);
+    if (loading) return; // wait until user is fully loaded
 
-  useEffect(() => {
-    // Filter subjects based on user permissions
-    const filteredSubjects = nexSubjects.filter((s) => {
-      // If user has admin badge, show ALL subjects
-      if (isAdmin) return true;
-
-      // Otherwise, only show subjects created by this user
-      return s.createdBy === user?.id;
-    });
-
-    setSubjects(filteredSubjects);
-  }, [nexSubjects, user, isAdmin]);
-
-  useEffect(() => {
-    const filteredTopics = nexTopics.filter((t) => {
-      return isAdmin || t.createdBy === user?.id;
-    });
-    setTopics(filteredTopics);
-  }, [nexTopics, user, isAdmin]);
-
-  useEffect(() => {
+    setSubjects(nexSubjects.filter((s) => isAdmin || s.createdBy === user?.id));
+    setTopics(nexTopics.filter((t) => isAdmin || t.createdBy === user?.id));
     setNotes(nexNotes.filter((n) => isAdmin || n.publishedBy === user?.id));
-  }, [nexNotes, user, isAdmin]);
+  }, [nexSubjects, nexTopics, nexNotes, user, isAdmin, loading]);
 
   // Subject CRUD
   const handleCreateSubject = async () => {
@@ -184,8 +159,8 @@ export default function NotesSubjectCreator({
         subjects.map((s) =>
           s.id === editingId
             ? { ...s, ...subjectForm, updatedAt: new Date().toISOString() }
-            : s,
-        ),
+            : s
+        )
       );
       setShowSubjectModal(false);
       setSubjectForm({});
@@ -214,7 +189,7 @@ export default function NotesSubjectCreator({
     const newTopic = createTopic(
       topicForm,
       selectedSubject,
-      user ? user.id : "unknown",
+      user ? user.id : "unknown"
     );
     const response = await CreateTopic(newTopic.id, newTopic);
     if (response.success) {
@@ -234,8 +209,8 @@ export default function NotesSubjectCreator({
         topics.map((t) =>
           t.id === editingId
             ? { ...t, ...topicForm, updatedAt: new Date().toISOString() }
-            : t,
-        ),
+            : t
+        )
       );
       setShowTopicModal(false);
       setTopicForm({});
@@ -264,8 +239,8 @@ export default function NotesSubjectCreator({
           noteAbout.type == "note"
             ? "md"
             : noteAbout.type == "pdf"
-              ? "pdf"
-              : "json",
+            ? "pdf"
+            : "json"
         );
 
         const { fileURL, error } = await UploadFile({
@@ -303,7 +278,7 @@ export default function NotesSubjectCreator({
         noteID,
         noteAbout,
         selectedTopic,
-        user?.id || "unknown",
+        user?.id || "unknown"
       );
 
       // Build the context object directly with the returned URL
@@ -324,7 +299,7 @@ export default function NotesSubjectCreator({
       const response = await CreateNote(
         newNoteAbout.id,
         newNoteAbout,
-        newNoteData,
+        newNoteData
       );
       if (response.success) {
         setNotes([...notes, newNoteAbout]);
@@ -347,8 +322,8 @@ export default function NotesSubjectCreator({
         notes.map((n) =>
           n.id === editingId
             ? { ...n, ...noteAbout, updatedAt: new Date().toISOString() }
-            : n,
-        ),
+            : n
+        )
       );
       setShowNoteModal(false);
       setNoteAbout({});
@@ -381,7 +356,7 @@ export default function NotesSubjectCreator({
           notes.filter((n) => {
             const topic = topics.find((t) => t.id === n.topicID);
             return topic?.subjectID !== id;
-          }),
+          })
         );
       }
     } else if (type === "topic") {
@@ -470,7 +445,7 @@ export default function NotesSubjectCreator({
               if (activeTab === "notes") setShowNoteModal(true);
             } else {
               alert(
-                "Only admins can create new content. you need nexApex or nexRoot badge.",
+                "Only admins can create new content. you need nexApex or nexRoot badge."
               );
             }
           }}
@@ -620,7 +595,7 @@ export default function NotesSubjectCreator({
                     setNoteAbout(note);
                     setEditingId(note.id);
                     const foundTopic = topics.find(
-                      (t) => t.id === note.topicID,
+                      (t) => t.id === note.topicID
                     );
                     if (foundTopic) {
                       setSelectedSubject(foundTopic.subjectID);
@@ -905,14 +880,14 @@ export default function NotesSubjectCreator({
               noteAbout.type === "pdf"
                 ? ".pdf"
                 : noteAbout.type === "quiz"
-                  ? ".json"
-                  : ".md"
+                ? ".json"
+                : ".md"
             }
             onChange={(e) => {
               setNoteFile(
                 e.target.files?.[0]
                   ? URL.createObjectURL(e.target.files[0])
-                  : undefined,
+                  : undefined
               );
             }}
           />
