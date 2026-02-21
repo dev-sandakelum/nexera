@@ -52,36 +52,6 @@ export default function MobileNavBar({
   }, [pathname]);
 
   function iconAdder(idx: number) {
-    // Back button
-    if (idx === -1) {
-      return openPanel ? (
-        <li
-          key="back"
-          className="nav-sideIcon"
-          style={{
-            zIndex: 33,
-            position: "absolute",
-            top: 0,
-            transform: openPanel ? `translateY(${0}px)` : "translateY(-5px)",
-            transition: "transform 0.3s ease",
-          }}
-          onClick={() => {
-            router.back();
-            setOpenPanel(false);
-          }}
-        >
-          <div className="navigation-btn">
-            <LuArrowLeft size={24} className="icon deactivated" />
-          </div>
-          <div className={`navigation-icon-name ${openPanel && "active"}`}>
-            Back
-          </div>
-        </li>
-      ) : (
-        <></>
-      );
-    }
-
     const icons = [
       "Home",
       "Notes",
@@ -194,7 +164,6 @@ export default function MobileNavBar({
           }}
         ></div>
         <ul className={`nav-sideIcons ${openPanel ? "open" : ""}`}>
-          {iconAdder(-1)}
           {iconAdder(0)}
           {iconAdder(1)}
           {iconAdder(2)}
@@ -203,6 +172,19 @@ export default function MobileNavBar({
           {iconAdder(5)}
           {iconAdder(6)}
         </ul>
+
+        {/* Fixed Back Button at Bottom Middle */}
+        {openPanel && (
+        <button
+          onClick={() => {
+            router.back();
+            setOpenPanel(false);
+          }}
+          className="fixed-back-btn"
+          aria-label="Go back"
+        >
+          <LuArrowLeft size={24} />
+        </button>)}
 
         <div className="logoContainer">
           <div className="logo">

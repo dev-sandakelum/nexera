@@ -147,29 +147,29 @@ export default function HomePage() {
         <div className="left-side">
           <div className="notification">
             <p>
-              <span>• New Courses Added Weekly</span>
+              <span>• New Notes Added Weekly</span>
             </p>
           </div>
           <h1 className="title">
             Unlock Your <span>Potential</span> with NexEra
           </h1>
           <p className="description">
-            Access thousands of expert-led courses and take the next step in
+            Access thousands of expert-led notes,quizzes and take the next step in
             your professional journey. Join a global community of lifelong
             learners.
           </p>
           <div className="search-bar">
             <BiSearch size={24} />
-            <input type="text" placeholder="Search for courses..." />
+            <input type="text" placeholder="Search for notes..." />
             <button onClick={popUp}>Search</button>
           </div>
           <div className="popular">
             <p>Popular Searches:</p>
             <ul>
-              <li>Web Development</li>
-              <li>Data Science</li>
-              <li>Graphic Design</li>
-              <li>Digital Marketing</li>
+              <li>Management</li>
+              <li>DBMS</li>
+              <li>OS</li>
+              <li>Maths</li>
             </ul>
           </div>
         </div>
