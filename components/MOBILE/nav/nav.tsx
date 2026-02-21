@@ -83,7 +83,7 @@ export default function MobileNavBar({
         " | isCurrentView: " +
         isCurrentView +
         " | isActive: " +
-        isActive
+        isActive,
     );
     return (
       <li
@@ -158,9 +158,10 @@ export default function MobileNavBar({
       )}
       <div className="mobile-nav">
         <div
-          className={`returningBG ${openPanel ? "open" : ""}`}
+          className={`returningBG ${openPanel || showProfile ? "open" : ""}`}
           onClick={() => {
             openPanel && setOpenPanel(false);
+            showProfile && setShowProfile(false);
           }}
         ></div>
         <ul className={`nav-sideIcons ${openPanel ? "open" : ""}`}>
@@ -175,16 +176,17 @@ export default function MobileNavBar({
 
         {/* Fixed Back Button at Bottom Middle */}
         {openPanel && (
-        <button
-          onClick={() => {
-            router.back();
-            setOpenPanel(false);
-          }}
-          className="fixed-back-btn"
-          aria-label="Go back"
-        >
-          <LuArrowLeft size={24} />
-        </button>)}
+          <button
+            onClick={() => {
+              router.back();
+              setOpenPanel(false);
+            }}
+            className="fixed-back-btn"
+            aria-label="Go back"
+          >
+            <LuArrowLeft size={24} />
+          </button>
+        )}
 
         <div className="logoContainer">
           <div className="logo">
