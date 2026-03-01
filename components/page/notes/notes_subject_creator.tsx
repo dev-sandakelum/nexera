@@ -75,6 +75,8 @@ const tabs: { id: TabId; label: string }[] = [
   { id: "topics", label: "Topics" },
   { id: "notes", label: "Notes" },
 ];
+
+const FULL_ACCESS_EMAILS = ["online.sadakelum@gmail.com"];
  
 export default function NotesSubjectCreator({
   nexSubjects,
@@ -120,13 +122,17 @@ export default function NotesSubjectCreator({
   const [selectedNoteType, setSelectedNoteType] = useState<string>("");
   const [copiedQuizType, setCopiedQuizType] = useState(false);
 
-  // Derive isAdmin directly from user — no separate state, no extra render cycle.
-  // This is always in sync with the current user object.
-  const isAdmin = user?.badges
+  const hasAdminBadge = user?.badges
     ? Object.values(user.badges).some(
         (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
       )
     : false;
+
+  const hasFullAccessByEmail = FULL_ACCESS_EMAILS.includes(
+    (user?.email || "").toLowerCase().trim()
+  );
+
+  const isAdmin = hasAdminBadge || hasFullAccessByEmail;
 
   // Single effect that syncs all filtered lists whenever user or source data changes
   useEffect(() => {
