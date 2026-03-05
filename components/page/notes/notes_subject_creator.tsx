@@ -461,11 +461,6 @@ export default function NotesSubjectCreator({
             className="nsc-create-btn"
             title="Refresh access levels"
             onClick={() => setRefreshKey((k) => k + 1)}
-            style={{
-              background: "transparent",
-              border: "1px solid currentColor",
-              opacity: 0.7,
-            }}
           >
             <FiRefreshCw /> Refresh
           </button>
