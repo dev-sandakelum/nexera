@@ -6,6 +6,7 @@ import {
   FiLayers,
   FiFileText,
   FiCopy,
+  FiRefreshCw,
 } from "react-icons/fi";
 
 // Types from shared types file
@@ -77,7 +78,7 @@ const tabs: { id: TabId; label: string }[] = [
 ];
 
 const FULL_ACCESS_EMAILS = ["online.sadakelum@gmail.com"];
- 
+
 export default function NotesSubjectCreator({
   nexSubjects,
   nexTopics,
@@ -89,6 +90,7 @@ export default function NotesSubjectCreator({
 }) {
   const { user, loading } = useUser();
   const [activeTab, setActiveTab] = useState<TabId>("subjects");
+  const [refreshKey, setRefreshKey] = useState(0);
   const [subjects, setSubjects] = useState<nexSubject[]>([]);
   const [topics, setTopics] = useState<nexTopic[]>([]);
   const [notes, setNotes] = useState<nexNoteAbout[]>([]);
@@ -135,13 +137,25 @@ export default function NotesSubjectCreator({
   const isAdmin = hasAdminBadge || hasFullAccessByEmail;
 
   // Single effect that syncs all filtered lists whenever user or source data changes
+  // Also re-runs on refreshKey change to reset access levels
   useEffect(() => {
     if (loading) return; // wait until user is fully loaded
 
-    setSubjects(nexSubjects.filter((s) => isAdmin || s.createdBy === user?.id));
-    setTopics(nexTopics.filter((t) => isAdmin || t.createdBy === user?.id));
-    setNotes(nexNotes.filter((n) => isAdmin || n.publishedBy === user?.id));
-  }, [nexSubjects, nexTopics, nexNotes, user, isAdmin, loading]);
+    // Re-evaluate access: FULL_ACCESS_EMAILS always get full access
+    const currentEmail = (user?.email || "").toLowerCase().trim();
+    const hasFullAccess = FULL_ACCESS_EMAILS.includes(currentEmail);
+    const currentIsAdmin = hasAdminBadge || hasFullAccess;
+
+    setSubjects(
+      nexSubjects.filter((s) => currentIsAdmin || s.createdBy === user?.id)
+    );
+    setTopics(
+      nexTopics.filter((t) => currentIsAdmin || t.createdBy === user?.id)
+    );
+    setNotes(
+      nexNotes.filter((n) => currentIsAdmin || n.publishedBy === user?.id)
+    );
+  }, [nexSubjects, nexTopics, nexNotes, user, isAdmin, loading, refreshKey]);
 
   // Subject CRUD
   const handleCreateSubject = async () => {
@@ -442,22 +456,36 @@ export default function NotesSubjectCreator({
           <h1 className="nsc-title">Content Creator</h1>
           <p className="nsc-subtitle">Manage subjects, topics, and notes</p>
         </div>
-        <button
-          className="nsc-create-btn"
-          onClick={() => {
-            if (isAdmin) {
-              if (activeTab === "subjects") setShowSubjectModal(true);
-              if (activeTab === "topics") setShowTopicModal(true);
-              if (activeTab === "notes") setShowNoteModal(true);
-            } else {
-              alert(
-                "Only admins can create new content. you need nexApex or nexRoot badge."
-              );
-            }
-          }}
-        >
-          <FiPlus /> Create New
-        </button>
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+          <button
+            className="nsc-create-btn"
+            title="Refresh access levels"
+            onClick={() => setRefreshKey((k) => k + 1)}
+            style={{
+              background: "transparent",
+              border: "1px solid currentColor",
+              opacity: 0.7,
+            }}
+          >
+            <FiRefreshCw /> Refresh
+          </button>
+          <button
+            className="nsc-create-btn"
+            onClick={() => {
+              if (isAdmin) {
+                if (activeTab === "subjects") setShowSubjectModal(true);
+                if (activeTab === "topics") setShowTopicModal(true);
+                if (activeTab === "notes") setShowNoteModal(true);
+              } else {
+                alert(
+                  "Only admins can create new content. you need nexApex or nexRoot badge."
+                );
+              }
+            }}
+          >
+            <FiPlus /> Create New
+          </button>
+        </div>
       </div>
 
       {/* Tabs */}
