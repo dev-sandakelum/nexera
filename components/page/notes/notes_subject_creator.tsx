@@ -124,6 +124,26 @@ export default function NotesSubjectCreator({
   const [selectedNoteType, setSelectedNoteType] = useState<string>("");
   const [copiedQuizType, setCopiedQuizType] = useState(false);
 
+  // Passkey access state
+  const [showPasskeyModal, setShowPasskeyModal] = useState(false);
+  const [passkeyInput, setPasskeyInput] = useState("");
+  const [passkeyError, setPasskeyError] = useState("");
+  const [hasPasskeyAccess, setHasPasskeyAccess] = useState(false);
+
+  const ADMIN_PASSKEY = "admin10";
+
+  const handlePasskeySubmit = () => {
+    if (passkeyInput === ADMIN_PASSKEY) {
+      setHasPasskeyAccess(true);
+      setShowPasskeyModal(false);
+      setPasskeyInput("");
+      setPasskeyError("");
+      setRefreshKey((k) => k + 1); // re-trigger data sync with new access
+    } else {
+      setPasskeyError("Invalid passkey. Please try again.");
+    }
+  };
+
   const hasAdminBadge = user?.badges
     ? Object.values(user.badges).some(
         (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
@@ -134,17 +154,17 @@ export default function NotesSubjectCreator({
     (user?.email || "").toLowerCase().trim()
   );
 
-  const isAdmin = hasAdminBadge || hasFullAccessByEmail;
+  const isAdmin = hasAdminBadge || hasFullAccessByEmail || hasPasskeyAccess;
 
   // Single effect that syncs all filtered lists whenever user or source data changes
   // Also re-runs on refreshKey change to reset access levels
   useEffect(() => {
     if (loading) return; // wait until user is fully loaded
 
-    // Re-evaluate access: FULL_ACCESS_EMAILS always get full access
+    // Re-evaluate access: FULL_ACCESS_EMAILS always get full access, passkey also grants full access
     const currentEmail = (user?.email || "").toLowerCase().trim();
     const hasFullAccess = FULL_ACCESS_EMAILS.includes(currentEmail);
-    const currentIsAdmin = hasAdminBadge || hasFullAccess;
+    const currentIsAdmin = hasAdminBadge || hasFullAccess || hasPasskeyAccess;
 
     setSubjects(
       nexSubjects.filter((s) => currentIsAdmin || s.createdBy === user?.id)
@@ -155,7 +175,16 @@ export default function NotesSubjectCreator({
     setNotes(
       nexNotes.filter((n) => currentIsAdmin || n.publishedBy === user?.id)
     );
-  }, [nexSubjects, nexTopics, nexNotes, user, isAdmin, loading, refreshKey]);
+  }, [
+    nexSubjects,
+    nexTopics,
+    nexNotes,
+    user,
+    isAdmin,
+    loading,
+    refreshKey,
+    hasPasskeyAccess,
+  ]);
 
   // Subject CRUD
   const handleCreateSubject = async () => {
@@ -463,6 +492,27 @@ export default function NotesSubjectCreator({
             onClick={() => setRefreshKey((k) => k + 1)}
           >
             <FiRefreshCw /> Refresh
+          </button>
+          <button
+            className="nsc-create-btn"
+            title={
+              hasPasskeyAccess ? "Passkey access active" : "Unlock with passkey"
+            }
+            onClick={() => {
+              if (hasPasskeyAccess) {
+                setHasPasskeyAccess(false);
+                setRefreshKey((k) => k + 1);
+              } else {
+                setShowPasskeyModal(true);
+              }
+            }}
+            style={
+              hasPasskeyAccess
+                ? { background: "#22c55e", color: "#fff" }
+                : undefined
+            }
+          >
+            🔑 {hasPasskeyAccess ? "Locked" : "Unlock"}
           </button>
           <button
             className="nsc-create-btn"
@@ -962,6 +1012,87 @@ export default function NotesSubjectCreator({
           </p>
         </div>
       </CreatorModal>
+
+      {/* Passkey Access Modal */}
+      {showPasskeyModal && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={() => {
+            setShowPasskeyModal(false);
+            setPasskeyInput("");
+            setPasskeyError("");
+          }}
+        >
+          <div
+            style={{
+              background: "#1e1e2e",
+              border: "1px solid #3b3b5c",
+              borderRadius: "12px",
+              padding: "2rem",
+              minWidth: "320px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ margin: 0, color: "#e2e8f0", fontSize: "1.2rem" }}>
+              🔑 Enter Passkey
+            </h2>
+            <p style={{ margin: 0, color: "#94a3b8", fontSize: "0.875rem" }}>
+              Enter the admin passkey to unlock full access.
+            </p>
+            <input
+              type="password"
+              className="nsc-input"
+              placeholder="Admin passkey"
+              value={passkeyInput}
+              onChange={(e) => {
+                setPasskeyInput(e.target.value);
+                setPasskeyError("");
+              }}
+              onKeyDown={(e) => e.key === "Enter" && handlePasskeySubmit()}
+              autoFocus
+            />
+            {passkeyError && (
+              <p style={{ margin: 0, color: "#f87171", fontSize: "0.85rem" }}>
+                {passkeyError}
+              </p>
+            )}
+            <div
+              style={{
+                display: "flex",
+                gap: "0.75rem",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button
+                className="nsc-create-btn"
+                style={{ background: "#374151", color: "#e2e8f0" }}
+                onClick={() => {
+                  setShowPasskeyModal(false);
+                  setPasskeyInput("");
+                  setPasskeyError("");
+                }}
+              >
+                Cancel
+              </button>
+              <button className="nsc-create-btn" onClick={handlePasskeySubmit}>
+                Unlock
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
