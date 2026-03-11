@@ -4,33 +4,33 @@
 
 :root {
   /* Dark theme */
-  --bg-primary: #0b0d14;
-  --bg-secondary: #13161f;
-  --bg-tertiary: #191d2b;
-  --bg-surface: #1f2438;
+  --bg-primary: #0f1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+  --bg-surface: #30363d;
 
   /* Borders */
-  --border-light: #252b3d;
-  --border-dark: #2e3550;
+  --border-light: #30363d;
+  --border-dark: #444c56;
 
   /* Text */
-  --text-primary: #dde2f0;
-  --text-secondary: #7a83a6;
-  --text-tertiary: #454e6a;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --text-tertiary: #6e7681;
 
   /* Accent colors */
-  --color-blue: #38bdf8;
-  --color-purple: #818cf8;
-  --color-green: #34d399;
-  --color-orange: #fb923c;
-  --color-pink: #f472b6;
-  --color-violet: #a78bfa;
+  --color-blue: #58a6ff;
+  --color-purple: #79c0ff;
+  --color-green: #3fb950;
+  --color-orange: #d29922;
+  --color-pink: #f85149;
+  --color-violet: #bc8ef9;
 
   /* Gradients */
-  --gradient-blue: rgba(56, 189, 248, 0.1);
-  --gradient-purple: rgba(129, 140, 248, 0.1);
-  --gradient-green: rgba(52, 211, 153, 0.1);
-  --gradient-orange: rgba(251, 146, 60, 0.1);
+  --gradient-blue: rgba(88, 166, 255, 0.1);
+  --gradient-purple: rgba(188, 142, 249, 0.1);
+  --gradient-green: rgba(63, 185, 80, 0.1);
+  --gradient-orange: rgba(210, 153, 34, 0.1);
 }
 
 * {
