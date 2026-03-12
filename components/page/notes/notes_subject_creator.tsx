@@ -77,8 +77,6 @@ const tabs: { id: TabId; label: string }[] = [
   { id: "notes", label: "Notes" },
 ];
 
-const FULL_ACCESS_EMAILS = ["online.sadakelum@gmail.com"];
-
 export default function NotesSubjectCreator({
   nexSubjects,
   nexTopics,
@@ -144,47 +142,16 @@ export default function NotesSubjectCreator({
     }
   };
 
-  const hasAdminBadge = user?.badges
-    ? Object.values(user.badges).some(
-        (badge: any) => badge.id === "nexRoot" || badge.id === "nexApex"
-      )
-    : false;
+  const isAdmin = hasPasskeyAccess;
 
-  const hasFullAccessByEmail = FULL_ACCESS_EMAILS.includes(
-    (user?.email || "").toLowerCase().trim()
-  );
-
-  const isAdmin = hasAdminBadge || hasFullAccessByEmail || hasPasskeyAccess;
-
-  // Single effect that syncs all filtered lists whenever user or source data changes
-  // Also re-runs on refreshKey change to reset access levels
+  // Single effect that syncs all filtered lists whenever source data changes
+  // Also re-runs on refreshKey change
   useEffect(() => {
-    if (loading) return; // wait until user is fully loaded
-
-    // Re-evaluate access: FULL_ACCESS_EMAILS always get full access, passkey also grants full access
-    const currentEmail = (user?.email || "").toLowerCase().trim();
-    const hasFullAccess = FULL_ACCESS_EMAILS.includes(currentEmail);
-    const currentIsAdmin = hasAdminBadge || hasFullAccess || hasPasskeyAccess;
-
-    setSubjects(
-      nexSubjects.filter((s) => currentIsAdmin || s.createdBy === user?.id)
-    );
-    setTopics(
-      nexTopics.filter((t) => currentIsAdmin || t.createdBy === user?.id)
-    );
-    setNotes(
-      nexNotes.filter((n) => currentIsAdmin || n.publishedBy === user?.id)
-    );
-  }, [
-    nexSubjects,
-    nexTopics,
-    nexNotes,
-    user,
-    isAdmin,
-    loading,
-    refreshKey,
-    hasPasskeyAccess,
-  ]);
+    // Show all content to everyone — access is controlled by passkey only
+    setSubjects(nexSubjects);
+    setTopics(nexTopics);
+    setNotes(nexNotes);
+  }, [nexSubjects, nexTopics, nexNotes, refreshKey, hasPasskeyAccess]);
 
   // Subject CRUD
   const handleCreateSubject = async () => {
@@ -522,9 +489,7 @@ export default function NotesSubjectCreator({
                 if (activeTab === "topics") setShowTopicModal(true);
                 if (activeTab === "notes") setShowNoteModal(true);
               } else {
-                alert(
-                  "Only admins can create new content. you need nexApex or nexRoot badge."
-                );
+                alert("Please unlock with the passkey to create new content.");
               }
             }}
           >
@@ -1049,7 +1014,7 @@ export default function NotesSubjectCreator({
               🔑 Enter Passkey
             </h2>
             <p style={{ margin: 0, color: "#94a3b8", fontSize: "0.875rem" }}>
-              Enter the admin passkey to unlock full access.
+              Enter the passkey to unlock full access.
             </p>
             <input
               type="password"
