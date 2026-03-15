@@ -77,7 +77,7 @@ export default function NoteCard({
                 <h5 className="note-title">{note.title}</h5>
               </div>
 
-              <p className="note-description">{note.description}</p>
+              {/* <p className="note-description">{note.description}</p> */}
 
               <div className="note-meta">
                 <span className="note-meta-item">
