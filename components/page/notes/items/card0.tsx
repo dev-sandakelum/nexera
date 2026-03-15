@@ -109,7 +109,7 @@ export default function Card0({
                       className="cardContent"
                     >
                       <h3 className="cardTitle">{subject.title}</h3>
-                      {/* <p className="cardDescription">{subject.description}</p> */}
+                      <p className="cardDescription">{subject.description}</p>
                     </Link>
 
                     {/* Footer */}

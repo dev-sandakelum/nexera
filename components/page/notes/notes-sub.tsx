@@ -224,7 +224,7 @@ export default function Notes_Sub({
               <div className="topic-header">
                 <div className="topic-header-left">
                   <h3 className="topic-title">{topic.title}</h3>
-                  <p className="topic-description">{topic.description}</p>
+                  {/* <p className="topic-description">{topic.description}</p> */}
                   <div className="topic-subinfo-r">
                     <span>📝 {groupedNotes.note.length} Notes</span>
                     <span>📄 {groupedNotes.pdf.length} PDFs</span>
